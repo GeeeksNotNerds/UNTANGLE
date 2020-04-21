@@ -48,7 +48,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_one_login"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="350dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="240dp"
                 android:elevation="10dp"
@@ -113,18 +113,24 @@
                             android:layout_marginLeft="2dp"
                             android:layout_marginTop="32dp"
                             android:layout_marginBottom="24dp"
-                            android:inputType="textPassword"
+                            android:inputType="numberPassword"
                             android:backgroundTint="#9c27B0"
-                            android:hint="Password"
+                            android:hint="PIN"
                             android:textSize="15sp" />
 
                     </LinearLayout>
 
 
 
+
                 </LinearLayout>
 
+
+
+
+
             </androidx.cardview.widget.CardView>
+
         </LinearLayout>
 
 
@@ -147,18 +153,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/progress_bar"
             android:visibility="gone"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/login_button"
-            android:layout_marginTop="10dp"
-            android:id="@+id/register_account_link"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="18sp"
 
-            android:gravity="center_horizontal"
-            android:text="Don't have an account.Create one!"/>
+
+
 
 
 
