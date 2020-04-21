@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".SetupActivity">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+
+        android:id="@+id/setup_profile_image"
+        />
+
+    <EditText
+        android:id="@+id/setup_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/setup_profile_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+
+
+        android:ems="10"
+        android:hint="UserName"
+        android:inputType="textMultiLine"
+        android:padding="8dp" />
+    <EditText
+        android:padding="8dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/setup_name"
+        android:layout_below="@id/setup_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your full name"
+        android:ems="10"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:inputType="textMultiLine"
+
+        />
+    <EditText
+        android:padding="8dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/setup_branch"
+        android:layout_below="@id/setup_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your branch"
+        android:ems="10"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:inputType="textMultiLine"
+
+        />
+    <EditText
+        android:padding="8dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/setup_admin"
+        android:layout_below="@id/setup_branch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your admission number"
+        android:ems="10"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:inputType="textMultiLine"
+
+        />
+    <Button
+        android:padding="8dp"
+        android:layout_below="@id/setup_admin"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save details"
+        android:textColor="#00008c"
+        android:id="@+id/setup_save_button"
+        />
+
+</RelativeLayout>
