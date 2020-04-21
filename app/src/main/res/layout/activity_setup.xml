@@ -216,28 +216,6 @@
 
 
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:gravity="center_vertical"
-                        android:layout_gravity="center"
-                        android:paddingRight="8dp">
-
-                      <Switch
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:id="@+id/ver_switch"
-                          />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Are You an Admin?"
-                            android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
-
-
-
-                    </LinearLayout>
 
 
 
@@ -245,18 +223,8 @@
 
 
                 </LinearLayout>
-                <EditText
-                    android:layout_width="289dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="18dp"
-                    android:background="@drawable/edit_border"
-                    android:id="@+id/verification"
-                    android:hint="verification code..."
-                    android:inputType="textPassword"
-                    android:visibility="gone"
 
-                    android:textSize="15sp"
-                    />
+
 
             </LinearLayout>
 
