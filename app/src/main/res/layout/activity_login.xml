@@ -160,6 +160,31 @@
             android:gravity="center_horizontal"
             android:text="Don't have an account.Create one!"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_button"
+            android:layout_marginTop="10dp"
+
+            android:textColor="#000000"
+
+            android:textSize="18sp"
+
+            android:gravity="center_horizontal"
+            android:text="Or Login with your Google Account"/>
+
+
+        <ImageView
+            android:id="@+id/google_signin_button"
+            android:layout_width="100dp"
+            android:src="@drawable/ggle"
+            android:layout_marginTop="8dp"
+            android:layout_height="100dp"
+            android:elevation="15dp"
+
+            android:scaleType="fitCenter"
+            />
+
 
 
 
