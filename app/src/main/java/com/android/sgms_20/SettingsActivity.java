@@ -299,7 +299,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void SendUserToMainActivity()
     {
-        Intent intent=new Intent(SettingsActivity.this,ProfileActivity.class);
+        Intent intent=new Intent(SettingsActivity.this,MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -284,7 +285,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListner=
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener
+            navListner=
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -292,21 +296,22 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             startActivity(new Intent(MainActivity.this,MainActivity.class));
-                            finish();
+
                             break;
                         case R.id.nav_post:
                             startActivity(new Intent(MainActivity.this,PostActivity.class));
-                            finish();
+
                             break;
                         case R.id.nav_profile:
                             startActivity(new Intent(MainActivity.this,ProfileActivity.class));
-                            finish();
+
                             break;
                     }
 
                     return true;
                 }
             };
+
 
     @Override
     protected void onStart() {
