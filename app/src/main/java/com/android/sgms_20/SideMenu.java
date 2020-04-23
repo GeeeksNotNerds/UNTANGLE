@@ -44,7 +44,7 @@ public class SideMenu extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width=dm.widthPixels;
         int height=dm.heightPixels;
-        getWindow().setLayout((int)(width*.8),(int) (height*.33));
+        getWindow().setLayout((int)(width*.85),(int) (height*.45));
 
         WindowManager.LayoutParams params=getWindow().getAttributes();
         params.gravity= Gravity.RIGHT|Gravity.TOP;
@@ -69,12 +69,12 @@ public class SideMenu extends AppCompatActivity {
                 if(dataSnapshot.exists())
                 {
 
-                    String myUserName=dataSnapshot.child("username").getValue().toString();
-                    String myProfileName=dataSnapshot.child("fullname").getValue().toString();
+                    String myUserName=dataSnapshot.child("email").getValue().toString();
+                    String myProfileName=dataSnapshot.child("username").getValue().toString();
                     char letter=myProfileName.charAt(0);
+                    letter=Character.toUpperCase(letter);
 
-
-                    mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter),R.color.white );
+                    mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter),R.color.colorAccent);
                     thumbImage.setImageDrawable(mDrawableBuilder);
 
 

@@ -50,17 +50,17 @@ public class ProfileActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
-                    String myProfileImage=dataSnapshot.child("profileimage").getValue().toString();
-                    String myUserName=dataSnapshot.child("username").getValue().toString();
-                    String myProfileName=dataSnapshot.child("fullname").getValue().toString();
-                    String myBranch=dataSnapshot.child("branch").getValue().toString();
-                    String myAdmissionNo=dataSnapshot.child("admissionNo").getValue().toString();
+                    String myProfileImage=dataSnapshot.child("ProfileImage").getValue().toString();
+                    String myUserName=dataSnapshot.child("email").getValue().toString();
+                    String myProfileName=dataSnapshot.child("username").getValue().toString();
+                    String myBranch=dataSnapshot.child("department").getValue().toString();
+                    //String myAdmissionNo=dataSnapshot.child("admissionNo").getValue().toString();
 
-                    Picasso.with(ProfileActivity.this).load(myProfileImage).placeholder(R.drawable.profile).into(userProfileImage);
+                    Picasso.get().load(myProfileImage).placeholder(R.drawable.profile).into(userProfileImage);
                     userName.setText("@"+myUserName);
                     userFullName.setText(myProfileName);
                     userBranch.setText("Branch : "+myBranch);
-                    userAdmission.setText("Admission No. : "+myAdmissionNo);
+                    //userAdmission.setText("Admission No. : "+myAdmissionNo);
 
                 }
             }

@@ -73,18 +73,22 @@ public class MainActivity extends AppCompatActivity {
         PostsRef= FirebaseDatabase.getInstance().getReference().child("Posts");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+
         MyPostRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists())
-                {
-                    String myProfileName=dataSnapshot.child("fullname").getValue().toString();
-                    char letter=myProfileName.charAt(0);
+                if(dataSnapshot.exists()) {
+                    if (dataSnapshot.hasChild("username")) {
+                        String myProfileName = dataSnapshot.child("username").getValue().toString();
+                        char letter = myProfileName.charAt(0);
+                        letter = Character.toUpperCase(letter);
 
 
-                    mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter),R.color.white );
-                    pro.setImageDrawable(mDrawableBuilder);
+                        mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
 
+                        pro.setImageDrawable(mDrawableBuilder);
+
+                    }
                 }
             }
 
@@ -121,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void DisplayAllUsersPost()
+
+            private void DisplayAllUsersPost()
     {
 
         FirebaseRecyclerOptions<Posts> options=
@@ -282,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
         public void setProfileimage(Context ctx, String profileimage)
         {
             ImageView image=(ImageView)mView.findViewById(R.id.post_profile_image);
-            Picasso.with(ctx).load(profileimage).into(image);
+            Picasso.get().load(profileimage).into(image);
         }
         public void setTime(String time)
         {
@@ -327,6 +332,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+
+
+        super.onStart();
+        FirebaseUser currentUser=mAuth.getCurrentUser();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -334,9 +343,6 @@ public class MainActivity extends AppCompatActivity {
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         mGoogleApiClient.connect();
-
-        super.onStart();
-        FirebaseUser currentUser=mAuth.getCurrentUser();
         if(currentUser==null)
         {
             sendUserToLoginActivity();
@@ -369,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void SendToSetupActivity()
     {
-        Intent intent=new Intent(MainActivity.this,SetupActivity.class);
+        Intent intent=new Intent(MainActivity.this, SetupActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
@@ -383,3 +389,5 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 }
+
+

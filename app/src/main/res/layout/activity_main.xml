@@ -5,29 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-   <androidx.appcompat.widget.Toolbar
+
+    <androidx.appcompat.widget.Toolbar
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_height="45dp"
+       android:elevation="5dp"
        android:id="@+id/toolbar"
-       android:layout_marginTop="10dp"
-       android:layout_marginLeft="10dp"
-       android:layout_marginRight="10dp"
-       android:background="#9c27B0">
-       <RelativeLayout
+       android:background="@color/colorPrimaryDark">
+
+        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent">
 
-           <androidx.appcompat.widget.SearchView
+           <TextView
                android:layout_width="match_parent"
+               android:text="Untangle"
+               android:fontFamily="sans-serif-light"
 
+               android:textSize="25sp"
+               android:textColor="@color/white"
 
                android:layout_height="wrap_content"
                android:layout_toLeftOf="@id/thumbnail"/>
-           <ImageView
+
+            <ImageView
                android:id="@+id/thumbnail"
-               android:layout_width="40dp"
-               android:layout_alignParentRight="true"
+
                android:src="@drawable/profile"
+               android:layout_width="40dp"
+               android:layout_marginRight="8dp"
+
+
+               android:layout_alignParentRight="true"
                android:layout_height="40dp"/>
        </RelativeLayout>
 
@@ -39,10 +48,12 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation"
         android:id="@+id/fragment_container">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/all_users_post_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </FrameLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"

@@ -80,7 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String myAdmissionNo=dataSnapshot.child("admissionNo").getValue().toString();
 
 
-                        Picasso.with(SettingsActivity.this).load(myProfileImage).placeholder(R.drawable.profile).into(userProfImage);
+                        Picasso.get().load(myProfileImage).placeholder(R.drawable.profile).into(userProfImage);
                         userName.setText(myUserName);
                         userFullName.setText(myProfileName);
                         userBranch.setText(myBranch);
