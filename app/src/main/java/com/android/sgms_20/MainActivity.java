@@ -2,6 +2,7 @@ package com.android.sgms_20;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.Auth;
@@ -39,11 +43,15 @@ public class MainActivity extends AppCompatActivity {
     private GoogleApiClient mGoogleApiClient;
     String currentUserID;
     private DatabaseReference UsersRef;
+    private Toolbar mToolbar;
+    private TextDrawable mDrawableBuilder;
 
+    private ImageView pro;
 
     private RecyclerView postList;
 
-    private DatabaseReference PostsRef,LikesRef;
+    private DatabaseReference MyPostRef,PostsRef,LikesRef;
+    String letter="A";
 
 
 
@@ -54,12 +62,45 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mToolbar=(Toolbar) findViewById(R.id.toolbar);
+        pro=(ImageView)findViewById(R.id.thumbnail);
+        setSupportActionBar(mToolbar);
+        setTitle("Home");
 
         mAuth=FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         PostsRef= FirebaseDatabase.getInstance().getReference().child("Posts");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+        MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+        MyPostRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                    String myProfileName=dataSnapshot.child("fullname").getValue().toString();
+                    char letter=myProfileName.charAt(0);
+
+
+                    mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter),R.color.white );
+                    pro.setImageDrawable(mDrawableBuilder);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        pro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(MainActivity.this,SideMenu.class));
+
+            }
+        });
 
         postList=(RecyclerView)findViewById(R.id.all_users_post_list);
         postList.setHasFixedSize(true);
@@ -82,9 +123,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void DisplayAllUsersPost()
     {
-        //Retrieve using firebase recycler adapter
-        //module class-retrieve post info from firebase database
-        //static class
 
         FirebaseRecyclerOptions<Posts> options=
                 new FirebaseRecyclerOptions.Builder<Posts>()
@@ -100,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
                 final String PostKey=getRef(i).getKey();
 
                 postsViewHolder.setFullname(posts.getFullname());
+
+
+
+
+
                 postsViewHolder.setTime(posts.getTime());
                 postsViewHolder.setDate(posts.getDate());
                 postsViewHolder.setDescription(posts.getDescription());
@@ -179,24 +222,7 @@ public class MainActivity extends AppCompatActivity {
         postList.setAdapter(firebaseRecyclerAdapter);
     }
 
-        /*FirebaseRecyclerAdapter<Posts,PostsViewHolder> firebaseRecyclerAdapter=
-                new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(
-                        Posts.class,
-                        R.layout.all_posts_layout,
-                        PostsViewHolder.class,
-                        PostsRef)
-                {
-                    @Override
-                    protected void onBindViewHolder(@NonNull PostsViewHolder postsViewHolder, int i, @NonNull Posts posts) {
 
-                    }
-
-                    @NonNull
-                    @Override
-                    public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        return null;
-                    }
-                };*/
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder
     {
@@ -208,10 +234,13 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference LikesRef;
 
 
+
+
         public PostsViewHolder(@NonNull View itemView)
         {
             super(itemView);
             mView=itemView;
+
             LikePostButton=(ImageButton)mView.findViewById(R.id.like_button);
             CommentPostButton=(ImageButton)mView.findViewById(R.id.comment_button);
             DisplayNoOfLikes=(TextView)mView.findViewById(R.id.display_no_of_likes);

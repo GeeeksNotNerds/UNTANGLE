@@ -5,8 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+   <androidx.appcompat.widget.Toolbar
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/toolbar"
+       android:layout_marginTop="10dp"
+       android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
+       android:background="#9c27B0">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <androidx.appcompat.widget.SearchView
+               android:layout_width="match_parent"
+
+
+               android:layout_height="wrap_content"
+               android:layout_toLeftOf="@id/thumbnail"/>
+           <ImageView
+               android:id="@+id/thumbnail"
+               android:layout_width="40dp"
+               android:layout_alignParentRight="true"
+               android:src="@drawable/profile"
+               android:layout_height="40dp"/>
+       </RelativeLayout>
+
+   </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation"

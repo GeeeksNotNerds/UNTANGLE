@@ -9,12 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".SideMenu"
+            android:theme="@style/AppTheme.customTheme" ></activity>
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".PostActivity" />
-        <activity android:name=".ClickPostActivity"></activity>
-        <activity android:name=".CommentsActivity"></activity>
-        <activity android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".ClickPostActivity" />
+        <activity android:name=".CommentsActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".SetupActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
