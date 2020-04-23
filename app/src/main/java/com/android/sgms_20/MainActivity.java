@@ -2,6 +2,7 @@ package com.android.sgms_20;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference UsersRef;
 
 
+
     private RecyclerView postList;
 
     private DatabaseReference PostsRef,LikesRef;
@@ -54,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
 
         mAuth=FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
@@ -253,7 +260,12 @@ public class MainActivity extends AppCompatActivity {
         public void setProfileimage(Context ctx, String profileimage)
         {
             ImageView image=(ImageView)mView.findViewById(R.id.post_profile_image);
-            Picasso.with(ctx).load(profileimage).into(image);
+
+            Picasso.get()
+                    .load(profileimage)
+                    .placeholder(R.drawable.ic_account_circle_24px)
+                    .into(image);
+
         }
         public void setTime(String time)
         {
@@ -340,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void SendToSetupActivity()
     {
-        Intent intent=new Intent(MainActivity.this,SetupActivity.class);
+        Intent intent=new Intent(MainActivity.this, SetupActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

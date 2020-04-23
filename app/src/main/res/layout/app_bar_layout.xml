@@ -5,6 +5,6 @@
     android:id="@+id/main_app_bar"
     app:titleTextColor="#00008c"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark">
+    android:background="#660983">
 
 </androidx.appcompat.widget.Toolbar>
