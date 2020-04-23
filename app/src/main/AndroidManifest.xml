@@ -22,6 +22,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".SetupActivity" />
+        <activity android:name=".CommentsActivity" />
+        <activity android:name=".PostActivity" />
+        <activity android:name=".ClickPostActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".MainActivity" />
