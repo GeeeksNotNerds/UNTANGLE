@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Posts
 {
-    private String name;
+    private String username;
     private String email;
     private String description;
     private String date;
@@ -15,10 +15,11 @@ public class Posts
     private String mode;
     private String category;
     private String subCategory;
+    private String showInformation;
     private List<Tag> tags;
 
-    public Posts(String name, String email, String description, String date, String time, String uid,String profileImage, String mode, String category, String subCategory,List<Tag> tags) {
-        this.name = name;
+    public Posts(String name, String email, String description, String date, String time, String uid,String profileImage, String mode, String category, String subCategory,String showInformation,List<Tag> tags) {
+        this.username = name;
         this.profileImage=profileImage;
         this.email = email;
         this.description = description;
@@ -29,10 +30,19 @@ public class Posts
         this.mode = mode;
         this.category = category;
         this.subCategory = subCategory;
+        this.showInformation=showInformation;
+    }
+
+    public String getShowInformation() {
+        return showInformation;
+    }
+
+    public void setShowInformation(String showInformation) {
+        this.showInformation = showInformation;
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public String getProfileImage() {
@@ -44,7 +54,7 @@ public class Posts
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getEmail() {

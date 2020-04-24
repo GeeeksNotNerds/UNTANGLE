@@ -225,21 +225,35 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
                         {
+                            final String PostKey=dataSnapshot1.getKey();
+                            mAdapter=new PostsAdapter(this,PostKey);
+                            //final String PostKey=dataSnapshot1.getKey();
+                            /*Intent intent=new Intent(MainActivity.this,PostsAdapter.class);
+                            intent.putExtra("PostKey",PostKey);
+                            startActivity(intent);*/
+
                             final String owner;
                             String uid=dataSnapshot1.child("uid").getValue().toString();
                             if (uid.equals(currentUserID))owner="MyPosts";
                             else if(uid.startsWith("admin"))owner="Admin";
                             else if(uid.startsWith("club"))owner="Club";
                             else{owner="General";}
+                            String show=dataSnapshot1.child("showInformation").getValue().toString();
+                            String info;
+                            if(show.equals("yes"))info="Anonymous";
+
+
 
                             final String mode=dataSnapshot1.child("mode").getValue().toString();
                             final String sub=dataSnapshot1.child("subCategory").getValue().toString();
                             final String categ=dataSnapshot1.child("category").getValue().toString() ;
-                            String name=dataSnapshot1.child("name").getValue().toString();
+                            String name=dataSnapshot1.child("username").getValue().toString();
                             String user=dataSnapshot1.child("email").getValue().toString();
                             String date=dataSnapshot1.child("date").getValue().toString();
                             String post=dataSnapshot1.child("description").getValue().toString();
                             String profilePic=dataSnapshot1.child("profileImage").getValue().toString();
+                            if(show.equals("yes"))info="Anonymous";
+                            else{info=name;}
 
                             if(categ.equals("Official"))colour1=mColors[1];
                             if(categ.equals("Personal"))colour1=mColors[2];
@@ -262,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-                            add(new Posts(name,"@"+user,post,date,date,uid,profilePic,mode,categ,sub, new ArrayList<Tag>() {{
+                            add(new Posts(info,"@"+user,post,date,date,uid,profilePic,mode,categ,sub,show, new ArrayList<Tag>() {{
                                 add(new Tag(categ, colour1));
                                 add(new Tag(sub, colour2));
                                 add(new Tag(mode,colour3));

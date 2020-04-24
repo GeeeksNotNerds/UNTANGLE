@@ -276,7 +276,7 @@ public class PostActivity extends AppCompatActivity {
 
                         String userFullName = dataSnapshot.child("username").getValue().toString();
                         String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
-
+                        String userEmail=dataSnapshot.child("email").getValue().toString();
 
                     HashMap postsMap = new HashMap();
                     postsMap.put("uid", current_user_id);
@@ -285,9 +285,10 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("description", description);
                     postsMap.put("mode", Mode);
                     postsMap.put("category", category);
-                    postsMap.put("sub-category", Sub_Category);
-                    postsMap.put("ProfileImage", userProfileImage);
+                    postsMap.put("subCategory", Sub_Category);
+                    postsMap.put("profileImage", userProfileImage);
                     postsMap.put("username", userFullName);
+                    postsMap.put("email",userEmail);
                     postsMap.put("showInformation",UserInfo_show);
 
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)

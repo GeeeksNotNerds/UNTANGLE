@@ -35,7 +35,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private Context mContext;
     FirebaseAuth mAuth;
     String currentUserId;
-    DatabaseReference LikesRef;
+    private  Intent in;
+    String PostKey;
+    DatabaseReference LikesRef,PostsRef;
 
     public PostsAdapter(Context context, List<Posts> posts) {
         mContext = context;
@@ -43,7 +45,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+        PostsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
+    }
+    public PostsAdapter(Context context,Intent intent)
+    {
 
+        this.in=intent;
+    }
+
+    public PostsAdapter(ValueEventListener valueEventListener, String postKey) {
+        PostKey=postKey;
     }
 
     @Override
@@ -66,6 +77,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
         Posts question = mPosts.get(position);
+
+
+
 
         String PostKey=question.getUid().toString();
 
