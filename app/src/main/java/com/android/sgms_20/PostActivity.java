@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,11 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,9 +41,14 @@ public class PostActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private ProgressDialog loadingBar;
     private EditText PostDescription;
-    private Button UpdatePostButton;
+    private FloatingActionButton UpdatePostButton;
     private DatabaseReference UsersRef, PostsRef;
     private FirebaseAuth mAuth;
+    RadioGroup rg_mode,rg_mode_opt,rg_cat,rg_cat_off,rg_cat_per,rg_cat_oth;
+    CardView cv2,cv4,cv5,cv6;
+    String UserInfo_show;
+
+    String Mode,category,Sub_Category;
 
     private String description;
     private String current_user_id,saveCurrentDate,saveCurrentTime,postRandomName;
@@ -51,6 +59,144 @@ public class PostActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        cv2=findViewById(R.id.cv2);
+        cv4=findViewById(R.id.cv4);
+        cv5=findViewById(R.id.cv5);
+        cv6=findViewById(R.id.cv6);
+
+        rg_mode=findViewById(R.id.rg1);
+        rg_mode_opt=findViewById(R.id.rg2);
+        rg_cat=findViewById(R.id.rg3);
+        rg_cat_off=findViewById(R.id.rg4);
+        rg_cat_per=findViewById(R.id.rg5);
+        rg_cat_oth=findViewById(R.id.rg6);
+
+        rg_mode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId==R.id.post_public){
+
+                         cv2.setVisibility(View.VISIBLE);
+                         rg_mode_opt.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                             @Override
+                             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                                 if(checkedId==R.id.post_no){
+
+                                     UserInfo_show="no";
+                                     Mode="public";
+                                 }
+                                 else{
+                                     UserInfo_show="yes";
+                                     Mode="public";
+                                 }
+                             }
+                         });
+
+
+
+                }else{
+
+                    cv2.setVisibility(View.GONE);
+                    Mode="private";
+                    UserInfo_show="yes";
+                }
+            }
+        });
+
+        rg_cat.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId==R.id.post_official) {
+                    cv4.setVisibility(View.VISIBLE);
+                    cv5.setVisibility(View.GONE);
+                    cv6.setVisibility(View.GONE);
+
+                    rg_cat_off.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            if (checkedId == R.id.post_official_academic) {
+                                category = "officialGrievance";
+                                Sub_Category = "academic";
+                            } else if (checkedId == R.id.post_official_admission) {
+                                category = "officialGrievance";
+                                Sub_Category = "admission";
+
+                            } else if (checkedId == R.id.post_official_finance) {
+                                category = "officialGrievance";
+                                Sub_Category = "finance";
+                            }
+                        }
+
+                        ;
+
+                    });
+                }
+                else if(checkedId==R.id.post_personal){
+                    cv4.setVisibility(View.GONE);
+                    cv5.setVisibility(View.VISIBLE);
+                    cv6.setVisibility(View.GONE);
+
+                    rg_cat_per.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            if (checkedId == R.id.post_personal_health) {
+                                category = "personalIssue";
+                                Sub_Category = "health";
+                            } else if (checkedId == R.id.post_personal_housing) {
+                                category = "personalIssue";
+                                Sub_Category = "housing";
+
+                            } else if (checkedId == R.id.post_personal_rightviolation) {
+                                category = "personalIssue";
+                                Sub_Category = "rightViolation";
+                            }
+                        }
+
+                        ;
+
+                    });
+
+
+                }
+                else if(checkedId==R.id.post_other){
+                    cv4.setVisibility(View.GONE);
+                    cv5.setVisibility(View.GONE);
+                    cv6.setVisibility(View.VISIBLE);
+
+
+                    rg_cat_oth.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            if (checkedId == R.id.post_other_announcement) {
+                                category = "other";
+                                Sub_Category = "announcement";
+                            } else if (checkedId == R.id.post_other_comp) {
+                                category = "other";
+                                Sub_Category = "competetion";
+
+                            } else if (checkedId == R.id.post_other_intern) {
+                                category = "other";
+                                Sub_Category = "intern";
+                            } else if (checkedId == R.id.post_other_placements) {
+                                category = "other";
+                                Sub_Category = "placements";
+                            }
+                        }
+
+                        ;
+
+                    });
+
+
+
+                }
+
+            }
+        });
+
+
+
 
         mAuth = FirebaseAuth.getInstance();
         current_user_id = mAuth.getCurrentUser().getUid();
@@ -64,7 +210,7 @@ public class PostActivity extends AppCompatActivity {
 
 
         PostDescription=(EditText)findViewById(R.id.post_description);
-        UpdatePostButton=(Button)findViewById(R.id.update_post_button);
+        UpdatePostButton=findViewById(R.id.update_post_button);
         loadingBar = new ProgressDialog(this);
 
        // mToolbar=(Toolbar)findViewById(R.id.update_post_page_toolbar);
@@ -86,6 +232,12 @@ public class PostActivity extends AppCompatActivity {
     {
         //edit text is not empty
         description=PostDescription.getText().toString();
+
+
+
+
+
+
         if(TextUtils.isEmpty(description))
         {
             Toast.makeText(this, "Post cannot be left empty..", Toast.LENGTH_SHORT).show();
@@ -121,17 +273,23 @@ public class PostActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
-                    String userFullName = dataSnapshot.child("fullname").getValue().toString();
-                    String userProfileImage = dataSnapshot.child("profileimage").getValue().toString();
+
+                        String userFullName = dataSnapshot.child("username").getValue().toString();
+                        String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+
 
                     HashMap postsMap = new HashMap();
                     postsMap.put("uid", current_user_id);
                     postsMap.put("date", saveCurrentDate);
                     postsMap.put("time", saveCurrentTime);
                     postsMap.put("description", description);
+                    postsMap.put("mode", Mode);
+                    postsMap.put("category", category);
+                    postsMap.put("sub-category", Sub_Category);
+                    postsMap.put("ProfileImage", userProfileImage);
+                    postsMap.put("username", userFullName);
+                    postsMap.put("showInformation",UserInfo_show);
 
-                    postsMap.put("profileimage", userProfileImage);
-                    postsMap.put("fullname", userFullName);
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
                                 @Override
@@ -191,14 +349,17 @@ public class PostActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             startActivity(new Intent(PostActivity.this,MainActivity.class));
+                            finish();
 
                             break;
                         case R.id.nav_post:
                             startActivity(new Intent(PostActivity.this,PostActivity.class));
+                            finish();
 
                             break;
                         case R.id.nav_profile:
                             startActivity(new Intent(PostActivity.this,ProfileActivity.class));
+                            finish();
 
                             break;
                     }
