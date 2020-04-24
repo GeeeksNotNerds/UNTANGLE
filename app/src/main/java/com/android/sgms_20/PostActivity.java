@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +58,9 @@ public class PostActivity extends AppCompatActivity {
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+
+        BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListner);
 
 
         PostDescription=(EditText)findViewById(R.id.post_description);
@@ -173,4 +177,33 @@ public class PostActivity extends AppCompatActivity {
     {
         startActivity(new Intent(PostActivity.this,MainActivity.class));
     }
+
+
+
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener
+            navListner=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()){
+                        case R.id.nav_home:
+                            startActivity(new Intent(PostActivity.this,MainActivity.class));
+
+                            break;
+                        case R.id.nav_post:
+                            startActivity(new Intent(PostActivity.this,PostActivity.class));
+
+                            break;
+                        case R.id.nav_profile:
+                            startActivity(new Intent(PostActivity.this,ProfileActivity.class));
+
+                            break;
+                    }
+
+                    return true;
+                }
+            };
 }

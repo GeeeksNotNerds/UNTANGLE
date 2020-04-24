@@ -2,6 +2,7 @@ package com.android.sgms_20;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,12 @@ public class CommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width=dm.widthPixels;
+        int height=dm.heightPixels;
+        getWindow().setLayout((int)(width*.80),(int) (height*.80));
+
         mAuth= FirebaseAuth.getInstance();
         current_user_id=mAuth.getCurrentUser().getUid();
 
@@ -71,7 +78,7 @@ public class CommentsActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists())
                         {
-                            String userName=dataSnapshot.child("username").getValue().toString();
+                            String userName=dataSnapshot.child("email").getValue().toString();
                             ValidateComment(userName);
                             CommentInputText.setText("");
                         }
@@ -185,7 +192,7 @@ public class CommentsActivity extends AppCompatActivity {
             commentsMap.put("comment",commentText);
             commentsMap.put("date",saveCurrentDate);
             commentsMap.put("time",saveCurrentTime);
-            commentsMap.put("username",userName);
+            commentsMap.put("email",userName);
             PostsRef.child(RandomKey).updateChildren(commentsMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {

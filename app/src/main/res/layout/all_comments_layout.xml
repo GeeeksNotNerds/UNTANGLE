@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:elevation="8dp"
+    android:layout_height="wrap_content" >
+<RelativeLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -51,6 +56,7 @@
                 android:id="@+id/comment_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="Comment text will be displayed here"
 
                 android:textStyle="bold"
@@ -67,4 +73,7 @@
         </LinearLayout>
     </LinearLayout>
 
+
+
 </RelativeLayout>
+</androidx.cardview.widget.CardView>

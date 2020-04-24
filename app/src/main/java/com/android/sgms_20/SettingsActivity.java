@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +38,8 @@ import java.util.HashMap;
 public class SettingsActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private ProgressDialog loadingBar;
-    private EditText userName,userFullName,userBranch,userAdmission;
+    ProgressBar progressBar;
+    private EditText userName,userDept,userEmail;
     Button UpdateAccountSettingsButton;
     private ImageView userProfImage;
     private DatabaseReference SettingsuserRef;
@@ -48,43 +52,53 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+
         loadingBar=new ProgressDialog(this);
         mAuth= FirebaseAuth.getInstance();
+        progressBar=findViewById(R.id.progress_bar);
 
         currentUserId=mAuth.getCurrentUser().getUid();
         SettingsuserRef= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
         UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
-        mToolbar=(Toolbar)findViewById(R.id.settings_toolbsr);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Account Settings");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        userName=(EditText)findViewById(R.id.settings_username);
-        userFullName=(EditText)findViewById(R.id.settings_fullname);
-        userBranch=(EditText)findViewById(R.id.settings_branch);
-        userAdmission=(EditText)findViewById(R.id.settings_AdmissionNo);
-        userProfImage=(ImageView)findViewById(R.id.settings_profile_image);
-        UpdateAccountSettingsButton=(Button)findViewById(R.id.update_account_settings_button);
+
+
+
+
+        userName=(EditText)findViewById(R.id.settings_name);
+        userEmail=findViewById(R.id.settings_email);
+
+        userDept=(EditText)findViewById(R.id.settings_dept);
+
+        userProfImage=(ImageView)findViewById(R.id.settings_pro_pic);
+        UpdateAccountSettingsButton=(Button)findViewById(R.id.update_button);
 
         SettingsuserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists())
                     {
-                        String myProfileImage=dataSnapshot.child("profileimage").getValue().toString();
+                        String myProfileImage=dataSnapshot.child("ProfileImage").getValue().toString();
                         String myUserName=dataSnapshot.child("username").getValue().toString();
-                        String myProfileName=dataSnapshot.child("fullname").getValue().toString();
-                        String myBranch=dataSnapshot.child("branch").getValue().toString();
-                        String myAdmissionNo=dataSnapshot.child("admissionNo").getValue().toString();
+
+                        String myDept=dataSnapshot.child("department").getValue().toString();
+                        String myEmail=dataSnapshot.child("email").getValue().toString();
+
+                        Picasso.with(SettingsActivity.this)
+                                .load(myProfileImage)
+                                .placeholder(R.drawable.ic_account_circle_24px)
+                                .into(userProfImage);
 
 
-                        Picasso.get().load(myProfileImage).placeholder(R.drawable.profile).into(userProfImage);
+
+
+
                         userName.setText(myUserName);
-                        userFullName.setText(myProfileName);
-                        userBranch.setText(myBranch);
-                        userAdmission.setText(myAdmissionNo);
+
+                        userDept.setText(myDept);
+                        userEmail.setText(myEmail);
                     }
             }
 
@@ -145,6 +159,42 @@ public class SettingsActivity extends AppCompatActivity {
 
                 StorageReference filePath = UserProfileImageRef.child(currentUserId+ ".jpg");
 
+
+                filePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                final String downloadUrl = uri.toString();
+                                SettingsuserRef.child("ProfileImage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(SettingsActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+                                            progressBar.setVisibility(View.GONE);
+
+                                        } else {
+                                            String message = task.getException().getMessage();
+                                            Toast.makeText(SettingsActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
+                                            progressBar.setVisibility(View.GONE);
+                                        }
+
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
+                });
+
+
+
+                /*
+
+
+
                 filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task)
@@ -180,6 +230,9 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
+                */
             }
             else
             {
@@ -194,25 +247,22 @@ public class SettingsActivity extends AppCompatActivity {
     private void ValidateAccountInfo()
     {
         String username=userName.getText().toString();
-        String userfullname=userFullName.getText().toString();
-        String userbranch=userBranch.getText().toString();
-        String useradmission=userAdmission.getText().toString();
+
+        String userdept= userDept.getText().toString();
+        String useremail=userEmail.getText().toString();
 
         if(TextUtils.isEmpty(username))
         {
             Toast.makeText(this, "Please write your username", Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(userfullname))
+
+        else if(TextUtils.isEmpty(userdept))
         {
-            Toast.makeText(this, "Please write your full name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please write your department", Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(userbranch))
+        else if(TextUtils.isEmpty(useremail))
         {
-            Toast.makeText(this, "Please write your branch", Toast.LENGTH_SHORT).show();
-        }
-        else if(TextUtils.isEmpty(useradmission))
-        {
-            Toast.makeText(this, "Please write your admission no.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please write your Email", Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -220,18 +270,18 @@ public class SettingsActivity extends AppCompatActivity {
             loadingBar.setMessage("Please wait, while we updating your profile image...");
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
-            UpdateAccountInfo(username,userfullname,userbranch,useradmission);
+            UpdateAccountInfo(username,userdept,useremail);
         }
 
     }
 
-    private void UpdateAccountInfo(String username, String userfullname, String userbranch, String useradmission) {
+    private void UpdateAccountInfo(String username, String userdept, String useremail) {
 
         HashMap useMap= new HashMap();
         useMap.put("username",username);
-        useMap.put("fullname",userfullname);
-        useMap.put("branch",userbranch);
-        useMap.put("admissionNo",useradmission);
+
+        useMap.put("department",userdept);
+        useMap.put("email",useremail);
         SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {

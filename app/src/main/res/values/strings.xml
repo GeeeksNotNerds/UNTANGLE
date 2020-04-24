@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">SGMS_2.0</string>
+    <string name="app_name">FitFilter</string>
+    <string name="str_all_selected">All categories</string>
+
+    <string-array name="job_titles">
+        <item>All categories</item>
+        <item>Official</item>
+        <item>Personal</item>
+        <item>Placements</item>
+        <item>Admission</item>
+        <item>Academic</item>
+        <item>Finance</item>
+        <item>Housing</item>
+        <item>Rights Violation</item>
+        <item>Health</item>
+        <item>Public</item>
+        <item>Internships</item>
+        <item>Competitions</item>
+        <item>Courses</item>
+        <item>Private</item>
+        <item>Admin</item>
+        <item>General</item>
+        <item>MyPosts</item>
+
+    </string-array>
 </resources>

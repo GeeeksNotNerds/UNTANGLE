@@ -110,7 +110,7 @@ public class SetupActivity extends AppCompatActivity
                         String image = dataSnapshot.child("ProfileImage").getValue().toString();
                         Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + image);
 
-                        Picasso.get()
+                        Picasso.with(SetupActivity.this)
                                 .load(image)
                                 .placeholder(R.drawable.ic_account_circle_24px)
                                 .into(pro_pic);

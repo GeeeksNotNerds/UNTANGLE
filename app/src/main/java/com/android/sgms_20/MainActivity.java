@@ -2,9 +2,12 @@ package com.android.sgms_20;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,12 +19,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.Auth;
@@ -37,18 +43,34 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.yalantis.filter.adapter.FilterAdapter;
+import com.yalantis.filter.animator.FiltersListItemAnimator;
+import com.yalantis.filter.listener.FilterListener;
+import com.yalantis.filter.widget.Filter;
+import com.yalantis.filter.widget.FilterItem;
 
-public class MainActivity extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements FilterListener<Tag> {
     private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleApiClient;
     String currentUserID;
+    private int[] mColors;
+    private int colour1,colour2,colour3,colour4;
     private DatabaseReference UsersRef;
     private Toolbar mToolbar;
     private TextDrawable mDrawableBuilder;
+    private String[] mTitles;
+    private List<Posts> mAllQuestions;
+    private Filter<Tag> mFilter;
+    private PostsAdapter mAdapter;
 
     private ImageView pro;
 
-    private RecyclerView postList;
+    private RecyclerView postList,mRecyclerView;
 
     private DatabaseReference MyPostRef,PostsRef,LikesRef;
     String letter="A";
@@ -106,24 +128,229 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        postList=(RecyclerView)findViewById(R.id.all_users_post_list);
+        /*
+        postList=(RecyclerView)findViewById(R.id.list);
         postList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         postList.setLayoutManager(linearLayoutManager);
+        */
+        ImagePipelineConfig config = ImagePipelineConfig
+                .newBuilder(this)
+                .setDownsampleEnabled(true)
+                .build();
+        Fresco.initialize(this, config);
+
+        mColors = getResources().getIntArray(R.array.colors);
+        mTitles = getResources().getStringArray(R.array.job_titles);
+
+        mFilter = (Filter<Tag>) findViewById(R.id.filter);
+        mFilter.setAdapter(new Adapter(getTags()));
+        mFilter.setListener(this);
+
+        //the text to show when there's no selected items
+        mFilter.setNoSelectedItemText(getString(R.string.str_all_selected));
+        mFilter.build();
+
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
+        mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
+
+
 
 
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListner);
 
-        DisplayAllUsersPost();
+
+
+        //DisplayAllUsersPost();
 
 
 
 
     }
+
+    private void calculateDiff(final List<Posts> oldList, final List<Posts> newList) {
+        DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return oldList.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+            }
+        }).dispatchUpdatesTo(mAdapter);
+    }
+
+    private List<Tag> getTags() {
+        List<Tag> tags = new ArrayList<>();
+
+        for (int i = 0; i < mTitles.length; ++i) {
+            tags.add(new Tag(mTitles[i], mColors[i]));
+        }
+
+        return tags;
+    }
+
+    @Override
+    public void onNothingSelected() {
+        if (mRecyclerView != null) {
+            mAdapter.setPosts(mAllQuestions);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private List<Posts> getQuestions() {
+        return new ArrayList<Posts>() {
+            {
+                PostsRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
+                        {
+                            final String owner;
+                            String uid=dataSnapshot1.child("uid").getValue().toString();
+                            if (uid.equals(currentUserID))owner="MyPosts";
+                            else if(uid.startsWith("admin"))owner="Admin";
+                            else{owner="General";}
+
+                            final String mode=dataSnapshot1.child("mode").getValue().toString();
+                            final String sub=dataSnapshot1.child("subCategory").getValue().toString();
+                            final String categ=dataSnapshot1.child("category").getValue().toString() ;
+                            String name=dataSnapshot1.child("name").getValue().toString();
+                            String user=dataSnapshot1.child("email").getValue().toString();
+                            String date=dataSnapshot1.child("date").getValue().toString();
+                            String post=dataSnapshot1.child("description").getValue().toString();
+                            String profilePic=dataSnapshot1.child("profileImage").getValue().toString();
+
+                            if(categ.equals("Official"))colour1=mColors[1];
+                            if(categ.equals("Personal"))colour1=mColors[2];
+                            if(categ.equals("Placements"))colour1=mColors[3];
+                            if(sub.equals("Admission"))colour2=mColors[4];
+                            if(sub.equals("Academic"))colour2=mColors[5];
+                            if(sub.equals("Finance"))colour2=mColors[6];
+                            if(sub.equals("Housing"))colour2=mColors[7];
+                            if(sub.equals("Rights Violation"))colour2=mColors[8];
+                            if(sub.equals("Health"))colour2=mColors[9];
+                            if(mode.equals("Public"))colour3=mColors[10];
+                            if(sub.equals("Internships"))colour2=mColors[11];
+                            if(sub.equals("Competitions"))colour2=mColors[12];
+                            if(sub.equals("Courses"))colour2=mColors[13];
+                            if(mode.equals("Private"))colour3=mColors[14];
+                            if(owner.equals("Admin"))colour4=mColors[15];
+                            if(owner.equals("General"))colour4=mColors[17];
+                            if(owner.equals("MyPosts"))colour4=mColors[18];
+
+
+
+                            add(new Posts(name,"@"+user,post,date,date,uid,profilePic,mode,categ,sub, new ArrayList<Tag>() {{
+                                add(new Tag(categ, colour1));
+                                add(new Tag(sub, colour2));
+                                add(new Tag(mode,colour3));
+                                add(new Tag(owner,colour4));
+
+                            }}));
+
+                        }
+                        mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);
+                        mRecyclerView.setAdapter(mAdapter);
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+
+            }
+        };
+    }
+
+    private List<Posts> findByTags(List<Tag> tags) {
+        List<Posts> questions = new ArrayList<>();
+
+        for (Posts question : mAllQuestions) {
+            for (Tag tag : tags) {
+                if (question.hasTag(tag.getText()) && !questions.contains(question)) {
+                    questions.add(question);
+                }
+            }
+        }
+
+        return questions;
+    }
+
+    @Override
+    public void onFiltersSelected(@NotNull ArrayList<Tag> filters) {
+        List<Posts> newQuestions = findByTags(filters);
+        List<Posts> oldQuestions = mAdapter.getPosts();
+        mAdapter.setPosts(newQuestions);
+        calculateDiff(oldQuestions, newQuestions);
+        mAdapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(mAdapter);
+
+    }
+
+    @Override
+    public void onFilterSelected(Tag item) {
+        if (item.getText().equals(mTitles[0])) {
+            mFilter.deselectAll();
+            mFilter.collapse();
+        }
+    }
+
+    @Override
+    public void onFilterDeselected(Tag item) {
+
+    }
+
+    class Adapter extends FilterAdapter<Tag> {
+
+        Adapter(@NotNull List<? extends Tag> items) {
+            super(items);
+        }
+
+        @NotNull
+        @Override
+        public FilterItem createView(int position, Tag item) {
+            FilterItem filterItem = new FilterItem(MainActivity.this);
+
+            filterItem.setStrokeColor(R.color.colorPrimary);
+            filterItem.setTextColor(R.color.colorPrimary);
+            //filterItem.setCornerRadius(14);
+            filterItem.setCheckedTextColor(ContextCompat.getColor(MainActivity.this, android.R.color.white));
+            filterItem.setColor(ContextCompat.getColor(MainActivity.this, android.R.color.white));
+            filterItem.setCheckedColor(mColors[position]);
+            filterItem.setText(item.getText());
+            filterItem.deselect();
+
+            return filterItem;
+        }
+    }
+
+
 
 
             private void DisplayAllUsersPost()
@@ -142,18 +369,14 @@ public class MainActivity extends AppCompatActivity {
             {
                 final String PostKey=getRef(i).getKey();
 
-                postsViewHolder.setFullname(posts.getFullname());
-
-
-
-
-
-                postsViewHolder.setTime(posts.getTime());
-                postsViewHolder.setDate(posts.getDate());
-                postsViewHolder.setDescription(posts.getDescription());
-                postsViewHolder.setProfileimage(getApplicationContext(),posts.getProfileimage());
+                //postsViewHolder.setFullname(posts.getName());
+                //postsViewHolder.setTime(posts.getTime());
+                //postsViewHolder.setDate(posts.getDate());
+                //postsViewHolder.setDescription(posts.getDescription());
+                //postsViewHolder.setProfileimage(getApplicationContext(),posts.getProfileImage());
                 postsViewHolder.setLikesButtonStatus(PostKey);
                 postsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v)
                     {
@@ -216,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 return new PostsViewHolder(LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.all_posts_layout, parent, false));
+                        .inflate(R.layout.item_list, parent, false));
 
             }
 
@@ -229,10 +452,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     public static class PostsViewHolder extends RecyclerView.ViewHolder
     {
         View mView;
-        ImageButton LikePostButton,CommentPostButton;
+        AppCompatImageView LikePostButton,CommentPostButton;
         TextView DisplayNoOfLikes;
         int CountLikes;
         String currentUserId;
@@ -246,9 +470,9 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
             mView=itemView;
 
-            LikePostButton=(ImageButton)mView.findViewById(R.id.like_button);
-            CommentPostButton=(ImageButton)mView.findViewById(R.id.comment_button);
-            DisplayNoOfLikes=(TextView)mView.findViewById(R.id.display_no_of_likes);
+            LikePostButton=(AppCompatImageView)mView.findViewById(R.id.view_likes);
+            CommentPostButton=(AppCompatImageView) mView.findViewById(R.id.view_chat);
+            DisplayNoOfLikes=(TextView)mView.findViewById(R.id.text_likes_count);
 
             LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
             currentUserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -262,13 +486,13 @@ public class MainActivity extends AppCompatActivity {
                     if(dataSnapshot.child(PostKey).hasChild(currentUserId))
                     {
                         CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        LikePostButton.setImageResource(R.drawable.profile);
-                        DisplayNoOfLikes.setText(Integer.toString(CountLikes)+(" Likes"));
+                        LikePostButton.setImageResource(R.drawable.ic_heart);
+                        DisplayNoOfLikes.setText(Integer.toString(CountLikes));
                     }
                     else
                     {
                         CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        LikePostButton.setImageResource(R.drawable.profile);
+                        LikePostButton.setImageResource(R.drawable.ic_heart);
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
                     }
                 }
@@ -279,7 +503,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        public void setFullname(String fullname)
+        /*public void setFullname(String fullname)
         {
             TextView username=(TextView)mView.findViewById(R.id.post_user_name);
             username.setText(fullname);
@@ -287,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
         public void setProfileimage(Context ctx, String profileimage)
         {
             ImageView image=(ImageView)mView.findViewById(R.id.post_profile_image);
-            Picasso.get().load(profileimage).into(image);
+            Picasso.with(ctx).load(profileimage).into(image);
         }
         public void setTime(String time)
         {
@@ -303,7 +527,7 @@ public class MainActivity extends AppCompatActivity {
         {
             TextView PostDescription=(TextView)mView.findViewById(R.id.post_description);
             PostDescription.setText(description);
-        }
+        }*/
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListner=
