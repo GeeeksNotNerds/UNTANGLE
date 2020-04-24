@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>Official-Grievances</item>
+        <item>Personal Issues</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="categorie_0ff">
+        <item>Academic</item>
+        <item>Admission</item>
+        <item>Financial</item>
+    </string-array>
+    <string-array name="categorie_per">
+        <item>Health</item>
+        <item>Housing</item>
+        <item>Right-Violation</item>
+    </string-array>
+    <string-array name="categorie_other">
+        <item>Placements</item>
+        <item>Internships</item>
+        <item>Competetions</item>
+        <item>Announcements</item>
+    </string-array>
+
+</resources>
