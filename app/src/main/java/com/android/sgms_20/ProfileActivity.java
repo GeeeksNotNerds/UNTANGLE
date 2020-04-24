@@ -111,14 +111,17 @@ public class ProfileActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             startActivity(new Intent(ProfileActivity.this,MainActivity.class));
+                            finish();
 
                             break;
                         case R.id.nav_post:
                             startActivity(new Intent(ProfileActivity.this,PostActivity.class));
+                            finish();
 
                             break;
                         case R.id.nav_profile:
                             startActivity(new Intent(ProfileActivity.this,ProfileActivity.class));
+                            finish();
 
                             break;
                     }

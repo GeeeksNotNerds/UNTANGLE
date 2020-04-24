@@ -46,7 +46,7 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     RadioGroup rg_mode,rg_mode_opt,rg_cat,rg_cat_off,rg_cat_per,rg_cat_oth;
     CardView cv2,cv4,cv5,cv6;
-    Boolean UserName;
+    String UserInfo_show;
 
     String Mode,category,Sub_Category;
 
@@ -81,13 +81,13 @@ public class PostActivity extends AppCompatActivity {
                          rg_mode_opt.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                              @Override
                              public void onCheckedChanged(RadioGroup group, int checkedId) {
-                                 if(checkedId==R.id.no){
+                                 if(checkedId==R.id.post_no){
 
-                                     UserName=false;
+                                     UserInfo_show="no";
                                      Mode="public";
                                  }
                                  else{
-                                     UserName=true;
+                                     UserInfo_show="yes";
                                      Mode="public";
                                  }
                              }
@@ -99,7 +99,7 @@ public class PostActivity extends AppCompatActivity {
 
                     cv2.setVisibility(View.GONE);
                     Mode="private";
-                    UserName=true;
+                    UserInfo_show="yes";
                 }
             }
         });
@@ -288,6 +288,7 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("sub-category", Sub_Category);
                     postsMap.put("ProfileImage", userProfileImage);
                     postsMap.put("username", userFullName);
+                    postsMap.put("showInformation",UserInfo_show);
 
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
@@ -348,14 +349,17 @@ public class PostActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             startActivity(new Intent(PostActivity.this,MainActivity.class));
+                            finish();
 
                             break;
                         case R.id.nav_post:
                             startActivity(new Intent(PostActivity.this,PostActivity.class));
+                            finish();
 
                             break;
                         case R.id.nav_profile:
                             startActivity(new Intent(PostActivity.this,ProfileActivity.class));
+                            finish();
 
                             break;
                     }

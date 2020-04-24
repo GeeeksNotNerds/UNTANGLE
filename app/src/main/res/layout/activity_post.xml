@@ -189,6 +189,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
                         android:padding="8dp"
                         android:text="OFFICIAL GRIEVANCE"
                         android:id="@+id/post_official"
@@ -199,6 +200,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:textSize="15sp"
+                        android:layout_marginLeft="13dp"
                         android:text="PERSONAL ISSUES"
                         android:id="@+id/post_personal"
                         android:checked="false"/>
@@ -206,6 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
+                        android:layout_marginLeft="-25dp"
                         android:textSize="15sp"
                         android:text="OTHER"
                         android:id="@+id/post_other"
@@ -254,6 +257,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="0dp"
+
                 android:gravity="center"
                 android:id="@+id/rg4"
                 android:layout_below="@+id/tv4">
@@ -270,6 +274,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:textSize="15sp"
+                    android:layout_marginRight="3dp"
                     android:text="ACADEMIC"
                     android:id="@+id/post_official_academic"
                     android:checked="false"/>
@@ -278,6 +283,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:textSize="15sp"
+                    android:layout_marginRight="6dp"
                     android:text="FINANCE"
                     android:id="@+id/post_official_finance"
                     android:checked="false"/>
@@ -335,8 +341,9 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="HOUSING"
+                    android:layout_marginRight="28dp"
                     android:id="@+id/post_personal_housing"
-                    android:textSize="10sp"
+                    android:textSize="15sp"
                     android:checked="false"/>
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -351,6 +358,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:textSize="15sp"
+                    android:layout_marginRight="28dp"
                     android:text="HEALTH"
                     android:id="@+id/post_personal_health"
                     android:checked="false"/>
@@ -370,7 +378,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/cv3"
         app:cardBackgroundColor="#fcfcfc"
-        android:visibility="gone"
+
         app:cardCornerRadius="15dp"
         app:cardElevation="15dp"
         android:id="@+id/cv6"
@@ -414,6 +422,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
+                    android:layout_marginRight="4dp"
                     android:textSize="15sp"
                     android:text="INTERNSHIPS"
                     android:id="@+id/post_other_intern"
@@ -424,6 +433,7 @@
                     android:padding="8dp"
                     android:textSize="15sp"
                     android:text="COMPETETIONS"
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/post_other_comp"
                     android:checked="false"/>
                 <RadioButton
@@ -431,6 +441,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:textSize="15sp"
+                    android:layout_marginLeft="12dp"
                     android:text="ANNOUNCEMENTS"
                     android:id="@+id/post_other_announcement"
                     android:checked="false"/>
