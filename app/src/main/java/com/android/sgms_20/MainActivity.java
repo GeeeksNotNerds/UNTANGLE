@@ -229,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             String uid=dataSnapshot1.child("uid").getValue().toString();
                             if (uid.equals(currentUserID))owner="MyPosts";
                             else if(uid.startsWith("admin"))owner="Admin";
+                            else if(uid.startsWith("club"))owner="Club";
                             else{owner="General";}
 
                             final String mode=dataSnapshot1.child("mode").getValue().toString();
@@ -257,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             if(owner.equals("Admin"))colour4=mColors[15];
                             if(owner.equals("General"))colour4=mColors[17];
                             if(owner.equals("MyPosts"))colour4=mColors[18];
+                            if(owner.equals("Club"))colour4=mColors[19];
 
 
 

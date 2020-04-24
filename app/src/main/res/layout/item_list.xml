@@ -13,7 +13,7 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/avatar"
-        android:layout_width="60dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_below="@+id/dividerTop"
         android:layout_margin="16dp"

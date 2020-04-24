@@ -21,6 +21,7 @@
         <item>Admin</item>
         <item>General</item>
         <item>MyPosts</item>
+        <item>Club</item>
 
     </string-array>
 </resources>

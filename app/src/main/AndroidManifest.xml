@@ -23,8 +23,10 @@
         <activity android:name=".ProfileActivity"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".PostActivity" />
-        <activity android:name=".ClickPostActivity" />
-        <activity android:name=".CommentsActivity" />
+        <activity android:name=".ClickPostActivity"
+            android:theme="@style/AppTheme.customTheme"/>
+        <activity android:name=".CommentsActivity"
+            android:theme="@style/AppTheme.customTheme"/>
         <activity
             android:name=".SettingsActivity"
             android:theme="@style/AppTheme.customTheme"
