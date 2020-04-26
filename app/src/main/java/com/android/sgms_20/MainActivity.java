@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private List<Posts> mAllQuestions;
     private Filter<Tag> mFilter;
     private PostsAdapter mAdapter;
+    AppCompatImageView LikePostButton;
+    TextView DisplayNoOfLikes;
+    int CountLikes;
 
     private ImageView pro;
 
@@ -221,70 +224,116 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         return new ArrayList<Posts>() {
             {
                 PostsRef.addValueEventListener(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
-                        {
-                            final String PostKey=dataSnapshot1.getKey();
-                            mAdapter=new PostsAdapter(this,PostKey);
+                        mAllQuestions.clear();
+                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
+                            String postKey = dataSnapshot1.child("PostKey").getValue().toString();
+
                             //final String PostKey=dataSnapshot1.getKey();
                             /*Intent intent=new Intent(MainActivity.this,PostsAdapter.class);
                             intent.putExtra("PostKey",PostKey);
                             startActivity(intent);*/
 
                             final String owner;
-                            String uid=dataSnapshot1.child("uid").getValue().toString();
-                            if (uid.equals(currentUserID))owner="MyPosts";
-                            else if(uid.startsWith("admin"))owner="Admin";
-                            else if(uid.startsWith("club"))owner="Club";
-                            else{owner="General";}
-                            String show=dataSnapshot1.child("showInformation").getValue().toString();
+                            String uid = dataSnapshot1.child("uid").getValue().toString();
+                            if (uid.equals(currentUserID)) owner = "MyPosts";
+                            else if (uid.startsWith("admin")) owner = "Admin";
+                            else if (uid.startsWith("club")) owner = "Club";
+                            else {
+                                owner = "General";
+                            }
+                            String show = dataSnapshot1.child("showInformation").getValue().toString();
                             String info;
-                            if(show.equals("yes"))info="Anonymous";
+                            //if(show.equals("no"))info="Anonymous";
 
 
+                            final String mode = dataSnapshot1.child("mode").getValue().toString();
+                            final String sub = dataSnapshot1.child("subCategory").getValue().toString();
+                            final String categ = dataSnapshot1.child("category").getValue().toString();
+                            String name = dataSnapshot1.child("username").getValue().toString();
+                            String user = dataSnapshot1.child("email").getValue().toString();
+                            String date = dataSnapshot1.child("date").getValue().toString();
+                            String post = dataSnapshot1.child("description").getValue().toString();
+                            String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
+                            if (show.equals("no")) info = "Anonymous";
+                            else {
+                                info = name;
+                            }
 
-                            final String mode=dataSnapshot1.child("mode").getValue().toString();
-                            final String sub=dataSnapshot1.child("subCategory").getValue().toString();
-                            final String categ=dataSnapshot1.child("category").getValue().toString() ;
-                            String name=dataSnapshot1.child("username").getValue().toString();
-                            String user=dataSnapshot1.child("email").getValue().toString();
-                            String date=dataSnapshot1.child("date").getValue().toString();
-                            String post=dataSnapshot1.child("description").getValue().toString();
-                            String profilePic=dataSnapshot1.child("profileImage").getValue().toString();
-                            if(show.equals("yes"))info="Anonymous";
-                            else{info=name;}
+                            if (categ.equals("Official")) colour1 = mColors[1];
+                            if (categ.equals("Personal")) colour1 = mColors[2];
+                            if (categ.equals("Miscellaneous")) colour1 = mColors[3];
+                            if (sub.equals("Admission")) colour2 = mColors[4];
+                            if (sub.equals("Academic")) colour2 = mColors[5];
+                            if (sub.equals("Finance")) colour2 = mColors[6];
+                            if (sub.equals("Housing")) colour2 = mColors[7];
+                            if (sub.equals("Rights Violation")) colour2 = mColors[8];
+                            if (sub.equals("Health")) colour2 = mColors[9];
+                            if (sub.equals("Placements")) colour2 = mColors[20];
+                            if (mode.equals("Public")) colour3 = mColors[10];
+                            if (sub.equals("Internships")) colour2 = mColors[11];
+                            if (sub.equals("Competitions")) colour2 = mColors[12];
+                            if (sub.equals("Courses")) colour2 = mColors[13];
+                            if (mode.equals("Private")) colour3 = mColors[14];
+                            if (owner.equals("Admin")) colour4 = mColors[15];
+                            if (owner.equals("General")) colour4 = mColors[17];
+                            if (owner.equals("MyPosts")) colour4 = mColors[18];
+                            if (owner.equals("Club")) colour4 = mColors[19];
 
-                            if(categ.equals("Official"))colour1=mColors[1];
-                            if(categ.equals("Personal"))colour1=mColors[2];
-                            if(categ.equals("Placements"))colour1=mColors[3];
-                            if(sub.equals("Admission"))colour2=mColors[4];
-                            if(sub.equals("Academic"))colour2=mColors[5];
-                            if(sub.equals("Finance"))colour2=mColors[6];
-                            if(sub.equals("Housing"))colour2=mColors[7];
-                            if(sub.equals("Rights Violation"))colour2=mColors[8];
-                            if(sub.equals("Health"))colour2=mColors[9];
-                            if(mode.equals("Public"))colour3=mColors[10];
-                            if(sub.equals("Internships"))colour2=mColors[11];
-                            if(sub.equals("Competitions"))colour2=mColors[12];
-                            if(sub.equals("Courses"))colour2=mColors[13];
-                            if(mode.equals("Private"))colour3=mColors[14];
-                            if(owner.equals("Admin"))colour4=mColors[15];
-                            if(owner.equals("General"))colour4=mColors[17];
-                            if(owner.equals("MyPosts"))colour4=mColors[18];
-                            if(owner.equals("Club"))colour4=mColors[19];
+                            //LikePostButton=(AppCompatImageView)findViewById(R.id.view_likes);
+                            //DisplayNoOfLikes=(TextView)findViewById(R.id.text_likes_count);
+                            /*LikesRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.child(PostKey).hasChild(currentUserID))
+                                    {
+                                        CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                                        LikePostButton.setImageResource(R.drawable.ic_like);
+                                        DisplayNoOfLikes.setText(Integer.toString(CountLikes));
+                                    }
+                                    else
+                                    {
+                                        CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                                        LikePostButton.setImageResource(R.drawable.ic_heart);
+
+                                        DisplayNoOfLikes.setText(Integer.toString(CountLikes));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });*/
 
 
+                            if(mode.equals("Public")){
+                                add(new Posts(postKey, info, "@" + user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                    add(new Tag(categ, colour1));
+                                    add(new Tag(sub, colour2));
+                                    add(new Tag(mode, colour3));
+                                    add(new Tag(owner, colour4));
 
-                            add(new Posts(info,"@"+user,post,date,date,uid,profilePic,mode,categ,sub,show, new ArrayList<Tag>() {{
-                                add(new Tag(categ, colour1));
-                                add(new Tag(sub, colour2));
-                                add(new Tag(mode,colour3));
-                                add(new Tag(owner,colour4));
+                                }}));}
+                            else
+                            {
+                                if(owner.equals("Admin")||(uid.equals(currentUserID)))
+                                {
+                                    add(new Posts(postKey, info, "@" + user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                        add(new Tag(categ, colour1));
+                                        add(new Tag(sub, colour2));
+                                        add(new Tag(mode, colour3));
+                                        add(new Tag(owner, colour4));
 
-                            }}));
+                                    }}));
+                                }
+                            }
+
 
                         }
+
                         mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);
                         mRecyclerView.setAdapter(mAdapter);
 
@@ -554,15 +603,15 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             startActivity(new Intent(MainActivity.this,MainActivity.class));
-                            finish();
+
                             break;
                         case R.id.nav_post:
-                            startActivity(new Intent(MainActivity.this,PostActivity.class));
-                            finish();
+                            Intent intent=new Intent(MainActivity.this,PostActivity.class);
+                            startActivity(intent);
                             break;
                         case R.id.nav_profile:
-                            startActivity(new Intent(MainActivity.this,ProfileActivity.class));
-                            finish();
+                            Intent Pintent=new Intent(MainActivity.this,ProfileActivity.class);
+                            startActivity(Pintent);
                             break;
                     }
 

@@ -36,7 +36,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     FirebaseAuth mAuth;
     String currentUserId;
     private  Intent in;
-    String PostKey;
+
     DatabaseReference LikesRef,PostsRef;
 
     public PostsAdapter(Context context, List<Posts> posts) {
@@ -46,16 +46,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         currentUserId=mAuth.getCurrentUser().getUid();
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         PostsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
-    }
-    public PostsAdapter(Context context,Intent intent)
-    {
 
-        this.in=intent;
     }
 
-    public PostsAdapter(ValueEventListener valueEventListener, String postKey) {
-        PostKey=postKey;
-    }
+
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -77,11 +72,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
         Posts question = mPosts.get(position);
+        String PostKey=question.getPostid();
 
 
 
 
-        String PostKey=question.getUid().toString();
+        //String PostKey=question.getUid().toString();
+      //  String PostKey=PostsRef.child("PostKey").toString();
 
         holder.setLikesButtonStatus(PostKey);
         holder.settings.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +86,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             @Override
             public void onClick(View v)
             {
+
+
                 Intent clickPosIntent=new Intent(mContext,ClickPostActivity.class);
                 clickPosIntent.putExtra("PostKey",PostKey);
                 mContext.startActivity(clickPosIntent);
@@ -100,6 +99,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             @Override
             public void onClick(View v)
             {
+
+
                 Intent commentsIntent=new Intent(mContext,CommentsActivity.class);
                 commentsIntent.putExtra("PostKey",PostKey);
                 mContext.startActivity(commentsIntent);
@@ -112,6 +113,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             @Override
             public void onClick(View v)
             {
+
+
                 LikeChecker=true;
                 LikesRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -269,8 +272,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         }
         public void setLikesButtonStatus(final String PostKey)
-
+        //public void setLikesButtonStatus()
         {
+
             LikesRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

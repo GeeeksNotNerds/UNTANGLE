@@ -16,9 +16,11 @@ public class Posts
     private String category;
     private String subCategory;
     private String showInformation;
+    private String postid;
     private List<Tag> tags;
 
-    public Posts(String name, String email, String description, String date, String time, String uid,String profileImage, String mode, String category, String subCategory,String showInformation,List<Tag> tags) {
+    public Posts(String postid,String name, String email, String description, String date, String time, String uid,String profileImage, String mode, String category, String subCategory,String showInformation,List<Tag> tags) {
+        this.postid=postid;
         this.username = name;
         this.profileImage=profileImage;
         this.email = email;
@@ -31,6 +33,22 @@ public class Posts
         this.category = category;
         this.subCategory = subCategory;
         this.showInformation=showInformation;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPostid() {
+        return postid;
+    }
+
+    public void setPostid(String postid) {
+        this.postid = postid;
     }
 
     public String getShowInformation() {

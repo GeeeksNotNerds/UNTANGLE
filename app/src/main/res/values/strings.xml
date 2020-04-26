@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">FitFilter</string>
     <string name="str_all_selected">All categories</string>
+    <string name="my_preference">"com.abc.com.MyPref"</string>
+    <string name="my_preference_key">"com.abc.com.MyPrefKey"</string>
 
     <string-array name="job_titles">
         <item>All categories</item>
         <item>Official</item>
         <item>Personal</item>
-        <item>Placements</item>
+        <item>Miscellaneous</item>
         <item>Admission</item>
         <item>Academic</item>
         <item>Finance</item>
@@ -22,6 +24,28 @@
         <item>General</item>
         <item>MyPosts</item>
         <item>Club</item>
+        <item>Placements</item>
 
+    </string-array>
+    <string-array name="categories">
+        <item>Official</item>
+        <item>Personal</item>
+        <item>Miscellaneous</item>
+    </string-array>
+    <string-array name="sub1">
+        <item>Admission</item>
+        <item>Academic</item>
+        <item>Finance</item>
+    </string-array>
+    <string-array name="sub2">
+        <item>Housing</item>
+        <item>Right Violation</item>
+        <item>Health</item>
+    </string-array>
+    <string-array name="sub3">
+        <item>Placements</item>
+        <item>Courses</item>
+        <item>Competitions</item>
+        <item>Internships</item>
     </string-array>
 </resources>

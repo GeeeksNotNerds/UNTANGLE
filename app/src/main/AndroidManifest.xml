@@ -33,6 +33,15 @@
             android:theme="@style/AppTheme.customTheme"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".SetupActivity" />
+        <activity android:name=".WelcomeActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SplashScreenActivity"></activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -40,11 +49,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".Admin_Login" />
         <activity android:name=".The_First">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
     </application>

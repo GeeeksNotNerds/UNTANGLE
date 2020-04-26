@@ -105,6 +105,14 @@ public class SideMenu extends AppCompatActivity {
                 finish();
             }
         });
+        Support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PreferenceManager(SideMenu.this).clearPreference();
+                startActivity(new Intent(SideMenu.this,WelcomeActivity.class));
+                finish();
+            }
+        });
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +125,9 @@ public class SideMenu extends AppCompatActivity {
     }
 
     private void sendUserToLoginActivity() {
-        startActivity(new Intent(this,LoginActivity.class));
+        Intent intent=new Intent(SideMenu.this,LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 

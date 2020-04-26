@@ -73,6 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this,SideMenu.class));
+                finish();
             }
         });
 
@@ -89,7 +90,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(ProfileActivity.this, SettingsActivity.class));
+                Intent intent=new Intent(ProfileActivity.this,SettingsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
 
 
             }
@@ -146,15 +150,24 @@ public class ProfileActivity extends AppCompatActivity {
 
                     switch (item.getItemId()){
                         case R.id.nav_home:
-                            startActivity(new Intent(ProfileActivity.this,MainActivity.class));
+                            Intent intent=new Intent(ProfileActivity.this,MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
                             return true;
 
                         case R.id.nav_post:
-                            startActivity(new Intent(ProfileActivity.this,PostActivity.class));
+                            Intent Lintent=new Intent(ProfileActivity.this,PostActivity.class);
+                            Lintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Lintent);
+                            finish();
 
                             return true;
                         case R.id.nav_profile:
-                            startActivity(new Intent(ProfileActivity.this,ProfileActivity.class));
+                            Intent Pintent=new Intent(ProfileActivity.this,ProfileActivity.class);
+                            Pintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent);
+                            finish();
 
                             return true;
 

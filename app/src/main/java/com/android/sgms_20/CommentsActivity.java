@@ -49,7 +49,7 @@ public class CommentsActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width=dm.widthPixels;
         int height=dm.heightPixels;
-        getWindow().setLayout((int)(width*.80),(int) (height*.80));
+        getWindow().setLayout((int)(width*.90),(int) (height*.80));
 
         mAuth= FirebaseAuth.getInstance();
         current_user_id=mAuth.getCurrentUser().getUid();
@@ -78,7 +78,7 @@ public class CommentsActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists())
                         {
-                            String userName=dataSnapshot.child("email").getValue().toString();
+                            String userName=dataSnapshot.child("username").getValue().toString();
                             ValidateComment(userName);
                             CommentInputText.setText("");
                         }
@@ -192,7 +192,7 @@ public class CommentsActivity extends AppCompatActivity {
             commentsMap.put("comment",commentText);
             commentsMap.put("date",saveCurrentDate);
             commentsMap.put("time",saveCurrentTime);
-            commentsMap.put("email",userName);
+            commentsMap.put("username",userName);
             PostsRef.child(RandomKey).updateChildren(commentsMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {

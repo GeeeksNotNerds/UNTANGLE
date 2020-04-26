@@ -258,8 +258,8 @@ public class SetupActivity extends AppCompatActivity
 
                         Toast.makeText(SetupActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(SetupActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        Intent intent=new Intent(SetupActivity.this,MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
 

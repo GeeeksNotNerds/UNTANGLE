@@ -120,8 +120,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 RegisterUser();
                 break;
             case R.id.login_text:
+
+                Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 finish();
-                startActivity(new Intent(this, LoginActivity.class));
                 break;
         }
     }
