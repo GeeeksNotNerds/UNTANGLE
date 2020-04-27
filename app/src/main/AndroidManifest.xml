@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".AdminSetupActivity"></activity>
+
         <activity
             android:name=".SideMenu"
             android:theme="@style/AppTheme.customTheme" />

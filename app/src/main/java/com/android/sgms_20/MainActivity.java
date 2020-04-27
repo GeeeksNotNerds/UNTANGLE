@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private GoogleApiClient mGoogleApiClient;
     String currentUserID;
     private int[] mColors;
-    private String[] mAdmin;
+    private String[] mAdmin={"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
     private String[] mClub;
     private int colour1,colour2,colour3,colour4;
     private DatabaseReference UsersRef;

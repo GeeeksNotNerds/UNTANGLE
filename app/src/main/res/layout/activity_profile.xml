@@ -51,11 +51,13 @@
         android:layout_height="300dp"
         android:background="@color/colorPrimaryDark" />
 
+
     <RelativeLayout
         android:id="@+id/rl_two_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp">
+
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pro_pic"
@@ -64,13 +66,15 @@
             android:layout_marginTop="60dp"
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/profile">
+            android:src="@drawable/profile"
+            android:background="@drawable/circle">
 
 
         </de.hdodenhof.circleimageview.CircleImageView>
 
 
     </RelativeLayout>
+
 
     <LinearLayout
         android:layout_marginTop="-50dp"
@@ -90,11 +94,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="260dp"
+                android:layout_marginTop="280dp"
                 android:elevation="10dp"
                 app:cardBackgroundColor="#fcfcfc"
                 app:cardCornerRadius="15dp"
-                app:cardElevation="15dp"
+                app:cardElevation="10dp"
                 android:foregroundGravity="center"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
@@ -278,8 +282,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation"
-        app:itemIconTint="@color/colorAccent"
-        app:itemTextColor="@color/colorAccent"
+
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"
         />
 

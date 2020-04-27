@@ -151,7 +151,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                             String myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
                             String myUserName = dataSnapshot.child("username").getValue().toString();
-                            String Adminno = dataSnapshot.child("admission_no").getValue().toString();
+                            String Adminno = dataSnapshot.child("admission_number").getValue().toString();
                             String myBranch = dataSnapshot.child("department").getValue().toString();
                             String myEmail = dataSnapshot.child("email").getValue().toString();
 

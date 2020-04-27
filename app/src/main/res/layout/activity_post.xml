@@ -319,8 +319,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/post_description"
-
             android:tint="@color/white"
+
             android:layout_marginBottom="0dp"
             android:elevation="10dp"
             android:src="@drawable/send"
@@ -336,8 +336,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/colorAccent"
+
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"
         />
 

@@ -421,7 +421,7 @@ public class PostActivity extends AppCompatActivity {
 
                             break;
                         case R.id.nav_profile:
-                            Intent Pintent=new Intent(PostActivity.this,LoginActivity.class);
+                            Intent Pintent=new Intent(PostActivity.this,ProfileActivity.class);
                             Pintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(Pintent);
                             finish();

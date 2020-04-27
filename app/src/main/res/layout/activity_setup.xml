@@ -77,19 +77,21 @@
                 android:elevation="15dp"
                 android:orientation="vertical"
                 android:padding="16dp">
-                <LinearLayout
-                    android:weightSum="3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <RelativeLayout
+
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:background="@drawable/circle">
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="120dp"
-                    android:layout_weight="2"
+                    android:layout_width="fill_parent"
+
                     android:layout_marginRight="40dp"
-                    android:layout_height="120dp"
-                    android:scaleType="centerCrop"
+                    android:layout_height="fill_parent"
+                    android:layout_centerHorizontal="true"
                     android:id="@+id/pro_pic"
                     android:src="@drawable/profile" >
 
@@ -100,19 +102,21 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_cam"
-                    android:layout_weight="1"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/canv"
                     android:layout_marginTop="30dp"
                     android:textAllCaps="false"
                     app:fabCustomSize="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
 
                     app:borderWidth="0dp"
-                    android:background="@color/white"
+                    android:background="@color/colorPrimaryDark"
                     android:elevation="10dp"
                     />
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <ProgressBar
@@ -239,49 +243,49 @@
                             android:textSize="15sp"
                             />
                     </LinearLayout>
+                </LinearLayout>
 
-
-                    </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/edit_border"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center_vertical"
-                        android:layout_gravity="center"
-                        android:padding="8dp">
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:tint="@color/white"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_border"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center"
+                            android:padding="8dp">
 
-                            android:padding="10dp"
-                            android:src="@drawable/ic_account_circle_24px" />
+                            <ImageView
+                                android:tint="@color/white"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
 
-                        <EditText
-                            android:layout_width="289dp"
-                            android:layout_height="40dp"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_account_circle_24px" />
 
-                            android:layout_marginLeft="2dp"
-                            android:backgroundTint="@color/colorPrimaryDark"
-                            android:id="@+id/admin_no"
-                            android:textColorHint="@color/white"
-                            android:hint="  Name"
-                            android:inputType="textEmailAddress"
+                            <EditText
+                                android:layout_width="289dp"
+                                android:layout_height="40dp"
 
-                            android:textSize="15sp"
-                            />
-                    </LinearLayout>
+                                android:layout_marginLeft="2dp"
+                                android:backgroundTint="@color/colorPrimaryDark"
+                                android:id="@+id/admin_no"
+                                android:textColorHint="@color/white"
+                                android:hint="  Name"
+                                android:inputType="textEmailAddress"
+
+                                android:textSize="15sp"
+                                />
+                        </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
+
             <Button
                     android:layout_width="250dp"
                     android:layout_height="50dp"
