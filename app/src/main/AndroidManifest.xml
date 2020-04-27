@@ -10,48 +10,45 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        tools:replace="android:label"
         android:label="Untangle"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
+        <activity android:name=".AdminSetupActivity"></activity>
         <activity
             android:name=".SideMenu"
             android:theme="@style/AppTheme.customTheme" />
-        <activity android:name=".ProfileActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".PostActivity" />
-        <activity android:name=".PostsAdapter" />
-
-        <activity android:name=".ClickPostActivity"
-            android:theme="@style/AppTheme.customTheme"/>
-        <activity android:name=".CommentsActivity"
-            android:theme="@style/AppTheme.customTheme"/>
+        <activity
+            android:name=".ClickPostActivity"
+            android:theme="@style/AppTheme.customTheme" />
+        <activity
+            android:name=".CommentsActivity"
+            android:theme="@style/AppTheme.customTheme" />
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/AppTheme.customTheme"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.customTheme" />
         <activity android:name=".SetupActivity" />
         <activity android:name=".WelcomeActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashScreenActivity"></activity>
+        <activity android:name=".SplashScreenActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".Admin_Login" />
-        <activity android:name=".The_First">
-
-        </activity>
+        <activity android:name=".The_First"></activity>
         <activity android:name=".MainActivity" />
     </application>
 

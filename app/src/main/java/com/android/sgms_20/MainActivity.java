@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private GoogleApiClient mGoogleApiClient;
     String currentUserID;
     private int[] mColors;
+    private String[] mAdmin;
+    private String[] mClub;
     private int colour1,colour2,colour3,colour4;
     private DatabaseReference UsersRef;
     private Toolbar mToolbar;
@@ -146,7 +148,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         Fresco.initialize(this, config);
 
         mColors = getResources().getIntArray(R.array.colors);
+        mAdmin=getResources().getStringArray(R.array.admin_uid);
         mTitles = getResources().getStringArray(R.array.job_titles);
+        mClub=getResources().getStringArray(R.array.club_uid);
 
         mFilter = (Filter<Tag>) findViewById(R.id.filter);
         mFilter.setAdapter(new Adapter(getTags()));
@@ -238,12 +242,36 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                             final String owner;
                             String uid = dataSnapshot1.child("uid").getValue().toString();
-                            if (uid.equals(currentUserID)) owner = "MyPosts";
-                            else if (uid.startsWith("admin")) owner = "Admin";
-                            else if (uid.startsWith("club")) owner = "Club";
-                            else {
-                                owner = "General";
+
+                            int c=0;
+                            for(int i=0;i<1;i++)
+                            {
+                                if(uid.equals(mAdmin[i]))
+                                {
+                                    c=1;
+                                    break;
+                                }
                             }
+                            if(c!=1)
+                            {
+                                for(int j=0;j<1;j++)
+                                {
+                                    if(uid.equals(mClub[j]))
+                                    {
+                                        c=2;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if(c==1)owner="Admin";
+                            else if(c==2)owner="Club";
+                            else if(uid.equals(currentUserID))owner="My Posts";
+                            else {
+                                owner="General";
+                            }
+
+
                             String show = dataSnapshot1.child("showInformation").getValue().toString();
                             String info;
                             //if(show.equals("no"))info="Anonymous";
