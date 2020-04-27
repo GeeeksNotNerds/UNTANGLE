@@ -4,6 +4,14 @@
     <string name="my_preference">"com.abc.com.MyPref"</string>
     <string name="my_preference_key">"com.abc.com.MyPrefKey"</string>
 
+    <string-array name="admin_uid">
+        <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
+    </string-array>
+
+    <string-array name="club_uid">
+        <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
+    </string-array>
+
     <string-array name="job_titles">
         <item>All categories</item>
         <item>Official</item>

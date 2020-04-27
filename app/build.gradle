@@ -76,7 +76,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 
-
     implementation 'com.squareup.picasso:picasso:1.0.2'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
@@ -107,4 +106,3 @@ configurations.all {
         }
     }
 }
-
