@@ -39,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private ProgressDialog loadingBar;
     ProgressBar progressBar;
-    private EditText userName,userDept,userEmail;
+    private EditText userName,userDept,userEmail,userAdminNo;
     Button UpdateAccountSettingsButton;
     private ImageView userProfImage;
     private DatabaseReference SettingsuserRef;
@@ -65,12 +65,19 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-
-
         userName=(EditText)findViewById(R.id.settings_name);
         userEmail=findViewById(R.id.settings_email);
-
+        userAdminNo=findViewById(R.id.settings_admin_no);
         userDept=(EditText)findViewById(R.id.settings_dept);
+
+
+        if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+            userAdminNo.setHint("Designation");
+        }else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+            userAdminNo.setHint("Admisiion Number");
+        }
+
+
 
         userProfImage=(ImageView)findViewById(R.id.settings_pro_pic);
         UpdateAccountSettingsButton=(Button)findViewById(R.id.update_button);
@@ -80,25 +87,46 @@ public class SettingsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists())
                     {
-                        String myProfileImage=dataSnapshot.child("ProfileImage").getValue().toString();
-                        String myUserName=dataSnapshot.child("username").getValue().toString();
 
-                        String myDept=dataSnapshot.child("department").getValue().toString();
-                        String myEmail=dataSnapshot.child("email").getValue().toString();
+                        if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+                            String myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                            String myUserName = dataSnapshot.child("username").getValue().toString();
+                            String myDesignation=dataSnapshot.child("designation").getValue().toString();
+                            String myDept = dataSnapshot.child("department").getValue().toString();
+                            String myEmail = dataSnapshot.child("email").getValue().toString();
 
-                        Picasso.with(SettingsActivity.this)
-                                .load(myProfileImage)
-                                .placeholder(R.drawable.ic_account_circle_24px)
-                                .into(userProfImage);
+                            Picasso.with(SettingsActivity.this)
+                                    .load(myProfileImage)
+                                    .placeholder(R.drawable.ic_account_circle_24px)
+                                    .into(userProfImage);
+
+
+                            userName.setText(myUserName);
+                            userAdminNo.setText(myDesignation);
+                            userDept.setText(myDept);
+                            userEmail.setText(myEmail);
+                        }else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+
+                            String myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                            String myUserName = dataSnapshot.child("username").getValue().toString();
+                            String myAdminNo=dataSnapshot.child("admission_number").getValue().toString();
+                            String myDept = dataSnapshot.child("department").getValue().toString();
+                            String myEmail = dataSnapshot.child("email").getValue().toString();
+
+                            Picasso.with(SettingsActivity.this)
+                                    .load(myProfileImage)
+                                    .placeholder(R.drawable.ic_account_circle_24px)
+                                    .into(userProfImage);
+
+
+                            userName.setText(myUserName);
+                            userAdminNo.setText(myAdminNo);
+                            userDept.setText(myDept);
+                            userEmail.setText(myEmail);
 
 
 
-
-
-                        userName.setText(myUserName);
-
-                        userDept.setText(myDept);
-                        userEmail.setText(myEmail);
+                        }
                     }
             }
 
@@ -172,6 +200,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(SettingsActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+
                                             progressBar.setVisibility(View.GONE);
 
                                         } else {
@@ -244,60 +273,105 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-    private void ValidateAccountInfo()
-    {
-        String username=userName.getText().toString();
+    private void ValidateAccountInfo() {
+        if (currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
 
-        String userdept= userDept.getText().toString();
-        String useremail=userEmail.getText().toString();
 
-        if(TextUtils.isEmpty(username))
-        {
+            String username = userName.getText().toString();
+            String userDesignation=userAdminNo.getText().toString();
+        String userdept = userDept.getText().toString();
+        String useremail = userEmail.getText().toString();
+
+        if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Please write your username", Toast.LENGTH_SHORT).show();
-        }
-
-        else if(TextUtils.isEmpty(userdept))
-        {
+        } else if (TextUtils.isEmpty(userdept)) {
             Toast.makeText(this, "Please write your department", Toast.LENGTH_SHORT).show();
-        }
-        else if(TextUtils.isEmpty(useremail))
-        {
+        } else if (TextUtils.isEmpty(useremail)) {
             Toast.makeText(this, "Please write your Email", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else if (TextUtils.isEmpty(userDesignation)) {
+            Toast.makeText(this, "Please write your Designation", Toast.LENGTH_SHORT).show();
+        } else {
             loadingBar.setTitle("Profile Image");
             loadingBar.setMessage("Please wait, while we updating your profile image...");
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
-            UpdateAccountInfo(username,userdept,useremail);
+            UpdateAccountInfo(username, userdept, useremail,userDesignation);
+        }
+        } else if (!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+
+
+            String username = userName.getText().toString();
+            String userDesignation=userAdminNo.getText().toString();
+            String userdept = userDept.getText().toString();
+            String useremail = userEmail.getText().toString();
+
+            if (TextUtils.isEmpty(username)) {
+                Toast.makeText(this, "Please write your username", Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(userdept)) {
+                Toast.makeText(this, "Please write your department", Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(useremail)) {
+                Toast.makeText(this, "Please write your Email", Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(userDesignation)) {
+                Toast.makeText(this, "Please write your Admission Number", Toast.LENGTH_SHORT).show();
+            } else {
+                loadingBar.setTitle("Profile Image");
+                loadingBar.setMessage("Please wait, while we updating your profile image...");
+                loadingBar.setCanceledOnTouchOutside(true);
+                loadingBar.show();
+                UpdateAccountInfo(username, userdept, useremail,userDesignation);
+            }
+
+
         }
 
     }
 
-    private void UpdateAccountInfo(String username, String userdept, String useremail) {
+    private void UpdateAccountInfo(String username, String userdept, String useremail,String userDesignation) {
 
-        HashMap useMap= new HashMap();
-        useMap.put("username",username);
+        if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
 
-        useMap.put("department",userdept);
-        useMap.put("email",useremail);
-        SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
-            @Override
-            public void onComplete(@NonNull Task task) {
-                if(task.isSuccessful())
-                {
-                    loadingBar.dismiss();
-                    SendUserToMainActivity();
-                    Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
+            HashMap useMap = new HashMap();
+            useMap.put("username", username);
+            useMap.put("designation",userDesignation);
+            useMap.put("department", userdept);
+            useMap.put("email", useremail);
+            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        loadingBar.dismiss();
+                        SendUserToMainActivity();
+                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
+                    } else {
+                        loadingBar.dismiss();
+                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else
-                {
-                    loadingBar.dismiss();
-                    Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
+            });
+
+        }else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+
+            HashMap useMap = new HashMap();
+            useMap.put("username", username);
+            useMap.put("admission_number",userDesignation);
+            useMap.put("department", userdept);
+            useMap.put("email", useremail);
+            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        loadingBar.dismiss();
+                        SendUserToMainActivity();
+                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
+                    } else {
+                        loadingBar.dismiss();
+                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+
+
+        }
     }
 
     private void SendUserToMainActivity()

@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:padding="8dp"
-                android:fontFamily="cursive"
+                android:textStyle="bold"
                  android:layout_marginRight="32dp"
                 android:text="You want your post to be Public or Private?"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
@@ -173,7 +173,7 @@
                     android:layout_marginTop="20dp"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:fontFamily="cursive"
+
                     android:layout_height="wrap_content"
                     android:text="Select your complaint category"
 
@@ -196,7 +196,7 @@
                     android:textSize="20dp"
 
                     android:textStyle="bold"
-                    android:fontFamily="cursive"
+
                     android:layout_height="wrap_content"
                     android:text="Select your sub-category"
                     android:layout_below="@id/spinner1"

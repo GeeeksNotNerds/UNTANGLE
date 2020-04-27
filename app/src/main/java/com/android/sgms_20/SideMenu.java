@@ -79,7 +79,7 @@ public class SideMenu extends AppCompatActivity {
 
 
 
-                    userName.setText("@"+myUserName);
+                    userName.setText(myUserName);
                     userFullName.setText(myProfileName);
 
 

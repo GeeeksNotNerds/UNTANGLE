@@ -45,6 +45,11 @@ public class ClickPostActivity extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
 
+        // FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId)
+        //get it using known data from the card view
+        //.child("posts").push().getKey()
+
+
         PostKey=getIntent().getExtras().get("PostKey").toString();
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
         PostDescription=(TextView)findViewById(R.id.click_post_description);

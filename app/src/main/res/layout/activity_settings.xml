@@ -95,7 +95,7 @@
                                 <ImageView
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:layout_marginTop="8dp"
+                                    android:layout_marginTop="18dp"
                                     android:padding="10dp"
                                     android:tint="@color/colorPrimaryDark"
                                     android:src="@drawable/ic_profile" />
@@ -126,7 +126,7 @@
                                     android:layout_width="40dp"
                                     android:tint="@color/colorPrimaryDark"
                                     android:layout_height="40dp"
-                                    android:layout_marginTop="8dp"
+                                    android:layout_marginTop="18dp"
                                     android:padding="10dp"
                                     android:src="@drawable/ic_email_24dp" />
 
@@ -156,12 +156,41 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:tint="@color/colorPrimaryDark"
-                                    android:layout_marginTop="8dp"
+                                    android:layout_marginTop="18dp"
                                     android:padding="10dp"
                                     android:src="@drawable/dept" />
 
                                 <EditText
                                     android:id="@+id/settings_dept"
+                                    android:layout_width="289dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginTop="16dp"
+                                    android:textColorHint="@color/colorPrimaryDark"
+                                    android:backgroundTint="@color/colorPrimaryDark"
+                                    android:hint="Department"
+
+                                    android:textSize="15sp" />
+
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center_vertical"
+                                android:paddingRight="8dp">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:tint="@color/colorPrimaryDark"
+                                    android:layout_marginTop="15dp"
+                                    android:padding="10dp"
+                                    android:src="@drawable/ic_profile" />
+
+                                <EditText
+                                    android:id="@+id/settings_admin_no"
                                     android:layout_width="289dp"
                                     android:layout_height="40dp"
                                     android:layout_marginLeft="2dp"
@@ -208,7 +237,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="-35dp"
                     android:text="UPDATE DETAILS"
-
                     android:textSize="25sp"
                     android:id="@+id/update_button"
                     android:textColor="@android:color/white"

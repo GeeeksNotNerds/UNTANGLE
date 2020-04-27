@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView userName,userEmail,userBranch;
+    private TextView userName,userEmail,userBranch,admin_no;
     private CircleImageView userProfileImage;
     private DatabaseReference profileUserRef;
     private FirebaseAuth mAuth;
@@ -42,7 +43,9 @@ public class ProfileActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     TextDrawable mDrawableBuilder;
     DatabaseReference MyPostRef;
-    String currentUserID;
+
+    private static String TAG;
+
     ImageView pro;
 
     @Override
@@ -56,10 +59,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
+
+        Log.d(TAG, "onCreate: "+currentUserId);
         profileUserRef= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
 
         userName=(TextView) findViewById(R.id.name);
-
+        admin_no=findViewById(R.id.admin_no);
         userBranch=(TextView)findViewById(R.id.dept);
         userEmail=(TextView)findViewById(R.id.email);
         userProfileImage= findViewById(R.id.pro_pic);
@@ -68,6 +73,12 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+
+
+
+
 
         pro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,35 +114,71 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                if(dataSnapshot.exists())
-                {
-                    String myProfileImage=dataSnapshot.child("ProfileImage").getValue().toString();
-                    String myUserName=dataSnapshot.child("username").getValue().toString();
-
-                    String myBranch=dataSnapshot.child("department").getValue().toString();
-                    String myEmail=dataSnapshot.child("email").getValue().toString();
-
-                    Picasso.with(ProfileActivity.this)
-                            .load(myProfileImage)
-                            .placeholder(R.drawable.ic_account_circle_24px)
-                            .into(userProfileImage);
+                if(dataSnapshot.exists()) {
 
 
-                    userName.setText("UserName :"+myUserName);
 
-                    userBranch.setText("Department : "+myBranch);
-                    userEmail.setText("Email : "+myEmail);
+                        if (currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
 
-                    String myProfileName = dataSnapshot.child("username").getValue().toString();
-                    char letter = myProfileName.charAt(0);
-                    letter = Character.toUpperCase(letter);
+                            String myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                            String myUserName = dataSnapshot.child("username").getValue().toString();
+                            String Designation = dataSnapshot.child("designation").getValue().toString();
+                            String myBranch = dataSnapshot.child("department").getValue().toString();
+                            String myEmail = dataSnapshot.child("email").getValue().toString();
+
+                            Picasso.with(ProfileActivity.this)
+                                    .load(myProfileImage)
+                                    .placeholder(R.drawable.ic_account_circle_24px)
+                                    .into(userProfileImage);
 
 
-                    mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
+                            userName.setText("UserName :" + myUserName);
+                            admin_no.setText("Designation :" + Designation);
 
-                    pro.setImageDrawable(mDrawableBuilder);
+                            userBranch.setText("Department : " + myBranch);
+                            userEmail.setText("Email : " + myEmail);
 
-                }
+                            String myProfileName = dataSnapshot.child("username").getValue().toString();
+                            char letter = myProfileName.charAt(0);
+                            letter = Character.toUpperCase(letter);
+
+
+                            mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
+
+                            pro.setImageDrawable(mDrawableBuilder);
+
+                        } else if (!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+
+                            String myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                            String myUserName = dataSnapshot.child("username").getValue().toString();
+                            String Adminno = dataSnapshot.child("admission_no").getValue().toString();
+                            String myBranch = dataSnapshot.child("department").getValue().toString();
+                            String myEmail = dataSnapshot.child("email").getValue().toString();
+
+                            Picasso.with(ProfileActivity.this)
+                                    .load(myProfileImage)
+                                    .placeholder(R.drawable.ic_account_circle_24px)
+                                    .into(userProfileImage);
+
+
+                            userName.setText("UserName :" + myUserName);
+                            admin_no.setText("Admission Number :" + Adminno);
+
+                            userBranch.setText("Department : " + myBranch);
+                            userEmail.setText("Email : " + myEmail);
+
+                            String myProfileName = dataSnapshot.child("username").getValue().toString();
+                            char letter = myProfileName.charAt(0);
+                            letter = Character.toUpperCase(letter);
+
+
+                            mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
+
+                            pro.setImageDrawable(mDrawableBuilder);
+
+
+                        }
+                    }
             }
 
             @Override

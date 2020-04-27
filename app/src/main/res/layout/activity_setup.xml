@@ -239,6 +239,47 @@
                             android:textSize="15sp"
                             />
                     </LinearLayout>
+
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_border"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:tint="@color/white"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+
+                            android:padding="10dp"
+                            android:src="@drawable/ic_account_circle_24px" />
+
+                        <EditText
+                            android:layout_width="289dp"
+                            android:layout_height="40dp"
+
+                            android:layout_marginLeft="2dp"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:id="@+id/admin_no"
+                            android:textColorHint="@color/white"
+                            android:hint="  Name"
+                            android:inputType="textEmailAddress"
+
+                            android:textSize="15sp"
+                            />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
             <Button
@@ -256,5 +297,6 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:elevation="15dp" />
         </LinearLayout>
+
     </ScrollView>
 </RelativeLayout>
