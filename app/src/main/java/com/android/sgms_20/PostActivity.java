@@ -414,13 +414,9 @@ public class PostActivity extends AppCompatActivity {
                             finish();
 
                             break;
-                        case R.id.nav_post:
-                            Intent Lintent=new Intent(PostActivity.this,PostActivity.class);
-                            Lintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(Lintent);
-                            finish();
 
-                            break;
+
+
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(PostActivity.this,ProfileActivity.class);
                             Pintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);

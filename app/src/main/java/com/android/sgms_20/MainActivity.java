@@ -649,10 +649,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                     switch (item.getItemId()){
-                        case R.id.nav_home:
-                            startActivity(new Intent(MainActivity.this,MainActivity.class));
 
-                            break;
                         case R.id.nav_post:
                             Intent intent=new Intent(MainActivity.this,PostActivity.class);
                             startActivity(intent);

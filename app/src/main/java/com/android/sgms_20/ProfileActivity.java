@@ -209,12 +209,7 @@ public class ProfileActivity extends AppCompatActivity {
                             startActivity(Lintent);
                             finish();
 
-                            return true;
-                        case R.id.nav_profile:
-                            Intent Pintent=new Intent(ProfileActivity.this,ProfileActivity.class);
-                            Pintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(Pintent);
-                            finish();
+
 
                             return true;
 
