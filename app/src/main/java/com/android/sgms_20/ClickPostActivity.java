@@ -23,9 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ClickPostActivity extends AppCompatActivity {
 
-    private TextView PostDescription;
-    private Button DeletePostButton,EditPostButton;
-    private String PostKey,currentUserID,databaseUSerID,description;
+    private TextView PostDescription,postStatus,postStatus_heading;
+    private Button DeletePostButton,EditPostButton,statusButton;
+    private String PostKey,currentUserID,databaseUSerID,description,Status;
     private DatabaseReference ClickPostRef;
 
     private FirebaseAuth mAuth;
@@ -52,10 +52,14 @@ public class ClickPostActivity extends AppCompatActivity {
 
         PostKey=getIntent().getExtras().get("PostKey").toString();
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
+
         PostDescription=(TextView)findViewById(R.id.click_post_description);
         DeletePostButton=(Button)findViewById(R.id.delete_post_button);
         EditPostButton=(Button)findViewById(R.id.edit_post_button);
-
+        postStatus=findViewById(R.id.click_post_status);
+        postStatus_heading=findViewById(R.id.status_heading);
+        statusButton=findViewById(R.id.status_post_button);
+        statusButton.setVisibility(View.INVISIBLE);
         DeletePostButton.setVisibility(View.INVISIBLE);
         EditPostButton.setVisibility(View.INVISIBLE);
 
@@ -66,9 +70,29 @@ public class ClickPostActivity extends AppCompatActivity {
               if(dataSnapshot.exists())
               {
                   description=dataSnapshot.child("description").getValue().toString();
+                  Status=dataSnapshot.child("status").getValue().toString();
+                  postStatus.setText(Status);
+
                   PostDescription.setText(description);
                   databaseUSerID=dataSnapshot.child("uid").getValue().toString();
-                  if(currentUserID.equals(databaseUSerID))
+                  if(databaseUSerID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+
+                      postStatus.setVisibility(View.INVISIBLE);
+                      postStatus_heading.setVisibility(View.INVISIBLE);
+
+                  }
+
+
+
+                  if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")&& !databaseUSerID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+
+                      statusButton.setVisibility(View.VISIBLE);
+                      DeletePostButton.setVisibility(View.INVISIBLE);
+                      EditPostButton.setVisibility(View.INVISIBLE);
+
+
+                  }
+                  else if(currentUserID.equals(databaseUSerID))
                   {
                       DeletePostButton.setVisibility(View.VISIBLE);
                       EditPostButton.setVisibility(View.VISIBLE);
@@ -80,6 +104,19 @@ public class ClickPostActivity extends AppCompatActivity {
                           EditCurrentPost(description);
                       }
                   });
+
+
+                  statusButton.setOnClickListener(new View.OnClickListener() {
+                      @Override
+                      public void onClick(View v) {
+
+                          ClickPostRef.child("status").setValue("Reviewed...Corresponding Action will be taken as soon as possible");
+                          Toast.makeText(ClickPostActivity.this, "Status Changed", Toast.LENGTH_SHORT).show();
+                          SendUserToMainActivity();
+
+                      }
+                  });
+
               }
             }
 
@@ -125,7 +162,7 @@ public class ClickPostActivity extends AppCompatActivity {
         });
         Dialog dialog=builder.create();
         dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_blue_light);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_orange_dark);
     }
 
     private void DeleteCurrentPost()
