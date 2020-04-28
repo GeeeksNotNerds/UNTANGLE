@@ -55,6 +55,7 @@ public class SetupActivity extends AppCompatActivity {
     ProgressBar progressBar;
     FloatingActionButton fab;
     private String TAG;
+    private String[] mAdmin;
     private StorageReference proPicRef;
 
 
@@ -65,6 +66,7 @@ public class SetupActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         dept = findViewById(R.id.dept);
         admin_no = findViewById(R.id.admin_no);
+        mAdmin=getResources().getStringArray(R.array.admin_uid);
 
         email = findViewById(R.id.email);
 
@@ -77,11 +79,19 @@ public class SetupActivity extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currUserId);
         proPicRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
-
-        if (currUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+        int c=0;
+        for(int i=0;i<1;i++){
+        if (currUserId.equals(mAdmin[i])) {
+           c=1;
+           break;
+        } }
+        if (c==1) {
             admin_no.setHint("Designation");
-        } else {
+            c=0;
+        }
+        else {
             admin_no.setHint("Admission Number");
+            c=0;
         }
 
 
@@ -225,8 +235,19 @@ public class SetupActivity extends AppCompatActivity {
 
 
     private void SaveAccountInfo() {
+        int l=0;
+        for(int i=0;i<1;i++)
+        {
+            if(currUserId.equals(mAdmin[i]))
+            {
+                l=1;
+                break;
+            }
+        }
 
-        if (!currUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2") ){
+
+
+        if (l==0) {
 
             String Name = name.getText().toString();
             String Dept = dept.getText().toString();
@@ -282,8 +303,8 @@ public class SetupActivity extends AppCompatActivity {
                 });
 
             }
-        } else if (currUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
-
+        } else if (l==1) {
+            l=0;
 
             String Name = name.getText().toString();
             String Dept = dept.getText().toString();
