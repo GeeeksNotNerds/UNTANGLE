@@ -370,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 if(l==1||(uid.equals(currentUserID)))
                                 {
                                     l=0;
-                                    add(new Posts(postKey, info, "@" + user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                    add(new Posts(postKey, info, "" + user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
                                         add(new Tag(owner, colour4));
                                         add(new Tag(mode, colour3));
                                         add(new Tag(categ, colour1));

@@ -110,9 +110,38 @@ public class ClickPostActivity extends AppCompatActivity {
                       @Override
                       public void onClick(View v) {
 
-                          ClickPostRef.child("status").setValue("Reviewed...Corresponding Action will be taken as soon as possible");
-                          Toast.makeText(ClickPostActivity.this, "Status Changed", Toast.LENGTH_SHORT).show();
-                          SendUserToMainActivity();
+                          //ClickPostRef.child("status").setValue("Reviewed...Corresponding Action will be taken as soon as possible");
+                         // Toast.makeText(ClickPostActivity.this, "Status Changed", Toast.LENGTH_SHORT).show();
+                          //SendUserToMainActivity();
+
+                          AlertDialog.Builder builder=new AlertDialog.Builder(ClickPostActivity.this);
+                          builder.setTitle("Change Status");
+
+                          final EditText inputField = new EditText(ClickPostActivity.this);
+                          inputField.setText(description);
+                          builder.setView(inputField);
+                          builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                              @Override
+                              public void onClick(DialogInterface dialog, int which)
+                              {
+
+                                  ClickPostRef.child("status").setValue(inputField.getText().toString());
+                                  Toast.makeText(ClickPostActivity.this, "Status Changed.", Toast.LENGTH_SHORT).show();
+                                  SendUserToMainActivity();
+                              }
+                          });
+                          builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                              @Override
+                              public void onClick(DialogInterface dialog, int which) {
+                                  dialog.cancel();
+                              }
+                          });
+                          Dialog dialog=builder.create();
+                          dialog.show();
+
+
+
+
 
                       }
                   });
@@ -162,7 +191,7 @@ public class ClickPostActivity extends AppCompatActivity {
         });
         Dialog dialog=builder.create();
         dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_orange_dark);
+
     }
 
     private void DeleteCurrentPost()
