@@ -17,9 +17,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +50,7 @@ public class PostActivity extends AppCompatActivity {
     RadioGroup rg_mode,rg_mode_opt,rg_cat,rg_cat_off,rg_cat_per,rg_cat_oth;
     CardView cv2,cv4,cv5,cv6;
     String UserInfo_show;
+    String cat1,cat2;
 
     String Mode,category,Sub_Category;
 
@@ -61,16 +65,16 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         cv2=findViewById(R.id.cv2);
-        cv4=findViewById(R.id.cv4);
+        //cv4=findViewById(R.id.cv4);
         cv5=findViewById(R.id.cv5);
-        cv6=findViewById(R.id.cv6);
+        //cv6=findViewById(R.id.cv6);
 
         rg_mode=findViewById(R.id.rg1);
         rg_mode_opt=findViewById(R.id.rg2);
-        rg_cat=findViewById(R.id.rg3);
-        rg_cat_off=findViewById(R.id.rg4);
+        //rg_cat=findViewById(R.id.rg3);
+        //rg_cat_off=findViewById(R.id.rg4);
         rg_cat_per=findViewById(R.id.rg5);
-        rg_cat_oth=findViewById(R.id.rg6);
+        //rg_cat_oth=findViewById(R.id.rg6);
 
         rg_mode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -84,11 +88,11 @@ public class PostActivity extends AppCompatActivity {
                                  if(checkedId==R.id.post_no){
 
                                      UserInfo_show="no";
-                                     Mode="public";
+                                     Mode="Public";
                                  }
                                  else{
                                      UserInfo_show="yes";
-                                     Mode="public";
+                                     Mode="Public";
                                  }
                              }
                          });
@@ -98,13 +102,62 @@ public class PostActivity extends AppCompatActivity {
                 }else{
 
                     cv2.setVisibility(View.GONE);
-                    Mode="private";
+                    Mode="Private";
                     UserInfo_show="yes";
                 }
             }
         });
 
-        rg_cat.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
+        final Spinner spinner2=(Spinner)findViewById(R.id.spinner2);
+        ArrayAdapter<String> adapter1=new ArrayAdapter<String>(PostActivity.this,android.R.layout.simple_expandable_list_item_1,getResources().getStringArray(R.array.categories));
+        final ArrayAdapter<String> adapter2=new ArrayAdapter<String>(PostActivity.this,android.R.layout.simple_expandable_list_item_1,getResources().getStringArray(R.array.sub1));
+        final ArrayAdapter<String> adapter3=new ArrayAdapter<String>(PostActivity.this,android.R.layout.simple_expandable_list_item_1,getResources().getStringArray(R.array.sub2));
+        final ArrayAdapter<String> adapter4=new ArrayAdapter<String>(PostActivity.this,android.R.layout.simple_expandable_list_item_1,getResources().getStringArray(R.array.sub3));
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner1.setAdapter(adapter1);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String label=parent.getItemAtPosition(position).toString();
+                cat1=label;
+
+                if(label.equals("Official"))
+                {
+                    spinner2.setAdapter(adapter2);
+                }
+                else if(label.equals("Personal"))
+                {
+                    spinner2.setAdapter(adapter3);
+                }
+                else {
+                    spinner2.setAdapter(adapter4);
+                }
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cat2=parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        /*rg_cat.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId==R.id.post_official) {
@@ -193,7 +246,7 @@ public class PostActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
 
 
@@ -276,7 +329,7 @@ public class PostActivity extends AppCompatActivity {
 
                         String userFullName = dataSnapshot.child("username").getValue().toString();
                         String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
-
+                        String userEmail=dataSnapshot.child("email").getValue().toString();
 
                     HashMap postsMap = new HashMap();
                     postsMap.put("uid", current_user_id);
@@ -284,11 +337,13 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("time", saveCurrentTime);
                     postsMap.put("description", description);
                     postsMap.put("mode", Mode);
-                    postsMap.put("category", category);
-                    postsMap.put("sub-category", Sub_Category);
-                    postsMap.put("ProfileImage", userProfileImage);
+                    postsMap.put("category", cat1);
+                    postsMap.put("subCategory", cat2);
+                    postsMap.put("profileImage", userProfileImage);
                     postsMap.put("username", userFullName);
+                    postsMap.put("email",userEmail);
                     postsMap.put("showInformation",UserInfo_show);
+                    postsMap.put("PostKey",postRandomName+current_user_id);
 
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
@@ -333,7 +388,11 @@ public class PostActivity extends AppCompatActivity {
 
     private void SendUserToMainActivity()
     {
-        startActivity(new Intent(PostActivity.this,MainActivity.class));
+
+        Intent intent=new Intent(PostActivity.this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -348,17 +407,23 @@ public class PostActivity extends AppCompatActivity {
 
                     switch (item.getItemId()){
                         case R.id.nav_home:
-                            startActivity(new Intent(PostActivity.this,MainActivity.class));
+                            Intent intent=new Intent(PostActivity.this,MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                             finish();
 
                             break;
                         case R.id.nav_post:
-                            startActivity(new Intent(PostActivity.this,PostActivity.class));
+                            Intent Lintent=new Intent(PostActivity.this,PostActivity.class);
+                            Lintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Lintent);
                             finish();
 
                             break;
                         case R.id.nav_profile:
-                            startActivity(new Intent(PostActivity.this,ProfileActivity.class));
+                            Intent Pintent=new Intent(PostActivity.this,ProfileActivity.class);
+                            Pintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent);
                             finish();
 
                             break;

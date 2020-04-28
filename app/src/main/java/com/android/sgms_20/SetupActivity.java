@@ -43,11 +43,10 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SetupActivity extends AppCompatActivity
-{
+public class SetupActivity extends AppCompatActivity {
     private static final int CHOOSE_IMAGE = 101;
 
-    EditText name, dept, email;
+    EditText name, dept, email, admin_no;
     CircleImageView pro_pic;
     Button save;
     FirebaseAuth mAuth;
@@ -65,6 +64,7 @@ public class SetupActivity extends AppCompatActivity
         setContentView(R.layout.activity_setup);
         name = findViewById(R.id.name);
         dept = findViewById(R.id.dept);
+        admin_no = findViewById(R.id.admin_no);
 
         email = findViewById(R.id.email);
 
@@ -78,6 +78,11 @@ public class SetupActivity extends AppCompatActivity
         proPicRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
 
+        if (currUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+            admin_no.setHint("Designation");
+        } else {
+            admin_no.setHint("Admission Number");
+        }
 
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -106,11 +111,11 @@ public class SetupActivity extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
-                    if(dataSnapshot.hasChild("ProfileImage")) {
+                    if (dataSnapshot.hasChild("ProfileImage")) {
                         String image = dataSnapshot.child("ProfileImage").getValue().toString();
                         Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + image);
 
-                        Picasso.get()
+                        Picasso.with(SetupActivity.this)
                                 .load(image)
                                 .placeholder(R.drawable.ic_account_circle_24px)
                                 .into(pro_pic);
@@ -219,56 +224,122 @@ public class SetupActivity extends AppCompatActivity
                 */
 
 
-    private void SaveAccountInfo () {
+    private void SaveAccountInfo() {
 
-        String Name = name.getText().toString();
-        String Dept = dept.getText().toString();
+        if (!currUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2") ){
 
-        String Email = email.getText().toString();
+            String Name = name.getText().toString();
+            String Dept = dept.getText().toString();
 
-        if (Name.isEmpty()) {
-            name.setError("Enter Name!");
-            name.requestFocus();
-            return;
-        }
-        if (Dept.isEmpty()) {
-            dept.setError("Enter Department!");
-            dept.requestFocus();
-            return;
-        }
-        if (Email.isEmpty()) {
-            email.setError("Enter Email!");
-            email.requestFocus();
-            return;
-        }
+            String Email = email.getText().toString();
+            String AdmisiionNo = admin_no.getText().toString();
 
-         else {
-            progressBar.setVisibility(View.VISIBLE);
+            if (Name.isEmpty()) {
+                name.setError("Enter Name!");
+                name.requestFocus();
+                return;
+            }
+            if (Dept.isEmpty()) {
+                dept.setError("Enter Department!");
+                dept.requestFocus();
+                return;
+            }
+            if (Email.isEmpty()) {
+                email.setError("Enter Email!");
+                email.requestFocus();
+                return;
+            }
+            if (AdmisiionNo.isEmpty()) {
+                email.setError("Enter Admission Number!");
+                email.requestFocus();
+                return;
+            } else {
+                progressBar.setVisibility(View.VISIBLE);
 
-            HashMap user = new HashMap();
-            user.put("username", Name);
-            user.put("department", Dept);
-            user.put("email", Email);
+                HashMap user = new HashMap();
+                user.put("username", Name);
+                user.put("department", Dept);
+                user.put("email", Email);
+                user.put("admission_number", AdmisiionNo);
 
-            userRef.updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    progressBar.setVisibility(View.GONE);
-                    if (task.isSuccessful()) {
+                userRef.updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        progressBar.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
 
-                        Toast.makeText(SetupActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SetupActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(SetupActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        finish();
+                            Intent intent = new Intent(SetupActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
 
-                    } else {
-                        Toast.makeText(SetupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SetupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-            });
+                });
 
+            }
+        } else if (currUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+
+
+            String Name = name.getText().toString();
+            String Dept = dept.getText().toString();
+
+            String Email = email.getText().toString();
+            String Designation = admin_no.getText().toString();
+
+            if (Name.isEmpty()) {
+                name.setError("Enter Name!");
+                name.requestFocus();
+                return;
+            }
+            if (Dept.isEmpty()) {
+                dept.setError("Enter Department!");
+                dept.requestFocus();
+                return;
+            }
+            if (Email.isEmpty()) {
+                email.setError("Enter Email!");
+                email.requestFocus();
+                return;
+            }
+            if (Designation.isEmpty()) {
+                email.setError("Enter your Designation!");
+                email.requestFocus();
+                return;
+            } else {
+                progressBar.setVisibility(View.VISIBLE);
+
+                HashMap user = new HashMap();
+                user.put("username", Name);
+                user.put("department", Dept);
+                user.put("email", Email);
+                user.put("designation", Designation);
+
+                userRef.updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        progressBar.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
+
+                            Toast.makeText(SetupActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(SetupActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+
+                        } else {
+                            Toast.makeText(SetupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+            }
         }
     }
 }

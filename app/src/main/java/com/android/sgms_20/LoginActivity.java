@@ -187,23 +187,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void firebaseAuthWithGoogleAccount(GoogleSignInAccount account) {
         AuthCredential credential=GoogleAuthProvider.getCredential(account.getIdToken(),null);
-        mAuth.signInWithCredential(credential).addOnCompleteListener(this,task ->{
-            if(task.isSuccessful()){
-                progressBar.setVisibility(View.GONE);
-                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                FirebaseUser user =mAuth.getCurrentUser();
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    progressBar.setVisibility(View.GONE);
+                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    FirebaseUser user =mAuth.getCurrentUser();
 
 
 
-            }else{
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(LoginActivity.this,"SignIn Successgul",Toast.LENGTH_SHORT).show();
+                }else{
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(LoginActivity.this,"SignIn Successgul",Toast.LENGTH_SHORT).show();
 
+
+                }
 
             }
-
         });
+
+
     }
 }

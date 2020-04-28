@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,8 +36,19 @@ public class ClickPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_post);
 
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width=dm.widthPixels;
+        int height=dm.heightPixels;
+        getWindow().setLayout((int)(width*.80),(int) (height*.80));
+
         mAuth= FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
+
+        // FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId)
+        //get it using known data from the card view
+        //.child("posts").push().getKey()
+
 
         PostKey=getIntent().getExtras().get("PostKey").toString();
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);

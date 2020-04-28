@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#673AB7"
+    android:background="@color/colorPrimaryDark"
     android:layout_height="match_parent"
     android:id="@+id/rv"
     tools:context=".The_First">
@@ -41,12 +41,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="16dp"
+
                 android:gravity="center"
                 android:layout_below="@+id/tv">
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
+
                     android:text="YES"
                     android:id="@+id/yes"
                     android:checked="false"/>

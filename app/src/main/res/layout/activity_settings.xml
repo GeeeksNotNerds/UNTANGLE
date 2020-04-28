@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
@@ -19,7 +20,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="#9c27B0" />
+                android:background="@color/colorAccent" />
 
             <RelativeLayout
                 android:id="@+id/rl_two_login"
@@ -34,7 +35,7 @@
 
                     android:textAlignment="center"
                     android:textColor="#ffffff"
-                    android:textSize="32sp"
+                    android:textSize="27sp"
                     android:textStyle="bold" />
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/settings_pro_pic"
@@ -43,7 +44,7 @@
                     android:layout_marginTop="60dp"
                     android:layout_centerHorizontal="true"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher">
+                    android:src="@drawable/profile">
 
 
                 </de.hdodenhof.circleimageview.CircleImageView>
@@ -94,8 +95,9 @@
                                 <ImageView
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:layout_marginTop="8dp"
+                                    android:layout_marginTop="18dp"
                                     android:padding="10dp"
+                                    android:tint="@color/colorPrimaryDark"
                                     android:src="@drawable/ic_profile" />
 
                                 <EditText
@@ -104,7 +106,8 @@
                                     android:layout_height="40dp"
                                     android:layout_marginLeft="2dp"
                                     android:layout_marginTop="16dp"
-                                    android:backgroundTint="#9c27B0"
+                                    android:textColorHint="@color/colorPrimaryDark"
+                                    android:backgroundTint="@color/colorPrimaryDark"
                                     android:hint="Name"
 
                                     android:textSize="15sp" />
@@ -121,8 +124,9 @@
 
                                 <ImageView
                                     android:layout_width="40dp"
+                                    android:tint="@color/colorPrimaryDark"
                                     android:layout_height="40dp"
-                                    android:layout_marginTop="8dp"
+                                    android:layout_marginTop="18dp"
                                     android:padding="10dp"
                                     android:src="@drawable/ic_email_24dp" />
 
@@ -132,7 +136,8 @@
                                     android:layout_height="40dp"
                                     android:layout_marginLeft="2dp"
                                     android:layout_marginTop="16dp"
-                                    android:backgroundTint="#9c27B0"
+                                    android:textColorHint="@color/colorPrimaryDark"
+                                    android:backgroundTint="@color/colorPrimaryDark"
                                     android:hint=" Email"
                                     android:inputType="textEmailAddress"
                                     android:textSize="15sp" />
@@ -150,7 +155,8 @@
                                 <ImageView
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:layout_marginTop="8dp"
+                                    android:tint="@color/colorPrimaryDark"
+                                    android:layout_marginTop="18dp"
                                     android:padding="10dp"
                                     android:src="@drawable/dept" />
 
@@ -160,7 +166,37 @@
                                     android:layout_height="40dp"
                                     android:layout_marginLeft="2dp"
                                     android:layout_marginTop="16dp"
-                                    android:backgroundTint="#9c27B0"
+                                    android:textColorHint="@color/colorPrimaryDark"
+                                    android:backgroundTint="@color/colorPrimaryDark"
+                                    android:hint="Department"
+
+                                    android:textSize="15sp" />
+
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center_vertical"
+                                android:paddingRight="8dp">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:tint="@color/colorPrimaryDark"
+                                    android:layout_marginTop="15dp"
+                                    android:padding="10dp"
+                                    android:src="@drawable/ic_profile" />
+
+                                <EditText
+                                    android:id="@+id/settings_admin_no"
+                                    android:layout_width="289dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginTop="16dp"
+                                    android:textColorHint="@color/colorPrimaryDark"
+                                    android:backgroundTint="@color/colorPrimaryDark"
                                     android:hint="Department"
 
                                     android:textSize="15sp" />
@@ -197,7 +233,7 @@
                     android:layout_height="50dp"
                     android:layout_below="@id/cv_one_login"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/button1"
                     android:layout_gravity="center"
                     android:layout_marginTop="-35dp"
                     android:text="UPDATE DETAILS"

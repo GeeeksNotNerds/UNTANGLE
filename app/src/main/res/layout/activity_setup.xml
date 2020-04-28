@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#BA68C8"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     tools:context=".SetupActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="#BA68C8" />
+        android:background="@color/colorPrimaryDark" />
 
     <!--Top Header Layout-->
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create Profile"
-
+            android:textColor="@color/white"
             android:textSize="30sp"
             android:layout_marginLeft="65dp"
             android:textStyle="bold" />
@@ -77,38 +77,56 @@
                 android:elevation="15dp"
                 android:orientation="vertical"
                 android:padding="16dp">
+                <RelativeLayout
+
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:background="@drawable/circle">
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop"
+                    android:layout_width="fill_parent"
+
+                    android:layout_marginRight="40dp"
+                    android:layout_height="fill_parent"
+                    android:layout_centerHorizontal="true"
                     android:id="@+id/pro_pic"
-                    android:src="@mipmap/ic_launcher" >
+                    android:src="@drawable/profile" >
 
 
                 </de.hdodenhof.circleimageview.CircleImageView>
 
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
 
-                    />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_cam"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/canv"
+                    android:layout_marginTop="30dp"
+                    android:textAllCaps="false"
+                    app:fabCustomSize="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+
                     app:borderWidth="0dp"
+                    android:background="@color/colorPrimaryDark"
                     android:elevation="10dp"
-                    app:fabCustomSize="50dp" />
+                    />
+            </RelativeLayout>
 
 
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
 
+                />
 
 
                 <LinearLayout
@@ -119,12 +137,14 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/edit_border"
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
                         android:layout_gravity="center"
-                        android:paddingRight="8dp">
+                        android:padding="8dp">
 
                         <ImageView
+                            android:tint="@color/white"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
 
@@ -134,9 +154,11 @@
                         <EditText
                             android:layout_width="289dp"
                             android:layout_height="40dp"
+
                             android:layout_marginLeft="2dp"
-                            android:background="@drawable/edit_border"
+                            android:backgroundTint="@color/colorPrimaryDark"
                             android:id="@+id/name"
+                            android:textColorHint="@color/white"
                             android:hint="  Name"
                             android:inputType="textEmailAddress"
 
@@ -147,12 +169,14 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:gravity="center_vertical"
                         android:layout_gravity="center"
-                        android:paddingRight="8dp">
+                        android:padding="8dp"
+                        android:background="@drawable/edit_border">
 
                         <ImageView
+                            android:tint="@color/white"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
 
@@ -160,12 +184,13 @@
                             android:src="@drawable/dept" />
 
                         <EditText
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:textColorHint="@color/white"
                             android:layout_width="289dp"
                             android:layout_height="40dp"
                             android:layout_marginLeft="2dp"
-                            android:background="@drawable/edit_border"
                             android:id="@+id/dept"
-                            android:hint="  department"
+                            android:hint="  Department"
 
 
                             android:textSize="15sp"
@@ -181,9 +206,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="vertical"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    android:background="@drawable/edit_border">
 
 
 
@@ -198,7 +225,7 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-
+                            android:tint="@color/white"
                             android:padding="10dp"
                             android:src="@drawable/ic_email_24dp" />
 
@@ -206,77 +233,74 @@
                             android:layout_width="289dp"
                             android:layout_height="40dp"
                             android:layout_marginLeft="2dp"
+                            android:textColorHint="@color/white"
+                            android:backgroundTint="@color/colorPrimaryDark"
                             android:background="@drawable/edit_border"
                             android:id="@+id/email"
-                            android:hint="  email"
+                            android:hint="  Email"
                             android:inputType="textEmailAddress"
 
                             android:textSize="15sp"
                             />
-
-
                     </LinearLayout>
-
-
-
-
-
-
                 </LinearLayout>
 
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_border"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:tint="@color/white"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+
+                                android:padding="10dp"
+                                android:src="@drawable/ic_account_circle_24px" />
+
+                            <EditText
+                                android:layout_width="289dp"
+                                android:layout_height="40dp"
+
+                                android:layout_marginLeft="2dp"
+                                android:backgroundTint="@color/colorPrimaryDark"
+                                android:id="@+id/admin_no"
+                                android:textColorHint="@color/white"
+                                android:hint="  Name"
+                                android:inputType="textEmailAddress"
+
+                                android:textSize="15sp"
+                                />
+                        </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
 
-
-
-
-
-                <Button
+            <Button
                     android:layout_width="250dp"
                     android:layout_height="50dp"
                     android:layout_below="@id/cv_one_login"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/pro_layout"
                     android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
+                android:textAllCaps="false"
+                android:layout_marginTop="24dp"
                     android:text="Save Details"
                     android:textSize="25sp"
                     android:id="@+id/save_button"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorPrimaryDark"
                     android:elevation="15dp" />
-
-
-
-
-
-
-
-
-
-
-
         </LinearLayout>
 
-
-
-
-
-
-
-
     </ScrollView>
-
-
-
-
-
-
-
-
-
-
-
-
-
 </RelativeLayout>

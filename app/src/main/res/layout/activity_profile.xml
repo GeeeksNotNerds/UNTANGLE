@@ -6,27 +6,59 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:elevation="5dp"
+        android:id="@+id/toolbar1"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:text="Profile.."
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-light"
+
+                android:textSize="25sp"
+                android:textColor="@color/colorPrimaryDark"
+
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/thumbnail1"/>
+
+            <ImageView
+                android:layout_marginTop="8dp"
+                android:id="@+id/thumbnail1"
+
+                android:src="@drawable/profile"
+                android:layout_width="40dp"
+                android:layout_marginRight="8dp"
+
+
+                android:layout_alignParentRight="true"
+                android:layout_height="40dp"/>
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="#9c27B0" />
+        android:background="@color/colorPrimaryDark" />
+
 
     <RelativeLayout
         android:id="@+id/rl_two_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp">
-        <TextView
-            android:id="@+id/tv_one_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="P R O F I L E"
 
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="32sp"
-            android:textStyle="bold" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pro_pic"
             android:layout_width="150dp"
@@ -34,13 +66,15 @@
             android:layout_marginTop="60dp"
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher">
+            android:src="@drawable/profile"
+            android:background="@drawable/circle">
 
 
         </de.hdodenhof.circleimageview.CircleImageView>
 
 
     </RelativeLayout>
+
 
     <LinearLayout
         android:layout_marginTop="-50dp"
@@ -60,11 +94,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="260dp"
+                android:layout_marginTop="280dp"
                 android:elevation="10dp"
                 app:cardBackgroundColor="#fcfcfc"
                 app:cardCornerRadius="15dp"
-                app:cardElevation="15dp"
+                app:cardElevation="10dp"
                 android:foregroundGravity="center"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
@@ -83,6 +117,7 @@
                         android:paddingRight="8dp">
 
                         <ImageView
+                            android:tint="@color/colorPrimaryDark"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginTop="8dp"
@@ -96,6 +131,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="16dp"
                             android:text="Name"
+                            android:textColor="@color/colorPrimaryDark"
 
 
                             android:textSize="15sp" />
@@ -114,6 +150,7 @@
                             android:layout_height="40dp"
                             android:layout_marginTop="8dp"
                             android:padding="10dp"
+                            android:tint="@color/colorPrimaryDark"
                             android:src="@drawable/ic_email_24dp" />
 
                         <TextView
@@ -123,6 +160,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="16dp"
                             android:text="Email"
+                            android:textColor="@color/colorPrimaryDark"
 
 
                             android:textSize="15sp" />
@@ -141,15 +179,47 @@
                             android:layout_height="40dp"
                             android:layout_marginTop="8dp"
                             android:padding="10dp"
+                            android:tint="@color/colorPrimaryDark"
                             android:src="@drawable/dept" />
 
                         <TextView
+                            android:textColor="@color/colorPrimaryDark"
                             android:id="@+id/dept"
                             android:layout_width="289dp"
                             android:layout_height="40dp"
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="16dp"
                             android:text="Department"
+
+
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp">
+
+                        <ImageView
+                            android:tint="@color/colorPrimaryDark"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="8dp"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_profile" />
+
+                        <TextView
+                            android:id="@+id/admin_no"
+                            android:layout_width="289dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Name"
+                            android:textColor="@color/colorPrimaryDark"
 
 
                             android:textSize="15sp" />
@@ -186,10 +256,11 @@
             android:layout_height="50dp"
             android:layout_below="@id/cv_one_login"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/button_background"
+            android:background="@drawable/button"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:text="Edit Profile"
+            android:textAllCaps="false"
             android:textSize="25sp"
             android:id="@+id/edit_button"
             android:textColor="@android:color/white"
@@ -211,8 +282,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation"
-        app:itemIconTint="@color/colorAccent"
-        app:itemTextColor="@color/colorAccent"
+
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"
         />
 

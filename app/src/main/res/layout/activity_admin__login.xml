@@ -10,7 +10,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="#9c27B0" />
+        android:background="@color/colorPrimaryDark" />
 
     <RelativeLayout
         android:id="@+id/rl_two_login"
@@ -77,6 +77,7 @@
                             android:layout_height="40dp"
                             android:layout_marginTop="16dp"
                             android:padding="10dp"
+                            android:tint="@color/colorPrimaryDark"
                             android:src="@drawable/ic_email_24dp" />
 
                         <EditText
@@ -85,7 +86,7 @@
                             android:layout_height="40dp"
                             android:layout_marginLeft="2dp"
                             android:layout_marginTop="16dp"
-                            android:backgroundTint="#9c27B0"
+                            android:backgroundTint="@color/colorPrimaryDark"
                             android:hint=" Email"
                             android:inputType="textEmailAddress"
                             android:textSize="15sp" />
@@ -104,6 +105,7 @@
                             android:layout_height="80dp"
                             android:layout_marginTop="8dp"
                             android:padding="10dp"
+                            android:tint="@color/colorPrimaryDark"
                             android:src="@drawable/password" />
 
                         <EditText
@@ -114,7 +116,7 @@
                             android:layout_marginTop="32dp"
                             android:layout_marginBottom="24dp"
                             android:inputType="numberPassword"
-                            android:backgroundTint="#9c27B0"
+                            android:backgroundTint="@color/colorPrimaryDark"
                             android:hint="PIN"
                             android:textSize="15sp" />
 
@@ -140,7 +142,7 @@
             android:layout_height="50dp"
             android:layout_below="@id/cv_one_login"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/button_background"
+            android:background="@drawable/button"
             android:layout_gravity="center"
             android:layout_marginTop="-35dp"
             android:text="Login"
