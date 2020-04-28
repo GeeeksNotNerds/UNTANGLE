@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                             String show = dataSnapshot1.child("showInformation").getValue().toString();
-                            String info;
+                            String info,mail;
                             //if(show.equals("no"))info="Anonymous";
 
 
@@ -291,9 +291,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             String date = dataSnapshot1.child("date").getValue().toString();
                             String post = dataSnapshot1.child("description").getValue().toString();
                             String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                            if (show.equals("no")) info = "Anonymous";
+                            if (show.equals("no")) {
+                                info = "Anonymous";
+                                 mail=" ";}
                             else {
                                 info = name;
+                                mail=user;
                             }
 
                             if (categ.equals("Official")) colour1 = mColors[1];
@@ -344,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                             if(mode.equals("Public")){
-                                add(new Posts(postKey, "@"+info,   user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                add(new Posts(postKey, ""+info,   mail, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
@@ -649,10 +652,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                     switch (item.getItemId()){
-                        case R.id.nav_home:
-                            startActivity(new Intent(MainActivity.this,MainActivity.class));
 
-                            break;
                         case R.id.nav_post:
                             Intent intent=new Intent(MainActivity.this,PostActivity.class);
                             startActivity(intent);

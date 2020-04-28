@@ -47,7 +47,7 @@
             <View
                 android:id="@+id/bottomStroke"
                 android:layout_width="wrap_content"
-                android:layout_height="1.25dp"
+                android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/textView"
                 android:layout_alignParentBottom="true"
                 android:layout_alignRight="@+id/textView" />
@@ -56,11 +56,11 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:text="Test filter item"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="10sp" />
 
         </RelativeLayout>
 

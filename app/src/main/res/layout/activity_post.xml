@@ -111,7 +111,7 @@
                 android:id="@+id/tv2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="cursive"
+
                 android:padding="8dp"
 
                 android:text="You want to post your username?"
