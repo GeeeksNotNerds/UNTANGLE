@@ -68,6 +68,9 @@ public class PostActivity extends AppCompatActivity {
         //cv4=findViewById(R.id.cv4);
         cv5=findViewById(R.id.cv5);
         //cv6=findViewById(R.id.cv6);
+        BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListner);
+        bottomNav.getMenu().findItem(R.id.nav_post).setChecked(true);
 
         rg_mode=findViewById(R.id.rg1);
         rg_mode_opt=findViewById(R.id.rg2);
@@ -258,8 +261,6 @@ public class PostActivity extends AppCompatActivity {
 
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
 
-        BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListner);
 
 
         PostDescription=(EditText)findViewById(R.id.post_description);

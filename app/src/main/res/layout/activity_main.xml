@@ -45,7 +45,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#E4E6E3"
+        android:background="@color/gray"
         android:layout_below="@id/toolbar"
         android:layout_above="@id/bottom_navigation"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

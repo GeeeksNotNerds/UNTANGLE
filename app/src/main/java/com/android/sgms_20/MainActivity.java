@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private GoogleApiClient mGoogleApiClient;
     String currentUserID;
     private int[] mColors;
-    private String[] mAdmin={"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
+    private String[] mAdmin;
     private String[] mClub;
     private int colour1,colour2,colour3,colour4;
     private DatabaseReference UsersRef;
@@ -264,11 +264,17 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 }
                             }
 
-                            if(c==1)owner="Admin";
-                            else if(c==2)owner="Club";
-                            else if(uid.equals(currentUserID))owner="My Posts";
+                            if(c==1){owner="Admin";
+                            c=0;
+                            }
+                            else if(c==2){owner="Club";
+                            c=0;
+                            }
+                            else if(currentUserID.equals(uid)){owner="MyPosts";
+                            c=0;}
                             else {
                                 owner="General";
+                                c=0;
                             }
 
 
@@ -299,16 +305,16 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             if (sub.equals("Housing")) colour2 = mColors[7];
                             if (sub.equals("Rights Violation")) colour2 = mColors[8];
                             if (sub.equals("Health")) colour2 = mColors[9];
-                            if (sub.equals("Placements")) colour2 = mColors[20];
+                            if (sub.equals("Placements")) colour2 = mColors[19];
                             if (mode.equals("Public")) colour3 = mColors[10];
                             if (sub.equals("Internships")) colour2 = mColors[11];
                             if (sub.equals("Competitions")) colour2 = mColors[12];
                             if (sub.equals("Courses")) colour2 = mColors[13];
                             if (mode.equals("Private")) colour3 = mColors[14];
                             if (owner.equals("Admin")) colour4 = mColors[15];
-                            if (owner.equals("General")) colour4 = mColors[17];
-                            if (owner.equals("MyPosts")) colour4 = mColors[18];
-                            if (owner.equals("Club")) colour4 = mColors[19];
+                            if (owner.equals("General")) colour4 = mColors[16];
+                            if (owner.equals("MyPosts")) colour4 = mColors[17];
+                            if (owner.equals("Club")) colour4 = mColors[18];
 
                             //LikePostButton=(AppCompatImageView)findViewById(R.id.view_likes);
                             //DisplayNoOfLikes=(TextView)findViewById(R.id.text_likes_count);
@@ -338,22 +344,36 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                             if(mode.equals("Public")){
-                                add(new Posts(postKey, info, "@" + user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                add(new Posts(postKey, "@"+info,   user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                    add(new Tag(owner, colour4));
+                                    add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
                                     add(new Tag(sub, colour2));
-                                    add(new Tag(mode, colour3));
-                                    add(new Tag(owner, colour4));
+
+
 
                                 }}));}
                             else
                             {
-                                if(owner.equals("Admin")||(uid.equals(currentUserID)))
+                                int l=0;
+                                for(int i=0;i<1;i++)
                                 {
+                                    if(currentUserID.equals(mAdmin[i]))
+                                    {
+                                        l=1;
+                                        break;
+                                    }
+                                }
+                                if(l==1||(uid.equals(currentUserID)))
+                                {
+                                    l=0;
                                     add(new Posts(postKey, info, "@" + user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                        add(new Tag(owner, colour4));
+                                        add(new Tag(mode, colour3));
                                         add(new Tag(categ, colour1));
                                         add(new Tag(sub, colour2));
-                                        add(new Tag(mode, colour3));
-                                        add(new Tag(owner, colour4));
+
+
 
                                     }}));
                                 }
