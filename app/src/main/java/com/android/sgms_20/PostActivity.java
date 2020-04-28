@@ -345,7 +345,7 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("email",userEmail);
                     postsMap.put("showInformation",UserInfo_show);
                     postsMap.put("PostKey",postRandomName+current_user_id);
-                    postsMap.put("status","To be Reviewed..");
+                    postsMap.put("status","New");
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
                                 @Override
