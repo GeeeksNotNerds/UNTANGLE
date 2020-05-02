@@ -156,13 +156,38 @@
         android:tint="#827f93" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/statusheading"
+        android:layout_margin="8dp"
+        android:textSize="16dp"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingBottom="8dp"
+        android:layout_below="@id/filter_first"
+        android:text="STATUS:"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/status"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="16dp"
+        android:layout_below="@id/filter_first"
+        android:layout_toRightOf="@id/statusheading"
+        android:text="status..."/>
+    <TextView
         android:id="@+id/text_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/filter_first"
-        android:maxLines="4"
-        android:layout_margin="16dp"
+        android:layout_below="@id/status"
+        android:textSize="24dp"
+        android:padding="8dp"
+        android:layout_margin="0dp"
         android:text="What is the first step to transform an idea into an actual project?"
         android:textColor="#827f93" />
 

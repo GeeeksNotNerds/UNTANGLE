@@ -161,7 +161,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.textSubcategory.setText(secondTag.getText());
         Tag thirdTag= question.getTags().get(2);
         holder.textMode.setText(thirdTag.getText());
-
+        holder.textStatus.setText(question.getStatus());
         Tag fourthTag= question.getTags().get(3);
         holder.textUid.setText(fourthTag.getText());
 
@@ -236,6 +236,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView textQuestion;
         TextView textCategory;
         TextView textSubcategory;
+        TextView textStatus,statusHeading;
 
 
 
@@ -267,8 +268,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             textCategory = (TextView) itemView.findViewById(R.id.filter_first);
             textMode=(TextView)itemView.findViewById(R.id.filter_third);
             textUid=(TextView)itemView.findViewById(R.id.filter_fourth);
-
+            textStatus=itemView.findViewById(R.id.status);
+            statusHeading=itemView.findViewById(R.id.statusheading);
             textSubcategory= (TextView) itemView.findViewById(R.id.filter_second);
+
+
+
 
         }
         public void setLikesButtonStatus(final String PostKey)

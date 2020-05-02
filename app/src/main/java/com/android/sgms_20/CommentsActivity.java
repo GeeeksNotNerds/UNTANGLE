@@ -145,7 +145,7 @@ public class CommentsActivity extends AppCompatActivity {
         public void setUsername(String username)
         {
             TextView myUserName=(TextView)mView.findViewById(R.id.comment_username);
-            myUserName.setText("@"+ username+" ");
+            myUserName.setText( " " +username+" ");
         }
         public void setComment(String comment)
         {

@@ -55,7 +55,7 @@ public class SetupActivity extends AppCompatActivity {
     ProgressBar progressBar;
     FloatingActionButton fab;
     private String TAG;
-    private String[] mAdmin;
+    private String[] mAdmin=new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};;
     private StorageReference proPicRef;
 
 

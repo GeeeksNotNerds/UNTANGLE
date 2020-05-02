@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private GoogleApiClient mGoogleApiClient;
     String currentUserID;
     private int[] mColors;
-    private String[] mAdmin;
+    private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
     private String[] mClub;
     private int colour1,colour2,colour3,colour4;
     private DatabaseReference UsersRef;
@@ -287,6 +287,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             final String sub = dataSnapshot1.child("subCategory").getValue().toString();
                             final String categ = dataSnapshot1.child("category").getValue().toString();
                             String name = dataSnapshot1.child("username").getValue().toString();
+                            String status;
+                            if(!owner.equals("Admin"))status=dataSnapshot1.child("status").getValue().toString();
+                            else status="-";
                             String user = dataSnapshot1.child("email").getValue().toString();
                             String date = dataSnapshot1.child("date").getValue().toString();
                             String post = dataSnapshot1.child("description").getValue().toString();
@@ -347,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                             if(mode.equals("Public")){
-                                add(new Posts(postKey, ""+info,   mail, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                add(new Posts(postKey, ""+info,   mail, post, date, date, uid, profilePic, mode, categ, sub, show,status, new ArrayList<Tag>() {{
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
@@ -370,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 if(l==1||(uid.equals(currentUserID)))
                                 {
                                     l=0;
-                                    add(new Posts(postKey, info, "" + user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                    add(new Posts(postKey, info, "" + user, post, date, date, uid, profilePic, mode, categ, sub, show,status, new ArrayList<Tag>() {{
                                         add(new Tag(owner, colour4));
                                         add(new Tag(mode, colour3));
                                         add(new Tag(categ, colour1));
