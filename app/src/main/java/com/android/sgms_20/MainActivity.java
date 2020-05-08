@@ -69,21 +69,21 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private List<Posts> mAllQuestions;
     private Filter<Tag> mFilter;
     private PostsAdapter mAdapter;
-    AppCompatImageView LikePostButton;
-    TextView DisplayNoOfLikes;
-    int CountLikes;
+    AppCompatImageView LikePostButton,downVotePostButton;
+    TextView DisplayNoOfLikes,DisplayDownVotes;
+    int CountLikes,countDownVotes;
 
     private ImageView pro;
 
     private RecyclerView postList,mRecyclerView;
 
-    private DatabaseReference MyPostRef,PostsRef,LikesRef;
+    private DatabaseReference MyPostRef,PostsRef,LikesRef,DownVotesRef;
     String letter="A";
 
 
 
 
-    boolean LikeChecker=false;
+    boolean LikeChecker=false,DownVoteChecker=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         PostsRef= FirebaseDatabase.getInstance().getReference().child("Posts");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+        DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
         MyPostRef.addValueEventListener(new ValueEventListener() {
@@ -552,6 +553,44 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                     }
                 });
+
+                postsViewHolder.DownVotePostButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        DownVoteChecker=true;
+                        DownVotesRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if(DownVoteChecker==true)
+                                {
+                                    if(dataSnapshot.child(PostKey).hasChild(currentUserID))
+                                    {
+                                        DownVotesRef.child(PostKey).child(currentUserID).removeValue();
+                                        DownVoteChecker=false;
+
+                                    }
+                                    else
+                                    {
+
+                                        DownVotesRef.child(PostKey).child(currentUserID).setValue(true);
+                                        DownVoteChecker=false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+                });
+
+
+
             }
 
             @NonNull
@@ -575,11 +614,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     public static class PostsViewHolder extends RecyclerView.ViewHolder
     {
         View mView;
-        AppCompatImageView LikePostButton,CommentPostButton;
-        TextView DisplayNoOfLikes;
-        int CountLikes;
+        AppCompatImageView LikePostButton,CommentPostButton,DownVotePostButton;
+        TextView DisplayNoOfLikes,DisplayNoOfDownVotes;
+        int CountLikes,CountDownVotes;
         String currentUserId;
-        DatabaseReference LikesRef;
+        DatabaseReference LikesRef,DownVotesRef;
 
 
 
@@ -592,8 +631,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             LikePostButton=(AppCompatImageView)mView.findViewById(R.id.view_likes);
             CommentPostButton=(AppCompatImageView) mView.findViewById(R.id.view_chat);
             DisplayNoOfLikes=(TextView)mView.findViewById(R.id.text_likes_count);
-
+            DownVotePostButton=mView.findViewById(R.id.view_downVotes);
+            DisplayNoOfDownVotes=mView.findViewById(R.id.view_downVotes);
             LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+            DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
             currentUserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
         public void setLikesButtonStatus(final String PostKey)
@@ -622,6 +663,33 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 }
             });
         }
+        public void setDownVoteButtonStatus(final String PostKey)
+
+        {
+            DownVotesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(PostKey).hasChild(currentUserId))
+                    {
+                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                        DownVotePostButton.setImageResource(R.drawable.arrows);
+                        DisplayNoOfDownVotes.setText(Integer.toString(CountDownVotes));
+                    }
+                    else
+                    {
+                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                        DownVotePostButton.setImageResource(R.drawable.downvote);
+                        DisplayNoOfDownVotes.setText(Integer.toString(CountLikes));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
         /*public void setFullname(String fullname)
         {
             TextView username=(TextView)mView.findViewById(R.id.post_user_name);

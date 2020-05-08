@@ -37,14 +37,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
     private List<Posts> mPosts;
-    boolean LikeChecker=false;
+    boolean LikeChecker=false,DownVoteChecker=false;
     private Context mContext;
     private TextDrawable mDrawableBuilder;
     FirebaseAuth mAuth;
     String currentUserId;
     private  Intent in;
+    private boolean like=false,unlike=false;
 
-    DatabaseReference LikesRef,PostsRef;
+    DatabaseReference LikesRef,PostsRef,DownVotesRef;
 
     public PostsAdapter(Context context, List<Posts> posts) {
         mContext = context;
@@ -52,6 +53,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+        DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
+
         PostsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
 
     }
@@ -88,6 +91,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
       //  String PostKey=PostsRef.child("PostKey").toString();
 
         holder.setLikesButtonStatus(PostKey);
+        holder.setDownVoteButtonStatus(PostKey);
         holder.settings.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -116,6 +120,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
         });
 
+
+
         holder.LikePostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -126,12 +132,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 LikesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(LikeChecker==true)
+                        if(LikeChecker==true )
                         {
                             if(dataSnapshot.child(PostKey).hasChild(currentUserId))
                             {
                                 LikesRef.child(PostKey).child(currentUserId).removeValue();
                                 LikeChecker=false;
+
 
                             }
                             else
@@ -139,6 +146,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                                 LikesRef.child(PostKey).child(currentUserId).setValue(true);
                                 LikeChecker=false;
+
                             }
                         }
                     }
@@ -152,6 +160,50 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             }
         });
+
+
+        holder.DownVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+
+                DownVoteChecker=true;
+                DownVotesRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(DownVoteChecker==true)
+                        {
+                            if(dataSnapshot.child(PostKey).hasChild(currentUserId))
+                            {
+                                DownVotesRef.child(PostKey).child(currentUserId).removeValue();
+                                DownVoteChecker=false;
+
+
+                            }
+                            else
+                            {
+
+                                DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
+                                DownVoteChecker=false;
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+        });
+
+
+
+
 
         holder.textMode.setText(question.getMode());
         //holder.textUid.setText(question.getUid());
@@ -225,6 +277,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         drawable1.setCornerRadius(1000);
         drawable1.setColor(secondTag.getColor());
         holder.secondFilter.setBackgroundDrawable(drawable1);*/
+
     }
 
     private int getColor(int color) {
@@ -239,11 +292,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-        AppCompatImageView LikePostButton,CommentPostButton,settings;
-        TextView DisplayNoOfLikes;
-        int CountLikes;
+        AppCompatImageView LikePostButton,CommentPostButton,settings,DownVoteButton;
+        TextView DisplayNoOfLikes,DisplayDownVotes;
+        int CountLikes,CountDownVotes;
         String currentUserId;
-        DatabaseReference LikesRef;
+        DatabaseReference LikesRef,DownVotesRef;
 
 
         TextView textAuthorName;
@@ -272,8 +325,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             LikePostButton=(AppCompatImageView)mView.findViewById(R.id.view_likes);
             CommentPostButton=(AppCompatImageView) mView.findViewById(R.id.view_chat);
             DisplayNoOfLikes=(TextView)mView.findViewById(R.id.text_likes_count);
-
+            DownVoteButton=mView.findViewById(R.id.view_downVotes);
+            DisplayDownVotes=mView.findViewById(R.id.text_downVotes_count);
             LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+            DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
 
 
 
@@ -307,6 +362,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
                         LikePostButton.setImageResource(R.drawable.upvote);
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
+
+
                     }
                     else
                     {
@@ -323,6 +380,39 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             });
         }
+
+
+        public void setDownVoteButtonStatus(final String PostKey)
+        //public void setLikesButtonStatus()
+        {
+
+            DownVotesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(PostKey).hasChild(currentUserId))
+                    {
+                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                        DownVoteButton.setImageResource(R.drawable.downvote);
+                        DisplayDownVotes.setText(Integer.toString(CountDownVotes));
+
+
+                    }
+                    else
+                    {
+                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                        DownVoteButton.setImageResource(R.drawable.arrows);
+
+                        DisplayDownVotes.setText(Integer.toString(CountDownVotes));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
 
     }
 }
