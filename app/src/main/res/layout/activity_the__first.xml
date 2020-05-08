@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:padding="16dp"
-
+                android:fontFamily="sans-serif-light"
                 android:text="Are you a Student?"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
                 android:textSize="25dp"

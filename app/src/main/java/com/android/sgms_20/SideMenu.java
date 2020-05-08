@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,6 +41,10 @@ public class SideMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_side_menu);
+        mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext()) //Use app context to prevent leaks using activity
+                //.enableAutoManage(this /* FragmentActivity */, connectionFailedListener)
+                .addApi(Auth.GOOGLE_SIGN_IN_API)
+                .build();
 
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -61,6 +67,8 @@ public class SideMenu extends AppCompatActivity {
         Profile=(TextView)findViewById(R.id.profile_page);
         Support=(TextView)findViewById(R.id.support_page);
         Logout=(TextView)findViewById(R.id.logout);
+
+
 
         profileUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -117,7 +125,11 @@ public class SideMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                if (mGoogleApiClient.isConnected()) {
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                    mGoogleApiClient.disconnect();
+                    mGoogleApiClient.connect();
+                }
                 sendUserToLoginActivity();
 
             }
@@ -129,6 +141,22 @@ public class SideMenu extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
     }
 
 

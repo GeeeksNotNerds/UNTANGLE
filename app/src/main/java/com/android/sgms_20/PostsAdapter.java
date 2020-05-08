@@ -5,10 +5,12 @@ package com.android.sgms_20;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,21 +26,26 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
 
     private List<Posts> mPosts;
-    boolean LikeChecker=false;
+    boolean LikeChecker=false,DownVoteChecker=false;
     private Context mContext;
+    private TextDrawable mDrawableBuilder;
     FirebaseAuth mAuth;
     String currentUserId;
     private  Intent in;
+    private boolean like=false,unlike=false;
 
-    DatabaseReference LikesRef,PostsRef;
+    DatabaseReference LikesRef,PostsRef,DownVotesRef;
 
     public PostsAdapter(Context context, List<Posts> posts) {
         mContext = context;
@@ -45,6 +53,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+        DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
+
         PostsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
 
     }
@@ -81,6 +91,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
       //  String PostKey=PostsRef.child("PostKey").toString();
 
         holder.setLikesButtonStatus(PostKey);
+        holder.setDownVoteButtonStatus(PostKey);
         holder.settings.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -109,6 +120,20 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
         });
 
+        holder.pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ProIntent=new Intent(mContext,ProItemView.class);
+                ProIntent.putExtra("PostKey",PostKey);
+                mContext.startActivity(ProIntent);
+
+            }
+        });
+
+
+
+
+
         holder.LikePostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -119,19 +144,25 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 LikesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(LikeChecker==true)
+                        if(LikeChecker==true )
                         {
                             if(dataSnapshot.child(PostKey).hasChild(currentUserId))
                             {
                                 LikesRef.child(PostKey).child(currentUserId).removeValue();
                                 LikeChecker=false;
+                                like=false;
+                                unlike=false;
+
 
                             }
                             else
                             {
+                                if(!unlike && !like) {
+                                    LikesRef.child(PostKey).child(currentUserId).setValue(true);
+                                    LikeChecker = false;
+                                    like = true;
+                                }
 
-                                LikesRef.child(PostKey).child(currentUserId).setValue(true);
-                                LikeChecker=false;
                             }
                         }
                     }
@@ -145,6 +176,55 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             }
         });
+
+
+        holder.DownVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+
+                DownVoteChecker=true;
+                DownVotesRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(DownVoteChecker==true)
+                        {
+                            if(dataSnapshot.child(PostKey).hasChild(currentUserId))
+                            {
+                                DownVotesRef.child(PostKey).child(currentUserId).removeValue();
+                                DownVoteChecker=false;
+                                like=false;
+                                unlike=false;
+
+
+                            }
+                            else
+                            {
+                                if(!like && !unlike) {
+
+                                    DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
+                                    DownVoteChecker = false;
+                                    unlike=true;
+                                }
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+        });
+
+
+
+
 
         holder.textMode.setText(question.getMode());
         //holder.textUid.setText(question.getUid());
@@ -161,10 +241,21 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.textSubcategory.setText(secondTag.getText());
         Tag thirdTag= question.getTags().get(2);
         holder.textMode.setText(thirdTag.getText());
-
+        holder.textStatus.setText(question.getStatus());
         Tag fourthTag= question.getTags().get(3);
         holder.textUid.setText(fourthTag.getText());
+        //holder.pic.setImageURI(Uri.parse(question.getProfileImage()));
 
+        char letter = question.getName().charAt(0);
+       letter = Character.toUpperCase(letter);
+
+
+        //Uri imgUri=Uri.parse(question.getProfileImage());
+        //imageView.setImageURI(null);
+        //imageView.setImageURI(imgUri);
+        mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
+       holder.pic.setImageDrawable(mDrawableBuilder);
+      // else holder.pic.setImageURI(imgUri);
 
         GradientDrawable drawable = new GradientDrawable();
         drawable.setCornerRadius(1000);
@@ -207,6 +298,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         drawable1.setCornerRadius(1000);
         drawable1.setColor(secondTag.getColor());
         holder.secondFilter.setBackgroundDrawable(drawable1);*/
+
     }
 
     private int getColor(int color) {
@@ -221,11 +313,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-        AppCompatImageView LikePostButton,CommentPostButton,settings;
-        TextView DisplayNoOfLikes;
-        int CountLikes;
+        AppCompatImageView LikePostButton,CommentPostButton,settings,DownVoteButton;
+        ImageView pro;
+        TextView DisplayNoOfLikes,DisplayDownVotes;
+        int CountLikes,CountDownVotes;
         String currentUserId;
-        DatabaseReference LikesRef;
+        DatabaseReference LikesRef,DownVotesRef;
 
 
         TextView textAuthorName;
@@ -236,7 +329,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView textQuestion;
         TextView textCategory;
         TextView textSubcategory;
-
+        TextView textStatus,statusHeading;
+        ImageView pic;
 
 
 
@@ -253,12 +347,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             LikePostButton=(AppCompatImageView)mView.findViewById(R.id.view_likes);
             CommentPostButton=(AppCompatImageView) mView.findViewById(R.id.view_chat);
             DisplayNoOfLikes=(TextView)mView.findViewById(R.id.text_likes_count);
-
+            pro=mView.findViewById(R.id.avatar);
+            DownVoteButton=mView.findViewById(R.id.view_downVotes);
+            DisplayDownVotes=mView.findViewById(R.id.text_downVotes_count);
             LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+            DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
 
 
 
             currentUserId= FirebaseAuth.getInstance().getCurrentUser().getUid();
+            pic=itemView.findViewById(R.id.avatar);
 
             textAuthorName = (TextView) itemView.findViewById(R.id.text_name);
             textJobTitle = (TextView) itemView.findViewById(R.id.text_job_title);
@@ -267,8 +365,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             textCategory = (TextView) itemView.findViewById(R.id.filter_first);
             textMode=(TextView)itemView.findViewById(R.id.filter_third);
             textUid=(TextView)itemView.findViewById(R.id.filter_fourth);
-
+            textStatus=itemView.findViewById(R.id.status);
+            statusHeading=itemView.findViewById(R.id.statusheading);
             textSubcategory= (TextView) itemView.findViewById(R.id.filter_second);
+
+
+
 
         }
         public void setLikesButtonStatus(final String PostKey)
@@ -281,13 +383,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     if(dataSnapshot.child(PostKey).hasChild(currentUserId))
                     {
                         CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        LikePostButton.setImageResource(R.drawable.ic_like);
+                        LikePostButton.setImageResource(R.drawable.upvote);
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
+
+
                     }
                     else
                     {
                         CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        LikePostButton.setImageResource(R.drawable.ic_heart);
+                        LikePostButton.setImageResource(R.drawable.ic);
 
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
                     }
@@ -299,6 +403,39 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             });
         }
+
+
+        public void setDownVoteButtonStatus(final String PostKey)
+        //public void setLikesButtonStatus()
+        {
+
+            DownVotesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(PostKey).hasChild(currentUserId))
+                    {
+                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                        DownVoteButton.setImageResource(R.drawable.downvote);
+                        DisplayDownVotes.setText(Integer.toString(CountDownVotes));
+
+
+                    }
+                    else
+                    {
+                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                        DownVoteButton.setImageResource(R.drawable.arrows);
+
+                        DisplayDownVotes.setText(Integer.toString(CountDownVotes));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
 
     }
 }

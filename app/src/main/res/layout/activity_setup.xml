@@ -30,6 +30,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:fontFamily="sans-serif-light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create Profile"
@@ -297,6 +298,8 @@
                 android:layout_marginTop="24dp"
                     android:text="Save Details"
                     android:textSize="25sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="bold"
                     android:id="@+id/save_button"
                     android:textColor="@color/colorPrimaryDark"
                     android:elevation="15dp" />

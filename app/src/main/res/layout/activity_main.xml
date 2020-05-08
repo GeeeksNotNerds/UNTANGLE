@@ -30,6 +30,8 @@
 
             <ImageView
                android:id="@+id/thumbnail"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
 
                android:src="@drawable/profile"
                android:layout_width="40dp"

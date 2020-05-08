@@ -36,7 +36,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.util.HashMap;
 
 public class SettingsActivity extends AppCompatActivity {
-    private Toolbar mToolbar;
+
     private ProgressDialog loadingBar;
     ProgressBar progressBar;
     private EditText userName,userDept,userEmail,userAdminNo;
@@ -47,6 +47,8 @@ public class SettingsActivity extends AppCompatActivity {
     private StorageReference UserProfileImageRef;
     private FirebaseAuth mAuth;
     String currentUserId;
+    private Toolbar mToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,27 @@ public class SettingsActivity extends AppCompatActivity {
         loadingBar=new ProgressDialog(this);
         mAuth= FirebaseAuth.getInstance();
         progressBar=findViewById(R.id.progress_bar);
+        mToolbar=(Toolbar)findViewById(R.id.toolbar1);
+        setSupportActionBar(mToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent=new Intent(SettingsActivity.this,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+
+
+            }
+        });
+
 
         currentUserId=mAuth.getCurrentUser().getUid();
         SettingsuserRef= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
@@ -195,6 +218,7 @@ public class SettingsActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 final String downloadUrl = uri.toString();
+                                loadingBar.dismiss();
                                 SettingsuserRef.child("ProfileImage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
