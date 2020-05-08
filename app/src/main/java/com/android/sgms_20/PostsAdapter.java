@@ -5,10 +5,12 @@ package com.android.sgms_20;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,9 +26,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
@@ -33,6 +39,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private List<Posts> mPosts;
     boolean LikeChecker=false;
     private Context mContext;
+    private TextDrawable mDrawableBuilder;
     FirebaseAuth mAuth;
     String currentUserId;
     private  Intent in;
@@ -164,7 +171,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.textStatus.setText(question.getStatus());
         Tag fourthTag= question.getTags().get(3);
         holder.textUid.setText(fourthTag.getText());
+        //holder.pic.setImageURI(Uri.parse(question.getProfileImage()));
 
+        char letter = question.getName().charAt(0);
+       letter = Character.toUpperCase(letter);
+
+
+        //Uri imgUri=Uri.parse(question.getProfileImage());
+        //imageView.setImageURI(null);
+        //imageView.setImageURI(imgUri);
+        mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
+       holder.pic.setImageDrawable(mDrawableBuilder);
+      // else holder.pic.setImageURI(imgUri);
 
         GradientDrawable drawable = new GradientDrawable();
         drawable.setCornerRadius(1000);
@@ -237,7 +255,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView textCategory;
         TextView textSubcategory;
         TextView textStatus,statusHeading;
-
+        ImageView pic;
 
 
 
@@ -260,6 +278,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
             currentUserId= FirebaseAuth.getInstance().getCurrentUser().getUid();
+            pic=itemView.findViewById(R.id.avatar);
 
             textAuthorName = (TextView) itemView.findViewById(R.id.text_name);
             textJobTitle = (TextView) itemView.findViewById(R.id.text_job_title);
@@ -286,13 +305,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     if(dataSnapshot.child(PostKey).hasChild(currentUserId))
                     {
                         CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        LikePostButton.setImageResource(R.drawable.ic_like);
+                        LikePostButton.setImageResource(R.drawable.upvote);
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
                     }
                     else
                     {
                         CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        LikePostButton.setImageResource(R.drawable.ic_heart);
+                        LikePostButton.setImageResource(R.drawable.ic);
 
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
                     }

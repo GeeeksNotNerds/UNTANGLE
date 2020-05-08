@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Comments.."
         android:id="@+id/comment"
+        android:fontFamily="sans-serif-light"
         android:layout_margin="24dp"
         android:layout_alignParentTop="true"
         android:textSize="24sp"

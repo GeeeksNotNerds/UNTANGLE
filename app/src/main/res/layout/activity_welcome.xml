@@ -38,6 +38,7 @@
         android:layout_alignParentLeft="true"
         android:background="@null"
         android:id="@+id/bnSkip"
+        android:fontFamily="sans-serif-light"
         android:layout_marginBottom="8dp"
         android:textColor="#000000"
         />
@@ -50,6 +51,7 @@
         android:layout_alignParentRight="true"
         android:background="@null"
         android:id="@+id/bnNext"
+        android:fontFamily="sans-serif-light"
         android:layout_marginBottom="8dp"
         android:textColor="#000000"
         />

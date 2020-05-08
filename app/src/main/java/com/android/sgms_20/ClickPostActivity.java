@@ -1,8 +1,12 @@
 package com.android.sgms_20;
 
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -13,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +41,14 @@ public class ClickPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_post);
+
+
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            NotificationChannel channel=new NotificationChannel("n","n", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager=getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
 
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -126,7 +140,9 @@ public class ClickPostActivity extends AppCompatActivity {
                               {
 
                                   ClickPostRef.child("status").setValue(inputField.getText().toString());
+                                  notification();
                                   Toast.makeText(ClickPostActivity.this, "Status Changed.", Toast.LENGTH_SHORT).show();
+
                                   SendUserToMainActivity();
                               }
                           });
@@ -209,4 +225,19 @@ public class ClickPostActivity extends AppCompatActivity {
         finish();
 
     }
+
+
+private void notification(){
+
+    NotificationCompat.Builder builder=new NotificationCompat.Builder(this,"n")
+            .setContentText("UNTANGLED")
+            .setSmallIcon(R.id.logo)
+            .setAutoCancel(true)
+            .setContentText("Status of your post has been changed!");
+    NotificationManagerCompat managerCompat=NotificationManagerCompat.from(this);
+    managerCompat.notify(1,builder.build());
+
+}
+
+
 }

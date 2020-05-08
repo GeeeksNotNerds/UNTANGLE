@@ -22,6 +22,7 @@
             android:orientation="horizontal"
             android:layout_margin="10dp">
             <TextView
+                android:fontFamily="sans-serif-light"
                 android:id="@+id/comment_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +40,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:text="commented on"
-
+                android:fontFamily="sans-serif-light"
                 android:textStyle="bold"
                 android:textSize="14sp"/>
             <TextView
@@ -47,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date :"
-
+                android:fontFamily="sans-serif-light"
                 android:textStyle="bold"
                 android:textSize="14sp"/>
 
@@ -64,7 +65,7 @@
                 android:id="@+id/comment_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:fontFamily="sans-serif-light"
                 android:text="Comment text will be displayed here"
 
                 android:textColor="#F80F0000"
@@ -75,6 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Time:"
+                android:fontFamily="sans-serif-light"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold"
                 android:textSize="14sp"/>

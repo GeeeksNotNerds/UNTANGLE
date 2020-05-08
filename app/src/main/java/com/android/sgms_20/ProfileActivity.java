@@ -79,7 +79,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-
         pro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

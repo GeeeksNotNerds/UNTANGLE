@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
     <TextView
+        android:fontFamily="sans-serif-light"
        android:id="@+id/status_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +37,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="start"
-
+            android:fontFamily="sans-serif-light"
             android:padding="0dp"
 
             android:text="To Be Reviewed..."
@@ -56,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:text="post description"
+        android:fontFamily="sans-serif-light"
         android:textSize="20sp"
         android:textAlignment="textStart"
         android:layout_centerHorizontal="true"
@@ -70,6 +72,7 @@
 
 
     <Button
+        android:clickable="true"
         android:id="@+id/edit_post_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,16 +85,16 @@
         android:padding="8dp"
         android:text="Edit Post"
 
-
+        android:fontFamily="sans-serif-light"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
         android:textStyle="bold" />
     <Button
-
+         android:clickable="true"
         android:id="@+id/status_post_button"
         android:textAllCaps="false"
         android:padding="8dp"
-
+        android:fontFamily="sans-serif-light"
         android:background="@drawable/border1"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
@@ -108,6 +111,7 @@
 
 
     <Button
+        android:clickable="true"
 
         android:id="@+id/delete_post_button"
         android:textAllCaps="false"
@@ -121,7 +125,7 @@
         android:layout_marginTop="5dp"
        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-
+        android:fontFamily="sans-serif-light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="delete Post"/>

@@ -19,9 +19,10 @@
         android:layout_centerHorizontal="true"
         android:text="Post It!"
         android:textColor="@color/white"
+        android:fontFamily="sans-serif-light"
         android:textSize="30sp"
         android:layout_margin="10dp"
-        android:fontFamily="@string/common_google_play_services_enable_title"/>
+        />
 
 
         >
@@ -51,6 +52,7 @@
                 android:layout_centerHorizontal="true"
                 android:padding="8dp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-light"
                  android:layout_marginRight="32dp"
                 android:text="You want your post to be Public or Private?"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
@@ -108,6 +110,7 @@
             >
 
             <TextView
+                android:fontFamily="sans-serif-light"
                 android:id="@+id/tv2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,7 +176,7 @@
                     android:layout_marginTop="20dp"
                     android:textSize="20dp"
                     android:textStyle="bold"
-
+                    android:fontFamily="sans-serif-light"
                     android:layout_height="wrap_content"
                     android:text="Select your complaint category"
 
@@ -196,7 +199,7 @@
                     android:textSize="20dp"
 
                     android:textStyle="bold"
-
+                    android:fontFamily="sans-serif-light"
                     android:layout_height="wrap_content"
                     android:text="Select your sub-category"
                     android:layout_below="@id/spinner1"
@@ -242,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:padding="8dp"
-
+                android:fontFamily="sans-serif-light"
 
                 android:text="Choose a Sub-Category...."
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
@@ -306,7 +309,7 @@
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginLeft="8dp"
-
+            android:fontFamily="sans-serif-light"
             android:layout_marginBottom="24dp"
             android:background="@drawable/edit_border"
             android:hint="   Write about your post  "
