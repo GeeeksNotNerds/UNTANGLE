@@ -138,14 +138,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                             {
                                 LikesRef.child(PostKey).child(currentUserId).removeValue();
                                 LikeChecker=false;
+                                like=false;
+                                unlike=false;
 
 
                             }
                             else
                             {
-
-                                LikesRef.child(PostKey).child(currentUserId).setValue(true);
-                                LikeChecker=false;
+                                if(!unlike && !like) {
+                                    LikesRef.child(PostKey).child(currentUserId).setValue(true);
+                                    LikeChecker = false;
+                                    like = true;
+                                }
 
                             }
                         }
@@ -178,14 +182,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                             {
                                 DownVotesRef.child(PostKey).child(currentUserId).removeValue();
                                 DownVoteChecker=false;
+                                like=false;
+                                unlike=false;
 
 
                             }
                             else
                             {
+                                if(!like && !unlike) {
 
-                                DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
-                                DownVoteChecker=false;
+                                    DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
+                                    DownVoteChecker = false;
+                                    unlike=true;
+                                }
 
                             }
                         }
