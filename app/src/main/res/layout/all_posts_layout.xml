@@ -96,8 +96,8 @@
             android:text="Post description "
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:padding="3dp"
-            android:textSize="18sp"
+            android:padding="10dp"
+            android:textSize="24sp"
             android:textColor="#000000" />
         <LinearLayout
             android:layout_width="match_parent"
