@@ -54,7 +54,7 @@ public class ClickPostActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width=dm.widthPixels;
         int height=dm.heightPixels;
-        getWindow().setLayout((int)(width*.80),(int) (height*.80));
+        getWindow().setLayout((int)(width*.90),(int) (height*.80));
 
         mAuth= FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();

@@ -34,6 +34,8 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.customTheme" />
         <activity android:name=".SetupActivity" />
+        <activity android:name=".ProItemView"
+            android:theme="@style/AppTheme.customTheme"/>
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -79,13 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        pro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this,SideMenu.class));
-                finish();
-            }
-        });
+
 
 
 

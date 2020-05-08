@@ -120,6 +120,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
         });
 
+        holder.pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ProIntent=new Intent(mContext,ProItemView.class);
+                ProIntent.putExtra("PostKey",PostKey);
+                mContext.startActivity(ProIntent);
+
+            }
+        });
+
+
+
 
 
         holder.LikePostButton.setOnClickListener(new View.OnClickListener() {
@@ -302,6 +314,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         View mView;
         AppCompatImageView LikePostButton,CommentPostButton,settings,DownVoteButton;
+        ImageView pro;
         TextView DisplayNoOfLikes,DisplayDownVotes;
         int CountLikes,CountDownVotes;
         String currentUserId;
@@ -334,6 +347,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             LikePostButton=(AppCompatImageView)mView.findViewById(R.id.view_likes);
             CommentPostButton=(AppCompatImageView) mView.findViewById(R.id.view_chat);
             DisplayNoOfLikes=(TextView)mView.findViewById(R.id.text_likes_count);
+            pro=mView.findViewById(R.id.avatar);
             DownVoteButton=mView.findViewById(R.id.view_downVotes);
             DisplayDownVotes=mView.findViewById(R.id.text_downVotes_count);
             LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
