@@ -191,14 +191,14 @@ public class ProfileActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             Intent intent=new Intent(ProfileActivity.this,MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                             startActivity(intent);
                             finish();
                             return true;
 
                         case R.id.nav_post:
                             Intent Lintent=new Intent(ProfileActivity.this,PostActivity.class);
-                            Lintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                             startActivity(Lintent);
                             finish();
 

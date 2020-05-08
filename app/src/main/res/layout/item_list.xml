@@ -115,6 +115,8 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         fresco:tint="#015822"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_below="@+id/divider"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
@@ -145,6 +147,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/arrows"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:tint="#827f93" />
     <TextView
         android:id="@+id/text_downVotes_count"

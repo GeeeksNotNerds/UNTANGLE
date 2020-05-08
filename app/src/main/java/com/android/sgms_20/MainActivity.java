@@ -726,10 +726,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                         case R.id.nav_post:
                             Intent intent=new Intent(MainActivity.this,PostActivity.class);
+
                             startActivity(intent);
                             break;
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(MainActivity.this,ProfileActivity.class);
+
                             startActivity(Pintent);
                             break;
                     }

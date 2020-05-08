@@ -409,7 +409,7 @@ public class PostActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             Intent intent=new Intent(PostActivity.this,MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                             startActivity(intent);
                             finish();
 
@@ -417,7 +417,7 @@ public class PostActivity extends AppCompatActivity {
 
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(PostActivity.this,ProfileActivity.class);
-                            Pintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                             startActivity(Pintent);
                             finish();
 
