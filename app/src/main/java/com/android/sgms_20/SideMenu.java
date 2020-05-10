@@ -50,7 +50,7 @@ public class SideMenu extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width=dm.widthPixels;
         int height=dm.heightPixels;
-        getWindow().setLayout((int)(width*.85),(int) (height*.45));
+        getWindow().setLayout((int)(width*.60),(int) (height*.40));
 
         WindowManager.LayoutParams params=getWindow().getAttributes();
         params.gravity= Gravity.RIGHT|Gravity.TOP;

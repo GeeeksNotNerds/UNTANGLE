@@ -43,7 +43,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     FirebaseAuth mAuth;
     String currentUserId;
     private  Intent in;
-    private boolean like=false,unlike=false;
+
 
     DatabaseReference LikesRef,PostsRef,DownVotesRef;
 
@@ -141,6 +141,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
                 LikeChecker=true;
+
                 LikesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -150,18 +151,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                             {
                                 LikesRef.child(PostKey).child(currentUserId).removeValue();
                                 LikeChecker=false;
-                                like=false;
-                                unlike=false;
+                                DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
+
 
 
                             }
                             else
                             {
-                                if(!unlike && !like) {
+
                                     LikesRef.child(PostKey).child(currentUserId).setValue(true);
+                                    DownVotesRef.child(PostKey).child(currentUserId).removeValue();
                                     LikeChecker = false;
-                                    like = true;
-                                }
+
+
 
                             }
                         }
@@ -194,19 +196,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                             {
                                 DownVotesRef.child(PostKey).child(currentUserId).removeValue();
                                 DownVoteChecker=false;
-                                like=false;
-                                unlike=false;
-
+                                LikesRef.child(PostKey).child(currentUserId).setValue(true);
 
                             }
                             else
                             {
-                                if(!like && !unlike) {
+
 
                                     DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
                                     DownVoteChecker = false;
-                                    unlike=true;
-                                }
+                                    LikesRef.child(PostKey).child(currentUserId).removeValue();
+
 
                             }
                         }
