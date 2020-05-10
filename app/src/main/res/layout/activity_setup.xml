@@ -89,13 +89,13 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="fill_parent"
-
+                     android:background="@drawable/circle"
+                    android:padding="2dp"
                     android:layout_marginRight="40dp"
                     android:layout_height="fill_parent"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/pro_pic"
                     android:src="@drawable/profile" >
-
 
                 </de.hdodenhof.circleimageview.CircleImageView>
 

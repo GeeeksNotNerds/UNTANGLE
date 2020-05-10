@@ -46,16 +46,25 @@ public class SideMenu extends AppCompatActivity {
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
 
+
+
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width=dm.widthPixels;
         int height=dm.heightPixels;
-        getWindow().setLayout((int)(width*.60),(int) (height*.40));
+        getWindow().setLayout((int)(width*.61),(int) (height*.40));
+        WindowManager.LayoutParams windowManager = getWindow().getAttributes();
+        windowManager.dimAmount = 0.60f;
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        //WindowManager.LayoutParams params=getWindow().getAttributes();
+     // windowManager.gravity= Gravity.RIGHT|Gravity.TOP;
 
-        WindowManager.LayoutParams params=getWindow().getAttributes();
-        params.gravity= Gravity.RIGHT|Gravity.TOP;
+      //  params.dimAmount=0.0f;
 
-        getWindow().setAttributes(params);
+
+
+
+        //getWindow().setAttributes(params);
 
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
