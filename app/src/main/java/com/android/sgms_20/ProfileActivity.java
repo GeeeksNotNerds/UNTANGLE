@@ -141,17 +141,25 @@ public class ProfileActivity extends AppCompatActivity {
                             pro.setImageDrawable(mDrawableBuilder);
 
                         } else if (!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+                            String myProfileImage="";
+                 if(dataSnapshot.child("ProfileImage").exists())  myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
-                            String myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+
+
+
                             String myUserName = dataSnapshot.child("username").getValue().toString();
                             String Adminno = dataSnapshot.child("admission_number").getValue().toString();
                             String myBranch = dataSnapshot.child("department").getValue().toString();
                             String myEmail = dataSnapshot.child("email").getValue().toString();
 
-                            Picasso.with(ProfileActivity.this)
-                                    .load(myProfileImage)
-                                    .placeholder(R.drawable.ic_account_circle_24px)
-                                    .into(userProfileImage);
+                            if(!myProfileImage.isEmpty()) {
+                                Picasso.with(ProfileActivity.this)
+                                        .load(myProfileImage)
+                                        .placeholder(R.drawable.ic_account_circle_24px)
+                                        .into(userProfileImage);
+                            }else{
+                                userProfileImage.setImageResource(R.drawable.profile);
+                            }
 
 
                             userName.setText("UserName : " + myUserName);

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,13 +36,15 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SettingsActivity extends AppCompatActivity {
 
     private ProgressDialog loadingBar;
     ProgressBar progressBar;
     private EditText userName,userDept,userEmail,userAdminNo;
     Button UpdateAccountSettingsButton;
-    private ImageView userProfImage;
+    private CircleImageView userProfImage;
     private DatabaseReference SettingsuserRef;
     final static int Gallery_Pick = 1;
     private StorageReference UserProfileImageRef;
@@ -102,7 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-        userProfImage=(ImageView)findViewById(R.id.settings_pro_pic);
+        userProfImage=findViewById(R.id.settings_pro_pic);
         UpdateAccountSettingsButton=(Button)findViewById(R.id.update_button);
 
         SettingsuserRef.addValueEventListener(new ValueEventListener() {
@@ -129,18 +132,29 @@ public class SettingsActivity extends AppCompatActivity {
                             userDept.setText(myDept);
                             userEmail.setText(myEmail);
                         }else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                            String myProfileImage="";
+                            if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
-                            String myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+
+
                             String myUserName = dataSnapshot.child("username").getValue().toString();
                             String myAdminNo=dataSnapshot.child("admission_number").getValue().toString();
                             String myDept = dataSnapshot.child("department").getValue().toString();
                             String myEmail = dataSnapshot.child("email").getValue().toString();
 
-                            Picasso.with(SettingsActivity.this)
-                                    .load(myProfileImage)
-                                    .placeholder(R.drawable.ic_account_circle_24px)
-                                    .into(userProfImage);
+                        //    Picasso.with(SettingsActivity.this)
+                          //          .load(myProfileImage)
+                            //        .placeholder(R.drawable.ic_account_circle_24px)
+                              //      .into(userProfImage);
 
+                            if(!myProfileImage.isEmpty()) {
+                                Picasso.with(SettingsActivity.this)
+                                        .load(myProfileImage)
+                                        .placeholder(R.drawable.ic_account_circle_24px)
+                                        .into(userProfImage);
+                            }else{
+                                userProfImage.setImageResource(R.drawable.profile);
+                            }
 
                             userName.setText(myUserName);
                             userAdminNo.setText(myAdminNo);
@@ -169,13 +183,24 @@ public class SettingsActivity extends AppCompatActivity {
         userProfImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent = new Intent();
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, Gallery_Pick);
+              //  Intent galleryIntent = new Intent();
+                //galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                //galleryIntent.setType("image/*");
+                //startActivityForResult(galleryIntent, Gallery_Pick);
+
+
+                Intent gallint = new Intent();
+                gallint.setType("image/*");
+                gallint.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(gallint, "Select Profile Image"), Gallery_Pick);
+
 
             }
         });
+
+
+
+
     }
 
 
@@ -186,12 +211,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(requestCode==Gallery_Pick && resultCode==RESULT_OK && data!=null)
         {
-            Uri ImageUri = data.getData();
+            Uri imageuri = data.getData();
 
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
-                    .start(this);
+            CropImage.activity(imageuri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
         }
 
         if(requestCode== CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
@@ -224,6 +246,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(SettingsActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+
 
                                             progressBar.setVisibility(View.GONE);
 
@@ -315,8 +338,8 @@ public class SettingsActivity extends AppCompatActivity {
         } else if (TextUtils.isEmpty(userDesignation)) {
             Toast.makeText(this, "Please write your Designation", Toast.LENGTH_SHORT).show();
         } else {
-            loadingBar.setTitle("Profile Image");
-            loadingBar.setMessage("Please wait, while we updating your profile image...");
+            loadingBar.setTitle("Profile");
+            loadingBar.setMessage("Please wait, while we updating your profile ...");
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
             UpdateAccountInfo(username, userdept, useremail,userDesignation);
@@ -339,7 +362,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please write your Admission Number", Toast.LENGTH_SHORT).show();
             } else {
                 loadingBar.setTitle("Profile Image");
-                loadingBar.setMessage("Please wait, while we updating your profile image...");
+                loadingBar.setMessage("Please wait, while we updating your profile ...");
                 loadingBar.setCanceledOnTouchOutside(true);
                 loadingBar.show();
                 UpdateAccountInfo(username, userdept, useremail,userDesignation);

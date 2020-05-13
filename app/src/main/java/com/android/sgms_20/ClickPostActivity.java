@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,8 @@ public class ClickPostActivity extends AppCompatActivity {
 
     private TextView PostDescription,postStatus,postStatus_heading;
     private Button DeletePostButton,EditPostButton,statusButton;
-    private String PostKey,currentUserID,databaseUSerID,description,Status;
+    ImageView Share;
+    private String PostKey,currentUserID,databaseUSerID,description,Status,message;
     private DatabaseReference ClickPostRef;
 
     private FirebaseAuth mAuth;
@@ -80,6 +82,7 @@ public class ClickPostActivity extends AppCompatActivity {
         statusButton.setVisibility(View.INVISIBLE);
         DeletePostButton.setVisibility(View.INVISIBLE);
         EditPostButton.setVisibility(View.INVISIBLE);
+        Share=findViewById(R.id.share);
 
         ClickPostRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -88,6 +91,7 @@ public class ClickPostActivity extends AppCompatActivity {
               if(dataSnapshot.exists())
               {
                   description=dataSnapshot.child("description").getValue().toString();
+                  message=dataSnapshot.child("description").getValue().toString();
                   Status=dataSnapshot.child("status").getValue().toString();
                   postStatus.setText(Status);
 
@@ -182,6 +186,20 @@ public class ClickPostActivity extends AppCompatActivity {
 
             }
         });
+
+        Share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message2 = "New Post on UNTANGLE : "+message;
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, message2);
+
+                startActivity(Intent.createChooser(share, "SHARE POST"));
+            }
+        });
+
+
 
     }
 

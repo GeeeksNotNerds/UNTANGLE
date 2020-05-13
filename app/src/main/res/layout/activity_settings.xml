@@ -236,7 +236,7 @@
                 android:background="@drawable/button1"
                 android:layout_gravity="center"
                 android:layout_marginTop="-40dp"
-                android:text="EDIT DETAILS"
+                android:text="UPDATE DETAILS"
                 android:fontFamily="sans-serif-light"
                 android:textSize="25sp"
                 android:id="@+id/update_button"

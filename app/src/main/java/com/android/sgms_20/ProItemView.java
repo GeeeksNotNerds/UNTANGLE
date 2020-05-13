@@ -73,13 +73,25 @@ public class ProItemView extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if(dataSnapshot.exists()){
-                                ProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
-                                if(permission.equals("yes")){
+                               if(dataSnapshot.child("ProfileImage").exists()) ProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                                else ProfileImage="";
 
-                                    Picasso.with(ProItemView.this)
-                                            .load(ProfileImage)
-                                            .placeholder(R.drawable.ic_profile)
-                                            .into(image);
+
+                               if(permission.equals("yes")){
+
+                                  //  Picasso.with(ProItemView.this)
+                                    //        .load(ProfileImage)
+                                      //      .placeholder(R.drawable.ic_profile)
+                                        //    .into(image);
+
+                                    if(!ProfileImage.isEmpty()) {
+                                        Picasso.with(ProItemView.this)
+                                                .load(ProfileImage)
+                                                .placeholder(R.drawable.ic_account_circle_24px)
+                                                .into(image);
+                                    }else{
+                                        image.setImageResource(R.drawable.profile);
+                                    }
 
                                     description = dataSnapshot.child("username").getValue().toString();
                                     Status = dataSnapshot.child("email").getValue().toString();
