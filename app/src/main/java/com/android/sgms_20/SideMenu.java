@@ -53,6 +53,7 @@ public class SideMenu extends AppCompatActivity {
         int width=dm.widthPixels;
         int height=dm.heightPixels;
         getWindow().setLayout((int)(width*.61),(int) (height*.40));
+
         WindowManager.LayoutParams windowManager = getWindow().getAttributes();
         windowManager.dimAmount = 0.60f;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -61,7 +62,7 @@ public class SideMenu extends AppCompatActivity {
 
       //  params.dimAmount=0.0f;
 
-
+//myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
 
         //getWindow().setAttributes(params);

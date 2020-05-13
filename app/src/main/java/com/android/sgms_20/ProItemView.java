@@ -24,8 +24,8 @@ public class ProItemView extends AppCompatActivity {
     TextView Name,Email;
     CircleImageView image;
 
-    private String PostKey,currentUserID,databaseUSerID,description,Status,permission,ProfileImage;
-    private DatabaseReference ClickPostRef;
+    private String PostKey,currentUserID,databaseUSerID,description,Status,permission,ProfileImage,Pro;
+    private DatabaseReference ClickPostRef,ProRef;
 
     private FirebaseAuth mAuth;
 
@@ -50,34 +50,61 @@ public class ProItemView extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
         PostKey=getIntent().getExtras().get("PostKey").toString();
+
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
 
 
         ClickPostRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    permission=dataSnapshot.child("showInformation").getValue().toString();
-                    ProfileImage = dataSnapshot.child("profileImage").getValue().toString();
-                    if(permission.equals("yes")){
+            public void onDataChange(DataSnapshot dataSnapshot1) {
+                if (dataSnapshot1.exists()) {
 
-                        Picasso.with(ProItemView.this)
-                                .load(ProfileImage)
-                                .placeholder(R.drawable.ic_profile)
-                                .into(image);
+                Pro=dataSnapshot1.child("uid").getValue().toString();
+                    permission=dataSnapshot1.child("showInformation").getValue().toString();
 
-                     description = dataSnapshot.child("username").getValue().toString();
-                     Status = dataSnapshot.child("email").getValue().toString();
-                     Email.setText(Status);
+                    databaseUSerID = dataSnapshot1.child("uid").getValue().toString();
 
-                     Name.setText(description);
-                    }
-                    else if(permission.equals("no")){
-                        Email.setText("-");
 
-                        Name.setText("Anonymous");
-                    }
-                    databaseUSerID = dataSnapshot.child("uid").getValue().toString();
+
+
+                    ProRef=FirebaseDatabase.getInstance().getReference().child("Users").child(Pro);
+
+                    ProRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                ProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                                if(permission.equals("yes")){
+
+                                    Picasso.with(ProItemView.this)
+                                            .load(ProfileImage)
+                                            .placeholder(R.drawable.ic_profile)
+                                            .into(image);
+
+                                    description = dataSnapshot.child("username").getValue().toString();
+                                    Status = dataSnapshot.child("email").getValue().toString();
+                                    Email.setText(Status);
+
+                                    Name.setText(description);
+                                }
+                                else if(permission.equals("no")){
+                                    Email.setText("-");
+
+                                    Name.setText("Anonymous");
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+
 
                 }
 

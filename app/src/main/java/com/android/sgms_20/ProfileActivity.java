@@ -125,8 +125,8 @@ public class ProfileActivity extends AppCompatActivity {
                                     .into(userProfileImage);
 
 
-                            userName.setText("UserName :" + myUserName);
-                            admin_no.setText("Designation :" + Designation);
+                            userName.setText("UserName : " + myUserName);
+                            admin_no.setText("Designation : " + Designation);
 
                             userBranch.setText("Department : " + myBranch);
                             userEmail.setText("Email : " + myEmail);
@@ -154,8 +154,8 @@ public class ProfileActivity extends AppCompatActivity {
                                     .into(userProfileImage);
 
 
-                            userName.setText("UserName :" + myUserName);
-                            admin_no.setText("Admission Number :" + Adminno);
+                            userName.setText("UserName : " + myUserName);
+                            admin_no.setText("Admission Number : " + Adminno);
 
                             userBranch.setText("Department : " + myBranch);
                             userEmail.setText("Email : " + myEmail);
