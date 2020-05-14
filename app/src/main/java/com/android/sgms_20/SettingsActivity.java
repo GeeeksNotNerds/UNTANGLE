@@ -115,17 +115,24 @@ public class SettingsActivity extends AppCompatActivity {
                     {
 
                         if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
-                            String myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                            String myProfileImage="";
+                            if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+
+
+
                             String myUserName = dataSnapshot.child("username").getValue().toString();
                             String myDesignation=dataSnapshot.child("designation").getValue().toString();
                             String myDept = dataSnapshot.child("department").getValue().toString();
                             String myEmail = dataSnapshot.child("email").getValue().toString();
 
-                            Picasso.with(SettingsActivity.this)
-                                    .load(myProfileImage)
-                                    .placeholder(R.drawable.ic_account_circle_24px)
-                                    .into(userProfImage);
-
+                            if(!myProfileImage.isEmpty()) {
+                                Picasso.with(SettingsActivity.this)
+                                        .load(myProfileImage)
+                                        .placeholder(R.drawable.ic_account_circle_24px)
+                                        .into(userProfImage);
+                            }else{
+                                userProfImage.setImageResource(R.drawable.profile);
+                            }
 
                             userName.setText(myUserName);
                             userAdminNo.setText(myDesignation);

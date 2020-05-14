@@ -49,7 +49,7 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     RadioGroup rg_mode,rg_mode_opt,rg_cat,rg_cat_off,rg_cat_per,rg_cat_oth;
     CardView cv2,cv4,cv5,cv6;
-    String UserInfo_show;
+    String UserInfo_show="";
     String cat1,cat2;
 
     String Mode,category,Sub_Category;
@@ -66,7 +66,7 @@ public class PostActivity extends AppCompatActivity {
 
         cv2=findViewById(R.id.cv2);
         //cv4=findViewById(R.id.cv4);
-        cv5=findViewById(R.id.cv5);
+       // cv5=findViewById(R.id.cv5);
         //cv6=findViewById(R.id.cv6);
         BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListner);
@@ -76,7 +76,7 @@ public class PostActivity extends AppCompatActivity {
         rg_mode_opt=findViewById(R.id.rg2);
         //rg_cat=findViewById(R.id.rg3);
         //rg_cat_off=findViewById(R.id.rg4);
-        rg_cat_per=findViewById(R.id.rg5);
+        //rg_cat_per=findViewById(R.id.rg5);
         //rg_cat_oth=findViewById(R.id.rg6);
 
         rg_mode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -93,7 +93,7 @@ public class PostActivity extends AppCompatActivity {
                                      UserInfo_show="no";
                                      Mode="Public";
                                  }
-                                 else{
+                                 else if(checkedId==R.id.yes){
                                      UserInfo_show="yes";
                                      Mode="Public";
                                  }
@@ -295,7 +295,9 @@ public class PostActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(description))
         {
             Toast.makeText(this, "Post cannot be left empty..", Toast.LENGTH_SHORT).show();
-        }
+        }if(UserInfo_show.isEmpty()){
+        Toast.makeText(this, "Please Select the mode of posting(public or private), and if the mode is public...select if you wish to post anonymously or no!", Toast.LENGTH_SHORT).show();
+           }
         else
         {
             loadingBar.setTitle("Add New Post");

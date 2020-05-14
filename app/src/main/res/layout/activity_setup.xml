@@ -104,8 +104,8 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_cam"
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/canv"
                     android:layout_marginTop="30dp"
                     android:textAllCaps="false"
@@ -113,7 +113,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
 
-                    app:borderWidth="0dp"
+
                     android:background="@color/colorPrimaryDark"
                     android:elevation="10dp"
                     />
