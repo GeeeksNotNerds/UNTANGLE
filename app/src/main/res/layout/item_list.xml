@@ -34,7 +34,7 @@
         android:fontFamily="sans-serif-light"
         android:layout_toStartOf="@+id/text_date"
         android:text="Carol Bell"
-        android:padding="3dp"
+        android:padding="1dp"
         android:textColor="#827f93"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/text_name"
         android:layout_below="@+id/text_name"
-        android:layout_marginBottom="10dp"
-        android:padding="3dp"
+        android:layout_marginBottom="0dp"
+        android:padding="1dp"
         android:fontFamily="sans-serif-light"
         android:text="Graphic Designer"
         android:textColor="#827f93" />

@@ -63,7 +63,7 @@
                  android:layout_marginRight="32dp"
                 android:text="You want your post to be Public or Private?"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                android:textSize="22sp"
+                android:textSize="20sp"
                  />
 
             <RadioGroup
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
 
                 android:padding="8dp"
-
+                 android:textStyle="bold"
                 android:text="You want to post your username?"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
                 android:textSize="20sp"
