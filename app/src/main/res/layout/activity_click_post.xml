@@ -6,128 +6,150 @@
     android:layout_height="match_parent"
     android:background="@drawable/border1"
     tools:context=".ClickPostActivity">
+
+
+   <ImageView
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       android:src="@drawable/share"
+       android:id="@+id/share"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentRight="true"
+       android:background="?attr/selectableItemBackgroundBorderless"
+       android:clickable="true"
+       android:layout_margin="20dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/status_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="start"
+
+
+                android:padding="0dp"
+                android:text="S T A T U S : "
+                android:textAlignment="textStart"
+                android:textColor="@color/common_google_signin_btn_text_light_focused"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/click_post_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="start"
+                android:padding="0dp"
+
+                android:text="To Be Reviewed..."
+                android:textAlignment="textStart"
+                android:textColor="@color/inactive_dots"
+                android:textSize="15sp" />
+
+
+        </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    <TextView
-        android:fontFamily="sans-serif-light"
-       android:id="@+id/status_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="S T A T U S : "
-        android:textSize="20sp"
-        android:textAlignment="textStart"
-
-
-
-        android:textColor="@color/common_google_signin_btn_text_light_focused"
-        android:padding="0dp"
-        android:textStyle="bold"
-        android:layout_margin="20dp"
-        android:gravity="start" />
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
         <TextView
-            android:id="@+id/click_post_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:gravity="start"
+            android:id="@+id/click_post_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginTop="100dp"
             android:fontFamily="sans-serif-light"
-            android:padding="0dp"
-
-            android:text="To Be Reviewed..."
+            android:gravity="start"
+            android:padding="13dp"
+            android:text="post description"
             android:textAlignment="textStart"
-            android:textColor="@color/common_google_signin_btn_text_light_focused"
+            android:textColor="@color/inactive_dots"
             android:textSize="20sp"
             android:textStyle="bold" />
-
+        </ScrollView>
 
     </LinearLayout>
 
 
+        <Button
+            android:id="@+id/edit_post_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/border1"
+            android:clickable="true"
+            android:fontFamily="sans-serif-light"
+            android:padding="8dp"
 
-    <TextView
-        android:id="@+id/click_post_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="post description"
-        android:fontFamily="sans-serif-light"
-        android:textSize="20sp"
-        android:textAlignment="textStart"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textColor="@color/common_google_signin_btn_text_light_focused"
-        android:padding="13dp"
-        android:textStyle="bold"
-        android:layout_margin="10dp"
-        android:gravity="start" />
+            android:text="Edit Post"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
 
+        <Button
+            android:id="@+id/status_post_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/border1"
+            android:clickable="true"
+            android:fontFamily="sans-serif-light"
+            android:padding="8dp"
+            android:text="Change Status"
 
-
-
-    <Button
-        android:clickable="true"
-        android:id="@+id/edit_post_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/border1"
-        android:padding="8dp"
-        android:text="Edit Post"
-
-        android:fontFamily="sans-serif-light"
-        android:textAllCaps="false"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold" />
-    <Button
-         android:clickable="true"
-        android:id="@+id/status_post_button"
-        android:textAllCaps="false"
-        android:padding="8dp"
-        android:fontFamily="sans-serif-light"
-        android:background="@drawable/border1"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="5dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change Status"/>
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
 
 
-    <Button
-        android:clickable="true"
+        <Button
+            android:id="@+id/delete_post_button"
 
-        android:id="@+id/delete_post_button"
-        android:textAllCaps="false"
-        android:padding="8dp"
-        android:background="@drawable/border1"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="5dp"
-       android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:fontFamily="sans-serif-light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="delete Post"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/border1"
+            android:clickable="true"
+            android:fontFamily="sans-serif-light"
+            android:padding="8dp"
+            android:text="delete Post"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
+
+
 
 </RelativeLayout>

@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity">
+    tools:context=".SettingsActivity"
+    android:background="@drawable/border1"
+    android:layout_margin="5dp">
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -35,256 +36,221 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
 
-        >
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="#827f93" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/settings_pro_pic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/header_cover_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-60dp"
+            android:background="@drawable/profile_circular_border"
+            android:elevation="5dp"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile" />
+
+        <RelativeLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/header_cover_image"
+            android:background="#827f93"
+            android:elevation="4dp"
+            android:paddingBottom="24dp">
 
 
-            <View
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_one_login"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="@color/colorAccent" />
-
-            <RelativeLayout
-                android:id="@+id/rl_two_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-                <TextView
-                    android:id="@+id/tv_one_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="P R O F I L E   U P D A T E"
-
-                    android:textAlignment="center"
-                    android:textColor="#ffffff"
-                    android:textSize="27sp"
-                    android:textStyle="bold" />
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/settings_pro_pic"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="60dp"
-                    android:layout_centerHorizontal="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/profile">
+                android:layout_height="320dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:elevation="10dp"
+                app:cardBackgroundColor="#fcfcfc"
+                app:cardCornerRadius="15dp"
+                android:layout_margin="24dp"
+                android:foregroundGravity="center"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
 
 
-                </de.hdodenhof.circleimageview.CircleImageView>
 
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_marginTop="-50dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="18dp"
+                            android:padding="10dp"
+                            android:tint="@color/colorPrimaryDark"
+                            android:src="@drawable/ic_profile" />
+
+                        <EditText
+                            android:id="@+id/settings_name"
+                            android:layout_width="289dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginTop="16dp"
+                            android:textColorHint="@color/colorPrimaryDark"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:hint="Name"
+
+                            android:textSize="15sp" />
 
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cv_one_login"
-                        android:layout_width="match_parent"
-                        android:layout_height="350dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="260dp"
-                        android:elevation="10dp"
-                        app:cardBackgroundColor="#fcfcfc"
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="15dp"
-                        android:foregroundGravity="center"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="true">
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp">
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center_vertical"
-                                android:paddingRight="8dp">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:tint="@color/colorPrimaryDark"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="18dp"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_email_24dp" />
 
-                                <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="18dp"
-                                    android:padding="10dp"
-                                    android:tint="@color/colorPrimaryDark"
-                                    android:src="@drawable/ic_profile" />
-
-                                <EditText
-                                    android:id="@+id/settings_name"
-                                    android:layout_width="289dp"
-                                    android:layout_height="40dp"
-                                    android:layout_marginLeft="2dp"
-                                    android:layout_marginTop="16dp"
-                                    android:textColorHint="@color/colorPrimaryDark"
-                                    android:backgroundTint="@color/colorPrimaryDark"
-                                    android:hint="Name"
-
-                                    android:textSize="15sp" />
+                        <EditText
+                            android:id="@+id/settings_email"
+                            android:layout_width="289dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginTop="16dp"
+                            android:textColorHint="@color/colorPrimaryDark"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:hint=" Email"
+                            android:inputType="textEmailAddress"
+                            android:textSize="15sp" />
 
 
-                            </LinearLayout>
+                    </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center_vertical"
-                                android:paddingRight="8dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp">
 
-                                <ImageView
-                                    android:layout_width="40dp"
-                                    android:tint="@color/colorPrimaryDark"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="18dp"
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_email_24dp" />
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:tint="@color/colorPrimaryDark"
+                            android:layout_marginTop="18dp"
+                            android:padding="10dp"
+                            android:src="@drawable/dept" />
 
-                                <EditText
-                                    android:id="@+id/settings_email"
-                                    android:layout_width="289dp"
-                                    android:layout_height="40dp"
-                                    android:layout_marginLeft="2dp"
-                                    android:layout_marginTop="16dp"
-                                    android:textColorHint="@color/colorPrimaryDark"
-                                    android:backgroundTint="@color/colorPrimaryDark"
-                                    android:hint=" Email"
-                                    android:inputType="textEmailAddress"
-                                    android:textSize="15sp" />
+                        <EditText
+                            android:id="@+id/settings_dept"
+                            android:layout_width="289dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginTop="16dp"
+                            android:textColorHint="@color/colorPrimaryDark"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:hint="Department"
 
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center_vertical"
-                                android:paddingRight="8dp">
-
-                                <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:tint="@color/colorPrimaryDark"
-                                    android:layout_marginTop="18dp"
-                                    android:padding="10dp"
-                                    android:src="@drawable/dept" />
-
-                                <EditText
-                                    android:id="@+id/settings_dept"
-                                    android:layout_width="289dp"
-                                    android:layout_height="40dp"
-                                    android:layout_marginLeft="2dp"
-                                    android:layout_marginTop="16dp"
-                                    android:textColorHint="@color/colorPrimaryDark"
-                                    android:backgroundTint="@color/colorPrimaryDark"
-                                    android:hint="Department"
-
-                                    android:textSize="15sp" />
+                            android:textSize="15sp" />
 
 
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center_vertical"
-                                android:paddingRight="8dp">
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp">
 
-                                <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:tint="@color/colorPrimaryDark"
-                                    android:layout_marginTop="15dp"
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_profile" />
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:tint="@color/colorPrimaryDark"
+                            android:layout_marginTop="15dp"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_profile" />
 
-                                <EditText
-                                    android:id="@+id/settings_admin_no"
-                                    android:layout_width="289dp"
-                                    android:layout_height="40dp"
-                                    android:layout_marginLeft="2dp"
-                                    android:layout_marginTop="16dp"
-                                    android:textColorHint="@color/colorPrimaryDark"
-                                    android:backgroundTint="@color/colorPrimaryDark"
-                                    android:hint="Department"
+                        <EditText
+                            android:id="@+id/settings_admin_no"
+                            android:layout_width="289dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginTop="16dp"
+                            android:textColorHint="@color/colorPrimaryDark"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:hint="Department"
 
-                                    android:textSize="15sp" />
-
-
-                            </LinearLayout>
+                            android:textSize="15sp" />
 
 
+                    </LinearLayout>
 
-
-                        </LinearLayout>
-
-
-
-
-
-                    </androidx.cardview.widget.CardView>
 
 
 
                 </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
 
 
-
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/progress_bar"
-                    android:visibility="gone"/>
-
-                <Button
-                    android:layout_width="250dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/cv_one_login"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/button1"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="-35dp"
-                    android:text="UPDATE DETAILS"
-                    android:fontFamily="sans-serif-light"
-                    android:textSize="25sp"
-                    android:id="@+id/update_button"
-                    android:textColor="@android:color/white"
-                    android:elevation="15dp" />
+            <Button
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/cv_one_login"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button1"
+                android:layout_gravity="center"
+                android:layout_marginTop="-40dp"
+                android:text="UPDATE DETAILS"
+                android:fontFamily="sans-serif-light"
+                android:textSize="25sp"
+                android:id="@+id/update_button"
+                android:textColor="@android:color/white"
+                android:elevation="15dp" />
 
 
-
-
-
-
-
-
-
-            </LinearLayout>
 
 
         </RelativeLayout>
-    </ScrollView>
 
+
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

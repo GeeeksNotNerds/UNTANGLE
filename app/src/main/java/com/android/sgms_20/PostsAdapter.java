@@ -141,6 +141,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
                 LikeChecker=true;
+
                 LikesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -150,6 +151,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                             {
                                 LikesRef.child(PostKey).child(currentUserId).removeValue();
                                 LikeChecker=false;
+                                DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
 
 
 
@@ -158,7 +160,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                             {
 
                                     LikesRef.child(PostKey).child(currentUserId).setValue(true);
+                                    DownVotesRef.child(PostKey).child(currentUserId).removeValue();
                                     LikeChecker = false;
+
+
 
                             }
                         }
@@ -192,6 +197,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                 DownVotesRef.child(PostKey).child(currentUserId).removeValue();
                                 DownVoteChecker=false;
 
+                                LikesRef.child(PostKey).child(currentUserId).setValue(true);
+
 
 
                             }
@@ -201,6 +208,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                                     DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
                                     DownVoteChecker = false;
+                                    LikesRef.child(PostKey).child(currentUserId).removeValue();
 
 
                             }

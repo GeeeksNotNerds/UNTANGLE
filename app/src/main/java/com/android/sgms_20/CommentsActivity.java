@@ -6,6 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -50,6 +51,10 @@ public class CommentsActivity extends AppCompatActivity {
         int width=dm.widthPixels;
         int height=dm.heightPixels;
         getWindow().setLayout((int)(width*.90),(int) (height*.80));
+
+        WindowManager.LayoutParams windowManager = getWindow().getAttributes();
+        windowManager.dimAmount = 0.60f;
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
         mAuth= FirebaseAuth.getInstance();
         current_user_id=mAuth.getCurrentUser().getUid();

@@ -16,8 +16,8 @@
         android:clickable="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:id="@+id/avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/dividerTop"
         android:layout_margin="16dp"
         />
