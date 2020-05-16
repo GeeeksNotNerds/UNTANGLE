@@ -201,10 +201,10 @@ android:layout_height="match_parent"
             android:id="@+id/google_signin_button"
             android:layout_width="100dp"
             android:background="@color/white"
-            android:src="@drawable/ggle"
+            android:src="@drawable/iconsg"
             android:layout_marginTop="8dp"
             android:layout_height="100dp"
-            android:elevation="15dp"
+
 
             android:scaleType="fitCenter"
             />

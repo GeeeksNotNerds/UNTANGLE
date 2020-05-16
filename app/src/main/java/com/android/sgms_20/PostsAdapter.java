@@ -196,7 +196,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                             {
                                 DownVotesRef.child(PostKey).child(currentUserId).removeValue();
                                 DownVoteChecker=false;
+
                                 LikesRef.child(PostKey).child(currentUserId).setValue(true);
+
+
 
                             }
                             else
