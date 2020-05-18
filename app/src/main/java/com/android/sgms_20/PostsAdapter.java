@@ -45,7 +45,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private  Intent in;
 
 
-    DatabaseReference LikesRef,PostsRef,DownVotesRef;
+    DatabaseReference LikesRef,PostsRef,DownVotesRef,Post;
 
     public PostsAdapter(Context context, List<Posts> posts) {
         mContext = context;
@@ -83,6 +83,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         Posts question = mPosts.get(position);
         String PostKey=question.getPostid();
+
+        Post=FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
 
 
 
@@ -229,6 +231,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
 
+
         holder.textMode.setText(question.getMode());
         //holder.textUid.setText(question.getUid());
         //holder.textSubcategory.setText(question.getSubcategory());
@@ -280,6 +283,21 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
 
+        Post.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String ID=dataSnapshot.child("uid").getValue().toString();
+                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                    holder.textStatus.setVisibility(View.GONE);
+                    holder.statusHeading.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         /*Question question = mQuestions.get(position);
 
