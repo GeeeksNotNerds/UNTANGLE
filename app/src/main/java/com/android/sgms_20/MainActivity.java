@@ -10,10 +10,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,6 +26,7 @@ import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -60,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private GoogleApiClient mGoogleApiClient;
     String currentUserID;
     private int[] mColors;
-    private String[] mAdmin;
+    private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
     private String[] mClub;
     private int colour1,colour2,colour3,colour4;
     private DatabaseReference UsersRef;
@@ -70,25 +74,29 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private List<Posts> mAllQuestions;
     private Filter<Tag> mFilter;
     private PostsAdapter mAdapter;
-    AppCompatImageView LikePostButton;
-    TextView DisplayNoOfLikes;
-    int CountLikes;
+    AppCompatImageView LikePostButton,downVotePostButton;
+    TextView DisplayNoOfLikes,DisplayDownVotes;
+    int CountLikes,countDownVotes;
+
 
     private ImageView pro;
 
     private RecyclerView postList,mRecyclerView;
 
-    private DatabaseReference MyPostRef,PostsRef,LikesRef;
+    private DatabaseReference MyPostRef,PostsRef,LikesRef,DownVotesRef;
     String letter="A";
 
 
 
 
-    boolean LikeChecker=false;
+    boolean LikeChecker=false,DownVoteChecker=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_main);
         mToolbar=(Toolbar) findViewById(R.id.toolbar);
 
@@ -101,11 +109,16 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         setSupportActionBar(mToolbar);
         setTitle("Home");
 
+        if(!haveNetworkConnection()){
+            Toast.makeText(MainActivity.this,"You are not Online....Please switch on your interner connection!",Toast.LENGTH_LONG).show();
+        }
+
         mAuth=FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         PostsRef= FirebaseDatabase.getInstance().getReference().child("Posts");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+        DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
         MyPostRef.addValueEventListener(new ValueEventListener() {
@@ -286,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                             String show = dataSnapshot1.child("showInformation").getValue().toString();
-                            String info;
+                            String info,mail;
                             //if(show.equals("no"))info="Anonymous";
 
 
@@ -294,13 +307,19 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             final String sub = dataSnapshot1.child("subCategory").getValue().toString();
                             final String categ = dataSnapshot1.child("category").getValue().toString();
                             String name = dataSnapshot1.child("username").getValue().toString();
+                            String status;
+                            if(!owner.equals("Admin"))status=dataSnapshot1.child("status").getValue().toString();
+                            else status="-";
                             String user = dataSnapshot1.child("email").getValue().toString();
                             String date = dataSnapshot1.child("date").getValue().toString();
                             String post = dataSnapshot1.child("description").getValue().toString();
-                            String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                            if (show.equals("no")) info = "Anonymous";
+                        //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
+                            if (show.equals("no")) {
+                                info = "Anonymous";
+                                 mail=" ";}
                             else {
                                 info = name;
+                                mail=user;
                             }
 
                             if (categ.equals("Official")) colour1 = mColors[1];
@@ -351,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                             if(mode.equals("Public")){
-                                add(new Posts(postKey, "@"+info,   user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
@@ -374,7 +393,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 if(l==1||(uid.equals(currentUserID)))
                                 {
                                     l=0;
-                                    add(new Posts(postKey, info, "@" + user, post, date, date, uid, profilePic, mode, categ, sub, show, new ArrayList<Tag>() {{
+                                    add(new Posts(postKey, info, "" + user, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
                                         add(new Tag(owner, colour4));
                                         add(new Tag(mode, colour3));
                                         add(new Tag(categ, colour1));
@@ -553,6 +572,44 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                     }
                 });
+
+                postsViewHolder.DownVotePostButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        DownVoteChecker=true;
+                        DownVotesRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if(DownVoteChecker==true)
+                                {
+                                    if(dataSnapshot.child(PostKey).hasChild(currentUserID))
+                                    {
+                                        DownVotesRef.child(PostKey).child(currentUserID).removeValue();
+                                        DownVoteChecker=false;
+
+                                    }
+                                    else
+                                    {
+
+                                        DownVotesRef.child(PostKey).child(currentUserID).setValue(true);
+                                        DownVoteChecker=false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+                });
+
+
+
             }
 
             @NonNull
@@ -576,11 +633,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     public static class PostsViewHolder extends RecyclerView.ViewHolder
     {
         View mView;
-        AppCompatImageView LikePostButton,CommentPostButton;
-        TextView DisplayNoOfLikes;
-        int CountLikes;
+        AppCompatImageView LikePostButton,CommentPostButton,DownVotePostButton;
+        TextView DisplayNoOfLikes,DisplayNoOfDownVotes;
+        int CountLikes,CountDownVotes;
         String currentUserId;
-        DatabaseReference LikesRef;
+        DatabaseReference LikesRef,DownVotesRef;
 
 
 
@@ -593,8 +650,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             LikePostButton=(AppCompatImageView)mView.findViewById(R.id.view_likes);
             CommentPostButton=(AppCompatImageView) mView.findViewById(R.id.view_chat);
             DisplayNoOfLikes=(TextView)mView.findViewById(R.id.text_likes_count);
-
+            DownVotePostButton=mView.findViewById(R.id.view_downVotes);
+            DisplayNoOfDownVotes=mView.findViewById(R.id.view_downVotes);
             LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+            DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
             currentUserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
         public void setLikesButtonStatus(final String PostKey)
@@ -623,6 +682,33 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 }
             });
         }
+        public void setDownVoteButtonStatus(final String PostKey)
+
+        {
+            DownVotesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(PostKey).hasChild(currentUserId))
+                    {
+                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                        DownVotePostButton.setImageResource(R.drawable.arrows);
+                        DisplayNoOfDownVotes.setText(Integer.toString(CountDownVotes));
+                    }
+                    else
+                    {
+                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
+                        DownVotePostButton.setImageResource(R.drawable.downvote);
+                        DisplayNoOfDownVotes.setText(Integer.toString(CountLikes));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
         /*public void setFullname(String fullname)
         {
             TextView username=(TextView)mView.findViewById(R.id.post_user_name);
@@ -656,16 +742,15 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                     switch (item.getItemId()){
-                        case R.id.nav_home:
-                            startActivity(new Intent(MainActivity.this,MainActivity.class));
 
-                            break;
                         case R.id.nav_post:
                             Intent intent=new Intent(MainActivity.this,PostActivity.class);
+
                             startActivity(intent);
                             break;
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(MainActivity.this,ProfileActivity.class);
+
                             startActivity(Pintent);
                             break;
                     }
@@ -732,6 +817,25 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         startActivity(loginIntent);
         finish();
     }
+
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
 }
 
 

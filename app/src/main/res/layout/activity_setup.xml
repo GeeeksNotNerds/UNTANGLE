@@ -30,6 +30,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:fontFamily="sans-serif-light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create Profile"
@@ -88,13 +89,13 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="fill_parent"
-
+                     android:background="@drawable/circle"
+                    android:padding="2dp"
                     android:layout_marginRight="40dp"
                     android:layout_height="fill_parent"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/pro_pic"
                     android:src="@drawable/profile" >
-
 
                 </de.hdodenhof.circleimageview.CircleImageView>
 
@@ -103,8 +104,8 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_cam"
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/canv"
                     android:layout_marginTop="30dp"
                     android:textAllCaps="false"
@@ -112,7 +113,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
 
-                    app:borderWidth="0dp"
+
                     android:background="@color/colorPrimaryDark"
                     android:elevation="10dp"
                     />
@@ -297,6 +298,8 @@
                 android:layout_marginTop="24dp"
                     android:text="Save Details"
                     android:textSize="25sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="bold"
                     android:id="@+id/save_button"
                     android:textColor="@color/colorPrimaryDark"
                     android:elevation="15dp" />

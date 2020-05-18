@@ -54,8 +54,8 @@ public class SetupActivity extends AppCompatActivity {
     String currUserId;
     ProgressBar progressBar;
     FloatingActionButton fab;
-    private String TAG;
-    private String[] mAdmin;
+    private String TAG,image="";
+    private String[] mAdmin=new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};;
     private StorageReference proPicRef;
 
 
@@ -122,7 +122,7 @@ public class SetupActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
 
                     if (dataSnapshot.hasChild("ProfileImage")) {
-                        String image = dataSnapshot.child("ProfileImage").getValue().toString();
+                         image = dataSnapshot.child("ProfileImage").getValue().toString();
                         Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + image);
 
                         Picasso.with(SetupActivity.this)
@@ -235,133 +235,142 @@ public class SetupActivity extends AppCompatActivity {
 
 
     private void SaveAccountInfo() {
-        int l=0;
-        for(int i=0;i<1;i++)
-        {
-            if(currUserId.equals(mAdmin[i]))
-            {
-                l=1;
-                break;
+
+        if (!image.isEmpty()) {
+
+
+            int l = 0;
+            for (int i = 0; i < 1; i++) {
+                if (currUserId.equals(mAdmin[i])) {
+                    l = 1;
+                    break;
+                }
             }
-        }
 
 
+            if (l == 0) {
 
-        if (l==0) {
+                String Name = name.getText().toString();
+                String Dept = dept.getText().toString();
 
-            String Name = name.getText().toString();
-            String Dept = dept.getText().toString();
+                String Email = email.getText().toString();
+                String AdmisiionNo = admin_no.getText().toString();
 
-            String Email = email.getText().toString();
-            String AdmisiionNo = admin_no.getText().toString();
+                if (Name.isEmpty()) {
+                    name.setError("Enter Name!");
+                    name.requestFocus();
+                    return;
+                }
+                if (Dept.isEmpty()) {
+                    dept.setError("Enter Department!");
+                    dept.requestFocus();
+                    return;
+                }
+                if (Email.isEmpty()) {
+                    email.setError("Enter Email!");
+                    email.requestFocus();
+                    return;
+                }
+                if (AdmisiionNo.isEmpty()) {
+                    email.setError("Enter Admission Number!");
+                    email.requestFocus();
+                    return;
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
 
-            if (Name.isEmpty()) {
-                name.setError("Enter Name!");
-                name.requestFocus();
-                return;
-            }
-            if (Dept.isEmpty()) {
-                dept.setError("Enter Department!");
-                dept.requestFocus();
-                return;
-            }
-            if (Email.isEmpty()) {
-                email.setError("Enter Email!");
-                email.requestFocus();
-                return;
-            }
-            if (AdmisiionNo.isEmpty()) {
-                email.setError("Enter Admission Number!");
-                email.requestFocus();
-                return;
-            } else {
-                progressBar.setVisibility(View.VISIBLE);
+                    HashMap user = new HashMap();
+                    user.put("username", Name);
+                    user.put("department", Dept);
+                    user.put("email", Email);
+                    user.put("admission_number", AdmisiionNo);
 
-                HashMap user = new HashMap();
-                user.put("username", Name);
-                user.put("department", Dept);
-                user.put("email", Email);
-                user.put("admission_number", AdmisiionNo);
+                    userRef.updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            progressBar.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
 
-                userRef.updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        progressBar.setVisibility(View.GONE);
-                        if (task.isSuccessful()) {
+                                Toast.makeText(SetupActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
 
-                            Toast.makeText(SetupActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SetupActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
 
-                            Intent intent = new Intent(SetupActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            Toast.makeText(SetupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(SetupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
 
-            }
-        } else if (l==1) {
-            l=0;
+                }
+            } else if (l == 1) {
+                l = 0;
 
-            String Name = name.getText().toString();
-            String Dept = dept.getText().toString();
+                String Name = name.getText().toString();
+                String Dept = dept.getText().toString();
 
-            String Email = email.getText().toString();
-            String Designation = admin_no.getText().toString();
+                String Email = email.getText().toString();
+                String Designation = admin_no.getText().toString();
 
-            if (Name.isEmpty()) {
-                name.setError("Enter Name!");
-                name.requestFocus();
-                return;
-            }
-            if (Dept.isEmpty()) {
-                dept.setError("Enter Department!");
-                dept.requestFocus();
-                return;
-            }
-            if (Email.isEmpty()) {
-                email.setError("Enter Email!");
-                email.requestFocus();
-                return;
-            }
-            if (Designation.isEmpty()) {
-                email.setError("Enter your Designation!");
-                email.requestFocus();
-                return;
-            } else {
-                progressBar.setVisibility(View.VISIBLE);
+                if (Name.isEmpty()) {
+                    name.setError("Enter Name!");
+                    name.requestFocus();
+                    return;
+                }
+                if (Dept.isEmpty()) {
+                    dept.setError("Enter Department!");
+                    dept.requestFocus();
+                    return;
+                }
+                if (Email.isEmpty()) {
+                    email.setError("Enter Email!");
+                    email.requestFocus();
+                    return;
+                }
+                if (Designation.isEmpty()) {
+                    email.setError("Enter your Designation!");
+                    email.requestFocus();
+                    return;
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
 
-                HashMap user = new HashMap();
-                user.put("username", Name);
-                user.put("department", Dept);
-                user.put("email", Email);
-                user.put("designation", Designation);
+                    HashMap user = new HashMap();
+                    user.put("username", Name);
+                    user.put("department", Dept);
+                    user.put("email", Email);
+                    user.put("designation", Designation);
 
-                userRef.updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        progressBar.setVisibility(View.GONE);
-                        if (task.isSuccessful()) {
+                    userRef.updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            progressBar.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
 
-                            Toast.makeText(SetupActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SetupActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
 
-                            Intent intent = new Intent(SetupActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            finish();
+                                Intent intent = new Intent(SetupActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
 
-                        } else {
-                            Toast.makeText(SetupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(SetupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
 
 
+                }
             }
+        }else{
+
+            Toast.makeText(SetupActivity.this,"Please Select your profile image ..",Toast.LENGTH_LONG).show();
+
         }
     }
+
+
+
 }
 

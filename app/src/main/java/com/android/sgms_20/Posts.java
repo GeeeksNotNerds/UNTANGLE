@@ -17,12 +17,13 @@ public class Posts
     private String subCategory;
     private String showInformation;
     private String postid;
+    private String status;
     private List<Tag> tags;
 
-    public Posts(String postid,String name, String email, String description, String date, String time, String uid,String profileImage, String mode, String category, String subCategory,String showInformation,List<Tag> tags) {
+    public Posts(String postid,String name, String email, String description, String date, String time, String uid, String mode, String category, String subCategory,String showInformation,String status,List<Tag> tags) {
         this.postid=postid;
         this.username = name;
-        this.profileImage=profileImage;
+
         this.email = email;
         this.description = description;
         this.date = date;
@@ -33,8 +34,11 @@ public class Posts
         this.category = category;
         this.subCategory = subCategory;
         this.showInformation=showInformation;
+        this.status=status;
     }
 
+    public String getStatus(){return status;}
+    public String setStatus(){return status;}
     public String getUsername() {
         return username;
     }
@@ -167,6 +171,8 @@ public class Posts
             return false;
         if (getEmail() != null ? !getEmail().equals(question.getEmail()) : question.getEmail() != null)
             return false;
+        if(getStatus()!= null ? !getStatus().equals(question.getStatus()) : question.getStatus() !=null)
+            return false;
         if (getDate() != null ? !getDate().equals(question.getDate()) : question.getDate() != null)
             return false;
         if (getDescription() != null ? !getDescription().equals(question.getDescription()) : question.getDescription() != null)
@@ -179,7 +185,7 @@ public class Posts
     public int hashCode() {
         int result = getName() != null ? getName().hashCode() : 0;
         result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
-
+        result = 31 * result + (getStatus() != null ? getStatus().hashCode(): 0);
         result = 31 * result + (getDate() != null ? getDate().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);

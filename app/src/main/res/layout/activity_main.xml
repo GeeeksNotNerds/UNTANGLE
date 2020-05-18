@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <androidx.appcompat.widget.Toolbar
        android:layout_width="match_parent"
        android:layout_height="45dp"
@@ -30,6 +31,8 @@
 
             <ImageView
                android:id="@+id/thumbnail"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
 
                android:src="@drawable/profile"
                android:layout_width="40dp"
@@ -73,5 +76,6 @@
         app:itemTextColor="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"
         tools:ignore="MissingConstraints" />
+
 
 </RelativeLayout>
