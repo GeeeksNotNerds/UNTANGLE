@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private String[] mTitles;
     private List<Posts> mAllQuestions;
     private Filter<Tag> mFilter;
+    private LinearLayoutManager linearLayoutManager;
     private PostsAdapter mAdapter;
     AppCompatImageView LikePostButton,downVotePostButton;
     TextView DisplayNoOfLikes,DisplayDownVotes;
@@ -182,7 +184,13 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        //mRecyclerView.setFocusable(false);
+        //FrameLayout frameLayout=(FrameLayout)findViewById(R.id.frame);
+        //frameLayout.requestFocus();
+        mRecyclerView.scrollToPosition(0);
+       linearLayoutManager =new LinearLayoutManager(this,RecyclerView.VERTICAL,true);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.scrollToPositionWithOffset(0,0);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
@@ -252,6 +260,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         mAllQuestions.clear();
+                        mRecyclerView.scrollToPosition(0);
+                        linearLayoutManager.scrollToPosition(0);
+
                         for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
                             String postKey = dataSnapshot1.child("PostKey").getValue().toString();
 
