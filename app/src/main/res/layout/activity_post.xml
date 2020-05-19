@@ -80,14 +80,14 @@
                     android:padding="8dp"
                     android:text="PUBLIC"
                     android:id="@+id/post_public"
-                    android:checked="false"/>
+                   />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="PRIVATE"
                     android:id="@+id/post_private"
-                    android:checked="false"/>
+                    />
             </RadioGroup>
 
 
@@ -143,14 +143,14 @@
                     android:padding="8dp"
                     android:text="YES"
                     android:id="@+id/post_yes"
-                    android:checked="false"/>
+                    />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="NO"
                     android:id="@+id/post_no"
-                    android:checked="false"/>
+                    />
             </RadioGroup>
 
 

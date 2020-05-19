@@ -92,11 +92,10 @@ public class PostActivity extends AppCompatActivity {
                              @Override
                              public void onCheckedChanged(RadioGroup group, int checkedId) {
                                  if(checkedId==R.id.post_no){
-
                                      UserInfo_show="no";
                                      Mode="Public";
                                  }
-                                 else if(checkedId==R.id.yes){
+                                 else if(checkedId==R.id.post_yes){
                                      UserInfo_show="yes";
                                      Mode="Public";
                                  }
