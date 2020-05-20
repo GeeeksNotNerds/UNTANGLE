@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -62,6 +63,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FilterListener<Tag> {
     private FirebaseAuth mAuth;
+
     private GoogleApiClient mGoogleApiClient;
     String currentUserID;
     private int[] mColors;
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     TextView DisplayNoOfLikes,DisplayDownVotes;
     int CountLikes,countDownVotes;
 
-
+    int pos;
     private ImageView pro;
 
     private RecyclerView postList,mRecyclerView;
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");//subscribing
         FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");//unsubscribe
 
-
+//        b1=(Button)findViewById(R.id.b);
         pro=(ImageView)findViewById(R.id.thumbnail);
         setSupportActionBar(mToolbar);
         setTitle("Home");
@@ -187,10 +189,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         //mRecyclerView.setFocusable(false);
         //FrameLayout frameLayout=(FrameLayout)findViewById(R.id.frame);
         //frameLayout.requestFocus();
-        mRecyclerView.scrollToPosition(0);
+        //mRecyclerView.scrollToPosition(0);
        linearLayoutManager =new LinearLayoutManager(this,RecyclerView.VERTICAL,true);
+       linearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        linearLayoutManager.scrollToPositionWithOffset(0,0);
+        //linearLayoutManager.scrollToPositionWithOffset(0,0);
+        pos=linearLayoutManager.findLastVisibleItemPosition();
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
@@ -208,6 +212,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
+    }
+
+    private void MoveToTop()
+    {
+        mRecyclerView.smoothScrollToPosition(pos-1);
     }
 
     private void calculateDiff(final List<Posts> oldList, final List<Posts> newList) {
@@ -260,8 +269,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         mAllQuestions.clear();
-                        mRecyclerView.scrollToPosition(0);
-                        linearLayoutManager.scrollToPosition(0);
+                        //mRecyclerView.scrollToPosition(0);
+                        //linearLayoutManager.scrollToPosition(0);
 
                         for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
                             String postKey = dataSnapshot1.child("PostKey").getValue().toString();
@@ -420,6 +429,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                         }
 
                         mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);
+            //            mRecyclerView.smoothScrollToPosition(0);
                         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -459,6 +469,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mAdapter.setPosts(newQuestions);
         calculateDiff(oldQuestions, newQuestions);
         mAdapter.notifyDataSetChanged();
+        //mRecyclerView.smoothScrollToPosition(0);
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -503,7 +514,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-            private void DisplayAllUsersPost()
+      /*      private void DisplayAllUsersPost()
     {
 
         FirebaseRecyclerOptions<Posts> options=
@@ -745,7 +756,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             TextView PostDescription=(TextView)mView.findViewById(R.id.post_description);
             PostDescription.setText(description);
         }*/
-    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListner=
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -775,6 +786,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
         super.onStart();
+        //mRecyclerView.smoothScrollToPosition(0);
         FirebaseUser currentUser=mAuth.getCurrentUser();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -791,6 +803,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         {
             CheckUserExistence();
         }
+
     }
 
     private void CheckUserExistence()

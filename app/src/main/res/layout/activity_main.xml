@@ -58,11 +58,13 @@
 
 
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:focusable="false"
-            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/container_height"
             tools:listitem="@layout/item_list" />
 
@@ -71,7 +73,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+
+
     </FrameLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:id="@+id/bottom_navigation"
