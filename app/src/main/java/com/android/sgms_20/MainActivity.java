@@ -23,6 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,6 +48,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 import com.yalantis.filter.adapter.FilterAdapter;
 import com.yalantis.filter.animator.FiltersListItemAnimator;
@@ -60,6 +63,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FilterListener<Tag> {
     private FirebaseAuth mAuth;
+
     private GoogleApiClient mGoogleApiClient;
     String currentUserID;
     private int[] mColors;
@@ -72,12 +76,13 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private String[] mTitles;
     private List<Posts> mAllQuestions;
     private Filter<Tag> mFilter;
+    private LinearLayoutManager linearLayoutManager;
     private PostsAdapter mAdapter;
     AppCompatImageView LikePostButton,downVotePostButton;
     TextView DisplayNoOfLikes,DisplayDownVotes;
     int CountLikes,countDownVotes;
 
-
+    int pos;
     private ImageView pro;
 
     private RecyclerView postList,mRecyclerView;
@@ -98,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
         setContentView(R.layout.activity_main);
         mToolbar=(Toolbar) findViewById(R.id.toolbar);
+
+
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");//subscribing
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");//unsubscribe
+
+//        b1=(Button)findViewById(R.id.b);
         pro=(ImageView)findViewById(R.id.thumbnail);
         setSupportActionBar(mToolbar);
         setTitle("Home");
@@ -175,6 +186,15 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
+        //mRecyclerView.setFocusable(false);
+        //FrameLayout frameLayout=(FrameLayout)findViewById(R.id.frame);
+        //frameLayout.requestFocus();
+        //mRecyclerView.scrollToPosition(0);
+       linearLayoutManager =new LinearLayoutManager(this,RecyclerView.VERTICAL,true);
+       linearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        //linearLayoutManager.scrollToPositionWithOffset(0,0);
+        pos=linearLayoutManager.findLastVisibleItemPosition();
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
       //  mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount());
@@ -195,6 +215,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
+    }
+
+    private void MoveToTop()
+    {
+        mRecyclerView.smoothScrollToPosition(pos-1);
     }
 
     private void calculateDiff(final List<Posts> oldList, final List<Posts> newList) {
@@ -247,6 +272,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         mAllQuestions.clear();
+                        //mRecyclerView.scrollToPosition(0);
+                        //linearLayoutManager.scrollToPosition(0);
+
                         for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
                             String postKey = dataSnapshot1.child("PostKey").getValue().toString();
 
@@ -404,6 +432,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                         }
 
                         mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);
+            //            mRecyclerView.smoothScrollToPosition(0);
                         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -443,6 +472,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mAdapter.setPosts(newQuestions);
         calculateDiff(oldQuestions, newQuestions);
         mAdapter.notifyDataSetChanged();
+        //mRecyclerView.smoothScrollToPosition(0);
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -487,7 +517,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-            private void DisplayAllUsersPost()
+      /*      private void DisplayAllUsersPost()
     {
 
         FirebaseRecyclerOptions<Posts> options=
@@ -729,7 +759,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             TextView PostDescription=(TextView)mView.findViewById(R.id.post_description);
             PostDescription.setText(description);
         }*/
-    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListner=
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -759,6 +789,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
         super.onStart();
+        //mRecyclerView.smoothScrollToPosition(0);
         FirebaseUser currentUser=mAuth.getCurrentUser();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -775,6 +806,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         {
             CheckUserExistence();
         }
+
     }
 
     private void CheckUserExistence()

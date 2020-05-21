@@ -13,62 +13,83 @@
        android:layout_height="50dp"
        android:src="@drawable/share"
        android:id="@+id/share"
+       android:tint="@color/colorAccent"
        android:layout_alignParentTop="true"
        android:layout_alignParentRight="true"
        android:background="?attr/selectableItemBackgroundBorderless"
        android:clickable="true"
        android:layout_margin="20dp"/>
 
-        <LinearLayout
+    <LinearLayout
+        android:id="@+id/li"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/status_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="start"
 
 
-            <TextView
-                android:id="@+id/status_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif-light"
-                android:gravity="start"
+            android:padding="0dp"
+            android:text="S T A T U S : "
+            android:textAlignment="textStart"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
 
-                android:padding="0dp"
-                android:text="S T A T U S : "
-                android:textAlignment="textStart"
-                android:textColor="@color/common_google_signin_btn_text_light_focused"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/click_post_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="start"
+            android:padding="0dp"
+
+            android:text="To Be Reviewed..."
+            android:textAlignment="textStart"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp" />
 
 
-            <TextView
-                android:id="@+id/click_post_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:fontFamily="sans-serif-light"
-                android:gravity="start"
-                android:padding="0dp"
+    </LinearLayout>
 
-                android:text="To Be Reviewed..."
-                android:textAlignment="textStart"
-                android:textColor="@color/inactive_dots"
-                android:textSize="15sp" />
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/li"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#ebebeb" />
 
-
-        </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="450dp"
+        android:layout_below="@id/divider"
+        android:orientation="vertical"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
+
+
+
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
 
         <TextView
@@ -76,13 +97,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:layout_marginTop="100dp"
+
             android:fontFamily="sans-serif-light"
             android:gravity="start"
             android:padding="13dp"
             android:text="post description"
             android:textAlignment="textStart"
-            android:textColor="@color/inactive_dots"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
         </ScrollView>
@@ -145,7 +166,7 @@
             android:clickable="true"
             android:fontFamily="sans-serif-light"
             android:padding="8dp"
-            android:text="delete Post"
+            android:text="Delete Post"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />

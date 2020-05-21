@@ -265,10 +265,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         GradientDrawable drawable = new GradientDrawable();
         drawable.setCornerRadius(1000);
+        //drawable.setSize(40,15);
         drawable.setColor(firstTag.getColor());
         holder.textCategory.setBackgroundDrawable(drawable);
         GradientDrawable drawable1 = new GradientDrawable();
         drawable1.setCornerRadius(1000);
+
         drawable1.setColor(secondTag.getColor());
         holder.textSubcategory.setBackgroundDrawable(drawable1);
 
