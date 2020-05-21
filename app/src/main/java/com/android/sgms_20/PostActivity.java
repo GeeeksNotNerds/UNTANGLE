@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,11 +46,13 @@ public class PostActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private EditText PostDescription;
     private FloatingActionButton UpdatePostButton;
+    private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
+    TextView title;
     private DatabaseReference UsersRef, PostsRef;
     private FirebaseAuth mAuth;
     RadioGroup rg_mode,rg_mode_opt,rg_cat,rg_cat_off,rg_cat_per,rg_cat_oth;
     CardView cv2,cv4,cv5,cv6;
-    String UserInfo_show="";
+    String UserInfo_show="",UsersRefid;
     String cat1,cat2;
 
     String Mode,category,Sub_Category;
@@ -63,7 +66,7 @@ public class PostActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
+        title=findViewById(R.id.select);
         cv2=findViewById(R.id.cv2);
         //cv4=findViewById(R.id.cv4);
        // cv5=findViewById(R.id.cv5);
@@ -89,11 +92,10 @@ public class PostActivity extends AppCompatActivity {
                              @Override
                              public void onCheckedChanged(RadioGroup group, int checkedId) {
                                  if(checkedId==R.id.post_no){
-
                                      UserInfo_show="no";
                                      Mode="Public";
                                  }
-                                 else if(checkedId==R.id.yes){
+                                 else if(checkedId==R.id.post_yes){
                                      UserInfo_show="yes";
                                      Mode="Public";
                                  }
@@ -259,8 +261,23 @@ public class PostActivity extends AppCompatActivity {
 
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
+
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
 
+
+
+
+        int c=1;
+        for(int i=0;i<1;i++){
+            if(current_user_id.equals(mAdmin[i])){
+                c=0;
+                break;
+            }
+        }
+
+        if(c==0){
+            title.setText("Select Your Announcement Category");
+        }
 
 
         PostDescription=(EditText)findViewById(R.id.post_description);
@@ -329,6 +346,8 @@ public class PostActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
+
+
 
                         String userFullName = dataSnapshot.child("username").getValue().toString();
                         String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();

@@ -140,7 +140,7 @@ public class ClickPostActivity extends AppCompatActivity {
                           builder.setTitle("Change Status");
 
                           final EditText inputField = new EditText(ClickPostActivity.this);
-                          inputField.setText(description);
+                          inputField.setText(Status);
                           builder.setView(inputField);
                           builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                               @Override

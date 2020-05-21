@@ -196,6 +196,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         //linearLayoutManager.scrollToPositionWithOffset(0,0);
         pos=linearLayoutManager.findLastVisibleItemPosition();
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+      //  mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount());
+      //  mRecyclerView.getLayoutManager().scrollToPosition(0);
         mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
 

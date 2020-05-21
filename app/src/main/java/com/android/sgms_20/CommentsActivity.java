@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,8 @@ import java.util.HashMap;
 
 public class CommentsActivity extends AppCompatActivity {
     private ImageButton postCommentButton;
+   // ImageView end;
+
     private EditText CommentInputText;
     private RecyclerView CommentsList;
     private String Post_Key,current_user_id;
@@ -58,7 +61,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         mAuth= FirebaseAuth.getInstance();
         current_user_id=mAuth.getCurrentUser().getUid();
-
+        //end=findViewById(R.id.end);
         Post_Key=getIntent().getExtras().get("PostKey").toString();
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -73,6 +76,9 @@ public class CommentsActivity extends AppCompatActivity {
 
         CommentInputText =(EditText)findViewById(R.id.comment_input);
         postCommentButton=(ImageButton)findViewById(R.id.post_comment_button);
+
+
+
 
         postCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
