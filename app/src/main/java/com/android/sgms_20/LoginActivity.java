@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String TAG;
     ImageView google;
     GoogleSignInClient mGooglesignInClient;
+    TextView pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         email=findViewById(R.id.login_email);
         password=findViewById(R.id.login_password);
         findViewById(R.id.login_button).setOnClickListener(this);
+        pass=findViewById(R.id.pass);
         mAuth=FirebaseAuth.getInstance();
         progressBar=findViewById(R.id.progress_bar);
         google=findViewById(R.id.google_signin_button);
@@ -84,6 +86,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
+        pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LoginActivity.this,password.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
+            }
+        });
 
 
     }
