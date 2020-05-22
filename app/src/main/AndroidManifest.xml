@@ -8,19 +8,20 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Untangle"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <service
-            android:name=".MyFirebaseMessagingService">
+        <activity android:name=".password"></activity>
+
+        <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -42,8 +43,9 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.customTheme" />
         <activity android:name=".SetupActivity" />
-        <activity android:name=".ProItemView"
-            android:theme="@style/AppTheme.customTheme"/>
+        <activity
+            android:name=".ProItemView"
+            android:theme="@style/AppTheme.customTheme" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +60,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".Admin_Login" />
-        <activity android:name=".The_First"></activity>
+        <activity android:name=".The_First" />
         <activity android:name=".MainActivity" />
     </application>
 
