@@ -186,17 +186,17 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
-        //mRecyclerView.setFocusable(false);
-        //FrameLayout frameLayout=(FrameLayout)findViewById(R.id.frame);
-        //frameLayout.requestFocus();
-        mRecyclerView.scrollToPosition(0);
+        mRecyclerView.setFocusable(false);
+        FrameLayout frameLayout=(FrameLayout)findViewById(R.id.frame);
+        frameLayout.requestFocus();
+        //mRecyclerView.scrollToPosition(0);
        linearLayoutManager =new LinearLayoutManager(this,RecyclerView.VERTICAL,true);
        linearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        linearLayoutManager.scrollToPositionWithOffset(0,0);
+       //linearLayoutManager.scrollToPositionWithOffset(0,0);
         pos=linearLayoutManager.findLastVisibleItemPosition();
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+       // mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
       //  mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount());
       //  mRecyclerView.getLayoutManager().scrollToPosition(0);
         mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
