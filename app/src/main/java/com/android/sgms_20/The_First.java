@@ -52,10 +52,22 @@ public class The_First extends AppCompatActivity {
         {
             SendUserToMainActivity();
         }
+        else
+        {
+            SendUserToSnackBarActivity();
+        }
 
 
 
 
+    }
+
+    private void SendUserToSnackBarActivity()
+    {
+        Intent intent=new Intent(The_First.this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void SendUserToMainActivity() {

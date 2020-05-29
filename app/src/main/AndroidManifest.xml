@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".password"></activity>
+        <activity android:name=".SnackBarActivity"></activity>
+        <activity android:name=".password" />
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
