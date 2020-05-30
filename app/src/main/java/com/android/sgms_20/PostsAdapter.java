@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -417,7 +418,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
                         LikePostButton.setImageResource(R.drawable.upvote);
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
-
+                        HashMap useMap = new HashMap();
+                        useMap.put("likes", Integer.toString(CountLikes));
+                        PostsRef.child(PostKey).updateChildren(useMap);
 
                     }
                     else
@@ -426,6 +429,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         LikePostButton.setImageResource(R.drawable.ic);
 
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
+                        HashMap useMap = new HashMap();
+                        useMap.put("likes", Integer.toString(CountLikes));
+                        PostsRef.child(PostKey).updateChildren(useMap);
                     }
                 }
 
