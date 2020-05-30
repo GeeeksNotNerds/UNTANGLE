@@ -7,8 +7,11 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +21,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         //getSupportActionBar().hide();
         Splash ob=new Splash();
         ob.start();
+       // mAuth= FirebaseAuth.getInstance();
+        //mAuth.signInWithEmailAndPassword("withoutloginuser@gmail.com","LoginFast");
+
 
     }
     private class Splash extends Thread

@@ -17,11 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,13 +32,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class ClickPostActivity extends AppCompatActivity {
 
     private TextView PostDescription,postStatus,postStatus_heading;
     private Button DeletePostButton,EditPostButton,statusButton;
     ImageView Share;
-    private String PostKey,currentUserID,databaseUSerID,description,Status,message;
-    private DatabaseReference ClickPostRef;
+    private String PostKey,currentUserID,databaseUSerID,description,Status,message,ReceiverUid;
+    private DatabaseReference ClickPostRef,NotificationRef;
 
     private FirebaseAuth mAuth;
 
@@ -70,8 +75,21 @@ public class ClickPostActivity extends AppCompatActivity {
         //.child("posts").push().getKey()
 
 
+
         PostKey=getIntent().getExtras().get("PostKey").toString();
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
+        ClickPostRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ReceiverUid=dataSnapshot.child("uid").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        NotificationRef=FirebaseDatabase.getInstance().getReference().child("Notification");
 
         PostDescription=(TextView)findViewById(R.id.click_post_description);
         DeletePostButton=(Button)findViewById(R.id.delete_post_button);
@@ -147,11 +165,35 @@ public class ClickPostActivity extends AppCompatActivity {
                               public void onClick(DialogInterface dialog, int which)
                               {
 
-                                  ClickPostRef.child("status").setValue(inputField.getText().toString());
-                                  notification();
-                                  Toast.makeText(ClickPostActivity.this, "Status Changed.", Toast.LENGTH_SHORT).show();
+                                  ClickPostRef.child("status").setValue(inputField.getText().toString())
+                                          .addOnCompleteListener(task -> {
 
-                                  SendUserToMainActivity();
+                                              if(task.isSuccessful()){
+
+                                                  HashMap<String,String> NotificationMap= new HashMap<>();
+                                                  NotificationMap.put("from",currentUserID);
+                                                  NotificationMap.put("type","StatusChange");
+
+                                                  NotificationRef.child(ReceiverUid).push()
+                                                          .setValue(NotificationMap)
+                                                          .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                              @Override
+                                                              public void onComplete(@NonNull Task<Void> task) {
+                                                                  Toast.makeText(ClickPostActivity.this, "Status Changed.", Toast.LENGTH_SHORT).show();
+
+                                                                  SendUserToMainActivity();
+
+                                                              }
+                                                          });
+
+
+
+
+                                              }
+
+                                          });
+
+
                               }
                           });
                           builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

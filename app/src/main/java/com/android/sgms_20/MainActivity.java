@@ -39,8 +39,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -104,17 +107,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         setContentView(R.layout.activity_main);
         mToolbar=(Toolbar) findViewById(R.id.toolbar);
-
-
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");//subscribing
         FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");//unsubscribe
 
-//        b1=(Button)findViewById(R.id.b);
         pro=(ImageView)findViewById(R.id.thumbnail);
         setSupportActionBar(mToolbar);
         setTitle("Home");
@@ -123,51 +120,52 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             Toast.makeText(MainActivity.this,"You are not Online....Please switch on your interner connection!",Toast.LENGTH_LONG).show();
         }
 
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-
-            mAuth=FirebaseAuth.getInstance();
-            currentUserID=mAuth.getCurrentUser().getUid();
-
-
+        mAuth=FirebaseAuth.getInstance();
+        currentUserID=mAuth.getCurrentUser().getUid();
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         PostsRef= FirebaseDatabase.getInstance().getReference().child("Posts");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
+        if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
+        {
+            pro.setVisibility(View.INVISIBLE);
+            //Toast.makeText(this, "Working", Toast.LENGTH_SHORT).show();
+        }
+        else
+            {
+            MyPostRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        if (dataSnapshot.hasChild("username")) {
+                            String myProfileName = dataSnapshot.child("username").getValue().toString();
+                            char letter = myProfileName.charAt(0);
+                            letter = Character.toUpperCase(letter);
 
-        MyPostRef.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()) {
-                    if (dataSnapshot.hasChild("username")) {
-                        String myProfileName = dataSnapshot.child("username").getValue().toString();
-                        char letter = myProfileName.charAt(0);
-                        letter = Character.toUpperCase(letter);
+                            mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
 
+                            pro.setImageDrawable(mDrawableBuilder);
 
-                        mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
-                        pro.setImageDrawable(mDrawableBuilder);
-
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-        pro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                startActivity(new Intent(MainActivity.this,SideMenu.class));
+                }
+            });
+            pro.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, SideMenu.class));
 
-            }
-        });
-
+                }
+            });
+        }
 
 
         ImagePipelineConfig config = ImagePipelineConfig
@@ -191,32 +189,24 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
-
-       linearLayoutManager =new LinearLayoutManager(this,RecyclerView.VERTICAL,true);
-       linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager =new LinearLayoutManager(this,RecyclerView.VERTICAL,true);
+        linearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-
-
+        pos=linearLayoutManager.findLastVisibleItemPosition();
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
-
         mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
-
-
-
-
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListner);
 
-
-
-        //DisplayAllUsersPost();
-
-
-
-
-    }
+        if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
+        {
+            bottomNav.setOnNavigationItemSelectedListener(navListner1);
+        }
+        else
+         {
+            bottomNav.setOnNavigationItemSelectedListener(navListner);
+         }
+}
 
 
 
@@ -309,8 +299,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             else if(c==2){owner="Club";
                             c=0;
                             }
-                            else if(currentUserID.equals(uid))
-                            {owner="MyPosts";
+                            else if(currentUserID.equals(uid)){owner="MyPosts";
                             c=0;}
                             else {
                                 owner="General";
@@ -365,17 +354,17 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-                            if(mode.equals("Public"))
-                            {
 
+                            if(mode.equals("Public")){
                                 add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
                                     add(new Tag(sub, colour2));
 
-                                }}));}
 
+
+                                }}));}
                             else
                             {
                                 int l=0;
@@ -488,6 +477,37 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         }
     }
 
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListner1=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()){
+
+                        case R.id.nav_post:
+
+                                            SendUserToLoginActivity();
+
+                            break;
+                        case R.id.nav_profile:
+
+                                            SendUserToLoginActivity();
+
+                            break;
+                    }
+
+                    return true;
+                }
+            };
+
+    private void SendUserToLoginActivity()
+    {
+        Intent loginIntent=new Intent(MainActivity.this,SnackBarActivity.class);
+        startActivity(loginIntent);
+
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListner=
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -527,8 +547,14 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mGoogleApiClient.connect();
         if(currentUser==null)
         {
-            sendUserToLoginActivity();
-
+            //sendUserToLoginActivity();
+           /* mAuth=FirebaseAuth.getInstance();
+            mAuth.signInWithEmailAndPassword("withoutloginuser@gmail.com","LoginFast").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
+                }
+            });*/
         }
         else
         {
@@ -536,8 +562,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         }
 
     }
-
-
 
     private void CheckUserExistence()
     {
