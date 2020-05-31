@@ -31,6 +31,7 @@ public class The_First extends AppCompatActivity {
           @Override
           public void onClick(View v)
           {
+              next.setVisibility(View.INVISIBLE);
               mAuth=FirebaseAuth.getInstance();
               mAuth.signInWithEmailAndPassword("withoutloginuser@gmail.com","LoginFast").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                   @Override
