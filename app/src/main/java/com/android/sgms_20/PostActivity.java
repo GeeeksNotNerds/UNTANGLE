@@ -1,7 +1,11 @@
 package com.android.sgms_20;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 
 
@@ -15,18 +19,21 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,18 +43,26 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
+    private static final String TAG ="";
     private Toolbar mToolbar;
     private ProgressDialog loadingBar;
     private EditText PostDescription;
     private FloatingActionButton UpdatePostButton;
     private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
     TextView title;
+    ImageView Media;
     private DatabaseReference UsersRef, PostsRef;
     private FirebaseAuth mAuth;
     RadioGroup rg_mode,rg_mode_opt,rg_cat,rg_cat_off,rg_cat_per,rg_cat_oth;
@@ -57,7 +72,9 @@ public class PostActivity extends AppCompatActivity {
 
     String Mode,category,Sub_Category;
 
-    private String description;
+    private String description,checker="",myUrl;
+    private Uri myUri;
+    private StorageTask uploadTask;
     private String current_user_id,saveCurrentDate,saveCurrentTime,postRandomName;
 
 
@@ -68,6 +85,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         title=findViewById(R.id.select);
         cv2=findViewById(R.id.cv2);
+        Media=findViewById(R.id.media);
         //cv4=findViewById(R.id.cv4);
        // cv5=findViewById(R.id.cv5);
         //cv6=findViewById(R.id.cv6);
@@ -81,6 +99,40 @@ public class PostActivity extends AppCompatActivity {
         //rg_cat_off=findViewById(R.id.rg4);
         //rg_cat_per=findViewById(R.id.rg5);
         //rg_cat_oth=findViewById(R.id.rg6);
+
+        Media.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CharSequence options[]= new CharSequence[]{
+
+                        "Image",
+                        "PDF File",
+                        "Word File"
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+                builder.setTitle("Select the  file");
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which==0){
+                            checker="image";
+
+                            Intent intent= new Intent();
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            intent.setType("image/*");
+                            startActivityForResult(intent.createChooser(intent,"Select Image"),438);
+                        }
+                        if(which==1){
+                            checker="pdf";
+                        }
+                        if(which==2){
+                            checker="docx";
+                        }
+                    }
+                });
+
+            }
+        });
 
         rg_mode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -337,6 +389,40 @@ public class PostActivity extends AppCompatActivity {
             SavingPostInformationToDatabase();
 
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == 438 && resultCode == RESULT_OK) {
+            Uri imageuri = data.getData();
+            Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + imageuri);
+            CropImage.activity(imageuri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
+        }
+
+
+        if(!checker.equals("image")){
+
+        }else if(checker.equals("image")){
+
+           // StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("Image Files");
+
+
+
+
+
+
+        }else{
+            Toast.makeText(this,"Error",Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void SavingPostInformationToDatabase()

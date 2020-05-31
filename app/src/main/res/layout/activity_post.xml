@@ -231,22 +231,54 @@
 
 
 
-
-    <EditText
-
-        android:id="@+id/post_description"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/cv3"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif-light"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/edit_border"
-        android:hint="   Write about your post  "
-        android:textColorHint="@color/white"
-        android:inputType="textMultiLine"
-        android:padding="10dp" />
+        android:id="@+id/ll"
+
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+
+                android:id="@+id/post_description"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/button_background2"
+                android:hint="   Write about your post  "
+                android:textColorHint="@color/white"
+                android:inputType="textMultiLine"
+                android:padding="15dp"
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right"
+                android:layout_marginRight="40dp"
+                android:id="@+id/media"
+                android:src="@drawable/paperclip"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+
 
 
 
@@ -256,7 +288,7 @@
             android:id="@+id/update_post_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_below="@id/post_description"
+            android:layout_below="@id/ll"
             android:tint="@color/white"
            android:layout_marginBottom="80dp"
            android:layout_centerHorizontal="true"
