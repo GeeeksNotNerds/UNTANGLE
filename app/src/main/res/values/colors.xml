@@ -32,6 +32,8 @@
         <item name="quality1" type="color">#9f9fed</item>
         <item name="customer1" type="color">#fc6177</item>
         <item name="other1" type="color">#bcbcbc</item>
+        <item name="white1" type="color">#ffffff</item>
+        <item name="pink" type="color">#fc6177</item>
     </array>
 
 

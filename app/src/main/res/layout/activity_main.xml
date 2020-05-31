@@ -8,42 +8,42 @@
 
 
     <androidx.appcompat.widget.Toolbar
-       android:layout_width="match_parent"
-       android:layout_height="45dp"
-       android:elevation="5dp"
-       android:id="@+id/toolbar"
-       android:background="@color/colorPrimaryDark">
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:elevation="5dp"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimaryDark">
 
         <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-           <TextView
-               android:layout_width="match_parent"
-               android:text="Untangle"
-               android:fontFamily="sans-serif-light"
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Untangle"
+                android:fontFamily="sans-serif-light"
 
-               android:textSize="25sp"
-               android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textColor="@color/white"
 
-               android:layout_height="wrap_content"
-               android:layout_toLeftOf="@id/thumbnail"/>
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/thumbnail"/>
 
             <ImageView
-               android:id="@+id/thumbnail"
+                android:id="@+id/thumbnail"
                 android:clickable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
 
-               android:src="@drawable/profile"
-               android:layout_width="40dp"
-               android:layout_marginRight="8dp"
+                android:src="@drawable/profile"
+                android:layout_width="40dp"
+                android:layout_marginRight="8dp"
 
 
-               android:layout_alignParentRight="true"
-               android:layout_height="40dp"/>
-       </RelativeLayout>
+                android:layout_alignParentRight="true"
+                android:layout_height="40dp"/>
+        </RelativeLayout>
 
-   </androidx.appcompat.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
 
         android:id="@+id/frame"
 
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/sort"
         android:layout_above="@id/bottom_navigation"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -75,8 +75,58 @@
 
 
 
-    </FrameLayout>
 
+    </FrameLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="10dp"
+        android:id="@+id/sort"
+        android:orientation="horizontal" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sort By"
+            android:textColor="#9C9AA7"
+            android:layout_marginRight="15dp"
+            android:textSize="16dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/latest"
+            android:textColor="@color/white"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:padding="5dp"
+            android:textAllCaps="false"
+            android:textSize="16dp"
+            android:background="@drawable/button_clicked"
+            android:text="What's new"/>
+
+        <Button
+            android:textAllCaps="false"
+            android:id="@+id/likes_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_unclick"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="Upvotes(Max to Min) "
+            android:textColor="@color/colorAccent"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/sort"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#ebebeb" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:id="@+id/bottom_navigation"

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -87,125 +89,151 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         Post=FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
 
 
-
-
-        //String PostKey=question.getUid().toString();
-      //  String PostKey=PostsRef.child("PostKey").toString();
-
         holder.setLikesButtonStatus(PostKey);
         holder.setDownVoteButtonStatus(PostKey);
-        holder.settings.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v)
-            {
+        //String email=question.getEmail();
+        if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
+        {
+            holder.pic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent ProIntent = new Intent(mContext, ProItemView.class);
+                    ProIntent.putExtra("PostKey", PostKey);
+                    mContext.startActivity(ProIntent);
 
+                }
+            });
+            holder.settings.setOnClickListener(new View.OnClickListener() {
 
-                Intent clickPosIntent=new Intent(mContext,ClickPostActivity.class);
-                clickPosIntent.putExtra("PostKey",PostKey);
-                mContext.startActivity(clickPosIntent);
-
-            }
-        });
-
-        holder.CommentPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-
-
-                Intent commentsIntent=new Intent(mContext,CommentsActivity.class);
-                commentsIntent.putExtra("PostKey",PostKey);
-                mContext.startActivity(commentsIntent);
+                @Override
+                public void onClick(View v)
+                {
 
 
-            }
-        });
+                    Intent clickPosIntent=new Intent(mContext,ClickPostActivity.class);
+                    clickPosIntent.putExtra("PostKey",PostKey);
+                    mContext.startActivity(clickPosIntent);
 
-        holder.pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent ProIntent=new Intent(mContext,ProItemView.class);
-                ProIntent.putExtra("PostKey",PostKey);
-                mContext.startActivity(ProIntent);
+                }
+            });
 
-            }
-        });
+            holder.LikePostButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    SendUserToSnackBarActivity();
 
+                }
+            });
+            holder.CommentPostButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    SendUserToSnackBarActivity();
+                }
+            });
+            holder.DownVoteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    SendUserToSnackBarActivity();
+                }
+            });
+        }
+        else {
+            holder.settings.setOnClickListener(new View.OnClickListener() {
 
-
-
-
-        holder.LikePostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-
-
-                LikeChecker=true;
-
-                LikesRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(LikeChecker==true )
-                        {
-                            if(dataSnapshot.child(PostKey).hasChild(currentUserId))
-                            {
-                                LikesRef.child(PostKey).child(currentUserId).removeValue();
-                                LikeChecker=false;
-                                DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
-
+                @Override
+                public void onClick(View v) {
 
 
-                            }
-                            else
-                            {
+                    Intent clickPosIntent = new Intent(mContext, ClickPostActivity.class);
+                    clickPosIntent.putExtra("PostKey", PostKey);
+                    mContext.startActivity(clickPosIntent);
+
+                }
+            });
+
+            holder.CommentPostButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Intent commentsIntent = new Intent(mContext, CommentsActivity.class);
+                    commentsIntent.putExtra("PostKey", PostKey);
+                    mContext.startActivity(commentsIntent);
+
+
+                }
+            });
+
+            holder.pic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent ProIntent = new Intent(mContext, ProItemView.class);
+                    ProIntent.putExtra("PostKey", PostKey);
+                    mContext.startActivity(ProIntent);
+
+                }
+            });
+            holder.LikePostButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    LikeChecker = true;
+
+                    LikesRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (LikeChecker == true) {
+                                if (dataSnapshot.child(PostKey).hasChild(currentUserId)) {
+                                    LikesRef.child(PostKey).child(currentUserId).removeValue();
+                                    LikeChecker = false;
+                                    DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
+
+
+                                } else {
 
                                     LikesRef.child(PostKey).child(currentUserId).setValue(true);
                                     DownVotesRef.child(PostKey).child(currentUserId).removeValue();
                                     LikeChecker = false;
 
 
-
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
-
-
-            }
-        });
+                        }
+                    });
 
 
-        holder.DownVoteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
+                }
+            });
 
 
-                DownVoteChecker=true;
-                DownVotesRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(DownVoteChecker==true)
-                        {
-                            if(dataSnapshot.child(PostKey).hasChild(currentUserId))
-                            {
-                                DownVotesRef.child(PostKey).child(currentUserId).removeValue();
-                                DownVoteChecker=false;
-
-                                LikesRef.child(PostKey).child(currentUserId).setValue(true);
+            holder.DownVoteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
+                    DownVoteChecker = true;
+                    DownVotesRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (DownVoteChecker == true) {
+                                if (dataSnapshot.child(PostKey).hasChild(currentUserId)) {
+                                    DownVotesRef.child(PostKey).child(currentUserId).removeValue();
+                                    DownVoteChecker = false;
 
-                            }
-                            else
-                            {
+                                    LikesRef.child(PostKey).child(currentUserId).setValue(true);
+
+
+                                } else {
 
 
                                     DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
@@ -213,22 +241,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                     LikesRef.child(PostKey).child(currentUserId).removeValue();
 
 
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
-
-
-            }
-        });
+                        }
+                    });
 
 
+                }
+            });
 
+
+        }
 
 
 
@@ -301,27 +329,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
         });
 
-        /*Question question = mQuestions.get(position);
+    }
 
-
-        holder.textAuthorName.setText(question.getAuthorName());
-        holder.textJobTitle.setText(question.getAuthorJobTitle());
-        holder.textDate.setText(question.getDate());
-        holder.textQuestion.setText(question.getText());
-        Tag firstTag = question.getTags().get(0);
-        holder.firstFilter.setText(firstTag.getText());
-        Tag secondTag = question.getTags().get(1);
-        holder.secondFilter.setText(secondTag.getText());
-
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setCornerRadius(1000);
-        drawable.setColor(firstTag.getColor());
-        holder.firstFilter.setBackgroundDrawable(drawable);
-        GradientDrawable drawable1 = new GradientDrawable();
-        drawable1.setCornerRadius(1000);
-        drawable1.setColor(secondTag.getColor());
-        holder.secondFilter.setBackgroundDrawable(drawable1);*/
-
+    private void SendUserToSnackBarActivity()
+    {
+        Intent loginIntent=new Intent(mContext,SnackBarActivity.class);
+        mContext.startActivity(loginIntent);
     }
 
     private int getColor(int color) {
@@ -375,9 +388,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             DisplayDownVotes=mView.findViewById(R.id.text_downVotes_count);
             LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
             DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
-
-
-
             currentUserId= FirebaseAuth.getInstance().getCurrentUser().getUid();
             pic=itemView.findViewById(R.id.avatar);
 
@@ -408,7 +418,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
                         LikePostButton.setImageResource(R.drawable.upvote);
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
-
+                        HashMap useMap = new HashMap();
+                        useMap.put("likes", Integer.toString(CountLikes));
+                        PostsRef.child(PostKey).updateChildren(useMap);
 
                     }
                     else
@@ -417,6 +429,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         LikePostButton.setImageResource(R.drawable.ic);
 
                         DisplayNoOfLikes.setText(Integer.toString(CountLikes));
+                        HashMap useMap = new HashMap();
+                        useMap.put("likes", Integer.toString(CountLikes));
+                        PostsRef.child(PostKey).updateChildren(useMap);
                     }
                 }
 

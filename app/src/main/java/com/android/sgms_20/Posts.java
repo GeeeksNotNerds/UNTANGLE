@@ -7,6 +7,7 @@ public class Posts
 {
     private String username;
     private String email;
+    private String likes;
     private String description;
     private String date;
     private String time;
@@ -23,7 +24,6 @@ public class Posts
     public Posts(String postid,String name, String email, String description, String date, String time, String uid, String mode, String category, String subCategory,String showInformation,String status,List<Tag> tags) {
         this.postid=postid;
         this.username = name;
-
         this.email = email;
         this.description = description;
         this.date = date;
@@ -35,6 +35,15 @@ public class Posts
         this.subCategory = subCategory;
         this.showInformation=showInformation;
         this.status=status;
+
+    }
+
+    public String getLikes() {
+        return likes;
+    }
+
+    public void setLikes(String likes) {
+        this.likes = likes;
     }
 
     public String getStatus(){return status;}
