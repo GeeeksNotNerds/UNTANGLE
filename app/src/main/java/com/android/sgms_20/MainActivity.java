@@ -99,8 +99,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     String letter="A";
 
 
-
-
     boolean LikeChecker=false,DownVoteChecker=false;
 
     @Override
