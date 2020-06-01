@@ -251,7 +251,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.textAuthorName.setText(question.getName());
         holder.textJobTitle.setText(question.getEmail());
         holder.textDate.setText(question.getDate());
-        holder.textQuestion.setText(question.getDescription());
+
+        String txt=question.getDescription();
+        if(txt.equals("")){
+            holder.textQuestion.setVisibility(View.GONE);
+        }else{
+            holder.textQuestion.setText(question.getDescription());
+        }
+
         Tag firstTag = question.getTags().get(0);
         holder.textCategory.setText(firstTag.getText());
         Tag secondTag = question.getTags().get(1);
