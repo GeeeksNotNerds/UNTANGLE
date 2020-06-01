@@ -492,6 +492,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     final String categ = dataSnapshot1.child("category").getValue().toString();
                                     String name = dataSnapshot1.child("username").getValue().toString();
                                     String status;
+                                    String PostPic=dataSnapshot1.child("PostImage").getValue().toString();
                                     if(!owner.equals("Admin"))status=dataSnapshot1.child("status").getValue().toString();
                                     else status="-";
                                     String user = dataSnapshot1.child("email").getValue().toString();
@@ -531,7 +532,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                                     if(mode.equals("Public")){
-                                        add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode,PostPic, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -554,7 +555,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         if(l==1||(uid.equals(currentUserID)))
                                         {
                                             l=0;
-                                            add(new Posts(postKey, info, "" + user, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Posts(postKey, info, "" + user, post, date, date, uid, mode,PostPic, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
                                                 add(new Tag(mode, colour3));
                                                 add(new Tag(categ, colour1));
