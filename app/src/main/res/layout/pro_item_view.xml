@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ProItemView"
     android:background="@drawable/border1"
     android:layout_margin="5dp">
@@ -58,8 +58,8 @@
 
             <TextView
                 android:id="@+id/user_profile_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_below="@+id/user_profile_name"
                 android:layout_centerHorizontal="true"
 

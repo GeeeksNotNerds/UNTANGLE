@@ -501,11 +501,14 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("PostKey",postRandomName+current_user_id);
                     postsMap.put("status","Unresolved");
 
+
                    if(check==1){
                        postsMap.put("PostImage","null");
                    }
 
 
+
+                    postsMap.put("likes","0");
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
                                 @Override

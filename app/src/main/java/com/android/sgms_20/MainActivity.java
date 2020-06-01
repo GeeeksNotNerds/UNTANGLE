@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -39,8 +40,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -61,6 +65,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class MainActivity extends AppCompatActivity implements FilterListener<Tag> {
     private FirebaseAuth mAuth;
 
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private String[] mClub;
     private int colour1,colour2,colour3,colour4;
     private DatabaseReference UsersRef;
+    private Button mSort1,mSort2;
     private Toolbar mToolbar;
     private TextDrawable mDrawableBuilder;
     private String[] mTitles;
@@ -84,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
     int pos;
     private ImageView pro;
+    private int q;
 
     private RecyclerView postList,mRecyclerView;
 
@@ -91,30 +99,23 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     String letter="A";
 
 
-
-
     boolean LikeChecker=false,DownVoteChecker=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         setContentView(R.layout.activity_main);
+        q=0;
         mToolbar=(Toolbar) findViewById(R.id.toolbar);
-
-
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");//subscribing
         FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");//unsubscribe
 
-//        b1=(Button)findViewById(R.id.b);
         pro=(ImageView)findViewById(R.id.thumbnail);
         setSupportActionBar(mToolbar);
         setTitle("Home");
 
         if(!haveNetworkConnection()){
-            Toast.makeText(MainActivity.this,"You are not Online....Please switch on your interner connection!",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"You are not Online....Please switch on your internet connection!",Toast.LENGTH_LONG).show();
         }
 
         mAuth=FirebaseAuth.getInstance();
@@ -125,46 +126,46 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
-        MyPostRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()) {
-                    if (dataSnapshot.hasChild("username")) {
-                        String myProfileName = dataSnapshot.child("username").getValue().toString();
-                        char letter = myProfileName.charAt(0);
-                        letter = Character.toUpperCase(letter);
+        if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
+        {
+            pro.setVisibility(View.INVISIBLE);
+            //Toast.makeText(this, "Working", Toast.LENGTH_SHORT).show();
+        }
+        else
+            {
+            MyPostRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        if (dataSnapshot.hasChild("username")) {
+                            String myProfileName = dataSnapshot.child("username").getValue().toString();
+                            char letter = myProfileName.charAt(0);
+                            letter = Character.toUpperCase(letter);
 
 
-                        mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
+                            mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
 
-                        pro.setImageDrawable(mDrawableBuilder);
+                            pro.setImageDrawable(mDrawableBuilder);
 
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-        pro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                startActivity(new Intent(MainActivity.this,SideMenu.class));
+                }
+            });
+            pro.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, SideMenu.class));
 
-            }
-        });
+                }
+            });
+        }
 
-        /*
-        postList=(RecyclerView)findViewById(R.id.list);
-        postList.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-        postList.setLayoutManager(linearLayoutManager);
-        */
+
         ImagePipelineConfig config = ImagePipelineConfig
                 .newBuilder(this)
                 .setDownsampleEnabled(true)
@@ -186,41 +187,59 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
-        mRecyclerView.setFocusable(false);
-        FrameLayout frameLayout=(FrameLayout)findViewById(R.id.frame);
-        frameLayout.requestFocus();
-        //mRecyclerView.scrollToPosition(0);
-       linearLayoutManager =new LinearLayoutManager(this,RecyclerView.VERTICAL,true);
-       linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager =new LinearLayoutManager(this,RecyclerView.VERTICAL,true);
+        linearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-       //linearLayoutManager.scrollToPositionWithOffset(0,0);
         pos=linearLayoutManager.findLastVisibleItemPosition();
         mRecyclerView.setHasFixedSize(true);
-       // mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
-      //  mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount());
-      //  mRecyclerView.getLayoutManager().scrollToPosition(0);
-        mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
+        mAdapter=new PostsAdapter(this,mAllQuestions=getQuestions());
+        mRecyclerView.setAdapter(mAdapter);
+        mSort1=(Button)findViewById(R.id.latest);
+
+        mSort1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mSort1.setBackgroundResource(R.drawable.button_clicked);
+                mSort2.setBackgroundResource(R.drawable.button_unclick);
+                mSort1.setTextColor(mColors[22]);
+                mSort2.setTextColor(mColors[23]);
+                q=0;
+                mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions=getQuestions());
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        });
+        mSort2=(Button)findViewById(R.id.likes_sort);
+        mSort2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mSort2.setBackgroundResource(R.drawable.button_clicked);
+                mSort1.setBackgroundResource(R.drawable.button_unclick);
+                mSort2.setTextColor(mColors[22]);
+                mSort1.setTextColor(mColors[23]);
+                q=1;
+                mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions=getQuestions());
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        });
+
+        //mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
+
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
-
-
-
-
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListner);
+
+        if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
+        {
+            bottomNav.setOnNavigationItemSelectedListener(navListner1);
+        }
+        else
+         {
+            bottomNav.setOnNavigationItemSelectedListener(navListner);
+         }
+}
 
 
-
-        //DisplayAllUsersPost();
-
-
-
-
-    }
-
-    private void MoveToTop()
-    {
-        mRecyclerView.smoothScrollToPosition(pos-1);
-    }
 
     private void calculateDiff(final List<Posts> oldList, final List<Posts> newList) {
         DiffUtil.calculateDiff(new DiffUtil.Callback() {
@@ -267,25 +286,23 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private List<Posts> getQuestions() {
         return new ArrayList<Posts>() {
             {
-                PostsRef.addValueEventListener(new ValueEventListener() {
+                if(q==1)
+                {
+                PostsRef.orderByChild("likes").addValueEventListener(new ValueEventListener()
+                {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         mAllQuestions.clear();
-                        //mRecyclerView.scrollToPosition(0);
-                        //linearLayoutManager.scrollToPosition(0);
 
                         for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
                             String postKey = dataSnapshot1.child("PostKey").getValue().toString();
-
                             //final String PostKey=dataSnapshot1.getKey();
                             /*Intent intent=new Intent(MainActivity.this,PostsAdapter.class);
                             intent.putExtra("PostKey",PostKey);
                             startActivity(intent);*/
-
                             final String owner;
                             String uid = dataSnapshot1.child("uid").getValue().toString();
-
                             int c=0;
                             for(int i=0;i<1;i++)
                             {
@@ -366,31 +383,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             if (owner.equals("MyPosts")) colour4 = mColors[17];
                             if (owner.equals("Club")) colour4 = mColors[18];
 
-                            //LikePostButton=(AppCompatImageView)findViewById(R.id.view_likes);
-                            //DisplayNoOfLikes=(TextView)findViewById(R.id.text_likes_count);
-                            /*LikesRef.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.child(PostKey).hasChild(currentUserID))
-                                    {
-                                        CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                                        LikePostButton.setImageResource(R.drawable.ic_like);
-                                        DisplayNoOfLikes.setText(Integer.toString(CountLikes));
-                                    }
-                                    else
-                                    {
-                                        CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                                        LikePostButton.setImageResource(R.drawable.ic_heart);
 
-                                        DisplayNoOfLikes.setText(Integer.toString(CountLikes));
-                                    }
-                                }
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });*/
 
 
                             if(mode.equals("Public")){
@@ -422,32 +416,164 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         add(new Tag(mode, colour3));
                                         add(new Tag(categ, colour1));
                                         add(new Tag(sub, colour2));
-
-
-
                                     }}));
                                 }
                             }
-
-
                         }
-
                         mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);
-            //            mRecyclerView.smoothScrollToPosition(0);
                         mRecyclerView.setAdapter(mAdapter);
-
-
                     }
-
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(DatabaseError databaseError)
+                    {
 
                     }
                 });
+            }
+                else
+                    {
+                        PostsRef.addValueEventListener(new ValueEventListener()
+                        {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                mAllQuestions.clear();
+
+                                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
+                                    String postKey = dataSnapshot1.child("PostKey").getValue().toString();
+                                    //final String PostKey=dataSnapshot1.getKey();
+                            /*Intent intent=new Intent(MainActivity.this,PostsAdapter.class);
+                            intent.putExtra("PostKey",PostKey);
+                            startActivity(intent);*/
+                                    final String owner;
+                                    String uid = dataSnapshot1.child("uid").getValue().toString();
+                                    int c=0;
+                                    for(int i=0;i<1;i++)
+                                    {
+                                        if(uid.equals(mAdmin[i]))
+                                        {
+                                            c=1;
+                                            break;
+                                        }
+                                    }
+                                    if(c!=1)
+                                    {
+                                        for(int j=0;j<1;j++)
+                                        {
+                                            if(uid.equals(mClub[j]))
+                                            {
+                                                c=2;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    if(c==1){owner="Admin";
+                                        c=0;
+                                    }
+                                    else if(c==2){owner="Club";
+                                        c=0;
+                                    }
+                                    else if(currentUserID.equals(uid)){owner="MyPosts";
+                                        c=0;}
+                                    else {
+                                        owner="General";
+                                        c=0;
+                                    }
+
+
+                                    String show = dataSnapshot1.child("showInformation").getValue().toString();
+                                    String info,mail;
+                                    //if(show.equals("no"))info="Anonymous";
+
+
+                                    final String mode = dataSnapshot1.child("mode").getValue().toString();
+                                    final String sub = dataSnapshot1.child("subCategory").getValue().toString();
+                                    final String categ = dataSnapshot1.child("category").getValue().toString();
+                                    String name = dataSnapshot1.child("username").getValue().toString();
+                                    String status;
+                                    if(!owner.equals("Admin"))status=dataSnapshot1.child("status").getValue().toString();
+                                    else status="-";
+                                    String user = dataSnapshot1.child("email").getValue().toString();
+                                    String date = dataSnapshot1.child("date").getValue().toString();
+                                    String post = dataSnapshot1.child("description").getValue().toString();
+                                    //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
+                                    if (show.equals("no")) {
+                                        info = "Anonymous";
+                                        mail=" ";}
+                                    else {
+                                        info = name;
+                                        mail=user;
+                                    }
+
+                                    if (categ.equals("Official")) colour1 = mColors[1];
+                                    if (categ.equals("Personal")) colour1 = mColors[2];
+                                    if (categ.equals("Miscellaneous")) colour1 = mColors[3];
+                                    if (sub.equals("Admission")) colour2 = mColors[4];
+                                    if (sub.equals("Academic")) colour2 = mColors[5];
+                                    if (sub.equals("Finance")) colour2 = mColors[6];
+                                    if (sub.equals("Housing")) colour2 = mColors[7];
+                                    if (sub.equals("Rights Violation")) colour2 = mColors[8];
+                                    if (sub.equals("Health")) colour2 = mColors[9];
+                                    if (sub.equals("Placements")) colour2 = mColors[19];
+                                    if (mode.equals("Public")) colour3 = mColors[10];
+                                    if (sub.equals("Internships")) colour2 = mColors[11];
+                                    if (sub.equals("Competitions")) colour2 = mColors[12];
+                                    if (sub.equals("Courses")) colour2 = mColors[13];
+                                    if (mode.equals("Private")) colour3 = mColors[14];
+                                    if (owner.equals("Admin")) colour4 = mColors[15];
+                                    if (owner.equals("General")) colour4 = mColors[16];
+                                    if (owner.equals("MyPosts")) colour4 = mColors[17];
+                                    if (owner.equals("Club")) colour4 = mColors[18];
 
 
 
 
+
+                                    if(mode.equals("Public")){
+                                        add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Tag(owner, colour4));
+                                            add(new Tag(mode, colour3));
+                                            add(new Tag(categ, colour1));
+                                            add(new Tag(sub, colour2));
+
+
+
+                                        }}));}
+                                    else
+                                    {
+                                        int l=0;
+                                        for(int i=0;i<1;i++)
+                                        {
+                                            if(currentUserID.equals(mAdmin[i]))
+                                            {
+                                                l=1;
+                                                break;
+                                            }
+                                        }
+                                        if(l==1||(uid.equals(currentUserID)))
+                                        {
+                                            l=0;
+                                            add(new Posts(postKey, info, "" + user, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
+                                                add(new Tag(owner, colour4));
+                                                add(new Tag(mode, colour3));
+                                                add(new Tag(categ, colour1));
+                                                add(new Tag(sub, colour2));
+                                            }}));
+                                        }
+                                    }
+                                }
+                                mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);
+                                mRecyclerView.setAdapter(mAdapter);
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError)
+                            {
+
+                            }
+                        });
+
+                }
             }
         };
     }
@@ -473,7 +599,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mAdapter.setPosts(newQuestions);
         calculateDiff(oldQuestions, newQuestions);
         mAdapter.notifyDataSetChanged();
-        //mRecyclerView.smoothScrollToPosition(0);
+
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -516,251 +642,27 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     }
 
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListner1=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.nav_post:
+                            SendUserToLoginActivity();
+                            break;
+                        case R.id.nav_profile:
+                            SendUserToLoginActivity();
+                            break;
+                    }
+                    return true;
+                }
+            };
 
-
-      /*      private void DisplayAllUsersPost()
+    private void SendUserToLoginActivity()
     {
-
-        FirebaseRecyclerOptions<Posts> options=
-                new FirebaseRecyclerOptions.Builder<Posts>()
-                        .setQuery(PostsRef,Posts.class)
-                        .setLifecycleOwner(this)
-                        .build();
-
-        FirebaseRecyclerAdapter<Posts,PostsViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options) {
-
-            @Override
-            protected void onBindViewHolder(@NonNull PostsViewHolder postsViewHolder, int i, @NonNull Posts posts)
-            {
-                final String PostKey=getRef(i).getKey();
-
-                //postsViewHolder.setFullname(posts.getName());
-                //postsViewHolder.setTime(posts.getTime());
-                //postsViewHolder.setDate(posts.getDate());
-                //postsViewHolder.setDescription(posts.getDescription());
-                //postsViewHolder.setProfileimage(getApplicationContext(),posts.getProfileImage());
-                postsViewHolder.setLikesButtonStatus(PostKey);
-                postsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Intent clickPosIntent=new Intent(MainActivity.this,ClickPostActivity.class);
-                        clickPosIntent.putExtra("PostKey",PostKey);
-                        startActivity(clickPosIntent);
-
-                    }
-                });
-
-                postsViewHolder.CommentPostButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Intent commentsIntent=new Intent(MainActivity.this,CommentsActivity.class);
-                        commentsIntent.putExtra("PostKey",PostKey);
-                        startActivity(commentsIntent);
-
-
-                    }
-                });
-
-                postsViewHolder.LikePostButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        LikeChecker=true;
-                        LikesRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if(LikeChecker==true)
-                                {
-                                    if(dataSnapshot.child(PostKey).hasChild(currentUserID))
-                                    {
-                                        LikesRef.child(PostKey).child(currentUserID).removeValue();
-                                        LikeChecker=false;
-
-                                    }
-                                    else
-                                    {
-
-                                        LikesRef.child(PostKey).child(currentUserID).setValue(true);
-                                        LikeChecker=false;
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-                    }
-                });
-
-                postsViewHolder.DownVotePostButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        DownVoteChecker=true;
-                        DownVotesRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if(DownVoteChecker==true)
-                                {
-                                    if(dataSnapshot.child(PostKey).hasChild(currentUserID))
-                                    {
-                                        DownVotesRef.child(PostKey).child(currentUserID).removeValue();
-                                        DownVoteChecker=false;
-
-                                    }
-                                    else
-                                    {
-
-                                        DownVotesRef.child(PostKey).child(currentUserID).setValue(true);
-                                        DownVoteChecker=false;
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-                    }
-                });
-
-
-
-            }
-
-            @NonNull
-            @Override
-            public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return new PostsViewHolder(LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_list, parent, false));
-
-            }
-
-
-
-
-        };
-        postList.setAdapter(firebaseRecyclerAdapter);
+        Intent loginIntent=new Intent(MainActivity.this,SnackBarActivity.class);
+        startActivity(loginIntent);
     }
-
-
-
-
-    public static class PostsViewHolder extends RecyclerView.ViewHolder
-    {
-        View mView;
-        AppCompatImageView LikePostButton,CommentPostButton,DownVotePostButton;
-        TextView DisplayNoOfLikes,DisplayNoOfDownVotes;
-        int CountLikes,CountDownVotes;
-        String currentUserId;
-        DatabaseReference LikesRef,DownVotesRef;
-
-
-
-
-        public PostsViewHolder(@NonNull View itemView)
-        {
-            super(itemView);
-            mView=itemView;
-
-            LikePostButton=(AppCompatImageView)mView.findViewById(R.id.view_likes);
-            CommentPostButton=(AppCompatImageView) mView.findViewById(R.id.view_chat);
-            DisplayNoOfLikes=(TextView)mView.findViewById(R.id.text_likes_count);
-            DownVotePostButton=mView.findViewById(R.id.view_downVotes);
-            DisplayNoOfDownVotes=mView.findViewById(R.id.view_downVotes);
-            LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
-            DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
-            currentUserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        }
-        public void setLikesButtonStatus(final String PostKey)
-
-        {
-            LikesRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.child(PostKey).hasChild(currentUserId))
-                    {
-                        CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        LikePostButton.setImageResource(R.drawable.ic_heart);
-                        DisplayNoOfLikes.setText(Integer.toString(CountLikes));
-                    }
-                    else
-                    {
-                        CountLikes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        LikePostButton.setImageResource(R.drawable.ic_heart);
-                        DisplayNoOfLikes.setText(Integer.toString(CountLikes));
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
-        public void setDownVoteButtonStatus(final String PostKey)
-
-        {
-            DownVotesRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.child(PostKey).hasChild(currentUserId))
-                    {
-                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        DownVotePostButton.setImageResource(R.drawable.arrows);
-                        DisplayNoOfDownVotes.setText(Integer.toString(CountDownVotes));
-                    }
-                    else
-                    {
-                        CountDownVotes=(int)dataSnapshot.child(PostKey).getChildrenCount();
-                        DownVotePostButton.setImageResource(R.drawable.downvote);
-                        DisplayNoOfDownVotes.setText(Integer.toString(CountLikes));
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-        /*public void setFullname(String fullname)
-        {
-            TextView username=(TextView)mView.findViewById(R.id.post_user_name);
-            username.setText(fullname);
-        }
-        public void setProfileimage(Context ctx, String profileimage)
-        {
-            ImageView image=(ImageView)mView.findViewById(R.id.post_profile_image);
-            Picasso.with(ctx).load(profileimage).into(image);
-        }
-        public void setTime(String time)
-        {
-            TextView PostTime=(TextView)mView.findViewById(R.id.post_time);
-            PostTime.setText(time);
-        }
-        public void setDate(String date)
-        {
-            TextView PostDate=(TextView)mView.findViewById(R.id.post_date);
-            PostDate.setText(date);
-        }
-        public void setDescription(String description)
-        {
-            TextView PostDescription=(TextView)mView.findViewById(R.id.post_description);
-            PostDescription.setText(description);
-        }*/
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListner=
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -790,7 +692,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
         super.onStart();
-        //mRecyclerView.smoothScrollToPosition(0);
+
         FirebaseUser currentUser=mAuth.getCurrentUser();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -801,7 +703,14 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mGoogleApiClient.connect();
         if(currentUser==null)
         {
-            sendUserToLoginActivity();
+            //sendUserToLoginActivity();
+           /* mAuth=FirebaseAuth.getInstance();
+            mAuth.signInWithEmailAndPassword("withoutloginuser@gmail.com","LoginFast").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
+                }
+            });*/
         }
         else
         {

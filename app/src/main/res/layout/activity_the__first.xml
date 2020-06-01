@@ -80,6 +80,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="24dp"
         android:elevation="15dp"
+        android:visibility="gone"
         />
 
 
