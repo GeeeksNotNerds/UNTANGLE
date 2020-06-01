@@ -61,7 +61,9 @@ public class PostActivity extends AppCompatActivity {
     private EditText PostDescription;
     private FloatingActionButton UpdatePostButton;
     private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
+    String downloadUrl="";
     TextView title;
+    int check=1;
     ImageView Media;
     private DatabaseReference UsersRef, PostsRef;
     private FirebaseAuth mAuth;
@@ -69,8 +71,11 @@ public class PostActivity extends AppCompatActivity {
     CardView cv2,cv4,cv5,cv6;
     String UserInfo_show="",UsersRefid;
     String cat1,cat2;
-
+    int Gall=8;
+    StorageReference PostImageRef;
     String Mode,category,Sub_Category;
+    private Uri resultUri=null;
+    ImageView Image;
 
     private String description,checker="",myUrl;
     private Uri myUri;
@@ -99,37 +104,19 @@ public class PostActivity extends AppCompatActivity {
         //rg_cat_off=findViewById(R.id.rg4);
         //rg_cat_per=findViewById(R.id.rg5);
         //rg_cat_oth=findViewById(R.id.rg6);
+        Image=findViewById(R.id.ima);
+
+
+
 
         Media.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence options[]= new CharSequence[]{
 
-                        "Image",
-                        "PDF File",
-                        "Word File"
-                };
-                AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
-                builder.setTitle("Select the  file");
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(which==0){
-                            checker="image";
-
-                            Intent intent= new Intent();
-                            intent.setAction(Intent.ACTION_GET_CONTENT);
-                            intent.setType("image/*");
-                            startActivityForResult(intent.createChooser(intent,"Select Image"),438);
-                        }
-                        if(which==1){
-                            checker="pdf";
-                        }
-                        if(which==2){
-                            checker="docx";
-                        }
-                    }
-                });
+                Intent gallInt=new Intent();
+                gallInt.setAction(Intent.ACTION_GET_CONTENT);
+                gallInt.setType("image/*");
+                startActivityForResult(gallInt,Gall);
 
             }
         });
@@ -164,6 +151,8 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
         Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
         final Spinner spinner2=(Spinner)findViewById(R.id.spinner2);
@@ -213,6 +202,8 @@ public class PostActivity extends AppCompatActivity {
 
             }
         });
+
+        PostImageRef=FirebaseStorage.getInstance().getReference();
 
         /*rg_cat.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -352,20 +343,65 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Gall && resultCode == RESULT_OK) {
+            Uri imageuri = data.getData();
+            Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + imageuri);
+            CropImage.activity(imageuri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
+        }
+
+
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+           // progressBar.setVisibility(View.VISIBLE);
+            Log.d(TAG, "onActivityResult: CROP IMAGE");
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if (resultCode == RESULT_OK) {
+                 resultUri = result.getUri();
+
+                if(resultUri!=null){
+                    Image.setVisibility(View.VISIBLE);
+                    Image.setImageURI(resultUri);
+                    PostDescription.setHint("Enter your Caption");
+
+                }
+
+
+
+                Log.d(TAG, "onActivityResult: CROP IMAGE : OK >> " + resultUri);
+
+            } else {
+                //progressBar.setVisibility(View.GONE);
+                Toast.makeText(PostActivity.this, "Error Occured!....Image Can't be cropped....try again!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+
+
+    }
+
     private void ValidatePostInfo()
     {
         //edit text is not empty
         description=PostDescription.getText().toString();
 
 
+       if(resultUri!=null){
+           storingImageToFirebaseStorage();
+       }
 
 
 
-
-        if(TextUtils.isEmpty(description))
+        if(TextUtils.isEmpty(description)&& resultUri==null)
         {
             Toast.makeText(this, "Post cannot be left empty..", Toast.LENGTH_SHORT).show();
-        }if(UserInfo_show.isEmpty()){
+        }
+        else if(UserInfo_show.isEmpty()){
         Toast.makeText(this, "Please Select the mode of posting(public or private), and if the mode is public...select if you wish to post anonymously or no!", Toast.LENGTH_SHORT).show();
            }
         else
@@ -391,39 +427,48 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
+    private void storingImageToFirebaseStorage() {
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        if (requestCode == 438 && resultCode == RESULT_OK) {
-            Uri imageuri = data.getData();
-            Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + imageuri);
-            CropImage.activity(imageuri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
-        }
-
-
-        if(!checker.equals("image")){
-
-        }else if(checker.equals("image")){
-
-           // StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("Image Files");
+        StorageReference filePath=PostImageRef.child("Post Images").child(resultUri.getLastPathSegment()+postRandomName+".jpg");
 
 
 
 
 
+        filePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        downloadUrl = uri.toString();
+                        PostsRef.child(postRandomName+current_user_id).child("PostImage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(PostActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+                                    check=0;
+                                   // progressBar.setVisibility(View.GONE);
 
-        }else{
-            Toast.makeText(this,"Error",Toast.LENGTH_LONG).show();
-        }
+                                } else {
+                                    String message = task.getException().getMessage();
+                                    Toast.makeText(PostActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
+                                   // progressBar.setVisibility(View.GONE);
+                                }
+
+                            }
+                        });
+
+                    }
+                });
+
+            }
+        });
 
 
 
-
-
-
-        super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     private void SavingPostInformationToDatabase()
     {
@@ -440,6 +485,7 @@ public class PostActivity extends AppCompatActivity {
                         String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
                         String userEmail=dataSnapshot.child("email").getValue().toString();
 
+
                     HashMap postsMap = new HashMap();
                     postsMap.put("uid", current_user_id);
                     postsMap.put("date", saveCurrentDate);
@@ -454,6 +500,12 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("showInformation",UserInfo_show);
                     postsMap.put("PostKey",postRandomName+current_user_id);
                     postsMap.put("status","Unresolved");
+
+                   if(check==1){
+                       postsMap.put("PostImage","null");
+                   }
+
+
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
                                 @Override

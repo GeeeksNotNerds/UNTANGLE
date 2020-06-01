@@ -229,13 +229,22 @@
 
     </androidx.cardview.widget.CardView>
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp"
+        android:id="@+id/ima"
+        android:layout_below="@id/cv3"
+        android:visibility="gone"
+        android:src="@drawable/ic_profile"/>
 
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cv3"
+        android:layout_below="@id/ima"
         android:id="@+id/ll"
 
         android:orientation="vertical">
@@ -255,7 +264,7 @@
                 android:layout_marginBottom="24dp"
                 android:background="@drawable/button_background2"
                 android:hint="   Write about your post  "
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/gray"
                 android:inputType="textMultiLine"
                 android:padding="15dp"
                 />

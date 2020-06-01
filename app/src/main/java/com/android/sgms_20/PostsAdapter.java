@@ -230,6 +230,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
 
+        Context context = holder.PostImage.getContext();
+      String t=question.getPostImage();
+      if(!t.equals("null")){
+          holder.PostImage.setVisibility(View.VISIBLE);
+
+          Picasso.with(context)
+                  .load(t)
+                  .placeholder(R.drawable.ic_account_circle_24px)
+                  .into(holder.PostImage);
+
+      }
 
 
         holder.textMode.setText(question.getMode());
@@ -354,6 +365,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView textSubcategory;
         TextView textStatus,statusHeading;
         ImageView pic;
+        ImageView PostImage;
 
 
 
@@ -391,6 +403,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             textStatus=itemView.findViewById(R.id.status);
             statusHeading=itemView.findViewById(R.id.statusheading);
             textSubcategory= (TextView) itemView.findViewById(R.id.filter_second);
+            PostImage=itemView.findViewById(R.id.postImage);
+
 
 
 

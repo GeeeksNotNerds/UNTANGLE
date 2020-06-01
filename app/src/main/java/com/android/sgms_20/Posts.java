@@ -1,6 +1,8 @@
 package com.android.sgms_20;
 
 
+import android.content.Context;
+
 import java.util.List;
 
 public class Posts
@@ -17,13 +19,14 @@ public class Posts
     private String subCategory;
     private String showInformation;
     private String postid;
+    private String postImage;
     private String status;
     private List<Tag> tags;
 
-    public Posts(String postid,String name, String email, String description, String date, String time, String uid, String mode, String category, String subCategory,String showInformation,String status,List<Tag> tags) {
+    public Posts(String postid,String name, String email, String description, String date, String time, String uid, String mode,String postimage, String category, String subCategory,String showInformation,String status,List<Tag> tags) {
         this.postid=postid;
         this.username = name;
-
+        this.postImage=postimage;
         this.email = email;
         this.description = description;
         this.date = date;
@@ -43,6 +46,12 @@ public class Posts
         return username;
     }
 
+    public String getPostImage(){return postImage;}
+
+    public void setPostImage( String postImage) {
+        this.postImage = postImage;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -54,6 +63,7 @@ public class Posts
     public void setPostid(String postid) {
         this.postid = postid;
     }
+
 
     public String getShowInformation() {
         return showInformation;
