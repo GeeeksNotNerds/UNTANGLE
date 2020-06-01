@@ -313,6 +313,7 @@ public class SetupActivity extends AppCompatActivity {
 
                 String Name = name.getText().toString();
                 String Dept = dept.getText().toString();
+                token= FirebaseInstanceId.getInstance().getToken();
 
                 String Email = email.getText().toString();
                 String Designation = admin_no.getText().toString();
@@ -344,6 +345,7 @@ public class SetupActivity extends AppCompatActivity {
                     user.put("department", Dept);
                     user.put("email", Email);
                     user.put("designation", Designation);
+                    user.put("device_token",token);
 
                     userRef.updateChildren(user).addOnCompleteListener(new OnCompleteListener() {
                         @Override
