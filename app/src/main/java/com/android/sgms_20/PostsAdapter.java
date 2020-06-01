@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +43,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
     private List<Posts> mPosts;
-    boolean LikeChecker=false,DownVoteChecker=false;
+    boolean LikeChecker=false,DownVoteChecker=false,StarChecker=false;
     private Context mContext;
     private TextDrawable mDrawableBuilder;
     FirebaseAuth mAuth;
@@ -47,18 +51,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private  Intent in;
 
 
-    DatabaseReference LikesRef,PostsRef,DownVotesRef,Post;
+    DatabaseReference UserRef,LikesRef,PostsRef,DownVotesRef,Post;
 
     public PostsAdapter(Context context, List<Posts> posts) {
         mContext = context;
         mPosts= posts;
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
+        UserRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId).child("star");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
-
         PostsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
-
     }
 
 
@@ -91,6 +94,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         holder.setLikesButtonStatus(PostKey);
         holder.setDownVoteButtonStatus(PostKey);
+        holder.setStar(PostKey);
 
         //String email=question.getEmail();
         if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
@@ -142,6 +146,85 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             });
         }
         else {
+            holder.mStar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+
+                    StarChecker = true;
+
+                    UserRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (StarChecker == true)
+                            {
+                                if (dataSnapshot.hasChild(PostKey)) {
+                                    UserRef.child(PostKey).removeValue();
+                                    StarChecker = false;
+                                    //DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
+
+
+                                }
+                                else
+                                    {   HashMap postsMap = new HashMap();
+                                        postsMap.put("uid", currentUserId);
+                                        postsMap.put("date", question.getDate());
+                                        postsMap.put("time", question.getTime());
+                                        postsMap.put("description", question.getDescription());
+                                        postsMap.put("mode", question.getMode());
+                                        postsMap.put("category", question.getCategory());
+                                        postsMap.put("subCategory", question.getSubCategory());
+                                        postsMap.put("profileImage", question.getProfileImage());
+                                        postsMap.put("username", question.getName());
+                                        postsMap.put("email",question.getEmail());
+                                        postsMap.put("showInformation",question.getShowInformation());
+                                        postsMap.put("PostKey",question.getPostid());
+                                        postsMap.put("status","Unresolved");
+                                        postsMap.put("likes",question.getLikes());
+                                        UserRef.child(question.getPostid()).updateChildren(postsMap)
+                                                .addOnCompleteListener(new OnCompleteListener() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task task)
+                                                    {
+                                                        if(task.isSuccessful())
+                                                        {
+                                                            Toast.makeText(mContext, "Post is starred", Toast.LENGTH_SHORT).show();
+                                                            //loadingBar.dismiss();
+                                                        }
+                                                        else
+                                                        {
+                                                            Toast.makeText(mContext, "Error Occured while starring the post.", Toast.LENGTH_SHORT).show();
+                                                            //loadingBar.dismiss();
+                                                        }
+                                                    }
+                                                });
+
+
+                                    //UserRef.child(PostKey).setValue(true);
+                                    //DownVotesRef.child(PostKey).child(currentUserId).removeValue();
+                                    LikeChecker = false;
+
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }
+
+              });
+
+                    //holder.mStar.setImageResource(R.drawable.ic_star_selected);
+
+
+
+
             holder.settings.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -279,6 +362,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         Tag fourthTag= question.getTags().get(3);
         holder.textUid.setText(fourthTag.getText());
         //holder.pic.setImageURI(Uri.parse(question.getProfileImage()));
+        /*String s=question.getStar();
+        if(s.equals("no")){
+            holder.mStar.setImageResource(R.drawable.ic_star_unselected);
+        }
+        else if(s.equals("yes"))
+        {
+            holder.mStar.setImageResource(R.drawable.ic_star_selected);
+        }*/
 
         char letter = question.getName().charAt(0);
        letter = Character.toUpperCase(letter);
@@ -356,7 +447,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         String currentUserId;
         DatabaseReference LikesRef,DownVotesRef;
 
-
+        ImageView mStar;
         TextView textAuthorName;
         TextView textMode;
         TextView textUid;
@@ -379,6 +470,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             super(itemView);
             mView=itemView;
 
+            mStar=(ImageView)mView.findViewById(R.id.star);
             settings=(AppCompatImageView)mView.findViewById(R.id.view_settings);
             LikePostButton=(AppCompatImageView)mView.findViewById(R.id.view_likes);
             CommentPostButton=(AppCompatImageView) mView.findViewById(R.id.view_chat);
@@ -405,6 +497,29 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
 
+        }
+        public void setStar(final String PostKey)
+        {
+          UserRef.addValueEventListener(new ValueEventListener()
+          {
+              @Override
+              public void onDataChange(DataSnapshot dataSnapshot)
+              {
+                  if(dataSnapshot.hasChild(PostKey))
+                  {
+                      mStar.setImageResource(R.drawable.ic_star_selected);
+                  }
+                  else
+                  {
+                      mStar.setImageResource(R.drawable.ic_star_unselected);
+                  }
+              }
+
+              @Override
+              public void onCancelled(DatabaseError databaseError) {
+
+              }
+          })  ;
         }
         public void setLikesButtonStatus(final String PostKey)
         //public void setLikesButtonStatus()

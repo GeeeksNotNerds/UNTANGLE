@@ -224,6 +224,13 @@ public class ProfileActivity extends AppCompatActivity {
                             finish();
 
                             return true;
+                        case R.id.nav_star:
+                            Intent Lintent1=new Intent(ProfileActivity.this,StarActivity.class);
+
+                            startActivity(Lintent1);
+                            finish();
+
+                            return true;
 
 
 

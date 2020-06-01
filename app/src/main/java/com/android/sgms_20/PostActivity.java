@@ -368,6 +368,7 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("showInformation",UserInfo_show);
                     postsMap.put("PostKey",postRandomName+current_user_id);
                     postsMap.put("status","Unresolved");
+                   // postsMap.put("star","no");
                     postsMap.put("likes","0");
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
@@ -445,6 +446,14 @@ public class PostActivity extends AppCompatActivity {
                             finish();
 
                             break;
+                        case R.id.nav_star:
+                            Intent Pintent1=new Intent(PostActivity.this,StarActivity.class);
+
+                            startActivity(Pintent1);
+                            finish();
+
+                            break;
+
                     }
 
                     return true;

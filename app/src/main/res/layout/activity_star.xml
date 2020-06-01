@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".StarActivity">
 
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:elevation="5dp"
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar1"
         android:background="@color/colorPrimaryDark">
 
         <RelativeLayout
@@ -27,10 +27,10 @@
                 android:textColor="@color/white"
 
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/thumbnail"/>
+                android:layout_toLeftOf="@id/thumbnail1"/>
 
             <ImageView
-                android:id="@+id/thumbnail"
+                android:id="@+id/thumbnail1"
                 android:clickable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
 
@@ -50,17 +50,17 @@
         android:layout_height="match_parent"
         android:background="@color/gray"
 
-        android:id="@+id/frame"
+        android:id="@+id/frame1"
 
-        android:layout_below="@id/sort"
-        android:layout_above="@id/bottom_navigation"
+        android:layout_below="@id/sort1"
+        android:layout_above="@id/bottom_navigation1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+            android:id="@+id/list1"
             android:layout_width="match_parent"
             android:focusable="false"
             android:nestedScrollingEnabled="false"
@@ -69,7 +69,7 @@
             tools:listitem="@layout/item_list" />
 
         <com.yalantis.filter.widget.Filter
-            android:id="@+id/filter"
+            android:id="@+id/filter1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -81,28 +81,33 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/toolbar1"
         android:layout_margin="10dp"
-        android:id="@+id/sort"
+        android:id="@+id/sort1"
         android:orientation="horizontal" >
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_sort"
             android:tint="@color/colorAccent"/>
+
         <TextView
-            android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sort By"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/colorAccent"
             android:layout_marginRight="15dp"
             android:textSize="18dp"/>
+
+
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/latest"
+            android:id="@+id/latest1"
             android:textColor="@color/white"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
@@ -114,7 +119,7 @@
 
         <Button
             android:textAllCaps="false"
-            android:id="@+id/likes_sort"
+            android:id="@+id/likes_sort1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -125,19 +130,18 @@
             android:textColor="@color/colorAccent"
             android:textSize="16dp" />
 
-
     </LinearLayout>
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/sort"
+        android:layout_below="@id/sort1"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="#ebebeb" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:id="@+id/bottom_navigation"
+        android:id="@+id/bottom_navigation1"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="labeled"

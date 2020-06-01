@@ -283,6 +283,7 @@ public class SetupActivity extends AppCompatActivity {
 
                     HashMap user = new HashMap();
                     user.put("username", Name);
+                    user.put("star",null);
                     user.put("department", Dept);
                     user.put("email", Email);
                     user.put("admission_number", AdmisiionNo);
