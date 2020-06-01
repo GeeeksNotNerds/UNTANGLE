@@ -258,6 +258,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         }
 
+        Context context = holder.PostImage.getContext();
+      String t=question.getPostImage();
+      if(!t.equals("null")){
+          holder.PostImage.setVisibility(View.VISIBLE);
+
+          Picasso.with(context)
+                  .load(t)
+                  .placeholder(R.drawable.ic_account_circle_24px)
+                  .into(holder.PostImage);
+
+      }
 
 
         holder.textMode.setText(question.getMode());
@@ -268,7 +279,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.textAuthorName.setText(question.getName());
         holder.textJobTitle.setText(question.getEmail());
         holder.textDate.setText(question.getDate());
-        holder.textQuestion.setText(question.getDescription());
+
+        String txt=question.getDescription();
+        if(txt.equals("")){
+            holder.textQuestion.setVisibility(View.GONE);
+        }else{
+            holder.textQuestion.setText(question.getDescription());
+        }
+
         Tag firstTag = question.getTags().get(0);
         holder.textCategory.setText(firstTag.getText());
         Tag secondTag = question.getTags().get(1);
@@ -367,6 +385,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView textSubcategory;
         TextView textStatus,statusHeading;
         ImageView pic;
+        ImageView PostImage;
 
 
 
@@ -401,6 +420,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             textStatus=itemView.findViewById(R.id.status);
             statusHeading=itemView.findViewById(R.id.statusheading);
             textSubcategory= (TextView) itemView.findViewById(R.id.filter_second);
+            PostImage=itemView.findViewById(R.id.postImage);
+
 
 
 

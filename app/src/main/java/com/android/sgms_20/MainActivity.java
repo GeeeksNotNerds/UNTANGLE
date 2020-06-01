@@ -351,6 +351,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             if(!owner.equals("Admin"))status=dataSnapshot1.child("status").getValue().toString();
                             else status="-";
                             String user = dataSnapshot1.child("email").getValue().toString();
+                            String postpic=dataSnapshot1.child("PostImage").getValue().toString();
                             String date = dataSnapshot1.child("date").getValue().toString();
                             String post = dataSnapshot1.child("description").getValue().toString();
                         //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
@@ -387,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                             if(mode.equals("Public")){
-                                add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
+                                add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
@@ -410,7 +411,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 if(l==1||(uid.equals(currentUserID)))
                                 {
                                     l=0;
-                                    add(new Posts(postKey, info, "" + user, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
+                                    add(new Posts(postKey, info, "" + user, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
                                         add(new Tag(owner, colour4));
                                         add(new Tag(mode, colour3));
                                         add(new Tag(categ, colour1));
