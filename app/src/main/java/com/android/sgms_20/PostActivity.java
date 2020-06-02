@@ -458,7 +458,7 @@ public class PostActivity extends AppCompatActivity {
                                     check=0;
 
                                     UpdatePostButton.setVisibility(View.VISIBLE);
-                                    mLoading.setVisibility(View.GONE);
+
 
                                    progressBar.setVisibility(View.GONE);
 
@@ -532,13 +532,14 @@ public class PostActivity extends AppCompatActivity {
                                     if(task.isSuccessful())
                                     {
                                         SendUserToMainActivity();
-                                        Toast.makeText(PostActivity.this, "New Post is updated successfully.", Toast.LENGTH_SHORT).show();
-                                        loadingBar.dismiss();
+                                        Toast.makeText(PostActivity.this, "New Post is updated successfully.", Toast.LENGTH_LONG).show();
+                                        mLoading.setVisibility(View.GONE);
+
                                     }
                                     else
                                     {
-                                        Toast.makeText(PostActivity.this, "Error Occured while updating your post.", Toast.LENGTH_SHORT).show();
-                                        loadingBar.dismiss();
+                                        Toast.makeText(PostActivity.this, "Error Occured while updating your post.", Toast.LENGTH_LONG).show();
+                                        mLoading.setVisibility(View.GONE);
                                     }
                                 }
                             });
