@@ -349,7 +349,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
           Picasso.with(context)
                   .load(t)
-                  .placeholder(R.drawable.ic_account_circle_24px)
+                  .placeholder(R.drawable.loader)
                   .into(holder.PostImage);
 
       }
