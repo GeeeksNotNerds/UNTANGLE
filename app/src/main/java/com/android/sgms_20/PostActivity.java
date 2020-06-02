@@ -1,7 +1,11 @@
 package com.android.sgms_20;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 
 
@@ -14,19 +18,24 @@ import androidx.cardview.widget.CardView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,28 +45,45 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
+    private static final String TAG ="";
     private Toolbar mToolbar;
     private ProgressDialog loadingBar;
+    private ProgressBar progressBar;
     private EditText PostDescription;
     private FloatingActionButton UpdatePostButton;
     private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
+    String downloadUrl="";
     TextView title;
+    int check=1;
+    private TextView mLoading;
+    ImageView Media;
     private DatabaseReference UsersRef, PostsRef;
     private FirebaseAuth mAuth;
     RadioGroup rg_mode,rg_mode_opt,rg_cat,rg_cat_off,rg_cat_per,rg_cat_oth;
     CardView cv2,cv4,cv5,cv6;
     String UserInfo_show="",UsersRefid;
     String cat1,cat2;
-
+    int Gall=8;
+    StorageReference PostImageRef;
     String Mode,category,Sub_Category;
+    private Uri resultUri=null;
+    ImageView Image;
 
-    private String description;
+    private String description,checker="",myUrl;
+    private Uri myUri;
+    private StorageTask uploadTask;
     private String current_user_id,saveCurrentDate,saveCurrentTime,postRandomName;
 
 
@@ -67,7 +93,10 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         title=findViewById(R.id.select);
+        mLoading=(TextView)findViewById(R.id.loading);
         cv2=findViewById(R.id.cv2);
+        Media=findViewById(R.id.media);
+        progressBar=(ProgressBar)findViewById(R.id.progress_bar1);
         //cv4=findViewById(R.id.cv4);
        // cv5=findViewById(R.id.cv5);
         //cv6=findViewById(R.id.cv6);
@@ -81,6 +110,22 @@ public class PostActivity extends AppCompatActivity {
         //rg_cat_off=findViewById(R.id.rg4);
         //rg_cat_per=findViewById(R.id.rg5);
         //rg_cat_oth=findViewById(R.id.rg6);
+        Image=findViewById(R.id.ima);
+
+
+
+
+        Media.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent gallInt=new Intent();
+                gallInt.setAction(Intent.ACTION_GET_CONTENT);
+                gallInt.setType("image/*");
+                startActivityForResult(gallInt,Gall);
+
+            }
+        });
 
         rg_mode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -112,6 +157,8 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
         Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
         final Spinner spinner2=(Spinner)findViewById(R.id.spinner2);
@@ -161,6 +208,8 @@ public class PostActivity extends AppCompatActivity {
 
             }
         });
+
+        PostImageRef=FirebaseStorage.getInstance().getReference();
 
         /*rg_cat.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -300,20 +349,65 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Gall && resultCode == RESULT_OK) {
+            Uri imageuri = data.getData();
+            Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + imageuri);
+            CropImage.activity(imageuri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
+        }
+
+
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+           // progressBar.setVisibility(View.VISIBLE);
+            Log.d(TAG, "onActivityResult: CROP IMAGE");
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if (resultCode == RESULT_OK) {
+                 resultUri = result.getUri();
+
+                if(resultUri!=null){
+                    Image.setVisibility(View.VISIBLE);
+                    Image.setImageURI(resultUri);
+                    PostDescription.setHint("Enter your Caption");
+
+                }
+
+
+
+                Log.d(TAG, "onActivityResult: CROP IMAGE : OK >> " + resultUri);
+
+            } else {
+                //progressBar.setVisibility(View.GONE);
+                Toast.makeText(PostActivity.this, "Error Occured!....Image Can't be cropped....try again!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+
+
+    }
+
     private void ValidatePostInfo()
     {
         //edit text is not empty
         description=PostDescription.getText().toString();
 
 
+       if(resultUri!=null){
+           storingImageToFirebaseStorage();
+       }
 
 
 
-
-        if(TextUtils.isEmpty(description))
+        if(TextUtils.isEmpty(description)&& resultUri==null)
         {
             Toast.makeText(this, "Post cannot be left empty..", Toast.LENGTH_SHORT).show();
-        }if(UserInfo_show.isEmpty()){
+        }
+        else if(UserInfo_show.isEmpty()){
         Toast.makeText(this, "Please Select the mode of posting(public or private), and if the mode is public...select if you wish to post anonymously or no!", Toast.LENGTH_SHORT).show();
            }
         else
@@ -339,6 +433,57 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
+    private void storingImageToFirebaseStorage() {
+
+        UpdatePostButton.setVisibility(View.INVISIBLE);
+        mLoading.setVisibility(View.VISIBLE);
+        StorageReference filePath=PostImageRef.child("Post Images").child(resultUri.getLastPathSegment()+postRandomName+".jpg");
+
+
+
+
+
+        filePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        downloadUrl = uri.toString();
+                        PostsRef.child(postRandomName+current_user_id).child("PostImage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(PostActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+                                    check=0;
+
+                                    UpdatePostButton.setVisibility(View.VISIBLE);
+                                    mLoading.setVisibility(View.GONE);
+
+                                   progressBar.setVisibility(View.GONE);
+
+                                } else {
+                                    String message = task.getException().getMessage();
+                                    Toast.makeText(PostActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
+                                    UpdatePostButton.setVisibility(View.VISIBLE);
+                                    mLoading.setVisibility(View.GONE);
+                                   progressBar.setVisibility(View.GONE);
+                                }
+
+                            }
+                        });
+
+                    }
+                });
+
+            }
+        });
+
+
+
+    }
+
+
     private void SavingPostInformationToDatabase()
     {
         UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
@@ -354,6 +499,7 @@ public class PostActivity extends AppCompatActivity {
                         String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
                         String userEmail=dataSnapshot.child("email").getValue().toString();
 
+
                     HashMap postsMap = new HashMap();
                     postsMap.put("uid", current_user_id);
                     postsMap.put("date", saveCurrentDate);
@@ -368,6 +514,14 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("showInformation",UserInfo_show);
                     postsMap.put("PostKey",postRandomName+current_user_id);
                     postsMap.put("status","Unresolved");
+
+
+                   if(check==1){
+                       postsMap.put("PostImage","null");
+                   }
+
+
+
                    // postsMap.put("star","no");
                     postsMap.put("likes","0");
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
@@ -413,11 +567,19 @@ public class PostActivity extends AppCompatActivity {
 
     private void SendUserToMainActivity()
     {
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent=new Intent(PostActivity.this,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        },5000);
+        progressBar.setVisibility(View.GONE);
 
-        Intent intent=new Intent(PostActivity.this,MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+
     }
 
 

@@ -25,6 +25,7 @@
     <ImageView
         android:layout_below="@id/dividerTop"
         android:layout_margin="16dp"
+        android:layout_marginRight="20dp"
         android:layout_width="30dp"
         android:id="@+id/star"
         android:layout_height="30dp"
@@ -251,13 +252,22 @@
         android:layout_below="@id/text_question"
         android:layout_toRightOf="@id/statusheading"
         android:text="status..."/>
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/ic_profile"
+        android:id="@+id/postImage"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:layout_below="@id/filter_first"
+        android:layout_centerHorizontal="true"/>
     <TextView
         android:id="@+id/text_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/filter_first"
+        android:layout_below="@id/postImage"
         android:textSize="20dp"
         android:maxLines="3"
 

@@ -66,11 +66,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import greco.lorenzo.com.lgsnackbar.LGSnackbarManager;
-import greco.lorenzo.com.lgsnackbar.core.LGSnackbarAction;
 
-import static greco.lorenzo.com.lgsnackbar.style.LGSnackBarTheme.SnackbarStyle.SUCCESS;
-import static greco.lorenzo.com.lgsnackbar.style.LGSnackBarTheme.SnackbarStyle.WARNING;
 
 public class MainActivity extends AppCompatActivity implements FilterListener<Tag> {
     private FirebaseAuth mAuth;
@@ -118,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         setTitle("Home");
 
         if(!haveNetworkConnection()){
-            Toast.makeText(MainActivity.this,"You are not Online....Please switch on your interner connection!",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"You are not Online....Please switch on your internet connection!",Toast.LENGTH_LONG).show();
         }
 
         mAuth=FirebaseAuth.getInstance();
@@ -294,7 +290,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         }
     }
 
-
     private List<Posts> getQuestions() {
         return new ArrayList<Posts>() {
             {
@@ -351,25 +346,25 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 //if(show.equals("no"))info="Anonymous";
 
 
-                                final String mode = dataSnapshot1.child("mode").getValue().toString();
-                                final String sub = dataSnapshot1.child("subCategory").getValue().toString();
-                                final String categ = dataSnapshot1.child("category").getValue().toString();
-                                String name = dataSnapshot1.child("username").getValue().toString();
-                                String status;
-                                if (!owner.equals("Admin"))
-                                    status = dataSnapshot1.child("status").getValue().toString();
-                                else status = "-";
-                                String user = dataSnapshot1.child("email").getValue().toString();
-                                String date = dataSnapshot1.child("date").getValue().toString();
-                                String post = dataSnapshot1.child("description").getValue().toString();
-                                //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                                if (show.equals("no")) {
-                                    info = "Anonymous";
-                                    mail = " ";
-                                } else {
-                                    info = name;
-                                    mail = user;
-                                }
+                            final String mode = dataSnapshot1.child("mode").getValue().toString();
+                            final String sub = dataSnapshot1.child("subCategory").getValue().toString();
+                            final String categ = dataSnapshot1.child("category").getValue().toString();
+                            String name = dataSnapshot1.child("username").getValue().toString();
+                            String status;
+                            if(!owner.equals("Admin"))status=dataSnapshot1.child("status").getValue().toString();
+                            else status="-";
+                            String user = dataSnapshot1.child("email").getValue().toString();
+                            String postpic=dataSnapshot1.child("PostImage").getValue().toString();
+                            String date = dataSnapshot1.child("date").getValue().toString();
+                            String post = dataSnapshot1.child("description").getValue().toString();
+                        //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
+                            if (show.equals("no")) {
+                                info = "Anonymous";
+                                 mail=" ";}
+                            else {
+                                info = name;
+                                mail=user;
+                            }
 
                                 if (categ.equals("Official")) colour1 = mColors[1];
                                 if (categ.equals("Personal")) colour1 = mColors[2];
@@ -392,41 +387,48 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 if (owner.equals("Club")) colour4 = mColors[18];
 
 
-                                if (mode.equals("Public")) {
-                                    add(new Posts(postKey, "" + info, mail, post, date, date, uid, mode, categ, sub, show, status, new ArrayList<Tag>() {{
+
+
+
+                            if(mode.equals("Public")){
+                                add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                    add(new Tag(owner, colour4));
+                                    add(new Tag(mode, colour3));
+                                    add(new Tag(categ, colour1));
+                                    add(new Tag(sub, colour2));
+
+
+
+                                }}));}
+                            else
+                            {
+                                int l=0;
+                                for(int i=0;i<1;i++)
+                                {
+                                    if(currentUserID.equals(mAdmin[i]))
+                                    {
+                                        l=1;
+                                        break;
+                                    }
+                                }
+                                if(l==1||(uid.equals(currentUserID)))
+                                {
+                                    l=0;
+                                    add(new Posts(postKey, info, "" + user, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
                                         add(new Tag(owner, colour4));
                                         add(new Tag(mode, colour3));
                                         add(new Tag(categ, colour1));
                                         add(new Tag(sub, colour2));
-
-
                                     }}));
-                                } else {
-                                    int l = 0;
-                                    for (int i = 0; i < 1; i++) {
-                                        if (currentUserID.equals(mAdmin[i])) {
-                                            l = 1;
-                                            break;
-                                        }
-                                    }
-                                    if (l == 1 || (uid.equals(currentUserID))) {
-                                        l = 0;
-                                        add(new Posts(postKey, info, "" + user, post, date, date, uid, mode, categ, sub, show, status, new ArrayList<Tag>() {{
-                                            add(new Tag(owner, colour4));
-                                            add(new Tag(mode, colour3));
-                                            add(new Tag(categ, colour1));
-                                            add(new Tag(sub, colour2));
-                                        }}));
-                                    }
                                 }
                             }
-                            mAdapter = new PostsAdapter(MainActivity.this, mAllQuestions);
-                            mAdapter.notifyDataSetChanged();
-                            mRecyclerView.setAdapter(mAdapter);
                         }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                        mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);
+                        mRecyclerView.setAdapter(mAdapter);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError)
+                    {
 
                         }
                     };
@@ -496,6 +498,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String status;
                                     if(!owner.equals("Admin"))status=dataSnapshot1.child("status").getValue().toString();
                                     else status="-";
+                                    String postpic=dataSnapshot1.child("PostImage").getValue().toString();
                                     String user = dataSnapshot1.child("email").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
                                     String post = dataSnapshot1.child("description").getValue().toString();
@@ -533,7 +536,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                                     if(mode.equals("Public")){
-                                        add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -556,7 +559,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         if(l==1||(uid.equals(currentUserID)))
                                         {
                                             l=0;
-                                            add(new Posts(postKey, info, "" + user, post, date, date, uid, mode, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Posts(postKey, info, "" + user, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
                                                 add(new Tag(mode, colour3));
                                                 add(new Tag(categ, colour1));

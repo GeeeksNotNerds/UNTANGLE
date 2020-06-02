@@ -147,7 +147,7 @@ public class SideMenu extends AppCompatActivity {
     }
 
     private void sendUserToLoginActivity() {
-        Intent intent=new Intent(SideMenu.this,LoginActivity.class);
+        Intent intent=new Intent(SideMenu.this,The_First.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
