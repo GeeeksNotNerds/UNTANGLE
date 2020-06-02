@@ -188,6 +188,9 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
         mRecyclerView.setLayoutManager(linearLayoutManager);
         pos = linearLayoutManager.findLastVisibleItemPosition();
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setItemViewCacheSize(20);
+        mRecyclerView.setDrawingCacheEnabled(true);
+        mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));

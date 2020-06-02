@@ -1,11 +1,10 @@
 package com.android.sgms_20;
 
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,17 +27,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
-
 
     private List<Posts> mPosts;
     boolean LikeChecker=false,DownVoteChecker=false,StarChecker=false;
@@ -84,14 +78,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-
-
         Posts question = mPosts.get(position);
         String PostKey=question.getPostid();
-
         Post=FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
-
-
         holder.setLikesButtonStatus(PostKey);
         holder.setDownVoteButtonStatus(PostKey);
         holder.setStar(PostKey);
@@ -105,7 +94,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     Intent ProIntent = new Intent(mContext, ProItemView.class);
                     ProIntent.putExtra("PostKey", PostKey);
                     mContext.startActivity(ProIntent);
-
                 }
             });
             holder.settings.setOnClickListener(new View.OnClickListener() {
@@ -317,14 +305,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                     LikesRef.child(PostKey).child(currentUserId).setValue(true);
 
 
-                                } else {
-
-
+                                }
+                                else
+                                    {
                                     DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
                                     DownVoteChecker = false;
                                     LikesRef.child(PostKey).child(currentUserId).removeValue();
-
-
                                 }
                             }
                         }
@@ -338,22 +324,31 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                 }
             });
-
-
         }
-
-        Context context = holder.PostImage.getContext();
+      Context context = holder.PostImage.getContext();
       String t=question.getPostImage();
-      if(!t.equals("null")){
+      if(!t.equals("null"))
+      {
           holder.PostImage.setVisibility(View.VISIBLE);
 
           Picasso.with(context)
                   .load(t)
+                  .fit()
                   .placeholder(R.drawable.loader1)
                   .into(holder.PostImage);
 
       }else{
           holder.PostImage.setVisibility(View.GONE);
+      }
+      else
+      {
+          holder.PostImage1.setVisibility(View.VISIBLE);
+          Picasso.with(context)
+                  .load("https://firebasestorage.googleapis.com/v0/b/sgms20.appspot.com/o/Post%20Images%2Fcropped3498178160595161716.jpgnull.jpg?alt=media&token=a086effe-adff-43a0-9678-e0f20341cf9b")
+                  .fit()
+                  .placeholder(R.drawable.loader1)
+                  .into(holder.PostImage1);
+
       }
 
 
@@ -480,6 +475,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView textStatus,statusHeading;
         ImageView pic;
         ImageView PostImage;
+        ImageView PostImage1;
 
 
 
@@ -516,7 +512,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             statusHeading=itemView.findViewById(R.id.statusheading);
             textSubcategory= (TextView) itemView.findViewById(R.id.filter_second);
             PostImage=itemView.findViewById(R.id.postImage);
-
+            PostImage1=itemView.findViewById(R.id.postImage1);
 
 
 

@@ -40,7 +40,7 @@ public class ClickPostActivity extends AppCompatActivity {
     private Button DeletePostButton,EditPostButton,statusButton;
     ImageView Share;
     private String PostKey,currentUserID,databaseUSerID,description,Status,message,ReceiverUid;
-    private DatabaseReference ClickPostRef,NotificationRef;
+    private DatabaseReference ClickPostRef,NotificationRef,UserRef;
 
     private FirebaseAuth mAuth;
 
@@ -77,6 +77,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
 
         PostKey=getIntent().getExtras().get("PostKey").toString();
+        UserRef=FirebaseDatabase.getInstance().getReference().child(currentUserID).child("star").child(PostKey);
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
         ClickPostRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -259,6 +260,7 @@ public class ClickPostActivity extends AppCompatActivity {
             {
 
                 ClickPostRef.child("description").setValue(inputField.getText().toString());
+                UserRef.child("description").setValue(inputField.getText().toString());
                 Toast.makeText(ClickPostActivity.this, "Post updated..", Toast.LENGTH_SHORT).show();
                 SendUserToMainActivity();
             }
@@ -277,6 +279,8 @@ public class ClickPostActivity extends AppCompatActivity {
     private void DeleteCurrentPost()
     {
         ClickPostRef.removeValue();
+        UserRef.removeValue();
+
      SendUserToMainActivity();
         Toast.makeText(this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
 
