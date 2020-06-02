@@ -84,6 +84,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.setLikesButtonStatus(PostKey);
         holder.setDownVoteButtonStatus(PostKey);
         holder.setStar(PostKey);
+        holder.setCommentCount(PostKey);
 
         //String email=question.getEmail();
         if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
@@ -453,12 +454,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView DisplayNoOfLikes,DisplayDownVotes;
         int CountLikes,CountDownVotes;
         String currentUserId;
-        DatabaseReference LikesRef,DownVotesRef;
+        DatabaseReference LikesRef,DownVotesRef,CommentsRef;
 
         ImageView mStar;
         TextView textAuthorName;
         TextView textMode;
-        TextView textUid;
+        TextView textUid,cnt;
         TextView textJobTitle;
         TextView textDate;
         TextView textQuestion;
@@ -489,9 +490,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             DownVoteButton=mView.findViewById(R.id.view_downVotes);
             DisplayDownVotes=mView.findViewById(R.id.text_downVotes_count);
             LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
+            CommentsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
             DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
             currentUserId= FirebaseAuth.getInstance().getCurrentUser().getUid();
             pic=itemView.findViewById(R.id.avatar);
+            cnt=itemView.findViewById(R.id.text_chat_count);
 
             textAuthorName = (TextView) itemView.findViewById(R.id.text_name);
             textJobTitle = (TextView) itemView.findViewById(R.id.text_job_title);
@@ -602,6 +605,29 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }
 
 
+        public void setCommentCount(String postKey) {
+
+            CommentsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(postKey).child("Comments").exists()){
+                        int count = (int)dataSnapshot.child(postKey).child("Comments").getChildrenCount();
+                        cnt.setText(Integer.toString(count));
+
+                    }else{
+                        cnt.setText(Integer.toString(0));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+
+                }
+            });
+
+
+        }
     }
 }
 
