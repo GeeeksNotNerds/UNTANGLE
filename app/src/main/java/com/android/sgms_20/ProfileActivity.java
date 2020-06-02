@@ -151,7 +151,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                             mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
 
-                            pro.setImageDrawable(mDrawableBuilder);
+                            //pro.setImageDrawable(mDrawableBuilder);
 
                         } else if (!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
                             String myProfileImage="";
