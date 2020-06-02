@@ -495,8 +495,6 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                             startActivity(Pintent);
                             break;
                         case R.id.nav_star:
-                            Intent Pintent1=new Intent(StarActivity.this,StarActivity.class);
-                            startActivity(Pintent1);
                             break;
                     }
 
