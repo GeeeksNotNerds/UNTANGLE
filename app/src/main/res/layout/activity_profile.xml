@@ -22,26 +22,16 @@
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:text="Profile"
-                android:textStyle="bold"
+
                 android:fontFamily="sans-serif-light"
 
                 android:textSize="25sp"
 
 
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/thumbnail1"/>
-
-            <ImageView
-                android:layout_marginTop="8dp"
-                android:id="@+id/thumbnail1"
-
-                android:src="@drawable/profile"
-                android:layout_width="40dp"
-                android:layout_marginRight="8dp"
+                />
 
 
-                android:layout_alignParentRight="true"
-                android:layout_height="40dp"/>
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
@@ -270,7 +260,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation"
-
+        app:labelVisibilityMode="labeled"
         app:itemTextColor="@color/bottom_nav_color"
         app:itemIconTint="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"

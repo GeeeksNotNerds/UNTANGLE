@@ -18,6 +18,7 @@ import androidx.cardview.widget.CardView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,12 +60,14 @@ public class PostActivity extends AppCompatActivity {
     private static final String TAG ="";
     private Toolbar mToolbar;
     private ProgressDialog loadingBar;
+    private ProgressBar progressBar;
     private EditText PostDescription;
     private FloatingActionButton UpdatePostButton;
     private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
     String downloadUrl="";
     TextView title;
     int check=1;
+    private TextView mLoading;
     ImageView Media;
     private DatabaseReference UsersRef, PostsRef;
     private FirebaseAuth mAuth;
@@ -89,8 +93,10 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         title=findViewById(R.id.select);
+        mLoading=(TextView)findViewById(R.id.loading);
         cv2=findViewById(R.id.cv2);
         Media=findViewById(R.id.media);
+        progressBar=(ProgressBar)findViewById(R.id.progress_bar1);
         //cv4=findViewById(R.id.cv4);
        // cv5=findViewById(R.id.cv5);
         //cv6=findViewById(R.id.cv6);
@@ -429,6 +435,8 @@ public class PostActivity extends AppCompatActivity {
 
     private void storingImageToFirebaseStorage() {
 
+        UpdatePostButton.setVisibility(View.INVISIBLE);
+        mLoading.setVisibility(View.VISIBLE);
         StorageReference filePath=PostImageRef.child("Post Images").child(resultUri.getLastPathSegment()+postRandomName+".jpg");
 
 
@@ -448,12 +456,18 @@ public class PostActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(PostActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
                                     check=0;
-                                   // progressBar.setVisibility(View.GONE);
+
+                                    UpdatePostButton.setVisibility(View.VISIBLE);
+                                    mLoading.setVisibility(View.GONE);
+
+                                   progressBar.setVisibility(View.GONE);
 
                                 } else {
                                     String message = task.getException().getMessage();
                                     Toast.makeText(PostActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
-                                   // progressBar.setVisibility(View.GONE);
+                                    UpdatePostButton.setVisibility(View.VISIBLE);
+                                    mLoading.setVisibility(View.GONE);
+                                   progressBar.setVisibility(View.GONE);
                                 }
 
                             }
@@ -508,6 +522,7 @@ public class PostActivity extends AppCompatActivity {
 
 
 
+                   // postsMap.put("star","no");
                     postsMap.put("likes","0");
                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
@@ -552,11 +567,19 @@ public class PostActivity extends AppCompatActivity {
 
     private void SendUserToMainActivity()
     {
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent=new Intent(PostActivity.this,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        },5000);
+        progressBar.setVisibility(View.GONE);
 
-        Intent intent=new Intent(PostActivity.this,MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+
     }
 
 
@@ -585,6 +608,14 @@ public class PostActivity extends AppCompatActivity {
                             finish();
 
                             break;
+                        case R.id.nav_star:
+                            Intent Pintent1=new Intent(PostActivity.this,StarActivity.class);
+
+                            startActivity(Pintent1);
+                            finish();
+
+                            break;
+
                     }
 
                     return true;

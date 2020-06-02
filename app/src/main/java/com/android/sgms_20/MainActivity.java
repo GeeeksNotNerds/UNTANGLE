@@ -51,6 +51,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
@@ -78,23 +79,22 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private int colour1,colour2,colour3,colour4;
     private DatabaseReference UsersRef;
     private Button mSort1,mSort2;
+    private ImageView mStar;
     private Toolbar mToolbar;
     private TextDrawable mDrawableBuilder;
     private String[] mTitles;
     private List<Posts> mAllQuestions;
     private Filter<Tag> mFilter;
+    private Button Send;
     private LinearLayoutManager linearLayoutManager;
     private PostsAdapter mAdapter;
     AppCompatImageView LikePostButton,downVotePostButton;
     TextView DisplayNoOfLikes,DisplayDownVotes;
     int CountLikes,countDownVotes;
-
     int pos;
     private ImageView pro;
     private int q;
-
     private RecyclerView postList,mRecyclerView;
-
     private DatabaseReference MyPostRef,PostsRef,LikesRef,DownVotesRef;
     String letter="A";
 
@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mToolbar=(Toolbar) findViewById(R.id.toolbar);
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");//subscribing
         FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");//unsubscribe
-
         pro=(ImageView)findViewById(R.id.thumbnail);
         setSupportActionBar(mToolbar);
         setTitle("Home");
@@ -224,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             }
         });
 
+
         //mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
 
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
@@ -239,6 +239,13 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
          }
 }
 
+    private void SendUserToStarActivity()
+    {
+        Intent intent=new Intent(MainActivity.this, StarActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
 
     private void calculateDiff(final List<Posts> oldList, final List<Posts> newList) {
@@ -286,61 +293,57 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private List<Posts> getQuestions() {
         return new ArrayList<Posts>() {
             {
-                if(q==1)
-                {
-                PostsRef.orderByChild("likes").addValueEventListener(new ValueEventListener()
-                {
+                if(q==1) {
+                    //DatabaseReference ref=PostsRef.child("likes");
+                    Query query = PostsRef.orderByChild("likes");
+                    ValueEventListener valueEventListener = new ValueEventListener() {
 
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        mAllQuestions.clear();
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            mAllQuestions.clear();
 
-                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
-                            String postKey = dataSnapshot1.child("PostKey").getValue().toString();
-                            //final String PostKey=dataSnapshot1.getKey();
+                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                String postKey = dataSnapshot1.child("PostKey").getValue().toString();
+                                //final String PostKey=dataSnapshot1.getKey();
                             /*Intent intent=new Intent(MainActivity.this,PostsAdapter.class);
                             intent.putExtra("PostKey",PostKey);
                             startActivity(intent);*/
-                            final String owner;
-                            String uid = dataSnapshot1.child("uid").getValue().toString();
-                            int c=0;
-                            for(int i=0;i<1;i++)
-                            {
-                                if(uid.equals(mAdmin[i]))
-                                {
-                                    c=1;
-                                    break;
-                                }
-                            }
-                            if(c!=1)
-                            {
-                                for(int j=0;j<1;j++)
-                                {
-                                    if(uid.equals(mClub[j]))
-                                    {
-                                        c=2;
+                                final String owner;
+                                String uid = dataSnapshot1.child("uid").getValue().toString();
+                                int c = 0;
+                                for (int i = 0; i < 1; i++) {
+                                    if (uid.equals(mAdmin[i])) {
+                                        c = 1;
                                         break;
                                     }
                                 }
-                            }
+                                if (c != 1) {
+                                    for (int j = 0; j < 1; j++) {
+                                        if (uid.equals(mClub[j])) {
+                                            c = 2;
+                                            break;
+                                        }
+                                    }
+                                }
 
-                            if(c==1){owner="Admin";
-                            c=0;
-                            }
-                            else if(c==2){owner="Club";
-                            c=0;
-                            }
-                            else if(currentUserID.equals(uid)){owner="MyPosts";
-                            c=0;}
-                            else {
-                                owner="General";
-                                c=0;
-                            }
+                                if (c == 1) {
+                                    owner = "Admin";
+                                    c = 0;
+                                } else if (c == 2) {
+                                    owner = "Club";
+                                    c = 0;
+                                } else if (currentUserID.equals(uid)) {
+                                    owner = "MyPosts";
+                                    c = 0;
+                                } else {
+                                    owner = "General";
+                                    c = 0;
+                                }
 
 
-                            String show = dataSnapshot1.child("showInformation").getValue().toString();
-                            String info,mail;
-                            //if(show.equals("no"))info="Anonymous";
+                                String show = dataSnapshot1.child("showInformation").getValue().toString();
+                                String info, mail;
+                                //if(show.equals("no"))info="Anonymous";
 
 
                             final String mode = dataSnapshot1.child("mode").getValue().toString();
@@ -363,25 +366,25 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 mail=user;
                             }
 
-                            if (categ.equals("Official")) colour1 = mColors[1];
-                            if (categ.equals("Personal")) colour1 = mColors[2];
-                            if (categ.equals("Miscellaneous")) colour1 = mColors[3];
-                            if (sub.equals("Admission")) colour2 = mColors[4];
-                            if (sub.equals("Academic")) colour2 = mColors[5];
-                            if (sub.equals("Finance")) colour2 = mColors[6];
-                            if (sub.equals("Housing")) colour2 = mColors[7];
-                            if (sub.equals("Rights Violation")) colour2 = mColors[8];
-                            if (sub.equals("Health")) colour2 = mColors[9];
-                            if (sub.equals("Placements")) colour2 = mColors[19];
-                            if (mode.equals("Public")) colour3 = mColors[10];
-                            if (sub.equals("Internships")) colour2 = mColors[11];
-                            if (sub.equals("Competitions")) colour2 = mColors[12];
-                            if (sub.equals("Courses")) colour2 = mColors[13];
-                            if (mode.equals("Private")) colour3 = mColors[14];
-                            if (owner.equals("Admin")) colour4 = mColors[15];
-                            if (owner.equals("General")) colour4 = mColors[16];
-                            if (owner.equals("MyPosts")) colour4 = mColors[17];
-                            if (owner.equals("Club")) colour4 = mColors[18];
+                                if (categ.equals("Official")) colour1 = mColors[1];
+                                if (categ.equals("Personal")) colour1 = mColors[2];
+                                if (categ.equals("Miscellaneous")) colour1 = mColors[3];
+                                if (sub.equals("Admission")) colour2 = mColors[4];
+                                if (sub.equals("Academic")) colour2 = mColors[5];
+                                if (sub.equals("Finance")) colour2 = mColors[6];
+                                if (sub.equals("Housing")) colour2 = mColors[7];
+                                if (sub.equals("Rights Violation")) colour2 = mColors[8];
+                                if (sub.equals("Health")) colour2 = mColors[9];
+                                if (sub.equals("Placements")) colour2 = mColors[19];
+                                if (mode.equals("Public")) colour3 = mColors[10];
+                                if (sub.equals("Internships")) colour2 = mColors[11];
+                                if (sub.equals("Competitions")) colour2 = mColors[12];
+                                if (sub.equals("Courses")) colour2 = mColors[13];
+                                if (mode.equals("Private")) colour3 = mColors[14];
+                                if (owner.equals("Admin")) colour4 = mColors[15];
+                                if (owner.equals("General")) colour4 = mColors[16];
+                                if (owner.equals("MyPosts")) colour4 = mColors[17];
+                                if (owner.equals("Club")) colour4 = mColors[18];
 
 
 
@@ -427,9 +430,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     public void onCancelled(DatabaseError databaseError)
                     {
 
-                    }
-                });
-            }
+                        }
+                    };
+                    query.addListenerForSingleValueEvent(valueEventListener);
+                }
                 else
                     {
                         PostsRef.addValueEventListener(new ValueEventListener()
@@ -492,9 +496,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     final String categ = dataSnapshot1.child("category").getValue().toString();
                                     String name = dataSnapshot1.child("username").getValue().toString();
                                     String status;
-                                    String PostPic=dataSnapshot1.child("PostImage").getValue().toString();
                                     if(!owner.equals("Admin"))status=dataSnapshot1.child("status").getValue().toString();
                                     else status="-";
+                                    String postpic=dataSnapshot1.child("PostImage").getValue().toString();
                                     String user = dataSnapshot1.child("email").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
                                     String post = dataSnapshot1.child("description").getValue().toString();
@@ -532,7 +536,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                                     if(mode.equals("Public")){
-                                        add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode,PostPic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        //add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode,PostPic, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -555,7 +560,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         if(l==1||(uid.equals(currentUserID)))
                                         {
                                             l=0;
-                                            add(new Posts(postKey, info, "" + user, post, date, date, uid, mode,PostPic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Posts(postKey, info, "" + user, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
                                                 add(new Tag(mode, colour3));
                                                 add(new Tag(categ, colour1));
@@ -654,6 +659,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                         case R.id.nav_profile:
                             SendUserToLoginActivity();
                             break;
+                        case  R.id.nav_star:
+                            SendUserToLoginActivity();
+                            break;
                     }
                     return true;
                 }
@@ -682,6 +690,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                             startActivity(Pintent);
                             break;
+                        case R.id.nav_star:
+                            Intent Pintent1=new Intent(MainActivity.this,StarActivity.class);
+
+                            startActivity(Pintent1);
                     }
 
                     return true;

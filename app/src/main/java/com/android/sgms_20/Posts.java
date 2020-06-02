@@ -21,10 +21,12 @@ public class Posts
     private String showInformation;
     private String postid;
     private String postImage;
+    private String star;
     private String status;
     private List<Tag> tags;
 
-    public Posts(String postid,String name, String email, String description, String date, String time, String uid, String mode,String postimage, String category, String subCategory,String showInformation,String status,List<Tag> tags) {
+    public Posts(String postid,String name, String email, String description, String date, String time,
+                 String uid, String mode,String postimage, String category, String subCategory,String showInformation,String status,List<Tag> tags) {
         this.postid=postid;
         this.username = name;
 
@@ -42,6 +44,14 @@ public class Posts
         this.showInformation=showInformation;
         this.status=status;
 
+    }
+
+    public String getStar() {
+        return star;
+    }
+
+    public void setStar(String star) {
+        this.star = star;
     }
 
     public String getLikes() {

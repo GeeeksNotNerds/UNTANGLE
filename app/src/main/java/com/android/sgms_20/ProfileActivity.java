@@ -181,15 +181,14 @@ public class ProfileActivity extends AppCompatActivity {
                             userBranch.setText("Department : " + myBranch);
                             userEmail.setText("Email : " + myEmail);
 
-                            String myProfileName = dataSnapshot.child("username").getValue().toString();
+                            /*String myProfileName = dataSnapshot.child("username").getValue().toString();
                             char letter = myProfileName.charAt(0);
                             letter = Character.toUpperCase(letter);
 
 
                             mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
 
-                            pro.setImageDrawable(mDrawableBuilder);
-
+                            pro.setImageDrawable(mDrawableBuilder);*/
 
                         }
                     }
@@ -221,6 +220,13 @@ public class ProfileActivity extends AppCompatActivity {
                             Intent Lintent=new Intent(ProfileActivity.this,PostActivity.class);
 
                             startActivity(Lintent);
+                            finish();
+
+                            return true;
+                        case R.id.nav_star:
+                            Intent Lintent1=new Intent(ProfileActivity.this,StarActivity.class);
+
+                            startActivity(Lintent1);
                             finish();
 
                             return true;
