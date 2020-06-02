@@ -537,6 +537,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                                     if(mode.equals("Public")){
                                         add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        //add(new Posts(postKey, ""+info,   mail, post, date, date, uid, mode,PostPic, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
