@@ -352,6 +352,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                   .placeholder(R.drawable.loader1)
                   .into(holder.PostImage);
 
+      }else{
+          holder.PostImage.setVisibility(View.GONE);
       }
 
 
