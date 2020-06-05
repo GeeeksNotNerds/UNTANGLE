@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,6 +63,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         loadingBar=new ProgressDialog(this);
         mAuth= FirebaseAuth.getInstance();
+        BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListner);
+        bottomNav.getMenu().findItem(R.id.nav_profile).setChecked(true);
         progressBar=findViewById(R.id.progress_bar);
         mToolbar=(Toolbar)findViewById(R.id.toolbar1);
         setSupportActionBar(mToolbar);
@@ -437,5 +442,43 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener
+            navListner=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()){
+                        case R.id.nav_home:
+                            Intent intent=new Intent(SettingsActivity.this,MainActivity.class);
+
+                            startActivity(intent);
+                            finish();
+                            return true;
+
+                        case R.id.nav_post:
+                            Intent Lintent=new Intent(SettingsActivity.this,PostActivity.class);
+
+                            startActivity(Lintent);
+                            finish();
+
+                            return true;
+                        case R.id.nav_star:
+                            Intent Lintent1=new Intent(SettingsActivity.this,StarActivity.class);
+
+                            startActivity(Lintent1);
+                            finish();
+
+                            return true;
+
+
+
+
+
+                    }
+
+                    return false;
+                }
+            };
 
 }

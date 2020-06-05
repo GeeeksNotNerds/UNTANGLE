@@ -244,13 +244,13 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
          }
 }
 
-    private void SendUserToStarActivity()
+    /*private void SendUserToStarActivity()
     {
         Intent intent=new Intent(MainActivity.this, StarActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
-    }
+    }*/
 
 
     private void calculateDiff(final List<Posts> oldList, final List<Posts> newList) {
@@ -386,25 +386,26 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 mail=user;
                             }
 
-                                if (categ.equals("Official")) colour1 = mColors[1];
-                                if (categ.equals("Personal")) colour1 = mColors[2];
-                                if (categ.equals("Miscellaneous")) colour1 = mColors[3];
-                                if (sub.equals("Admission")) colour2 = mColors[4];
-                                if (sub.equals("Academic")) colour2 = mColors[5];
-                                if (sub.equals("Finance")) colour2 = mColors[6];
-                                if (sub.equals("Housing")) colour2 = mColors[7];
-                                if (sub.equals("Rights Violation")) colour2 = mColors[8];
-                                if (sub.equals("Health")) colour2 = mColors[9];
-                                if (sub.equals("Placements")) colour2 = mColors[19];
-                                if (mode.equals("Public")) colour3 = mColors[10];
-                                if (sub.equals("Internships")) colour2 = mColors[11];
-                                if (sub.equals("Competitions")) colour2 = mColors[12];
-                                if (sub.equals("Courses")) colour2 = mColors[13];
-                                if (mode.equals("Private")) colour3 = mColors[14];
-                                if (owner.equals("Admin")) colour4 = mColors[15];
-                                if (owner.equals("General")) colour4 = mColors[16];
-                                if (owner.equals("MyPosts")) colour4 = mColors[17];
-                                if (owner.equals("Club")) colour4 = mColors[18];
+                                if (categ.equals("Official")) colour1 = mColors[7];
+                                if (categ.equals("Personal")) colour1 = mColors[8];
+                                if (categ.equals("Miscellaneous")) colour1 = mColors[19];
+                                if (sub.equals("Admission")) colour2 = mColors[9];
+                                if (sub.equals("Academic")) colour2 = mColors[10];
+                                if (sub.equals("Finance")) colour2 = mColors[11];
+                                if (sub.equals("Housing")) colour2 = mColors[16];
+                                if (sub.equals("Rights Violation")) colour2 = mColors[18];
+                                if (sub.equals("Health")) colour2 = mColors[17];
+                                if (mode.equals("Public")) colour3 = mColors[6];
+                                if (sub.equals("Internships")) colour2 = mColors[13];
+                                if (sub.equals("Competitions")) colour2 = mColors[14];
+                                if (sub.equals("Courses")) colour2 = mColors[15];
+                                if (mode.equals("Private")) colour3 = mColors[5];
+                                if (owner.equals("Admin")) colour4 = mColors[1];
+                                if (owner.equals("General")) colour4 = mColors[4];
+                                if (owner.equals("MyPosts")) colour4 = mColors[3];
+                                if (owner.equals("Club")) colour4 = mColors[2];
+                                if (sub.equals("Placements")) colour2 = mColors[12];
+
                                 String like=dataSnapshot1.child("likes").getValue().toString();
 
 
@@ -534,26 +535,25 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                             mail = user;
                                         }
 
-                                        if (categ.equals("Official")) colour1 = mColors[1];
-                                        if (categ.equals("Personal")) colour1 = mColors[2];
-                                        if (categ.equals("Miscellaneous")) colour1 = mColors[3];
-                                        if (sub.equals("Admission")) colour2 = mColors[4];
-                                        if (sub.equals("Academic")) colour2 = mColors[5];
-                                        if (sub.equals("Finance")) colour2 = mColors[6];
-                                        if (sub.equals("Housing")) colour2 = mColors[7];
-                                        if (sub.equals("Rights Violation")) colour2 = mColors[8];
-                                        if (sub.equals("Health")) colour2 = mColors[9];
-                                        if (sub.equals("Placements")) colour2 = mColors[19];
-                                        if (mode.equals("Public")) colour3 = mColors[10];
-                                        if (sub.equals("Internships")) colour2 = mColors[11];
-                                        if (sub.equals("Competitions")) colour2 = mColors[12];
-                                        if (sub.equals("Courses")) colour2 = mColors[13];
-                                        if (mode.equals("Private")) colour3 = mColors[14];
-                                        if (owner.equals("Admin")) colour4 = mColors[15];
-                                        if (owner.equals("General")) colour4 = mColors[16];
-                                        if (owner.equals("MyPosts")) colour4 = mColors[17];
-                                        if (owner.equals("Club")) colour4 = mColors[18];
-
+                                            if (categ.equals("Official")) colour1 = mColors[7];
+                                            if (categ.equals("Personal")) colour1 = mColors[8];
+                                            if (categ.equals("Miscellaneous")) colour1 = mColors[19];
+                                            if (sub.equals("Admission")) colour2 = mColors[9];
+                                            if (sub.equals("Academic")) colour2 = mColors[10];
+                                            if (sub.equals("Finance")) colour2 = mColors[11];
+                                            if (sub.equals("Housing")) colour2 = mColors[16];
+                                            if (sub.equals("Rights Violation")) colour2 = mColors[18];
+                                            if (sub.equals("Health")) colour2 = mColors[17];
+                                            if (mode.equals("Public")) colour3 = mColors[6];
+                                            if (sub.equals("Internships")) colour2 = mColors[13];
+                                            if (sub.equals("Competitions")) colour2 = mColors[14];
+                                            if (sub.equals("Courses")) colour2 = mColors[15];
+                                            if (mode.equals("Private")) colour3 = mColors[5];
+                                            if (owner.equals("Admin")) colour4 = mColors[1];
+                                            if (owner.equals("General")) colour4 = mColors[4];
+                                            if (owner.equals("MyPosts")) colour4 = mColors[3];
+                                            if (owner.equals("Club")) colour4 = mColors[2];
+                                            if (sub.equals("Placements")) colour2 = mColors[12];
 
                                         if (mode.equals("Public")) {
                                             add(new Posts(like, postKey, "" + info, mail, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{

@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
 
                 android:fontFamily="sans-serif-light"
 
@@ -252,5 +252,16 @@
 
 
     </RelativeLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:id="@+id/bottom_navigation"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation"
+        app:labelVisibilityMode="labeled"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="@color/bottom_nav_color"
+        android:background="?android:attr/windowBackground"
+        />
 
 </RelativeLayout>

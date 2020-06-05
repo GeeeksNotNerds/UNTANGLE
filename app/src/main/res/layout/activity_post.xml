@@ -185,7 +185,7 @@
                     android:textStyle="bold"
                     android:fontFamily="sans-serif-light"
                     android:layout_height="wrap_content"
-                    android:text="Select your complaint category"
+                    android:text="Select your post category"
 
                     android:textColor="#000000"
                     android:id="@+id/select"
@@ -208,7 +208,7 @@
                     android:textStyle="bold"
                     android:fontFamily="sans-serif-light"
                     android:layout_height="wrap_content"
-                    android:text="Select your sub-category"
+                    android:text="Select your post sub-category"
                     android:layout_below="@id/spinner1"
                     android:id="@+id/select2"
                     android:layout_marginLeft="10dp"/>
