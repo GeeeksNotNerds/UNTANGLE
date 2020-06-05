@@ -256,24 +256,27 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-                MyPostRef.child("star").addValueEventListener(new ValueEventListener() {
+                PostsRef.addValueEventListener(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot)
                     {
                         if (dataSnapshot.exists())
                         {
+
                             mAllQuestions.clear();
 
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                        {
+                            //dataSnapshot1.child(star).a
                             //if(PostsRef.child())
-                            if(dataSnapshot1.hasChild("PostKey"))
+                            if(dataSnapshot1.child("star").hasChild(currentUserID))
                             {
                             String postKey = dataSnapshot1.child("PostKey").getValue().toString();
-                            if(PostsRef.child("PostKey").equals(null))
-                                Toast.makeText(StarActivity.this, "Working", Toast.LENGTH_SHORT).show();
-                            else
-                                Toast.makeText(StarActivity.this, "Not working", Toast.LENGTH_SHORT).show();
+                            //if(PostsRef.child("PostKey").equals(null))
+                              //  Toast.makeText(StarActivity.this, "Working", Toast.LENGTH_SHORT).show();
+                            //else
+                              //  Toast.makeText(StarActivity.this, "Not working", Toast.LENGTH_SHORT).show();
                             //if(PostsRef.child(postKey).ex)
                             //PostsRef.addValueEventListener(new )
 

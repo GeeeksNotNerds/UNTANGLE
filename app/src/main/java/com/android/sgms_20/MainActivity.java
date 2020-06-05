@@ -317,13 +317,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     //query.keepSynced(true);
                     //ValueEventListener valueEventListener = new ValueEventListener() {
                     PostsRef.orderByChild("likes").addValueEventListener(new ValueEventListener() {
-
-                        
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot)
                         {
-
-
                             mAllQuestions.clear();
 
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {

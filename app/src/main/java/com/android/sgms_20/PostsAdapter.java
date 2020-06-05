@@ -141,13 +141,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                     StarChecker = true;
 
-                    UserRef.addValueEventListener(new ValueEventListener() {
+                    PostsRef.child(PostKey).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            {
                             if (StarChecker == true)
                             {
-                                if (dataSnapshot.hasChild(PostKey)) {
-                                    UserRef.child(PostKey).removeValue();
+                                if (dataSnapshot.child("star").hasChild(currentUserId))
+                                {
+                                    PostsRef.child(PostKey).child("star").child(currentUserId).removeValue();
                                     StarChecker = false;
                                     //DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
 
@@ -156,22 +158,26 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                 else
                                     {   HashMap postsMap = new HashMap();
                                         postsMap.put("uid", currentUserId);
-                                        postsMap.put("date", question.getDate());
-                                        postsMap.put("time", question.getTime());
-                                        postsMap.put("description", question.getDescription());
-                                        postsMap.put("mode", question.getMode());
-                                        postsMap.put("category", question.getCategory());
-                                        postsMap.put("subCategory", question.getSubCategory());
-                                        postsMap.put("profileImage", question.getProfileImage());
+                                       // postsMap.put("date", question.getDate());
+                                        //postsMap.put("time", question.getTime());
+                                        //postsMap.put("description", question.getDescription());
+                                        //postsMap.put("mode", question.getMode());
+                                        //postsMap.put("category", question.getCategory());
+                                        //postsMap.put("subCategory", question.getSubCategory());
+                                        //postsMap.put("profileImage", question.getProfileImage());
                                         postsMap.put("username", question.getName());
-                                        postsMap.put("email",question.getEmail());
-                                        postsMap.put("showInformation",question.getShowInformation());
-                                        postsMap.put("PostKey",question.getPostid());
-                                        postsMap.put("status","Unresolved");
-                                        postsMap.put("PostImage",question.getPostImage());
-                                        postsMap.put("likes",question.getLikes());
-                                        UserRef.child(question.getPostid()).updateChildren(postsMap)
-                                                .addOnCompleteListener(new OnCompleteListener() {
+                                        //postsMap.put("email",question.getEmail());
+                                        //postsMap.put("showInformation",question.getShowInformation());
+                                        //postsMap.put("PostKey",question.getPostid());
+                                        //postsMap.put("status","Unresolved");
+                                        //postsMap.put("PostImage",question.getPostImage());
+                                        //postsMap.put("likes",question.getLikes());
+
+                                        PostsRef.child(question.getPostid()).child("star").child(currentUserId).updateChildren(postsMap)
+
+                                        //UserRef.child(question.getPostid()).updateChildren(postsMap)
+                                                .addOnCompleteListener(new OnCompleteListener()
+                                                {
                                                     @Override
                                                     public void onComplete(@NonNull Task task)
                                                     {
@@ -194,7 +200,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                     StarChecker = false;
 
 
-                                }
+}                                }
                             }
                         }
 
@@ -263,6 +269,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                 if (dataSnapshot.child(PostKey).hasChild(currentUserId)) {
                                     LikesRef.child(PostKey).child(currentUserId).removeValue();
                                     LikeChecker = false;
+
                                     DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
 
 
@@ -275,6 +282,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                                 }
                             }
+                            //mContext.startActivity(new Intent(mContext,MainActivity.class));
                         }
 
                         @Override
@@ -422,14 +430,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.child("uid").equals(null)){
+                //if(!dataSnapshot.child("uid").equals(null)){
                 String ID=dataSnapshot.child("uid").getValue().toString();
                 if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
                     holder.textStatus.setVisibility(View.GONE);
                     holder.statusHeading.setVisibility(View.GONE);
                 }
                 }
-            }
+            //}
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -521,12 +529,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }
         public void setStar(final String PostKey)
         {
-          UserRef.addValueEventListener(new ValueEventListener()
+          PostsRef.addValueEventListener(new ValueEventListener()
           {
               @Override
               public void onDataChange(DataSnapshot dataSnapshot)
               {
-                  if(dataSnapshot.hasChild(PostKey))
+                  if(dataSnapshot.child(PostKey).child("star").hasChild(currentUserId))
                   {
                       mStar.setImageResource(R.drawable.ic_star_selected);
                   }
