@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -77,7 +78,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
 
         PostKey=getIntent().getExtras().get("PostKey").toString();
-        UserRef=FirebaseDatabase.getInstance().getReference().child(currentUserID).child("star").child(PostKey);
+        UserRef=FirebaseDatabase.getInstance().getReference().child("Users");
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
         ClickPostRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -260,7 +261,25 @@ public class ClickPostActivity extends AppCompatActivity {
             {
 
                 ClickPostRef.child("description").setValue(inputField.getText().toString());
-                UserRef.child("description").setValue(inputField.getText().toString());
+                //UserRef.child("description").setValue(inputField.getText().toString());
+                UserRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                        {
+                          if(dataSnapshot1.child("star").hasChild(PostKey))
+                          {
+                            dataSnapshot1.child("star").child(PostKey).child("description").getRef().setValue(inputField.getText().toString());
+                          }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 Toast.makeText(ClickPostActivity.this, "Post updated..", Toast.LENGTH_SHORT).show();
                 SendUserToMainActivity();
             }
@@ -278,12 +297,91 @@ public class ClickPostActivity extends AppCompatActivity {
 
     private void DeleteCurrentPost()
     {
-        ClickPostRef.removeValue();
-        UserRef.removeValue();
 
-     SendUserToMainActivity();
+        //public Iterable<DataSnapshot> getChildren();
+        //for(DataSnapshot child:)
+        //void getData(DataSnapshot dataSnapshot){
+        /*UserRef.addValueEventListener(new ValueEventListener()
+        {
+            public void getData(DataSnapshot dataSnapshot)
+            {
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
+                {
+
+                        Toast.makeText(ClickPostActivity.this, "Working", Toast.LENGTH_SHORT).show();
+                        UserRef.child("pHpCnW14v9cUKXLLB4eySHHSmlG3").child("star").child(PostKey).getRef().removeValue();
+                    }
+            }
+
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
+                    if(dataSnapshot1.hasChild("star"))
+                    {
+
+                        //Toast.makeText(ClickPostActivity.this, PostKey, Toast.LENGTH_SHORT).show();
+                        //dataSnapshot1.child("star").child(PostKey).getRef().removeValue();
+                        //if(dataSnapshot1.child("star").hasChild(PostKey))
+                            //Toast.makeText(ClickPostActivity.this, "Working", Toast.LENGTH_SHORT).show();
+                        UserRef.child("pHpCnW14v9cUKXLLB4eySHHSmlG3").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot2)
+                            {
+                                if(dataSnapshot2.child("star").hasChild(PostKey))
+                                {
+                                    //Toast.makeText(ClickPostActivity.this, "Working", Toast.LENGTH_SHORT).show();
+                                    dataSnapshot2.child("star").child(PostKey).getRef().removeValue();
+                                }
+                                else
+                                {
+                                    //Toast.makeText(ClickPostActivity.this, "Not a child", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError)
+                            {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
+
+        ClickPostRef.removeValue();
+        //UserRef.removeValue();
+        //UserRef.child("pHpCnW14v9cUKXLLB4eySHHSmlG3").child("star").child(PostKey).getRef().removeValue();
+        //UserRef.child("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2").child("department").setValue("lfof");
+      // new Handler().postDelayed(new Runnable() {
+        //    @Override
+          //  public void run() {
+                //ClickPostRef.removeValue();
+                //SendUserToMainActivity();
+                //Toast.makeText(ClickPostActivity.this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
+            //}
+        //},5000);
+        //ClickPostRef.removeValue();
+        SendUserToMainActivity();
         Toast.makeText(this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
 
+    }
+    private void getData(DataSnapshot dataSnapshot)
+    {
+        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
+        {
+            if(dataSnapshot1.hasChild("star")){
+                Toast.makeText(this, "Working", Toast.LENGTH_SHORT).show();
+            //UserRef.child("pHpCnW14v9cUKXLLB4eySHHSmlG3").child("star").child(PostKey).getRef().removeValue();
+        }}
     }
     private void SendUserToMainActivity()
     {
