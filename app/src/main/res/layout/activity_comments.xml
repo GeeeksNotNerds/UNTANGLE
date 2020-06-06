@@ -42,7 +42,7 @@
         android:layout_marginBottom="5dp"
         android:hint="Write a comment here.."
         android:textColorHint="@color/colorAccent"
-        android:inputType="textMultiLine"
+        android:inputType="textCapSentences"
         android:layout_alignParentLeft="true" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
 

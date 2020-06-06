@@ -14,25 +14,25 @@
 
     <string-array name="job_titles">
         <item>All categories</item>
+        <item>Admin</item>
+        <item>Club</item>
+        <item>MyPosts</item>
+        <item>General</item>
+        <item>Private</item>
+        <item>Public</item>
         <item>Official</item>
         <item>Personal</item>
-        <item>Miscellaneous</item>
         <item>Admission</item>
         <item>Academic</item>
         <item>Finance</item>
-        <item>Housing</item>
-        <item>Rights Violation</item>
-        <item>Health</item>
-        <item>Public</item>
+        <item>Placements</item>
         <item>Internships</item>
         <item>Competitions</item>
         <item>Courses</item>
-        <item>Private</item>
-        <item>Admin</item>
-        <item>General</item>
-        <item>MyPosts</item>
-        <item>Club</item>
-        <item>Placements</item>
+        <item>Housing</item>
+        <item>Health</item>
+        <item>Rights Violation</item>
+        <item>Miscellaneous</item>
 
     </string-array>
     <string-array name="categories">

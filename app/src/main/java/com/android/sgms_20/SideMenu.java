@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.squareup.picasso.Picasso;
 
 public class SideMenu extends AppCompatActivity {
@@ -133,14 +134,39 @@ public class SideMenu extends AppCompatActivity {
         });
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                if (mGoogleApiClient.isConnected()) {
-                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                    mGoogleApiClient.disconnect();
-                    mGoogleApiClient.connect();
-                }
-                sendUserToLoginActivity();
+            public void onClick(View v)
+            {
+                MaterialDialog mDialog = new MaterialDialog.Builder(SideMenu.this)
+                        .setTitle("Logout..")
+                        .setMessage("Are you sure you want to logout?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes,Logout!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                            {
+                                mAuth.signOut();
+                                if (mGoogleApiClient.isConnected()) {
+                                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                                    mGoogleApiClient.disconnect();
+                                    mGoogleApiClient.connect();
+                                }
+                                sendUserToLoginActivity();
+                                dialogInterface.dismiss();
+                            }
+
+
+                        })
+                        .setNegativeButton("No,Stay here", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                            {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .build();
+
+                // Show Dialog
+                mDialog.show();
 
             }
         });

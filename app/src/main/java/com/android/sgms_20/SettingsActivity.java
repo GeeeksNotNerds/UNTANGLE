@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -61,6 +64,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         loadingBar=new ProgressDialog(this);
         mAuth= FirebaseAuth.getInstance();
+        BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListner);
+        bottomNav.getMenu().findItem(R.id.nav_profile).setChecked(true);
         progressBar=findViewById(R.id.progress_bar);
         mToolbar=(Toolbar)findViewById(R.id.toolbar1);
         setSupportActionBar(mToolbar);
@@ -384,45 +390,104 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
 
-            HashMap useMap = new HashMap();
-            useMap.put("username", username);
-            useMap.put("designation",userDesignation);
-            useMap.put("department", userdept);
-            useMap.put("email", useremail);
-            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        loadingBar.dismiss();
-                        SendUserToMainActivity();
-                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
-                    } else {
-                        loadingBar.dismiss();
-                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            MaterialDialog mDialog = new MaterialDialog.Builder(SettingsActivity.this)
+                    .setTitle("Update Post..")
+                    .setMessage("Are you sure you want update your details?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes,Update!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                        {
+                            HashMap useMap = new HashMap();
+                            useMap.put("username", username);
+                            useMap.put("designation",userDesignation);
+                            useMap.put("department", userdept);
+                            useMap.put("email", useremail);
+                            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    if (task.isSuccessful()) {
+                                        loadingBar.dismiss();
+                                        SendUserToMainActivity();
+                                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        loadingBar.dismiss();
+                                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
-        }else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                            dialogInterface.dismiss();
+                        }
 
-            HashMap useMap = new HashMap();
-            useMap.put("username", username);
-            useMap.put("admission_number",userDesignation);
-            useMap.put("department", userdept);
-            useMap.put("email", useremail);
-            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        loadingBar.dismiss();
-                        SendUserToMainActivity();
-                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
-                    } else {
-                        loadingBar.dismiss();
-                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+
+                    })
+                    .setNegativeButton("Cancel", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                        {
+                            loadingBar.dismiss();
+                            dialogInterface.dismiss();
+
+                        }
+                    })
+                    .build();
+
+            // Show Dialog
+            mDialog.show();
+
+
+
+
+        }
+        else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+        {
+            MaterialDialog mDialog = new MaterialDialog.Builder(SettingsActivity.this)
+                    .setTitle("Update Post..")
+                    .setMessage("Are you sure you want update your details?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes,Update!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                        {
+                            HashMap useMap = new HashMap();
+                            useMap.put("username", username);
+                            useMap.put("admission_number",userDesignation);
+                            useMap.put("department", userdept);
+                            useMap.put("email", useremail);
+                            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    if (task.isSuccessful()) {
+                                        loadingBar.dismiss();
+                                        SendUserToMainActivity();
+                                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        loadingBar.dismiss();
+                                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            dialogInterface.dismiss();
+                        }
+
+
+                    })
+                    .setNegativeButton("Cancel", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                        {
+                            loadingBar.dismiss();
+                            dialogInterface.dismiss();
+
+                        }
+                    })
+                    .build();
+
+            // Show Dialog
+            mDialog.show();
+
+
 
 
         }
@@ -437,5 +502,43 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener
+            navListner=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()){
+                        case R.id.nav_home:
+                            Intent intent=new Intent(SettingsActivity.this,MainActivity.class);
+
+                            startActivity(intent);
+                            finish();
+                            return true;
+
+                        case R.id.nav_post:
+                            Intent Lintent=new Intent(SettingsActivity.this,PostActivity.class);
+
+                            startActivity(Lintent);
+                            finish();
+
+                            return true;
+                        case R.id.nav_star:
+                            Intent Lintent1=new Intent(SettingsActivity.this,StarActivity.class);
+
+                            startActivity(Lintent1);
+                            finish();
+
+                            return true;
+
+
+
+
+
+                    }
+
+                    return false;
+                }
+            };
 
 }
