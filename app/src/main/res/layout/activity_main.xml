@@ -33,9 +33,12 @@
                 android:id="@+id/thumbnail"
                 android:clickable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
+
                 android:src="@drawable/profile"
                 android:layout_width="40dp"
                 android:layout_marginRight="8dp"
+
+
                 android:layout_alignParentRight="true"
                 android:layout_height="40dp"/>
         </RelativeLayout>
@@ -139,9 +142,9 @@
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_navigation"
-        app:itemIconTint="@drawable/tab_color"
-        app:itemTextColor="@drawable/tab_color"
-        android:background="@drawable/bottom_navigation"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="@color/bottom_nav_color"
+        android:background="?android:attr/windowBackground"
         tools:ignore="MissingConstraints" />
 
 
