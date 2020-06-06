@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         q=0;
+        //Window window = MainActivity.getWindow();
+
         //public DataSnapshot dataSnapshot=new public DataSnapshot()
         mToolbar=(Toolbar) findViewById(R.id.toolbar);
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");//subscribing
