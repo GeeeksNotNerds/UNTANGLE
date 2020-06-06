@@ -283,6 +283,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                                 }
                             }
+                            MainActivity.getInstance().sort();
+                            //MainActivity(getClass())
                             //mContext.startActivity(new Intent(mContext,MainActivity.class));
                         }
 

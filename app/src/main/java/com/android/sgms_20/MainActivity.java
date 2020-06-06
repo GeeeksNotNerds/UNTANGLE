@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     int pos;
     private ImageView pro;
     private int q;
+    private static MainActivity instance;
+
     private RecyclerView postList,mRecyclerView;
     private DatabaseReference MyPostRef,PostsRef,LikesRef,DownVotesRef;
     String letter="A";
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");//unsubscribe
         pro=(ImageView)findViewById(R.id.thumbnail);
         setSupportActionBar(mToolbar);
+        instance=this;
         setTitle("Home");
 
         if(!haveNetworkConnection()){
@@ -243,6 +246,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             bottomNav.setOnNavigationItemSelectedListener(navListner);
          }
 }
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
 
     /*private void SendUserToStarActivity()
     {
@@ -298,8 +305,13 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     {
         //dataSnapshot=new DataSnapshot(UsersRef,"");
     }
+    public void sort()
+    {
+        mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions=getQuestions());
+        mRecyclerView.setAdapter(mAdapter);
+    }
 
-    private List<Posts> getQuestions() {
+    public List<Posts> getQuestions() {
         return new ArrayList<Posts>() {
             {
                 if(q==1) {
