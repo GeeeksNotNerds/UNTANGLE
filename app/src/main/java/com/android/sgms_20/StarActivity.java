@@ -512,13 +512,14 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                         case R.id.nav_post:
                             Intent intent=new Intent(StarActivity.this,PostActivity.class);
                             startActivity(intent);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             break;
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(StarActivity.this,ProfileActivity.class);
+                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(Pintent);
                             break;
-                        case R.id.nav_star:
-                            break;
+
                     }
 
                     return true;
