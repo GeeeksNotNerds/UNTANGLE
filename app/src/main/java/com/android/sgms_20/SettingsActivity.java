@@ -391,10 +391,10 @@ public class SettingsActivity extends AppCompatActivity {
         if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
 
             MaterialDialog mDialog = new MaterialDialog.Builder(SettingsActivity.this)
-                    .setTitle("Info")
-                    .setMessage("Public posts will be visible to all,while the private posts will only be visible to you and the other admins ")
+                    .setTitle("Update Post..")
+                    .setMessage("Are you sure you want update your details?")
                     .setCancelable(false)
-                    .setPositiveButton("Okay,Got it!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                    .setPositiveButton("Yes,Update!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
                         @Override
                         public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
                         {
@@ -422,10 +422,11 @@ public class SettingsActivity extends AppCompatActivity {
 
 
                     })
-                    .setNegativeButton("Cancel", R.drawable.ic_arrow, new MaterialDialog.OnClickListener() {
+                    .setNegativeButton("Cancel", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
                         @Override
                         public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
                         {
+                            loadingBar.dismiss();
                             dialogInterface.dismiss();
 
                         }
@@ -474,7 +475,10 @@ public class SettingsActivity extends AppCompatActivity {
                     })
                     .setNegativeButton("Cancel", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
                         @Override
-                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                        {
+                            loadingBar.dismiss();
+                            dialogInterface.dismiss();
 
                         }
                     })

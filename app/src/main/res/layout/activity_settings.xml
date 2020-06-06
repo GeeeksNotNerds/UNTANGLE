@@ -233,16 +233,17 @@
 
 
             <Button
-                android:layout_width="250dp"
-                android:layout_height="50dp"
+                android:layout_width="300dp"
+                android:layout_height="70dp"
                 android:layout_below="@id/cv_one_login"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:background="@drawable/button_background"
                 android:layout_marginTop="-40dp"
                 android:text="UPDATE DETAILS"
+                android:padding="5dp"
                 android:fontFamily="sans-serif-light"
-                android:textSize="25sp"
+                android:textSize="22sp"
                 android:id="@+id/update_button"
                 android:textColor="@android:color/white"
                 android:elevation="15dp" />

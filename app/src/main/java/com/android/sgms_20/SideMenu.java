@@ -137,10 +137,10 @@ public class SideMenu extends AppCompatActivity {
             public void onClick(View v)
             {
                 MaterialDialog mDialog = new MaterialDialog.Builder(SideMenu.this)
-                        .setTitle("Info")
-                        .setMessage("Public posts will be visible to all,while the private posts will only be visible to you and the other admins ")
+                        .setTitle("Logout..")
+                        .setMessage("Are you sure you want to logout?")
                         .setCancelable(false)
-                        .setPositiveButton("Okay,Got it!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                        .setPositiveButton("Yes,Logout!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
                             @Override
                             public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
                             {
@@ -156,7 +156,7 @@ public class SideMenu extends AppCompatActivity {
 
 
                         })
-                        .setNegativeButton("Cancel", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
+                        .setNegativeButton("No,Stay here", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
                             @Override
                             public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
                             {
