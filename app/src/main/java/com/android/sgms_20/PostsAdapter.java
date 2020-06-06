@@ -427,7 +427,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //if(!dataSnapshot.child("uid").equals(null)){
+                if(!dataSnapshot.child("uid").equals(null)){
                 String ID=dataSnapshot.child("uid").getValue().toString();
                 if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
                 {
@@ -435,7 +435,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     holder.statusHeading.setVisibility(View.GONE);
                 }
                 }
-            //}
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -473,7 +473,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         ImageView mStar;
         TextView textAuthorName;
         TextView textMode;
-        TextView textUid,cnt;
+        TextView textUid,cnt,cnt_head;
         TextView textJobTitle;
         TextView textDate;
         TextView textQuestion;
@@ -509,6 +509,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             currentUserId= FirebaseAuth.getInstance().getCurrentUser().getUid();
             pic=itemView.findViewById(R.id.avatar);
             cnt=itemView.findViewById(R.id.text_chat_count);
+            cnt_head=itemView.findViewById(R.id.text_chat_count1);
 
             textAuthorName = (TextView) itemView.findViewById(R.id.text_name);
             textJobTitle = (TextView) itemView.findViewById(R.id.text_job_title);
@@ -628,6 +629,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     if(dataSnapshot.child(postKey).child("Comments").exists()){
                         int count = (int)dataSnapshot.child(postKey).child("Comments").getChildrenCount();
                         cnt.setText(Integer.toString(count));
+                        if(count==1){
+                            cnt_head.setText("Comment");
+                        }else{
+                            cnt_head.setText("Comments");
+                        }
 
                     }else{
                         cnt.setText(Integer.toString(0));
