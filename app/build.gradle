@@ -45,12 +45,15 @@ dependencies {
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.google.firebase:firebase-auth:15.0.0'
     implementation 'com.google.firebase:firebase-database:15.0.0'
+    implementation 'com.shreyaspatil:MaterialDialog:2.1'
 
     implementation 'com.google.firebase:firebase-storage:15.0.0'
+    //implementation 'com.airbnb.android:lottie:3.3.6'
     implementation 'com.firebaseui:firebase-ui-database:3.3.1'
 
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.emredavarci:noty:1.0.3'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'

@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -389,45 +390,100 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
 
-            HashMap useMap = new HashMap();
-            useMap.put("username", username);
-            useMap.put("designation",userDesignation);
-            useMap.put("department", userdept);
-            useMap.put("email", useremail);
-            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        loadingBar.dismiss();
-                        SendUserToMainActivity();
-                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
-                    } else {
-                        loadingBar.dismiss();
-                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            MaterialDialog mDialog = new MaterialDialog.Builder(SettingsActivity.this)
+                    .setTitle("Info")
+                    .setMessage("Public posts will be visible to all,while the private posts will only be visible to you and the other admins ")
+                    .setCancelable(false)
+                    .setPositiveButton("Okay,Got it!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                        {
+                            HashMap useMap = new HashMap();
+                            useMap.put("username", username);
+                            useMap.put("designation",userDesignation);
+                            useMap.put("department", userdept);
+                            useMap.put("email", useremail);
+                            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    if (task.isSuccessful()) {
+                                        loadingBar.dismiss();
+                                        SendUserToMainActivity();
+                                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        loadingBar.dismiss();
+                                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
-        }else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                            dialogInterface.dismiss();
+                        }
 
-            HashMap useMap = new HashMap();
-            useMap.put("username", username);
-            useMap.put("admission_number",userDesignation);
-            useMap.put("department", userdept);
-            useMap.put("email", useremail);
-            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        loadingBar.dismiss();
-                        SendUserToMainActivity();
-                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
-                    } else {
-                        loadingBar.dismiss();
-                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+
+                    })
+                    .setNegativeButton("Cancel", R.drawable.ic_arrow, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                        {
+                            dialogInterface.dismiss();
+
+                        }
+                    })
+                    .build();
+
+            // Show Dialog
+            mDialog.show();
+
+
+
+
+        }
+        else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+        {
+            MaterialDialog mDialog = new MaterialDialog.Builder(SettingsActivity.this)
+                    .setTitle("Update Post..")
+                    .setMessage("Are you sure you want update your details?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes,Update!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                        {
+                            HashMap useMap = new HashMap();
+                            useMap.put("username", username);
+                            useMap.put("admission_number",userDesignation);
+                            useMap.put("department", userdept);
+                            useMap.put("email", useremail);
+                            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    if (task.isSuccessful()) {
+                                        loadingBar.dismiss();
+                                        SendUserToMainActivity();
+                                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        loadingBar.dismiss();
+                                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            dialogInterface.dismiss();
+                        }
+
+
+                    })
+                    .setNegativeButton("Cancel", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+
+                        }
+                    })
+                    .build();
+
+            // Show Dialog
+            mDialog.show();
+
+
 
 
         }

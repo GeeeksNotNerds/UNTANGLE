@@ -254,12 +254,7 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
         }
         else
         {
-            holder.PostImage1.setVisibility(View.VISIBLE);
-            Picasso.with(context)
-                    .load("https://firebasestorage.googleapis.com/v0/b/sgms20.appspot.com/o/Post%20Images%2Fcropped3498178160595161716.jpgnull.jpg?alt=media&token=a086effe-adff-43a0-9678-e0f20341cf9b")
-                    .fit()
-                    .placeholder(R.drawable.loader1)
-                    .into(holder.PostImage1);
+            holder.PostImage.setVisibility(View.GONE);
 
         }
 

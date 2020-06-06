@@ -161,7 +161,7 @@
                             android:id="@+id/name"
                             android:textColorHint="@color/white"
                             android:hint="  Name"
-                            android:inputType="textEmailAddress"
+                            android:inputType="textCapSentences"
 
                             android:textSize="15sp"
                             />
@@ -189,6 +189,7 @@
                             android:textColorHint="@color/white"
                             android:layout_width="289dp"
                             android:layout_height="40dp"
+                            android:inputType="textCapSentences"
                             android:layout_marginLeft="2dp"
                             android:id="@+id/dept"
                             android:hint="  Department"
@@ -276,9 +277,10 @@
                                 android:layout_marginLeft="2dp"
                                 android:backgroundTint="@color/colorPrimaryDark"
                                 android:id="@+id/admin_no"
+
                                 android:textColorHint="@color/white"
                                 android:hint="  Name"
-                                android:inputType="textEmailAddress"
+                                android:inputType="textCapSentences"
 
                                 android:textSize="15sp"
                                 />

@@ -216,7 +216,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
               });
 
-                    //holder.mStar.setImageResource(R.drawable.ic_star_selected);
+                    holder.mStar.setImageResource(R.drawable.ic_star_selected);
 
 
 
@@ -427,7 +427,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //if(!dataSnapshot.child("uid").equals(null)){
                 String ID=dataSnapshot.child("uid").getValue().toString();
-                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+                {
                     holder.textStatus.setVisibility(View.GONE);
                     holder.statusHeading.setVisibility(View.GONE);
                 }

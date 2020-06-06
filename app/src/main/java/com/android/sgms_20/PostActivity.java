@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,13 +26,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.emredavarci.noty.Noty;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +51,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.shreyaspatil.MaterialDialog.AbstractDialog;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -62,7 +67,7 @@ public class PostActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private ProgressBar progressBar;
     private EditText PostDescription;
-    private FloatingActionButton UpdatePostButton;
+    private ImageButton UpdatePostButton;
     private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
     String downloadUrl="";
     TextView title;
@@ -80,6 +85,8 @@ public class PostActivity extends AppCompatActivity {
     String Mode,category,Sub_Category;
     private Uri resultUri=null;
     ImageView Image;
+    private RelativeLayout r;
+    private ImageButton information;
 
     private String description,checker="",myUrl;
     private Uri myUri;
@@ -100,6 +107,7 @@ public class PostActivity extends AppCompatActivity {
         //cv4=findViewById(R.id.cv4);
        // cv5=findViewById(R.id.cv5);
         //cv6=findViewById(R.id.cv6);
+//        getSupportActionBar().hide();
         BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListner);
         bottomNav.getMenu().findItem(R.id.nav_post).setChecked(true);
@@ -111,8 +119,77 @@ public class PostActivity extends AppCompatActivity {
         //rg_cat_per=findViewById(R.id.rg5);
         //rg_cat_oth=findViewById(R.id.rg6);
         Image=findViewById(R.id.ima);
+        //r=(RelativeLayout)findViewById(R.id.r1);
+        information=(ImageButton)findViewById(R.id.info);
+
+        information.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                int c=1;
+                for(int i=0;i<1;i++){
+                    if(current_user_id.equals(mAdmin[i])){
+                        c=0;
+                        break;
+                    }
+                }
+
+                if(c==0){
+                    MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
+                            .setTitle("Info")
+                            .setMessage("Public posts will be visible to all,while the private posts will only be visible to you and the other admins ")
+                            .setCancelable(false)
+                            .setPositiveButton("Okay,Got it!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                                @Override
+                                public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                                    dialogInterface.dismiss();
+                                }
 
 
+                            })
+                            /*.setNegativeButton("Cancel", R.drawable.ic_arrow, new MaterialDialog.OnClickListener() {
+                                @Override
+                                public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+
+                                }
+                            })*/
+                            .build();
+
+                    // Show Dialog
+                    mDialog.show();
+
+                }
+
+
+                    //title.setText("Select Your Announcement Category");
+
+               // RelativeLayout rl = (RelativeLayout) findViewById(R.id.myLayout) ;
+                else {
+                    MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
+                            .setTitle("Info")
+                            .setMessage("Public posts will be visible to all,while the private posts will only be visible to you and the admin ")
+                            .setCancelable(false)
+                            .setPositiveButton("Okay,Got it!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                                @Override
+                                public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                                    dialogInterface.dismiss();
+                                }
+
+
+                            })
+                            /*.setNegativeButton("Cancel", R.drawable.ic_arrow, new MaterialDialog.OnClickListener() {
+                                @Override
+                                public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+
+                                }
+                            })*/
+                            .build();
+
+                    // Show Dialog
+                    mDialog.show();
+                }
+            }
+        });
 
 
         Media.setOnClickListener(new View.OnClickListener() {
@@ -326,6 +403,7 @@ public class PostActivity extends AppCompatActivity {
         }
 
         if(c==0){
+
             title.setText("Select Your Announcement Category");
         }
 
@@ -412,23 +490,50 @@ public class PostActivity extends AppCompatActivity {
            }
         else
         {
-            loadingBar.setTitle("Add New Post");
-            loadingBar.setMessage("Please wait, while we are updating your new post...");
-            loadingBar.show();
-            loadingBar.setCanceledOnTouchOutside(true);
+            MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
+                    .setTitle("Post It..")
+                    .setMessage("Are you sure you want to post this?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes,Post It", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int which)
+                        {
+                            loadingBar.setTitle("Add New Post");
+                            loadingBar.setMessage("Please wait, while we are updating your new post...");
+                            loadingBar.show();
+                            loadingBar.setCanceledOnTouchOutside(true);
 
 
-            Calendar calFordDate = Calendar.getInstance();
-            SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
-            saveCurrentDate = currentDate.format(calFordDate.getTime());
+                            Calendar calFordDate = Calendar.getInstance();
+                            SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+                            saveCurrentDate = currentDate.format(calFordDate.getTime());
 
-            Calendar calFordTime = Calendar.getInstance();
-            SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-            saveCurrentTime = currentTime.format(calFordDate.getTime());
+                            Calendar calFordTime = Calendar.getInstance();
+                            SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+                            saveCurrentTime = currentTime.format(calFordDate.getTime());
 
-            postRandomName = saveCurrentDate + saveCurrentTime;
+                            postRandomName = saveCurrentDate + saveCurrentTime;
 
-            SavingPostInformationToDatabase();
+                            SavingPostInformationToDatabase();
+                            dialogInterface.dismiss();
+                        }
+
+
+                    })
+                    .setNegativeButton("No,Leave It", R.drawable.ic_baseline_cancel_schedule_send_24, new MaterialDialog.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int which)
+                        {
+                            Toast.makeText(PostActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                            dialogInterface.dismiss();
+
+                        }
+                    })
+                    .build();
+
+            // Show Dialog
+            mDialog.show();
+
 
         }
     }
@@ -462,7 +567,8 @@ public class PostActivity extends AppCompatActivity {
 
                                    progressBar.setVisibility(View.GONE);
 
-                                } else {
+                                } else
+                                    {
                                     String message = task.getException().getMessage();
                                     Toast.makeText(PostActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
                                     UpdatePostButton.setVisibility(View.VISIBLE);

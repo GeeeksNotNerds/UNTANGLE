@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
 import java.util.HashMap;
 
@@ -47,9 +48,11 @@ public class ClickPostActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_post);
+        //getSupportActionBar().hide();
 
 
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
@@ -262,9 +265,10 @@ public class ClickPostActivity extends AppCompatActivity {
 
                 ClickPostRef.child("description").setValue(inputField.getText().toString());
                 //UserRef.child("description").setValue(inputField.getText().toString());
-                UserRef.addValueEventListener(new ValueEventListener() {
+                /*UserRef.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(DataSnapshot dataSnapshot)
+                    {
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
                         {
                           if(dataSnapshot1.child("star").hasChild(PostKey))
@@ -278,7 +282,7 @@ public class ClickPostActivity extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
-                });
+                });*/
 
                 Toast.makeText(ClickPostActivity.this, "Post updated..", Toast.LENGTH_SHORT).show();
                 SendUserToMainActivity();
@@ -357,7 +361,7 @@ public class ClickPostActivity extends AppCompatActivity {
             }
         });*/
 
-        ClickPostRef.removeValue();
+       // ClickPostRef.removeValue();
         //UserRef.removeValue();
         //UserRef.child("pHpCnW14v9cUKXLLB4eySHHSmlG3").child("star").child(PostKey).getRef().removeValue();
         //UserRef.child("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2").child("department").setValue("lfof");
@@ -369,9 +373,34 @@ public class ClickPostActivity extends AppCompatActivity {
                 //Toast.makeText(ClickPostActivity.this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
             //}
         //},5000);
-        //ClickPostRef.removeValue();
-        SendUserToMainActivity();
-        Toast.makeText(this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
+        MaterialDialog mDialog = new MaterialDialog.Builder(ClickPostActivity.this)
+                .setTitle("Delete..")
+                .setMessage("Are you sure you want to delete this post?")
+                .setCancelable(false)
+                .setPositiveButton("Yes,Delete It!", R.drawable.ic_baseline_delete_24, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                        ClickPostRef.removeValue();
+                        SendUserToMainActivity();
+                        Toast.makeText(ClickPostActivity.this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+
+
+                })
+                .setNegativeButton("Don't Delete", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                    {
+                        dialogInterface.dismiss();
+
+                    }
+                })
+                .build();
+
+        // Show Dialog
+        mDialog.show();
+
 
     }
     private void getData(DataSnapshot dataSnapshot)
