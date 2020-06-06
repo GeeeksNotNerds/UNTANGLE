@@ -217,7 +217,7 @@
         android:layout_marginBottom="4dp"
         android:layout_toLeftOf="@id/view_settings"
         android:fontFamily="sans-serif-light"
-        android:text="Comment/s"
+        android:text="Comments"
         android:textColor="#827f93"
         android:textSize="12sp"
         android:textStyle="bold" />
