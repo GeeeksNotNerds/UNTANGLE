@@ -201,8 +201,8 @@ public class ProfileActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             Intent intent=new Intent(ProfileActivity.this,MainActivity.class);
-
                             startActivity(intent);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             finish();
                             return true;
 

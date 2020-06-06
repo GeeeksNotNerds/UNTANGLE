@@ -702,8 +702,8 @@ public class PostActivity extends AppCompatActivity {
                     switch (item.getItemId()){
                         case R.id.nav_home:
                             Intent intent=new Intent(PostActivity.this,MainActivity.class);
-
                             startActivity(intent);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             finish();
 
                             break;
