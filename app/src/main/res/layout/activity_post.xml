@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/r1"
+    android:windowSoftInputMode="stateVisible|adjustResize"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
@@ -56,15 +58,26 @@
                 android:id="@+id/tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:padding="8dp"
                 android:textStyle="bold"
+                android:layout_marginLeft="10dp"
                 android:fontFamily="sans-serif-light"
-                 android:layout_marginRight="32dp"
+                 android:layout_marginRight="40dp"
                 android:text="You want your post to be Public or Private?"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
                 android:textSize="20sp"
                  />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:src="@drawable/info"
+                android:layout_alignParentRight="true"
+                android:background="@color/white"
+                android:layout_marginRight="15dp"
+                android:tint="@color/colorAccent"
+                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/info"
+                />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -185,7 +198,7 @@
                     android:textStyle="bold"
                     android:fontFamily="sans-serif-light"
                     android:layout_height="wrap_content"
-                    android:text="Select your complaint category"
+                    android:text="Select your post category"
 
                     android:textColor="#000000"
                     android:id="@+id/select"
@@ -208,7 +221,7 @@
                     android:textStyle="bold"
                     android:fontFamily="sans-serif-light"
                     android:layout_height="wrap_content"
-                    android:text="Select your sub-category"
+                    android:text="Select your post sub-category"
                     android:layout_below="@id/spinner1"
                     android:id="@+id/select2"
                     android:layout_marginLeft="10dp"/>
@@ -258,6 +271,7 @@
                 android:id="@+id/post_description"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:windowSoftInputMode="stateVisible|adjustResize"
                 android:layout_margin="15dp"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="sans-serif-light"
@@ -265,7 +279,7 @@
                 android:background="@drawable/button_background2"
                 android:hint="   Write about your post  "
                 android:textColorHint="@color/gray"
-                android:inputType="textMultiLine"
+                android:inputType="textCapSentences"
                 android:padding="15dp"
                 />
 
@@ -299,16 +313,18 @@
 
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageButton
             android:id="@+id/update_post_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_below="@id/ll"
+
             android:tint="@color/white"
+            android:background="@drawable/round_button"
            android:layout_marginBottom="80dp"
            android:layout_centerHorizontal="true"
 
-            android:src="@drawable/send"
+            android:src="@drawable/send_24"
 
 
             />

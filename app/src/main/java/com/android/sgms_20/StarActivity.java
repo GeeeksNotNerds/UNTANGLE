@@ -89,7 +89,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
     private List<Posts> mAllQuestions;
     private Filter<Tag> mFilter;
     private LinearLayoutManager linearLayoutManager;
-    private PostsAdapter mAdapter;
+    private StarAdapter mAdapter;
     AppCompatImageView LikePostButton, downVotePostButton;
     TextView DisplayNoOfLikes, DisplayDownVotes;
     int CountLikes, countDownVotes;
@@ -191,9 +191,9 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
         mRecyclerView.setItemViewCacheSize(20);
         mRecyclerView.setDrawingCacheEnabled(true);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions());
+        mAdapter = new StarAdapter(this, mAllQuestions = getQuestions());
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
+        mRecyclerView.setAdapter(mAdapter = new StarAdapter(this, mAllQuestions = getQuestions()));
 
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation1);
@@ -255,20 +255,39 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
             {
 
 
-                MyPostRef.child("star").addValueEventListener(new ValueEventListener() {
+
+                PostsRef.addValueEventListener(new ValueEventListener() {
 
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        mAllQuestions.clear();
+                    public void onDataChange(DataSnapshot dataSnapshot)
+                    {
+                        if (dataSnapshot.exists())
+                        {
 
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            mAllQuestions.clear();
+
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                        {
+                            //dataSnapshot1.child(star).a
+                            //if(PostsRef.child())
+                            if(dataSnapshot1.child("star").hasChild(currentUserID))
+                            {
                             String postKey = dataSnapshot1.child("PostKey").getValue().toString();
+                            //if(PostsRef.child("PostKey").equals(null))
+                              //  Toast.makeText(StarActivity.this, "Working", Toast.LENGTH_SHORT).show();
+                            //else
+                              //  Toast.makeText(StarActivity.this, "Not working", Toast.LENGTH_SHORT).show();
+                            //if(PostsRef.child(postKey).ex)
+                            //PostsRef.addValueEventListener(new )
+
                             //final String PostKey=dataSnapshot1.getKey();
-                            /*Intent intent=new Intent(MainActivity.this,PostsAdapter.class);
+                            /*Intent intent=new Intent(MainActivity.this,StarAdapter.class);
                             intent.putExtra("PostKey",PostKey);
                             startActivity(intent);*/
                             final String owner;
+
                             String uid = dataSnapshot1.child("uid").getValue().toString();
+
                             int c = 0;
                             for (int i = 0; i < 1; i++) {
                                 if (uid.equals(mAdmin[i])) {
@@ -304,7 +323,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                             String info, mail;
                             //if(show.equals("no"))info="Anonymous";
 
-
+                            final String like=dataSnapshot1.child("likes").getValue().toString();
                             final String mode = dataSnapshot1.child("mode").getValue().toString();
                             final String sub = dataSnapshot1.child("subCategory").getValue().toString();
                             final String categ = dataSnapshot1.child("category").getValue().toString();
@@ -326,29 +345,29 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 mail = user;
                             }
 
-                            if (categ.equals("Official")) colour1 = mColors[1];
-                            if (categ.equals("Personal")) colour1 = mColors[2];
-                            if (categ.equals("Miscellaneous")) colour1 = mColors[3];
-                            if (sub.equals("Admission")) colour2 = mColors[4];
-                            if (sub.equals("Academic")) colour2 = mColors[5];
-                            if (sub.equals("Finance")) colour2 = mColors[6];
-                            if (sub.equals("Housing")) colour2 = mColors[7];
-                            if (sub.equals("Rights Violation")) colour2 = mColors[8];
-                            if (sub.equals("Health")) colour2 = mColors[9];
-                            if (sub.equals("Placements")) colour2 = mColors[19];
-                            if (mode.equals("Public")) colour3 = mColors[10];
-                            if (sub.equals("Internships")) colour2 = mColors[11];
-                            if (sub.equals("Competitions")) colour2 = mColors[12];
-                            if (sub.equals("Courses")) colour2 = mColors[13];
-                            if (mode.equals("Private")) colour3 = mColors[14];
-                            if (owner.equals("Admin")) colour4 = mColors[15];
-                            if (owner.equals("General")) colour4 = mColors[16];
-                            if (owner.equals("MyPosts")) colour4 = mColors[17];
-                            if (owner.equals("Club")) colour4 = mColors[18];
+                            if (categ.equals("Official")) colour1 = mColors[7];
+                            if (categ.equals("Personal")) colour1 = mColors[8];
+                            if (categ.equals("Miscellaneous")) colour1 = mColors[19];
+                            if (sub.equals("Admission")) colour2 = mColors[9];
+                            if (sub.equals("Academic")) colour2 = mColors[10];
+                            if (sub.equals("Finance")) colour2 = mColors[11];
+                            if (sub.equals("Housing")) colour2 = mColors[16];
+                            if (sub.equals("Rights Violation")) colour2 = mColors[18];
+                            if (sub.equals("Health")) colour2 = mColors[17];
+                            if (mode.equals("Public")) colour3 = mColors[6];
+                            if (sub.equals("Internships")) colour2 = mColors[13];
+                            if (sub.equals("Competitions")) colour2 = mColors[14];
+                            if (sub.equals("Courses")) colour2 = mColors[15];
+                            if (mode.equals("Private")) colour3 = mColors[5];
+                            if (owner.equals("Admin")) colour4 = mColors[1];
+                            if (owner.equals("General")) colour4 = mColors[4];
+                            if (owner.equals("MyPosts")) colour4 = mColors[3];
+                            if (owner.equals("Club")) colour4 = mColors[2];
+                            if (sub.equals("Placements")) colour2 = mColors[12];
 
 
                             if (mode.equals("Public")) {
-                                add(new Posts(postKey, "" + info, mail, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
+                                add(new Posts(like,postKey, "" + info, mail, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
@@ -366,7 +385,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 }
                                 if (l == 1 || (uid.equals(currentUserID))) {
                                     l = 0;
-                                    add(new Posts(postKey, info, "" + user, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
+                                    add(new Posts(like,postKey, info, "" + user, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
                                         add(new Tag(owner, colour4));
                                         add(new Tag(mode, colour3));
                                         add(new Tag(categ, colour1));
@@ -374,10 +393,11 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                     }}));
                                 }
                             }
-                        }
-                        mAdapter = new PostsAdapter(StarActivity.this, mAllQuestions);
+                        }}
+                        mAdapter = new StarAdapter(StarActivity.this, mAllQuestions);
                         mRecyclerView.setAdapter(mAdapter);
                     }
+                }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

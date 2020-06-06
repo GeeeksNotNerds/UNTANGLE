@@ -19,15 +19,10 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:text="Profile"
-
-                android:fontFamily="sans-serif-light"
-
+                android:text="PROFILE"
                 android:textSize="25sp"
-
-
                 android:layout_height="wrap_content"
                 />
 
@@ -75,7 +70,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_one_login"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="100dp"
                 android:elevation="10dp"
@@ -97,24 +92,30 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center_vertical"
                     android:paddingRight="8dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                     <ImageView
                         android:tint="@color/colorPrimaryDark"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
+                        android:id="@+id/nm"
+                        android:layout_alignParentLeft="true"
                         android:padding="10dp"
                         android:src="@drawable/ic_profile" />
 
                     <TextView
                         android:id="@+id/name"
-                        android:layout_width="289dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/nm"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
                         android:text="Name"
@@ -122,28 +123,34 @@
 
 
                         android:textSize="15sp" />
+                    </RelativeLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center_vertical"
                     android:paddingRight="8dp">
-
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
+                        android:layout_alignParentLeft="true"
                         android:padding="10dp"
+                        android:id="@+id/em"
                         android:tint="@color/colorPrimaryDark"
                         android:src="@drawable/ic_email_24dp" />
 
                     <TextView
                         android:id="@+id/email"
-                        android:layout_width="289dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_toRightOf="@id/em"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
                         android:text="Email"
@@ -151,67 +158,83 @@
 
 
                         android:textSize="15sp" />
+                    </RelativeLayout>
+
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center_vertical"
                     android:paddingRight="8dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
                         android:padding="10dp"
+                        android:id="@+id/de"
+                        android:layout_alignParentLeft="true"
                         android:tint="@color/colorPrimaryDark"
                         android:src="@drawable/dept" />
 
                     <TextView
                         android:textColor="@color/colorPrimaryDark"
                         android:id="@+id/dept"
-                        android:layout_width="289dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/de"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
                         android:text="Department"
 
 
                         android:textSize="15sp" />
+                    </RelativeLayout>
 
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center_vertical"
                     android:paddingRight="8dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                     <ImageView
                         android:tint="@color/colorPrimaryDark"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
+                        android:id="@+id/ad"
+                        android:layout_alignParentLeft="true"
                         android:padding="10dp"
                         android:layout_marginBottom="16dp"
                         android:src="@drawable/ic_profile" />
 
                     <TextView
                         android:id="@+id/admin_no"
-                        android:layout_width="289dp"
-                        android:layout_height="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/ad"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="40dp"
                         android:text="Name"
                         android:textColor="@color/colorPrimaryDark"
 
 
                         android:textSize="15sp" />
+                    </RelativeLayout>
 
                 </LinearLayout>
 

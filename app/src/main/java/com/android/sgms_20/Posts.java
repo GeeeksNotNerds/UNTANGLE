@@ -25,10 +25,11 @@ public class Posts
     private String status;
     private List<Tag> tags;
 
-    public Posts(String postid,String name, String email, String description, String date, String time,
+    public Posts(String likes,String postid,String name, String email, String description, String date, String time,
                  String uid, String mode,String postimage, String category, String subCategory,String showInformation,String status,List<Tag> tags) {
         this.postid=postid;
         this.username = name;
+        this.likes=likes;
 
         this.postImage=postimage;
 

@@ -73,18 +73,6 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
-
-
-
-
-
-
-
-
-
-
         BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListner);
         bottomNav.getMenu().findItem(R.id.nav_profile).setChecked(true);
@@ -170,7 +158,9 @@ public class ProfileActivity extends AppCompatActivity {
                                         .load(myProfileImage)
                                         .placeholder(R.drawable.ic_account_circle_24px)
                                         .into(userProfileImage);
-                            }else{
+                            }
+                            else
+                                {
                                 userProfileImage.setImageResource(R.drawable.profile);
                             }
 
