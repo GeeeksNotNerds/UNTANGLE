@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private List<Posts> getQuestions() {
         return new ArrayList<Posts>() {
             {
-                if(q==1 ) {
+                if(q==1) {
                     //DatabaseReference ref=PostsRef.child("likes");
                     Query query = PostsRef.orderByChild("likes");
                     ValueEventListener valueEventListener = new ValueEventListener() {
