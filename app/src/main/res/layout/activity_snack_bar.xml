@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:padding="5dp"
         android:layout_toLeftOf="@id/t"
         android:src="@drawable/ic_warning"
         android:layout_above="@id/bu"
@@ -21,12 +21,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="You must login first..."
-        android:padding="15dp"
+        android:padding="5dp"
         android:layout_centerInParent="true"
         android:textSize="20sp"
         android:layout_above="@id/bu"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="5dp"/>
     <Button
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
