@@ -77,13 +77,18 @@
 
 
     </FrameLayout>
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/sort"
+        android:layout_height="wrap_content">
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+
         android:layout_margin="10dp"
-        android:id="@+id/sort"
+
         android:orientation="horizontal" >
         <ImageView
             android:layout_width="wrap_content"
@@ -127,6 +132,7 @@
 
 
     </LinearLayout>
+    </HorizontalScrollView>
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
