@@ -89,6 +89,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         //String email=question.getEmail();
         if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
+            holder.mStar.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    SendUserToSnackBarActivity();
+
+                }
+            });
             holder.pic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
