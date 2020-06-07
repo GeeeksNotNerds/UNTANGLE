@@ -21,12 +21,12 @@ public class SnackBarActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width=dm.widthPixels;
         int height=dm.heightPixels;
-        getWindow().setLayout((int)(width*1),(int) (height*.20));
+        getWindow().setLayout((int)(width*1),(int) (height*.30));
 
         WindowManager.LayoutParams windowManager = getWindow().getAttributes();
-        //windowManager.dimAmount = 0.60f;
+        windowManager.dimAmount = 0.60f;
         windowManager.gravity= Gravity.BOTTOM;
-       // getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
         mButton=(Button)findViewById(R.id.bu);
         mButton.setOnClickListener(new View.OnClickListener() {
