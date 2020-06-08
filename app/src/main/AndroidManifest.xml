@@ -16,15 +16,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:windowSoftInputMode="stateVisible|adjustPan"
         tools:replace="android:label">
+
+
         <activity android:name=".EntryActivity"
             android:theme="@style/AppTheme.customTheme"></activity>
         <activity
             android:name=".StarActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.customTheme" />
         <activity
             android:name=".SnackBarActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.customTheme" />
         <activity android:name=".password" />
 
@@ -36,44 +39,60 @@
 
         <activity
             android:name=".SideMenu"
+            android:screenOrientation="portrait"
             android:theme="@style/Dialog" />
         <activity
             android:name=".ProfileActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".PostActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
             android:theme="@style/Dialog"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".PostActivity" />
         <activity
             android:name=".ClickPostActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Dialog" />
         <activity
             android:name=".CommentsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.customTheme" />
         <activity
             android:name=".SettingsActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Dialog" />
-        <activity android:name=".SetupActivity" />
+        <activity android:name=".SetupActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ProItemView"
-            android:theme="@style/AppTheme.customTheme" />
-        <activity android:name=".WelcomeActivity">
+            android:theme="@style/AppTheme.customTheme"
+            android:screenOrientation="portrait" />
+        <activity android:name=".WelcomeActivity"
+            android:screenOrientation="portrait" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashScreenActivity" />
+        <activity android:name=".SplashScreenActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".Admin_Login" />
-        <activity android:name=".The_First" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Admin_Login"
+            android:screenOrientation="portrait" />
+        <activity android:name=".The_First"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

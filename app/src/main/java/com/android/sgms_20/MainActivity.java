@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private int q;
     private static MainActivity instance;
 
+
     private RecyclerView postList,mRecyclerView;
     private DatabaseReference MyPostRef,PostsRef,LikesRef,DownVotesRef;
     String letter="A";
@@ -429,7 +430,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                         //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                 if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
                                 {
-                                    info=dataSnapshot1.child("admissionNo").getValue().toString();
+                                    info=name;
                                     mail=user;
                                 }
                                 else {
@@ -584,7 +585,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                         if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
                                         {
-                                            info=dataSnapshot1.child("admissionNo").getValue().toString();
+                                            info=name;
                                             mail=user;
                                         }
                                         else
@@ -829,9 +830,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     String Mail=mAuth.getCurrentUser().getEmail().toString();
                     token= FirebaseInstanceId.getInstance().getToken();
                     int pos1=Mail.indexOf('.');
+                    int Apos=Mail.indexOf('@');
                     String userName=Mail.substring(0,pos1);
                     int pos2=Mail.indexOf('@',pos1+1);
-                    String admissionNo=Mail.substring(pos1+1,pos2);
+                    String admissionNo=Mail.substring(Apos-8,Apos);
                     int pos3=Mail.indexOf('.',pos2+1);
                     String branch=Mail.substring(pos2+1,pos3);
 
