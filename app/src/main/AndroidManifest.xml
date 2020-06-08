@@ -13,14 +13,16 @@
         android:icon="@mipmap/ic_launcher"
         android:label="Untangle"
         android:largeHeap="true"
-        android:windowSoftInputMode="stateVisible|adjustPan"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateVisible|adjustPan"
         tools:replace="android:label">
-        <activity android:name=".StarActivity"
+        <activity android:name=".EntryActivity"
             android:theme="@style/AppTheme.customTheme"></activity>
-
+        <activity
+            android:name=".StarActivity"
+            android:theme="@style/AppTheme.customTheme" />
         <activity
             android:name=".SnackBarActivity"
             android:theme="@style/AppTheme.customTheme" />
@@ -39,9 +41,9 @@
             android:name=".ProfileActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:windowSoftInputMode="adjustResize"
+            android:name=".PostActivity"
             android:theme="@style/Dialog"
-            android:name=".PostActivity" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ClickPostActivity"
             android:theme="@style/Dialog" />
