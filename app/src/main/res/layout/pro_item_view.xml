@@ -1,75 +1,266 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProItemView"
+    tools:context=".ProfileActivity"
     android:background="#827f93"
     android:layout_margin="5dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/header_cover_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/logo" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user_profile_photo"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_below="@+id/header_cover_image"
+            android:layout_width="250dp"
+            android:layout_height="210dp"
+            android:layout_marginTop="70dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="-60dp"
-            android:background="@drawable/profile_circular_border"
-            android:elevation="5dp"
-            android:padding="2dp"
-
             android:scaleType="centerCrop"
-            android:src="@drawable/p" />
+            android:src="@drawable/prof" />
+
+
 
         <RelativeLayout
             android:id="@+id/profile_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/header_cover_image"
-            android:background="#827f93"
-            android:elevation="4dp"
-            android:paddingBottom="24dp">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/header_cover_image">
 
 
-
-
-
-
-            <TextView
-                android:id="@+id/user_profile_name"
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_one_login"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="89dp"
-                android:text="Name"
-                android:textColor="#fff"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="80dp"
+                android:elevation="10dp"
 
-            <TextView
-                android:id="@+id/user_profile_email"
+                app:cardBackgroundColor="#fcfcfc"
+                app:cardCornerRadius="15dp"
+                android:layout_margin="15dp"
+                android:foregroundGravity="center"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:tint="@color/colorPrimaryDark"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="8dp"
+                                android:id="@+id/nm"
+                                android:layout_alignParentLeft="true"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_profile" />
+
+                            <TextView
+                                android:id="@+id/name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_toRightOf="@id/nm"
+                                android:text="Name"
+                                android:textColor="@color/colorPrimaryDark"
+
+
+                                android:textSize="15sp" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_alignParentLeft="true"
+                                android:padding="10dp"
+                                android:id="@+id/em"
+                                android:tint="@color/colorPrimaryDark"
+                                android:src="@drawable/ic_email_24dp" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_toRightOf="@id/em"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/email"
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginTop="16dp"
+                                    android:text="Email"
+                                    android:textColor="@color/colorPrimaryDark"
+
+
+                                    android:textSize="15sp" />
+                            </HorizontalScrollView>
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="8dp"
+                                android:padding="10dp"
+                                android:id="@+id/de"
+                                android:layout_alignParentLeft="true"
+                                android:tint="@color/colorPrimaryDark"
+                                android:src="@drawable/dept" />
+
+                            <TextView
+                                android:textColor="@color/colorPrimaryDark"
+                                android:id="@+id/dept"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/de"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="16dp"
+                                android:text="Department"
+
+
+                                android:textSize="15sp" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:tint="@color/colorPrimaryDark"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="8dp"
+                                android:id="@+id/ad"
+                                android:layout_alignParentLeft="true"
+                                android:padding="10dp"
+                                android:layout_marginBottom="16dp"
+                                android:src="@drawable/ic_profile" />
+
+                            <TextView
+                                android:id="@+id/admin_no"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/ad"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="40dp"
+                                android:text="Name"
+                                android:textColor="@color/colorPrimaryDark"
+
+
+                                android:textSize="15sp" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+
+
+            <Button
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_below="@+id/user_profile_name"
+                android:layout_below="@id/cv_one_login"
                 android:layout_centerHorizontal="true"
+                android:background="@drawable/button1"
+                android:layout_gravity="center"
+                android:layout_marginTop="-40dp"
+                android:text="EDIT DETAILS"
+                android:fontFamily="sans-serif-light"
+                android:textSize="25sp"
+                android:id="@+id/edit_button"
+                android:textColor="@android:color/white"
+                android:elevation="15dp" />
 
-                android:text="email"
-                android:textColor="#fff"
-                android:textSize="14sp" />
+
+
+
         </RelativeLayout>
 
 
 
+
     </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+
+
 </RelativeLayout>
