@@ -598,11 +598,24 @@ public class PostActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
-
-
-
+                    int c = 0;
+                    for (int i = 0; i < 1; i++) {
+                        if (current_user_id.equals(mAdmin[i])) {
+                            c = 1;
+                            break;
+                        }
+                    }
+                    String userAdmissionNo;
+                        if(c==1)
+                        {
+                             userAdmissionNo=dataSnapshot.child("designation").getValue().toString();
+                        }
+                        else {
+                             userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
+                        }
+                        //String userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
                         String userFullName = dataSnapshot.child("username").getValue().toString();
-                        String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+//                        String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
                         String userEmail=dataSnapshot.child("email").getValue().toString();
 
 
@@ -612,9 +625,10 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("time", saveCurrentTime);
                     postsMap.put("description", description);
                     postsMap.put("mode", Mode);
+                    postsMap.put("admissionNo",userAdmissionNo);
                     postsMap.put("category", cat1);
                     postsMap.put("subCategory", cat2);
-                    postsMap.put("profileImage", userProfileImage);
+  //                  postsMap.put("profileImage", userProfileImage);
                     postsMap.put("username", userFullName);
                     postsMap.put("email",userEmail);
                     postsMap.put("showInformation",UserInfo_show);

@@ -138,7 +138,11 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                 if (dataSnapshot.exists()) {
                     if (dataSnapshot.hasChild("username")) {
                         String myProfileName = dataSnapshot.child("username").getValue().toString();
-                        char letter = myProfileName.charAt(0);
+                        char letter;
+
+                       // else {
+                        letter = myProfileName.charAt(0);
+                    //}
                         letter = Character.toUpperCase(letter);
 
 
@@ -337,13 +341,19 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                             String date = dataSnapshot1.child("date").getValue().toString();
                             String post = dataSnapshot1.child("description").getValue().toString();
                             //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                            if (show.equals("no")) {
-                                info = "Anonymous";
-                                mail = " ";
-                            } else {
-                                info = name;
-                                mail = user;
-                            }
+                                if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+                                {
+                                    info=dataSnapshot1.child("admissionNo").getValue().toString();
+                                    mail=user;
+                                }
+                                else {
+                                    if (show.equals("no")) {
+                                        info = "Anonymous";
+                                        mail = " ";
+                                    } else {
+                                        info = name;
+                                        mail = user;
+                                    }}
 
                             if (categ.equals("Official")) colour1 = mColors[7];
                             if (categ.equals("Personal")) colour1 = mColors[8];

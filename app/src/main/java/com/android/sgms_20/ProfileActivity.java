@@ -82,10 +82,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(ProfileActivity.this,SettingsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
+                //Intent intent=new Intent(ProfileActivity.this,SettingsActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //startActivity(intent);
+                //finish();
 
 
             }
@@ -102,12 +102,12 @@ public class ProfileActivity extends AppCompatActivity {
                         if (currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
 
 
-                            String myProfileImage="";
+                            //String myProfileImage="";
 
 
 
 
-                           if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                           //if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
 
 
@@ -116,14 +116,15 @@ public class ProfileActivity extends AppCompatActivity {
                             String myBranch = dataSnapshot.child("department").getValue().toString();
                             String myEmail = dataSnapshot.child("email").getValue().toString();
 
-                            if(!myProfileImage.isEmpty()) {
+                            /*if(!myProfileImage.isEmpty()) {
                                 Picasso.with(ProfileActivity.this)
                                         .load(myProfileImage)
                                         .placeholder(R.drawable.ic_account_circle_24px)
                                         .into(userProfileImage);
-                            }else{
+                            }else
+                                {
                                 userProfileImage.setImageResource(R.drawable.profile);
-                            }
+                            }*/
 
 
                             userName.setText("UserName : " + myUserName);
@@ -142,8 +143,8 @@ public class ProfileActivity extends AppCompatActivity {
                             //pro.setImageDrawable(mDrawableBuilder);
 
                         } else if (!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
-                            String myProfileImage="";
-                              if(dataSnapshot.child("ProfileImage").exists())  myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                            //String myProfileImage="";
+                              //if(dataSnapshot.child("ProfileImage").exists())  myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
 
 
@@ -153,7 +154,7 @@ public class ProfileActivity extends AppCompatActivity {
                             String myBranch = dataSnapshot.child("department").getValue().toString();
                             String myEmail = dataSnapshot.child("email").getValue().toString();
 
-                            if(!myProfileImage.isEmpty()) {
+                            /*if(!myProfileImage.isEmpty()) {
                                 Picasso.with(ProfileActivity.this)
                                         .load(myProfileImage)
                                         .placeholder(R.drawable.ic_account_circle_24px)
@@ -162,7 +163,7 @@ public class ProfileActivity extends AppCompatActivity {
                             else
                                 {
                                 userProfileImage.setImageResource(R.drawable.profile);
-                            }
+                            }*/
 
 
                             userName.setText("UserName : " + myUserName);

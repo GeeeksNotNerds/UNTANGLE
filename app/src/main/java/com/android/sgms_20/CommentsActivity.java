@@ -1,5 +1,6 @@
 package com.android.sgms_20;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -84,23 +85,31 @@ public class CommentsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists())
-                        {
-                            String userName=dataSnapshot.child("username").getValue().toString();
-                            ValidateComment(userName);
-                            CommentInputText.setText("");
+                if(current_user_id.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
+                {
+                    startActivity(new Intent(CommentsActivity.this,SnackBarActivity.class));
+                    finish();
+                }
+                else {
+                    UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists())
+                            {
+                                String userName=dataSnapshot.child("username").getValue().toString();
+                                ValidateComment(userName);
+                                CommentInputText.setText("");
+                            }
+
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
 
-                    }
-                });
+                }
 
 
             }

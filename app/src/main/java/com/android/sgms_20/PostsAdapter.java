@@ -98,14 +98,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                 }
             });
-            holder.pic.setOnClickListener(new View.OnClickListener() {
+            /*holder.pic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent ProIntent = new Intent(mContext, ProItemView.class);
                     ProIntent.putExtra("PostKey", PostKey);
                     mContext.startActivity(ProIntent);
                 }
-            });
+            });*/
             holder.settings.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -130,9 +130,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             });
             holder.CommentPostButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
-                    SendUserToSnackBarActivity();
+                public void onClick(View v) {
+
+
+                    Intent commentsIntent = new Intent(mContext, CommentsActivity.class);
+                    commentsIntent.putExtra("PostKey", PostKey);
+                    mContext.startActivity(commentsIntent);
+
+
                 }
             });
             holder.DownVoteButton.setOnClickListener(new View.OnClickListener() {
@@ -256,7 +261,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             });
 
-            holder.pic.setOnClickListener(new View.OnClickListener() {
+            /*holder.pic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent ProIntent = new Intent(mContext, ProItemView.class);
@@ -264,7 +269,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     mContext.startActivity(ProIntent);
 
                 }
-            });
+            });*/
             holder.LikePostButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -293,6 +298,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                 }
                             }
                             MainActivity.getInstance().sort();
+                            //MainActivity.getInstance().finish();
                             //MainActivity(getClass())
                             //mContext.startActivity(new Intent(mContext,MainActivity.class));
                         }

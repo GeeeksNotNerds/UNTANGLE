@@ -55,6 +55,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 import com.yalantis.filter.adapter.FilterAdapter;
@@ -66,6 +67,7 @@ import com.yalantis.filter.widget.FilterItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -132,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+        //Toast.makeText(instance, currentUserID, Toast.LENGTH_SHORT).show();
 
         if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
@@ -144,7 +147,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        if (dataSnapshot.hasChild("username")) {
+                        if (dataSnapshot.hasChild("username"))
+                        {
                             String myProfileName = dataSnapshot.child("username").getValue().toString();
                             char letter = myProfileName.charAt(0);
                             letter = Character.toUpperCase(letter);
@@ -165,7 +169,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             });
             pro.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     startActivity(new Intent(MainActivity.this, SideMenu.class));
 
                 }
@@ -215,6 +220,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 mSort1.setTextColor(mColors[22]);
                 mSort2.setTextColor(mColors[23]);
                 q=0;
+
+                linearLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setHasFixedSize(true);
                 mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions=getQuestions());
                 mRecyclerView.setAdapter(mAdapter);
             }
@@ -229,6 +237,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 mSort2.setTextColor(mColors[22]);
                 mSort1.setTextColor(mColors[23]);
                 q=1;
+                linearLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setHasFixedSize(true);
                 mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions=getQuestions());
                 mRecyclerView.setAdapter(mAdapter);
             }
@@ -310,6 +320,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     }
     public void sort()
     {
+        linearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setHasFixedSize(true);
         mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions=getQuestions());
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -393,13 +405,19 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             String date = dataSnapshot1.child("date").getValue().toString();
                             String post = dataSnapshot1.child("description").getValue().toString();
                         //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                            if (show.equals("no")) {
-                                info = "Anonymous";
-                                 mail=" ";}
-                            else {
-                                info = name;
-                                mail=user;
-                            }
+                                if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+                                {
+                                    info=dataSnapshot1.child("admissionNo").getValue().toString();
+                                    mail=user;
+                                }
+                                else {
+                                    if (show.equals("no")) {
+                                        info = "Anonymous";
+                                        mail = " ";
+                                    } else {
+                                        info = name;
+                                        mail = user;
+                                    }}
 
                                 if (categ.equals("Official")) colour1 = mColors[7];
                                 if (categ.equals("Personal")) colour1 = mColors[8];
@@ -542,13 +560,20 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         String date = dataSnapshot1.child("date").getValue().toString();
                                         String post = dataSnapshot1.child("description").getValue().toString();
                                         //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                                        if (show.equals("no")) {
+                                        if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+                                        {
+                                            info=dataSnapshot1.child("admissionNo").getValue().toString();
+                                            mail=user;
+                                        }
+                                        else
+                                            {
+                                         if (show.equals("no")) {
                                             info = "Anonymous";
                                             mail = " ";
                                         } else {
                                             info = name;
                                             mail = user;
-                                        }
+                                        }}
 
                                             if (categ.equals("Official")) colour1 = mColors[7];
                                             if (categ.equals("Personal")) colour1 = mColors[8];
@@ -763,6 +788,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         }
         else
         {
+
             CheckUserExistence();
         }
 
@@ -776,7 +802,44 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(current_user_id))
                 {
-                    SendToSetupActivity();
+                    String token;
+                    String id=mAuth.getUid().toString();
+                    String Mail=mAuth.getCurrentUser().getEmail().toString();
+                    token= FirebaseInstanceId.getInstance().getToken();
+                    int pos1=Mail.indexOf('.');
+                    String userName=Mail.substring(0,pos1);
+                    int pos2=Mail.indexOf('@',pos1+1);
+                    String admissionNo=Mail.substring(pos1+1,pos2);
+                    int pos3=Mail.indexOf('.',pos2+1);
+                    String branch=Mail.substring(pos2+1,pos3);
+
+                    HashMap user1 = new HashMap();
+                    user1.put("username", userName);
+                    user1.put("department", branch);
+                    user1.put("email", Mail);
+                    user1.put("admission_number", admissionNo);
+                    user1.put("device_token",token);
+
+                    UsersRef.child(id).updateChildren(user1).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task)
+                        {
+                            //progressBar.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
+
+                                //Toast.makeText(RegisterActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+
+                            } else
+                            {
+                                Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    //SendToSetupActivity();
                 }
             }
 
@@ -790,7 +853,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
     private void SendToSetupActivity()
     {
-        Intent intent=new Intent(MainActivity.this, SetupActivity.class);
+        Intent intent=new Intent(MainActivity.this, RegisterActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
