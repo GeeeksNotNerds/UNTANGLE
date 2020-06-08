@@ -25,9 +25,9 @@
 
         <ImageView
             android:id="@+id/header_cover_image"
-            android:layout_width="250dp"
-            android:layout_height="210dp"
-            android:layout_marginTop="70dp"
+            android:layout_width="190dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
             android:src="@drawable/prof" />
@@ -63,8 +63,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
