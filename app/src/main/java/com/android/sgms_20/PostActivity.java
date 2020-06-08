@@ -718,21 +718,21 @@ public class PostActivity extends AppCompatActivity {
                         case R.id.nav_home:
                             Intent intent=new Intent(PostActivity.this,MainActivity.class);
                             startActivity(intent);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             finish();
 
                             break;
 
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(PostActivity.this,ProfileActivity.class);
-                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(Pintent);
                             finish();
 
                             break;
                         case R.id.nav_star:
                             Intent Pintent1=new Intent(PostActivity.this,StarActivity.class);
-                            Pintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Pintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(Pintent1);
                             finish();
 

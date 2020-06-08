@@ -380,9 +380,11 @@ public class ClickPostActivity extends AppCompatActivity {
                 .setPositiveButton("Yes,Delete It!", R.drawable.ic_baseline_delete_24, new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
-                        ClickPostRef.removeValue();
-                        SendUserToMainActivity();
-                        Toast.makeText(ClickPostActivity.this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
+
+                                 ClickPostRef.removeValue();
+                                 SendUserToMainActivity();
+                                 Toast.makeText(ClickPostActivity.this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
+
                         dialogInterface.dismiss();
                     }
 

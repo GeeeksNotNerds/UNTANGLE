@@ -83,7 +83,7 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
 
                     Toast.makeText(getApplicationContext(), "Login Successful!", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(Admin_Login.this,MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     //finish();
 

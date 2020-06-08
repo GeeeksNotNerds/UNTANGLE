@@ -519,18 +519,18 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                         case R.id.nav_home:
                             Intent intent2=new Intent(StarActivity.this,MainActivity.class);
                             startActivity(intent2);
-                            intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                            finish();
                             break;
                         case R.id.nav_post:
                             Intent intent=new Intent(StarActivity.this,PostActivity.class);
                             startActivity(intent);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             finish();
                             break;
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(StarActivity.this,ProfileActivity.class);
-                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(Pintent);
                             finish();
                             break;
