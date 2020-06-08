@@ -21,10 +21,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProItemView extends AppCompatActivity {
 
-    TextView Name,Email;
+    TextView Name,Email,Depatment,AdNo;
     CircleImageView image;
 
-    private String PostKey,currentUserID,databaseUSerID,description,Status,permission,ProfileImage,Pro;
+    private String PostKey,currentUserID,databaseUSerID,description,Status,permission,ProfileImage,Pro,admissionNo,department;
     private DatabaseReference ClickPostRef,ProRef;
 
     private FirebaseAuth mAuth;
@@ -33,16 +33,17 @@ public class ProItemView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pro_item_view);
-        Name=findViewById(R.id.user_profile_name);
-        Email=findViewById(R.id.user_profile_email);
-        image=findViewById(R.id.user_profile_photo);
+        Name=findViewById(R.id.name);
+        Email=findViewById(R.id.email);
+        Depatment=findViewById(R.id.dept);
+        AdNo=findViewById(R.id.admin_no);
 
 
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width=dm.widthPixels;
         int height=dm.heightPixels;
-        getWindow().setLayout((int)(width*.90),(int) (height*.45));
+        getWindow().setLayout((int)(width*.90),(int) (height*.65));
         WindowManager.LayoutParams windowManager = getWindow().getAttributes();
         windowManager.dimAmount = 0.60f;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -74,7 +75,7 @@ public class ProItemView extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if(dataSnapshot.exists()){
                                //if(dataSnapshot.child("ProfileImage").exists()) ProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
-                                ProfileImage="";
+                               // ProfileImage="";
 
 
                                if(permission.equals("yes")){
@@ -95,15 +96,67 @@ public class ProItemView extends AppCompatActivity {
 
                                     description = dataSnapshot.child("username").getValue().toString();
                                     Status = dataSnapshot.child("email").getValue().toString();
-                                    Email.setText(Status);
+                                    department=dataSnapshot.child("department").getValue().toString();
 
-                                    Name.setText(description);
+                                    if(Pro.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                                        admissionNo=dataSnapshot.child("designation").getValue().toString();
+                                        AdNo.setText("Designation : ");
+
+                                    }
+                                    else {
+                                        admissionNo = dataSnapshot.child("admission_number").getValue().toString();
+                                    }
+                                    Email.setText("Email : " +Status);
+
+                                    Name.setText("Name : "+description);
+
+                                    Depatment.setText("Department : "+department);
+                                   if(Pro.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                                       admissionNo=dataSnapshot.child("designation").getValue().toString();
+                                       AdNo.setText("Designation : "+admissionNo);
+
+                                   }
+                                   else {
+                                       admissionNo = dataSnapshot.child("admission_number").getValue().toString();
+                                       AdNo.setText("Admission Number : "+admissionNo);
+                                   }
                                 }
-                                else if(permission.equals("no")){
+                                else if(permission.equals("no") && !currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
                                     Email.setText("-");
+                                    AdNo.setText("-");
+                                    Depatment.setText("-");
 
                                     Name.setText("Anonymous");
-                                }
+                                }else if(permission.equals("no") && currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+
+                                   description = dataSnapshot.child("username").getValue().toString();
+                                   Status = dataSnapshot.child("email").getValue().toString();
+                                   department=dataSnapshot.child("department").getValue().toString();
+
+                                   if(Pro.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                                       admissionNo=dataSnapshot.child("designation").getValue().toString();
+
+
+                                   }
+                                   else {
+                                       admissionNo = dataSnapshot.child("admission_number").getValue().toString();
+                                   }
+                                   Email.setText("Email : "+Status);
+
+                                   Name.setText("Name : "+description);
+
+                                   Depatment.setText("Department : "+department);
+                                   if(Pro.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                                       admissionNo=dataSnapshot.child("designation").getValue().toString();
+                                       AdNo.setText("Designation : "+admissionNo);
+
+                                   }
+                                   else {
+                                       admissionNo = dataSnapshot.child("admission_number").getValue().toString();
+                                       AdNo.setText("Admission Number : "+admissionNo);
+                                   }
+
+                               }
                             }
 
                         }
