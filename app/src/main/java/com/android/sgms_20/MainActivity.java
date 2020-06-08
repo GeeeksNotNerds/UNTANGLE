@@ -262,7 +262,15 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
          {
             bottomNav.setOnNavigationItemSelectedListener(navListner);
          }
-        if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+        int d = 0;
+        for (int i = 0; i < 1; i++) {
+            if (currentUserID.equals(mAdmin[i])) {
+                d = 1;
+                break;
+            }
+        }
+
+        if(d==1)
         {
             Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                     .getBoolean("isFirstRun", true);
