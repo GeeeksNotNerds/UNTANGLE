@@ -112,6 +112,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         Intent ProIntent = new Intent(mContext, ProItemView.class);
                         ProIntent.putExtra("PostKey", PostKey);
                         mContext.startActivity(ProIntent);
+
                     }
                 });
             }else{
@@ -121,7 +122,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     public void onClick(View v) {
                         Intent ProIntent = new Intent(mContext, ProItemView.class);
                         ProIntent.putExtra("PostKey", PostKey);
-                       // mContext.startActivity(ProIntent);
+                      //  mContext.startActivity(ProIntent);
+
                     }
                 });
 
@@ -252,6 +254,31 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
               });
 
                     holder.mStar.setImageResource(R.drawable.ic_star_selected);
+
+            if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+
+                holder.pic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent ProIntent = new Intent(mContext, ProItemView.class);
+                        ProIntent.putExtra("PostKey", PostKey);
+                        mContext.startActivity(ProIntent);
+
+                    }
+                });
+            }else{
+
+                holder.pic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent ProIntent = new Intent(mContext, ProItemView.class);
+                        ProIntent.putExtra("PostKey", PostKey);
+                        //  mContext.startActivity(ProIntent);
+
+                    }
+                });
+
+            }
 
 
 
