@@ -492,7 +492,8 @@ public class PostActivity extends AppCompatActivity {
         {
             MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
                     .setTitle("Post It..")
-                    .setMessage("Are you sure you want to post this?")
+                    .setMessage("Users details,even in the anonymous posts,will be visible to the admin." +
+                            "Are you sure you want to post this?")
                     .setCancelable(false)
                     .setPositiveButton("Yes,Post It", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
                         @Override
