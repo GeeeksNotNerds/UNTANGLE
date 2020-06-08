@@ -248,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             }
         });
 
-
         //mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
 
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
@@ -772,19 +771,19 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             Intent intent=new Intent(MainActivity.this,PostActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
-
+                          // finish();
                             break;
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(MainActivity.this,ProfileActivity.class);
                             Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(Pintent);
-
+                           //finish();
                             break;
                         case R.id.nav_star:
                             Intent Pintent1=new Intent(MainActivity.this,StarActivity.class);
                             Pintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(Pintent1);
-
+                          //finish();
                             break;
                     }
 

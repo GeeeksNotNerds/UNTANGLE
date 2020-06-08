@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.login_button:
                 UserLogin();
-                finish();
+                //finish();
                 break;
         }
     }
