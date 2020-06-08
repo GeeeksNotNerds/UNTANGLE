@@ -488,6 +488,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 {
                     holder.textStatus.setVisibility(View.GONE);
                     holder.statusHeading.setVisibility(View.GONE);
+                }else{
+                    holder.textStatus.setVisibility(View.VISIBLE);
+                    holder.statusHeading.setVisibility(View.VISIBLE);
                 }
                 }
             }
