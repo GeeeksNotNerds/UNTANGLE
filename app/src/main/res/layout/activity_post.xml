@@ -233,6 +233,7 @@
                 <Spinner
                     android:layout_below="@id/select2"
                     android:layout_width="match_parent"
+
                     android:id="@+id/spinner2"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10sp"
@@ -279,13 +280,15 @@
             android:id="@+id/a"
             android:layout_alignParentLeft="true"
             android:textSize="20sp"
-            android:text="Want to attach file.."/>
+            android:text="Want to attach an Image ? "/>
 
         <ImageView
             android:layout_height="50dp"
             android:layout_width="50dp"
             android:id="@+id/media"
             android:layout_marginLeft="20sp"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:layout_toRightOf="@id/a"
             android:tint="@color/white"
@@ -336,6 +339,8 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_below="@id/post_description"
+        android:clickable="true"
+
 
             android:tint="@color/white"
             android:background="@drawable/round_button"
