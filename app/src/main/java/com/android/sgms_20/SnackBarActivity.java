@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SnackBarActivity extends AppCompatActivity {
 
+    FirebaseAuth mAuth;
     private Button mButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,7 @@ public class SnackBarActivity extends AppCompatActivity {
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width=dm.widthPixels;
+        mAuth=FirebaseAuth.getInstance();
         int height=dm.heightPixels;
         getWindow().setLayout((int)(width*1),(int) (height*.30));
 
@@ -32,6 +36,7 @@ public class SnackBarActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAuth.signOut();
                 SendUserToLoginActivity();
             }
         });

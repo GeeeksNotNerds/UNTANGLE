@@ -167,15 +167,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void VerifyWithEmail(){
         FirebaseUser user = mAuth.getCurrentUser();
         checker=user.isEmailVerified();
-        if (checker) {
+        if (checker)
+        {
             finish();
             Toast.makeText(this,"Account is verified.",Toast.LENGTH_SHORT).show();
+            
             Intent intent=new Intent(LoginActivity.this,MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-
-
-        }else{
+        }
+        else
+        {
             Toast.makeText(this,"Verify your account first",Toast.LENGTH_SHORT).show();
             mAuth.signOut();
         }

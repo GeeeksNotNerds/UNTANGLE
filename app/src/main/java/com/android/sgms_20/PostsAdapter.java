@@ -130,9 +130,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             });
             holder.CommentPostButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
-                    SendUserToSnackBarActivity();
+                public void onClick(View v) {
+
+
+                    Intent commentsIntent = new Intent(mContext, CommentsActivity.class);
+                    commentsIntent.putExtra("PostKey", PostKey);
+                    mContext.startActivity(commentsIntent);
+
+
                 }
             });
             holder.DownVoteButton.setOnClickListener(new View.OnClickListener() {
@@ -293,6 +298,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                 }
                             }
                             MainActivity.getInstance().sort();
+                            //MainActivity.getInstance().finish();
                             //MainActivity(getClass())
                             //mContext.startActivity(new Intent(mContext,MainActivity.class));
                         }

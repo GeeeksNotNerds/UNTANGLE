@@ -207,7 +207,7 @@
             android:textSize="18sp"
 
             android:gravity="center_horizontal"
-            android:text="Login...."/>
+            android:text="Already registered, Login here...."/>
 
 
 

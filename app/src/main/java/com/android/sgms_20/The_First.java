@@ -54,7 +54,8 @@ public class The_First extends AppCompatActivity {
           @Override
           public void onClick(View v) {
 
-              if(yes.isChecked()){
+              if(yes.isChecked())
+              {
                   Intent intent = new Intent(The_First.this, MainActivity.class);
                   startActivity(intent);
               }else if(no.isChecked()){

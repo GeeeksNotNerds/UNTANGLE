@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".ProItemView"
-    android:background="@drawable/border1"
+    android:background="#827f93"
     android:layout_margin="5dp">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,8 +28,9 @@
             android:background="@drawable/profile_circular_border"
             android:elevation="5dp"
             android:padding="2dp"
+
             android:scaleType="centerCrop"
-            android:src="@drawable/profile" />
+            android:src="@drawable/p" />
 
         <RelativeLayout
             android:id="@+id/profile_layout"
