@@ -203,13 +203,13 @@ public class ProfileActivity extends AppCompatActivity {
                         case R.id.nav_home:
                             Intent intent=new Intent(ProfileActivity.this,MainActivity.class);
                             startActivity(intent);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             finish();
                             return true;
 
                         case R.id.nav_post:
                             Intent Lintent=new Intent(ProfileActivity.this,PostActivity.class);
-                            Lintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Lintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                             startActivity(Lintent);
                             finish();
@@ -217,7 +217,7 @@ public class ProfileActivity extends AppCompatActivity {
                             return true;
                         case R.id.nav_star:
                             Intent Lintent1=new Intent(ProfileActivity.this,StarActivity.class);
-                            Lintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Lintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                             startActivity(Lintent1);
                             finish();
