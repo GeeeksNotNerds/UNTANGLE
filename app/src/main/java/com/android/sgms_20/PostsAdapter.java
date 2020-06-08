@@ -115,6 +115,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         mContext.startActivity(ProIntent);
                     }
                 });
+            }else{
+
+                holder.pic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent ProIntent = new Intent(mContext, ProItemView.class);
+                        ProIntent.putExtra("PostKey", PostKey);
+                       // mContext.startActivity(ProIntent);
+                    }
+                });
+
             }
             holder.settings.setOnClickListener(new View.OnClickListener() {
 
@@ -271,15 +282,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             });
 
-            holder.pic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent ProIntent = new Intent(mContext, ProItemView.class);
-                    ProIntent.putExtra("PostKey", PostKey);
-                    mContext.startActivity(ProIntent);
 
-                }
-            });
             holder.LikePostButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
