@@ -839,8 +839,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     int pos1=Mail.indexOf('.');
                     int Apos=Mail.indexOf('@');
                     String userName=Mail.substring(0,pos1);
-
-
                     int pos2=Mail.indexOf('@',pos1+1);
                     String admissionNo=Mail.substring(Apos-8,Apos);
                     int pos3=Mail.indexOf('.',pos2+1);
