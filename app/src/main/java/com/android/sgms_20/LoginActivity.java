@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()){
             case R.id.register_account_link:
                 startActivity(new Intent(this,RegisterActivity.class));
-                //finish();
+                finish();
                 break;
 
             case R.id.login_button:
@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent intent=new Intent(LoginActivity.this,MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            //finish();
+            finish();
         }
         else
         {
