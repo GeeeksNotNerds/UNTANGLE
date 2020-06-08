@@ -57,6 +57,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.squareup.picasso.Picasso;
 import com.yalantis.filter.adapter.FilterAdapter;
 import com.yalantis.filter.animator.FiltersListItemAnimator;
@@ -123,6 +124,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         setSupportActionBar(mToolbar);
         instance=this;
         setTitle("Home");
+
+
 
         if(!haveNetworkConnection()){
             Toast.makeText(MainActivity.this,"You are not Online....Please switch on your internet connection!",Toast.LENGTH_LONG).show();
@@ -259,6 +262,33 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
          {
             bottomNav.setOnNavigationItemSelectedListener(navListner);
          }
+        int d = 0;
+        for (int i = 0; i < 1; i++) {
+            if (currentUserID.equals(mAdmin[i])) {
+                d = 1;
+                break;
+            }
+        }
+
+        if(d==1)
+        {
+            Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .getBoolean("isFirstRun", true);
+
+            if (isFirstRun)
+            {
+                //Toast.makeText(instance, "Working", Toast.LENGTH_SHORT).show();
+                //show start activity
+                startActivity(new Intent(MainActivity.this,EntryActivity.class));
+
+
+                // Show Dialog
+               // mDialog.show();
+            }
+
+
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                    .putBoolean("isFirstRun", false).commit();}
 }
     public static MainActivity getInstance() {
         return instance;
@@ -742,19 +772,19 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             Intent intent=new Intent(MainActivity.this,PostActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
-                           finish();
+
                             break;
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(MainActivity.this,ProfileActivity.class);
                             Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(Pintent);
-                           finish();
+
                             break;
                         case R.id.nav_star:
                             Intent Pintent1=new Intent(MainActivity.this,StarActivity.class);
                             Pintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(Pintent1);
-                          finish();
+
                             break;
                     }
 
@@ -843,6 +873,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     });
                     //SendToSetupActivity();
                 }
+
             }
 
             @Override

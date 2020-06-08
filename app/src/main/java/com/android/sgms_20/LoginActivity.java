@@ -155,10 +155,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()){
             case R.id.register_account_link:
                 startActivity(new Intent(this,RegisterActivity.class));
+                finish();
                 break;
 
             case R.id.login_button:
                 UserLogin();
+                finish();
                 break;
         }
     }
@@ -169,12 +171,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         checker=user.isEmailVerified();
         if (checker)
         {
-            finish();
+
             Toast.makeText(this,"Account is verified.",Toast.LENGTH_SHORT).show();
             
             Intent intent=new Intent(LoginActivity.this,MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
         }
         else
         {
