@@ -10,6 +10,7 @@
 
     <string-array name="club_uid">
         <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
+        <item>nO3l336v84OXDNCkR0aFNm0Es1w2</item>
     </string-array>
 
     <string-array name="job_titles">
@@ -28,7 +29,7 @@
         <item>Placements</item>
         <item>Internships</item>
         <item>Competitions</item>
-        <item>Courses</item>
+        <item>Activities</item>
         <item>Housing</item>
         <item>Health</item>
         <item>Rights Violation</item>
@@ -52,7 +53,7 @@
     </string-array>
     <string-array name="sub3">
         <item>Placements</item>
-        <item>Courses</item>
+        <item>Activities</item>
         <item>Competitions</item>
         <item>Internships</item>
     </string-array>
