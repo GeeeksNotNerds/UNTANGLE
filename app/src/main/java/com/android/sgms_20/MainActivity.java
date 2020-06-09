@@ -461,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                 if (mode.equals("Public")) colour3 = mColors[6];
                                 if (sub.equals("Internships")) colour2 = mColors[13];
                                 if (sub.equals("Competitions")) colour2 = mColors[14];
-                                if (sub.equals("Courses")) colour2 = mColors[15];
+                                if (sub.equals("Activities")) colour2 = mColors[15];
                                 if (mode.equals("Private")) colour3 = mColors[5];
                                 if (owner.equals("Admin")) colour4 = mColors[1];
                                 if (owner.equals("General")) colour4 = mColors[4];
@@ -617,7 +617,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                             if (mode.equals("Public")) colour3 = mColors[6];
                                             if (sub.equals("Internships")) colour2 = mColors[13];
                                             if (sub.equals("Competitions")) colour2 = mColors[14];
-                                            if (sub.equals("Courses")) colour2 = mColors[15];
+                                            if (sub.equals("Activities")) colour2 = mColors[15];
                                             if (mode.equals("Private")) colour3 = mColors[5];
                                             if (owner.equals("Admin")) colour4 = mColors[1];
                                             if (owner.equals("General")) colour4 = mColors[4];

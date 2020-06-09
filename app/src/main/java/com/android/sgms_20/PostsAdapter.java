@@ -484,7 +484,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.child("uid").equals(null)){
                 String ID=dataSnapshot.child("uid").getValue().toString();
-                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||ID.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
                 {
                     holder.textStatus.setVisibility(View.GONE);
                     holder.statusHeading.setVisibility(View.GONE);
