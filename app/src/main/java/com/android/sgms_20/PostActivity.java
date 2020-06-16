@@ -19,9 +19,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -108,9 +110,6 @@ public class PostActivity extends AppCompatActivity {
        // cv5=findViewById(R.id.cv5);
         //cv6=findViewById(R.id.cv6);
 //        getSupportActionBar().hide();
-        BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListner);
-        bottomNav.getMenu().findItem(R.id.nav_post).setChecked(true);
 
         rg_mode=findViewById(R.id.rg1);
         rg_mode_opt=findViewById(R.id.rg2);
@@ -119,6 +118,17 @@ public class PostActivity extends AppCompatActivity {
         //rg_cat_per=findViewById(R.id.rg5);
         //rg_cat_oth=findViewById(R.id.rg6);
         Image=findViewById(R.id.ima);
+
+
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width=dm.widthPixels;
+        int height=dm.heightPixels;
+        getWindow().setLayout((int)(width*.90),(int) (height*.80));
+        WindowManager.LayoutParams windowManager = getWindow().getAttributes();
+        windowManager.dimAmount = 0.60f;
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
         //r=(RelativeLayout)findViewById(R.id.r1);
         information=(ImageButton)findViewById(R.id.info);
 
@@ -383,7 +393,8 @@ public class PostActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
-        current_user_id = mAuth.getCurrentUser().getUid();
+        //PostKey=getIntent().getExtras().get("PostKey").toString();
+        current_user_id = getIntent().getExtras().get("UserID").toString();
 
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -708,39 +719,5 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener
-            navListner=
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                    switch (item.getItemId()){
-                        case R.id.nav_home:
-                            Intent intent=new Intent(PostActivity.this,MainActivity.class);
-                            startActivity(intent);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            finish();
-
-                            break;
-
-                        case R.id.nav_profile:
-                            Intent Pintent=new Intent(PostActivity.this,ProfileActivity.class);
-                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(Pintent);
-                            finish();
-
-                            break;
-                        case R.id.nav_star:
-                            Intent Pintent1=new Intent(PostActivity.this,StarActivity.class);
-                            Pintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(Pintent1);
-                            finish();
-
-                            break;
-
-                    }
-
-                    return true;
-                }
-            };
 }
