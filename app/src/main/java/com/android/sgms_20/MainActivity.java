@@ -44,6 +44,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -97,10 +98,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     TextView DisplayNoOfLikes,DisplayDownVotes;
     int CountLikes,countDownVotes;
     int pos;
+    boolean isAdmin;
     private ImageView pro;
     private int q,tab;
     private static MainActivity instance;
-
+    FloatingActionButton add;
 
     private RecyclerView postList,mRecyclerView;
     private DatabaseReference MyPostRef,PostsRef,LikesRef,DownVotesRef;
@@ -118,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         ClubTab=(Button)findViewById(R.id.club);
         PublicTab=(Button)findViewById(R.id.chat);
         //Window window = MainActivity.getWindow();
+        add=findViewById(R.id.post_button);
+        add.setVisibility(View.GONE);
 
         //public DataSnapshot dataSnapshot=new public DataSnapshot()
         mToolbar=(Toolbar) findViewById(R.id.toolbar);
@@ -137,6 +141,14 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         tab=3;
         mAuth=FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
+
+        if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+            isAdmin=true;
+        }else{
+            isAdmin=false;
+        }
+
+
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         PostsRef= FirebaseDatabase.getInstance().getReference().child("Posts");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
@@ -261,6 +273,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             @Override
             public void onClick(View v)
             {
+
+                if(isAdmin){
+                    add.setVisibility(View.VISIBLE);
+                }else{
+                    add.setVisibility(View.GONE);
+                }
                 mSort1.setBackgroundResource(R.drawable.button_clicked);
                 mSort2.setBackgroundResource(R.drawable.button_unclick);
                 mSort1.setTextColor(mColors[22]);
@@ -281,6 +299,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             @Override
             public void onClick(View v)
             {
+
+                if(isAdmin){
+                    add.setVisibility(View.VISIBLE);
+                }else{
+                    add.setVisibility(View.GONE);
+                }
                 mSort1.setBackgroundResource(R.drawable.button_clicked);
                 mSort2.setBackgroundResource(R.drawable.button_unclick);
                 mSort1.setTextColor(mColors[22]);
@@ -300,6 +324,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             @Override
             public void onClick(View v)
             {
+
+                if(!isAdmin){
+                    add.setVisibility(View.VISIBLE);
+                }else{
+                    add.setVisibility(View.GONE);
+                }
                 mSort1.setBackgroundResource(R.drawable.button_clicked);
                 mSort2.setBackgroundResource(R.drawable.button_unclick);
                 mSort1.setTextColor(mColors[22]);
@@ -316,6 +346,30 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             }
         });
 
+        if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2")){
+
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent loginIntent=new Intent(MainActivity.this,SnackBarActivity.class);
+                    startActivity(loginIntent);
+                }
+            });
+
+
+
+        }else {
+
+
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
+                    postIntent.putExtra("UserID", currentUserID);
+                    startActivity(postIntent);
+                }
+            });
+        }
         //mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
 
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
@@ -1551,9 +1605,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()){
-                        case R.id.nav_post:
-                            SendUserToLoginActivity();
-                            break;
                         case R.id.nav_profile:
                             SendUserToLoginActivity();
                             break;
@@ -1578,12 +1629,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                     switch (item.getItemId()){
 
-                        case R.id.nav_post:
-                            Intent intent=new Intent(MainActivity.this,PostActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                          // finish();
-                            break;
+
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(MainActivity.this,ProfileActivity.class);
                             Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);

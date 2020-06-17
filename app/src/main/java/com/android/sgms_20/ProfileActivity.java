@@ -207,14 +207,7 @@ public class ProfileActivity extends AppCompatActivity {
                             finish();
                             return true;
 
-                        case R.id.nav_post:
-                            Intent Lintent=new Intent(ProfileActivity.this,PostActivity.class);
-                            Lintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                            startActivity(Lintent);
-                            finish();
-
-                            return true;
                         case R.id.nav_star:
                             Intent Lintent1=new Intent(ProfileActivity.this,StarActivity.class);
                             Lintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
