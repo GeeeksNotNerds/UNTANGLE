@@ -80,9 +80,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-
-
-
         Posts question = mPosts.get(position);
         String PostKey=question.getPostid();
         Post=FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
@@ -94,6 +91,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         //String email=question.getEmail();
         if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
+            if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+            {
+                holder.cnt.setVisibility(View.GONE);
+                holder.cnt_head.setVisibility(View.GONE);
+                holder.CommentPostButton.setVisibility(View.GONE);
+            }
             holder.mStar.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -172,6 +175,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             });
         }
         else {
+            if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+            {
+                holder.cnt.setVisibility(View.GONE);
+                holder.cnt_head.setVisibility(View.GONE);
+                holder.CommentPostButton.setVisibility(View.GONE);
+            }
+
             holder.mStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
@@ -484,7 +494,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.child("uid").equals(null)){
                 String ID=dataSnapshot.child("uid").getValue().toString();
-                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||ID.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+                String mode=dataSnapshot.child("mode").getValue().toString();
+                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||ID.equals("nO3l336v84OXDNCkR0aFNm0Es1w2")||mode.equals("Public"))
                 {
                     holder.textStatus.setVisibility(View.GONE);
                     holder.statusHeading.setVisibility(View.GONE);
@@ -581,6 +592,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             textSubcategory= (TextView) itemView.findViewById(R.id.filter_second);
             PostImage=itemView.findViewById(R.id.postImage);
             PostImage1=itemView.findViewById(R.id.postImage1);
+
 
 
 

@@ -75,11 +75,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FilterListener<Tag> {
     private FirebaseAuth mAuth;
-
     private GoogleApiClient mGoogleApiClient;
-    String currentUserID;
+    private String currentUserID;
     private int[] mColors;
-    private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
+    private String[] mAdmin= new String[]  {"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
     private String[] mClub;
     private int colour1,colour2,colour3,colour4;
     private DatabaseReference UsersRef;
@@ -131,10 +130,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-        if(!haveNetworkConnection()){
+        if(!haveNetworkConnection())
+        {
             Toast.makeText(MainActivity.this,"You are not Online....Please switch on your internet connection!",Toast.LENGTH_LONG).show();
         }
-        tab=1;
+        tab=3;
         mAuth=FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+
         //Toast.makeText(instance, currentUserID, Toast.LENGTH_SHORT).show();
 
         if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
@@ -205,7 +206,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mFilter.setNoSelectedItemText(getString(R.string.str_all_selected));
         mFilter.build();
 
-
+        if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+        {
+            PublicTab.setText("Private");
+        }
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         linearLayoutManager =new LinearLayoutManager(this,RecyclerView.VERTICAL,true);
         linearLayoutManager.setStackFromEnd(true);
@@ -272,7 +276,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 mRecyclerView.setAdapter(mAdapter);
             }
         });
-        ClubTab.setOnClickListener(new View.OnClickListener() {
+        ClubTab.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
@@ -422,9 +427,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     public List<Posts> getQuestions() {
         return new ArrayList<Posts>() {
             {
-                if(tab==1)
+                if(tab==1)//Official Tab
                 {
-                    if(q==1)
+                    if(q==1)//sort by likes
                     {
                         PostsRef.orderByChild("likes").addValueEventListener(new ValueEventListener() {
                             @Override
@@ -991,14 +996,34 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if (sub.equals("Placements")) colour2 = mColors[12];
 
                                     String like=dataSnapshot1.child("likes").getValue().toString();
-                                    if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
+                                    if((!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))//visible only to students and clubs
                                     {
+                                        if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
+                                    {
+                                        if(mode.equals("Public")){
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
                                             add(new Tag(sub, colour2));
                                         }}));
+                                    }}
+                                }
+                                    else //show admin only private issues
+                                    {
+                                        if(mode.equals("Private"))
+                                        {
+                                            if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
+                                            {
+                                                add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                                    add(new Tag(owner, colour4));
+                                                    add(new Tag(mode, colour3));
+                                                    add(new Tag(categ, colour1));
+                                                    add(new Tag(sub, colour2));
+                                                }}));
+                                            }
+
+                                        }
                                     }
                                 }
                                 mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);
@@ -1107,14 +1132,35 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if (sub.equals("Placements")) colour2 = mColors[12];
 
                                     String like=dataSnapshot1.child("likes").getValue().toString();
-                                    if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
+                                    if((!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))//visible only to students and clubs
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
-                                            add(new Tag(owner, colour4));
-                                            add(new Tag(mode, colour3));
-                                            add(new Tag(categ, colour1));
-                                            add(new Tag(sub, colour2));
-                                        }}));
+                                        if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
+                                        {
+                                            if(mode.equals("Public")){
+                                                add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                                    add(new Tag(owner, colour4));
+                                                    add(new Tag(mode, colour3));
+                                                    add(new Tag(categ, colour1));
+                                                    add(new Tag(sub, colour2));
+                                                }}));
+                                            }
+                                        }
+                                    }
+                                    else //show admin only private issues
+                                    {
+                                        if(mode.equals("Private"))
+                                        {
+                                            if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
+                                            {
+                                                add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                                    add(new Tag(owner, colour4));
+                                                    add(new Tag(mode, colour3));
+                                                    add(new Tag(categ, colour1));
+                                                    add(new Tag(sub, colour2));
+                                                }}));
+                                            }
+
+                                        }
                                     }
                                 }
                                 mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);

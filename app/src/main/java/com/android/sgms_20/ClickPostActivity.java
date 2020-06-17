@@ -263,7 +263,7 @@ public class ClickPostActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which)
             {
 
-                ClickPostRef.child("description").setValue(inputField.getText().toString());
+                ClickPostRef.child("description").setValue(description+"\nEdited:"+inputField.getText().toString());
                 //UserRef.child("description").setValue(inputField.getText().toString());
                 /*UserRef.addValueEventListener(new ValueEventListener() {
                     @Override

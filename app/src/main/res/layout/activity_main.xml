@@ -59,25 +59,25 @@
             android:layout_weight="1"
             android:background="@drawable/tabtype"
             android:layout_width="wrap_content"
-            android:text="Admin"
-            android:id="@+id/admin"
+            android:text="PUBLIC"
+            android:id="@+id/chat"
             android:textColor="@color/colorPrimaryDark"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/admin"
+            android:background="@drawable/tabtypeno"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:text="OFFICIAL"
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/club"
-            android:background="@drawable/tabtypeno"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:text="Clubs/Senate"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/chat"
             android:textColor="@color/colorPrimaryDark"
             android:background="@drawable/tabtypeno"
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:text="Public"
+            android:text="CLUBS"
             android:layout_height="wrap_content"/>
 
 
