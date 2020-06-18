@@ -516,13 +516,6 @@ public class SettingsActivity extends AppCompatActivity {
                             finish();
                             return true;
 
-                        case R.id.nav_post:
-                            Intent Lintent=new Intent(SettingsActivity.this,PostActivity.class);
-
-                            startActivity(Lintent);
-                            finish();
-
-                            return true;
                         case R.id.nav_star:
                             Intent Lintent1=new Intent(SettingsActivity.this,StarActivity.class);
 
