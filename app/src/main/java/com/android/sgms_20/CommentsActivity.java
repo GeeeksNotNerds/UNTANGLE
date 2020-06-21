@@ -137,6 +137,48 @@ public class CommentsActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull CommentsActivity.CommentsViewHolder commentsViewHolder, int i, @NonNull Comments comments)
             {
+                PostsRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot)
+                    {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                        {
+                            String uid=dataSnapshot1.child("uid").getValue().toString();
+
+                            if(uid.equals(current_user_id))
+                            {
+                                commentsViewHolder.mDelete.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                commentsViewHolder.mDelete.setVisibility(View.GONE);
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                commentsViewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+
+
+                           // PostsRef.child()
+                        String cid=comments.getCid();
+                        //Toast.makeText(CommentsActivity.this, cid, Toast.LENGTH_SHORT).show();
+                        PostsRef.child(cid).removeValue();
+                        SendUserToMainActivity();
+                        Toast.makeText(CommentsActivity.this, "Comment deleted....", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
                 commentsViewHolder.setUsername(comments.getUsername());
                 commentsViewHolder.setComment(comments.getComment());
                 commentsViewHolder.setDate(comments.getDate());
@@ -152,20 +194,33 @@ public class CommentsActivity extends AppCompatActivity {
 
     }
 
+    private void SendUserToMainActivity()
+    {
+        startActivity(new Intent(CommentsActivity.this,MainActivity.class));
+        finish();
+    }
+
     public static class CommentsViewHolder extends RecyclerView.ViewHolder
     {
         View mView;
+        ImageButton mDelete;
 
         public CommentsViewHolder(@NonNull View itemView)
         {
             super(itemView);
             mView=itemView;
+
+            mDelete=mView.findViewById(R.id.delete_comment);
+        }
+        public void setCid(String cid)
+        {
+            String myCid=cid;
         }
 
         public void setUsername(String username)
         {
             TextView myUserName=(TextView)mView.findViewById(R.id.comment_username);
-            myUserName.setText( " " +username+" ");
+            myUserName.setText( username);
         }
         public void setComment(String comment)
         {
@@ -213,6 +268,7 @@ public class CommentsActivity extends AppCompatActivity {
             commentsMap.put("date",saveCurrentDate);
             commentsMap.put("time",saveCurrentTime);
             commentsMap.put("username",userName);
+            commentsMap.put("cid",RandomKey);
             PostsRef.child(RandomKey).updateChildren(commentsMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
