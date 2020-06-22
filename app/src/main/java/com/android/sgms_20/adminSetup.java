@@ -34,6 +34,7 @@ public class adminSetup extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_setup);
+        //this.setFinishOnTouchOutside(false);
 
         mAuth=FirebaseAuth.getInstance();
         current_user_id=mAuth.getCurrentUser().getUid();
@@ -102,7 +103,7 @@ public class adminSetup extends AppCompatActivity
                                 if(task.isSuccessful())
                                 {
                                     SendUserToMainActivity();
-                                    Toast.makeText(adminSetup.this, "Details is updated successfully....", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(adminSetup.this, "Details are updated successfully....", Toast.LENGTH_LONG).show();
                                     //mLoading.setVisibility(View.GONE);
 
                                 }

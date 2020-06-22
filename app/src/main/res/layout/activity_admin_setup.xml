@@ -4,46 +4,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="20dp"
+
     tools:context=".adminSetup"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/white">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorPrimaryDark" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SETUP YOUR PROFILE"
+        android:text="Profile Setup"
+
+
         android:textAlignment="center"
         android:id="@+id/head"
-
-        android:textSize="30sp"
+        android:textSize="35sp"
         android:padding="10dp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:background="@drawable/button1"
+
+        android:background="@drawable/tabtypeno"
+        android:textColor="@color/colorAccent"
+
+
         android:layout_centerHorizontal="true"
         />
+
     <TextView
-        android:layout_below="@id/head"
-        android:fontFamily="sans-serif"
+        android:id="@+id/t"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:id="@+id/t"
+        android:layout_below="@id/head"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/button"
+        android:fontFamily="sans-serif"
+        android:padding="10dp"
+        android:text="Select the category and sub-category of the complaints you want to solve.."
         android:textAlignment="center"
-        android:textStyle="bold"
-        android:text="Select the category and sub-category of the complaints you want to view.."/>
+        android:textColor="@color/white"
+        android:textSize="25dp" />
+
     <TextView
 
         android:layout_below="@id/t"
         android:layout_width="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="70dp"
         android:textSize="20dp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-light"
         android:layout_height="wrap_content"
-        android:text="Select your post category"
-        android:textColor="@color/white"
+        android:text="Select the category"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/sel1"
         android:layout_marginLeft="10dp"/>
     <Spinner
@@ -58,13 +74,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="20dp"
 
         android:textStyle="bold"
         android:fontFamily="sans-serif-light"
         android:layout_height="wrap_content"
-        android:text="Select your post sub-category"
+        android:text="Select the sub-category"
         android:layout_below="@id/spin1"
         android:id="@+id/sel2"
         android:layout_marginLeft="10dp"/>
@@ -79,14 +95,19 @@
         android:layout_marginRight="10sp"
         />
     <Button
+        android:id="@+id/con"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sel2"
-        android:text="Continue"
-        android:id="@+id/con"
-        android:layout_centerHorizontal="true"
-        />
+        android:background="@drawable/button_background2"
+        android:text="NEXT"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginBottom="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:elevation="15dp"
 
+        />
 
 </RelativeLayout>
 

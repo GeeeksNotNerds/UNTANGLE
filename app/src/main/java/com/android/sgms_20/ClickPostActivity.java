@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -97,6 +98,7 @@ public class ClickPostActivity extends AppCompatActivity {
         NotificationRef=FirebaseDatabase.getInstance().getReference().child("Notification");
 
         PostDescription=(TextView)findViewById(R.id.click_post_description);
+        PostDescription.setMovementMethod(LinkMovementMethod.getInstance());
         DeletePostButton=(Button)findViewById(R.id.delete_post_button);
         EditPostButton=(Button)findViewById(R.id.edit_post_button);
         postStatus=findViewById(R.id.click_post_status);
@@ -116,14 +118,15 @@ public class ClickPostActivity extends AppCompatActivity {
                   description=dataSnapshot.child("description").getValue().toString();
                   message=dataSnapshot.child("description").getValue().toString();
                   Status=dataSnapshot.child("status").getValue().toString();
+                  String mode=dataSnapshot.child("mode").getValue().toString();
                   postStatus.setText(Status);
 
                   PostDescription.setText(description);
                   databaseUSerID=dataSnapshot.child("uid").getValue().toString();
-                  if(databaseUSerID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                  if(mode.equals("Private")){
 
-                      postStatus.setVisibility(View.INVISIBLE);
-                      postStatus_heading.setVisibility(View.INVISIBLE);
+                      postStatus.setVisibility(View.VISIBLE);
+                      postStatus_heading.setVisibility(View.VISIBLE);
 
                   }
 
@@ -263,7 +266,7 @@ public class ClickPostActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which)
             {
 
-                ClickPostRef.child("description").setValue(description+"\nEdited:"+inputField.getText().toString());
+                ClickPostRef.child("description").setValue(inputField.getText().toString());
                 //UserRef.child("description").setValue(inputField.getText().toString());
                 /*UserRef.addValueEventListener(new ValueEventListener() {
                     @Override

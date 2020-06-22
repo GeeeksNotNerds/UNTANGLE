@@ -42,6 +42,7 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
     private TextDrawable mDrawableBuilder;
     FirebaseAuth mAuth;
     String currentUserId;
+    private String mode;
     private  Intent in;
 
 
@@ -83,11 +84,58 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
         Post=FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
         holder.setLikesButtonStatus(PostKey);
         holder.setDownVoteButtonStatus(PostKey);
+        holder.setCommentCount(PostKey);
         holder.setStar(PostKey);
 
         //String email=question.getEmail();
 
-            holder.mStar.setOnClickListener(new View.OnClickListener() {
+        Post.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                mode=dataSnapshot.child("mode").getValue().toString();
+                if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2")||mode.equals("Private"))
+                {
+                    //comments hidden for posts from admin,clubs and private
+                    holder.cnt.setVisibility(View.GONE);
+                    holder.cnt_head.setVisibility(View.GONE);
+                    holder.CommentPostButton.setVisibility(View.GONE);
+                }
+                if(mode.equals("Private"))
+                {
+                    //disable upvote and downvote
+                    holder.LikePostButton.setVisibility(View.GONE);
+                    holder.DisplayDownVotes.setVisibility(View.GONE);
+                    holder.DisplayNoOfLikes.setVisibility(View.GONE);
+                    holder.DownVoteButton.setVisibility(View.GONE);
+
+
+                }
+
+                if(mode.equals("Private"))
+                {
+                    holder.textStatus.setVisibility(View.VISIBLE);
+                    holder.statusHeading.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        //Comments will be visible only for posts not from admin and club and only public
+        //Status will be shown only for private posts
+
+        //String email=question.getEmail();
+
+
+
+
+
+        holder.mStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
@@ -372,12 +420,12 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
         TextView DisplayNoOfLikes,DisplayDownVotes;
         int CountLikes,CountDownVotes;
         String currentUserId;
-        DatabaseReference LikesRef,DownVotesRef;
+        DatabaseReference LikesRef,DownVotesRef,CommentsRef;
 
         ImageView mStar;
         TextView textAuthorName;
         TextView textMode;
-        TextView textUid;
+        TextView textUid,cnt,cnt_head;
         TextView textJobTitle;
         TextView textDate;
         TextView textQuestion;
@@ -397,6 +445,8 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
             LikePostButton=(AppCompatImageView)mView.findViewById(R.id.view_likes);
             CommentPostButton=(AppCompatImageView) mView.findViewById(R.id.view_chat);
             DisplayNoOfLikes=(TextView)mView.findViewById(R.id.text_likes_count);
+                cnt=itemView.findViewById(R.id.text_chat_count);
+                cnt_head=itemView.findViewById(R.id.text_chat_count1);
             pro=mView.findViewById(R.id.avatar);
             DownVoteButton=mView.findViewById(R.id.view_downVotes);
             DisplayDownVotes=mView.findViewById(R.id.text_downVotes_count);
@@ -413,6 +463,7 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
             textMode=(TextView)itemView.findViewById(R.id.filter_third);
             textUid=(TextView)itemView.findViewById(R.id.filter_fourth);
             textStatus=itemView.findViewById(R.id.status);
+            CommentsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
             statusHeading=itemView.findViewById(R.id.statusheading);
             textSubcategory= (TextView) itemView.findViewById(R.id.filter_second);
             PostImage=itemView.findViewById(R.id.postImage);
@@ -481,6 +532,34 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
 
                 }
             });
+        }
+        public void setCommentCount(String postKey) {
+
+            CommentsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(postKey).child("Comments").exists()){
+                        int count = (int)dataSnapshot.child(postKey).child("Comments").getChildrenCount();
+                        cnt.setText(Integer.toString(count));
+                        if(count==1){
+                            cnt_head.setText("Comment");
+                        }else{
+                            cnt_head.setText("Comments");
+                        }
+
+                    }else{
+                        cnt.setText(Integer.toString(0));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+
+                }
+            });
+
+
         }
 
 

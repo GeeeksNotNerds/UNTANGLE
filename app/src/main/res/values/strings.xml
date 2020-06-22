@@ -9,7 +9,6 @@
     </string-array>
 
     <string-array name="club_uid">
-        <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
         <item>nO3l336v84OXDNCkR0aFNm0Es1w2</item>
     </string-array>
 
@@ -29,11 +28,15 @@
         <item>Placements</item>
         <item>Internships</item>
         <item>Competitions</item>
-        <item>Activities</item>
+        <item>Courses</item>
         <item>Housing</item>
         <item>Health</item>
         <item>Rights Violation</item>
         <item>Miscellaneous</item>
+        <item>Workshops</item>
+        <item>Results</item>
+        <item>Events</item>
+        <item>Activities</item>
 
     </string-array>
     <string-array name="categories">
@@ -53,8 +56,15 @@
     </string-array>
     <string-array name="sub3">
         <item>Placements</item>
-        <item>Activities</item>
+        <item>Courses</item>
         <item>Competitions</item>
         <item>Internships</item>
+    </string-array>
+    <string-array name="clubs">
+        <item>Workshops</item>
+        <item>Results</item>
+        <item>Competitions</item>
+        <item>Events</item>
+
     </string-array>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private TextDrawable mDrawableBuilder;
     FirebaseAuth mAuth;
     String currentUserId;
+    private String mode;
     private  Intent in;
 
 
@@ -87,16 +89,59 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.setDownVoteButtonStatus(PostKey);
         holder.setStar(PostKey);
         holder.setCommentCount(PostKey);
+        Post.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.exists()){
+                mode=dataSnapshot.child("mode").getValue().toString();
+
+                    if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2")||mode.equals("Private"))
+                    {
+                        //comments hidden for posts from admin,clubs and private
+                        holder.cnt.setVisibility(View.GONE);
+                        holder.cnt_head.setVisibility(View.GONE);
+                        holder.CommentPostButton.setVisibility(View.GONE);
+                    }
+                    if(mode.equals("Private"))
+                    {
+                        //disable upvote and downvote
+                        holder.LikePostButton.setVisibility(View.GONE);
+                        holder.DisplayDownVotes.setVisibility(View.GONE);
+                        holder.DisplayNoOfLikes.setVisibility(View.GONE);
+                        holder.DownVoteButton.setVisibility(View.GONE);
+
+
+                    }
+
+                    if(mode.equals("Private"))
+                    {
+                        holder.textStatus.setVisibility(View.VISIBLE);
+                        holder.statusHeading.setVisibility(View.VISIBLE);
+                    }
+
+               // Toast.makeText(mContext, mode, Toast.LENGTH_SHORT).show();
+            }}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        //Comments will be visible only for posts not from admin and club and only public
+        //Status will be shown only for private posts
 
         //String email=question.getEmail();
+
+
+       /* */
+
+
         if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
-            if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2"))
-            {
-                holder.cnt.setVisibility(View.GONE);
-                holder.cnt_head.setVisibility(View.GONE);
-                holder.CommentPostButton.setVisibility(View.GONE);
-            }
+
             holder.mStar.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -175,12 +220,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             });
         }
         else {
-            if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2"))
-            {
-                holder.cnt.setVisibility(View.GONE);
-                holder.cnt_head.setVisibility(View.GONE);
-                holder.CommentPostButton.setVisibility(View.GONE);
-            }
 
             holder.mStar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -488,18 +527,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
 
-        Post.addValueEventListener(new ValueEventListener()
+     /*   Post.addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.child("uid").equals(null)){
                 String ID=dataSnapshot.child("uid").getValue().toString();
                 String mode=dataSnapshot.child("mode").getValue().toString();
-                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||ID.equals("nO3l336v84OXDNCkR0aFNm0Es1w2")||mode.equals("Public"))
+                if(mode.equals("Private"))
                 {
-                    holder.textStatus.setVisibility(View.GONE);
-                    holder.statusHeading.setVisibility(View.GONE);
-                }else{
                     holder.textStatus.setVisibility(View.VISIBLE);
                     holder.statusHeading.setVisibility(View.VISIBLE);
                 }
@@ -510,7 +546,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
     }
 
@@ -584,6 +620,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             textJobTitle = (TextView) itemView.findViewById(R.id.text_job_title);
             textDate = (TextView) itemView.findViewById(R.id.text_date);
             textQuestion = (TextView) itemView.findViewById(R.id.text_question);
+            textQuestion.setMovementMethod(LinkMovementMethod.getInstance());
             textCategory = (TextView) itemView.findViewById(R.id.filter_first);
             textMode=(TextView)itemView.findViewById(R.id.filter_third);
             textUid=(TextView)itemView.findViewById(R.id.filter_fourth);
