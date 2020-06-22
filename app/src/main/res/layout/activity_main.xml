@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/tabtypeno"
-            android:drawableLeft="@drawable/clubs"
+            android:drawableLeft="@drawable/events"
             android:text="CLUBS"
             android:textColor="@color/colorPrimaryDark" />
 

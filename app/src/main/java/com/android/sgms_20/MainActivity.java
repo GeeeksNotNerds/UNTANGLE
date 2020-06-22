@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private Button AdminTab,ClubTab,PublicTab;
     private List<Posts> mAllQuestions;
     private Filter<Tag> mFilter;
+    private String adminCat;
     private Button Send;
     private LinearLayoutManager linearLayoutManager;
     private PostsAdapter mAdapter;
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     int CountLikes,countDownVotes;
     int pos;
     boolean isAdmin;
+
     private ImageView pro;
     private int q,tab;
     private static MainActivity instance;
@@ -155,7 +157,24 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
+
         //Toast.makeText(instance, currentUserID, Toast.LENGTH_SHORT).show();
+        if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+        {
+           MyPostRef.addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(DataSnapshot dataSnapshot)
+               {
+                   adminCat=dataSnapshot.child("subCategory").getValue().toString();
+                  Toast.makeText(MainActivity.this, adminCat, Toast.LENGTH_SHORT).show();
+               }
+
+               @Override
+               public void onCancelled(DatabaseError databaseError) {
+
+               }
+           });
+        }
 
         if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
@@ -1069,12 +1088,15 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         {
                                             if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
                                             {
+                                                if(adminCat.equals(sub))
+                                                {
                                                 add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
                                                     add(new Tag(owner, colour4));
                                                     add(new Tag(mode, colour3));
                                                     add(new Tag(categ, colour1));
                                                     add(new Tag(sub, colour2));
                                                 }}));
+                                                }
                                             }
 
                                         }
@@ -1206,13 +1228,14 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         {
                                             if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
                                             {
+                                                if(adminCat.equals(sub)){
                                                 add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
                                                     add(new Tag(owner, colour4));
                                                     add(new Tag(mode, colour3));
                                                     add(new Tag(categ, colour1));
                                                     add(new Tag(sub, colour2));
                                                 }}));
-                                            }
+                                            }}
 
                                         }
                                     }
@@ -1715,18 +1738,25 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                             //progressBar.setVisibility(View.GONE);
                             if (task.isSuccessful()) {
 
-                                //Toast.makeText(RegisterActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                finish();
-
-                            } else
+                                if(current_user_id.equals("ZbMXiJTBUBZoEl801QcepnEJO8n2"))
+                                {
+                                    SendToSetupActivity();
+                                }
+                                else {
+                                    //Toast.makeText(RegisterActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                            else
                             {
                                 Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
+                   // if(current_user_id.equals("ZbMXiJTBUBZoEl801QcepnEJO8n2"))
                     //SendToSetupActivity();
                 }
 
@@ -1742,7 +1772,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
     private void SendToSetupActivity()
     {
-        Intent intent=new Intent(MainActivity.this, RegisterActivity.class);
+        Intent intent=new Intent(MainActivity.this, adminSetup.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
