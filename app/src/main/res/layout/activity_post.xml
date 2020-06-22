@@ -7,6 +7,7 @@
     android:windowSoftInputMode="stateVisible|adjustResize"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".PostActivity">
     <ScrollView
         android:layout_width="wrap_content"
@@ -26,7 +27,7 @@
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:text="Post It!"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="@color/white"
         android:fontFamily="sans-serif-light"
         android:textSize="30sp"
         android:layout_margin="10dp"
@@ -50,6 +51,7 @@
        android:layout_below="@+id/text"
         app:cardBackgroundColor="#fcfcfc"
         app:cardCornerRadius="15dp"
+        app:cardElevation="15dp"
         android:id="@+id/cv"
         >
         <RelativeLayout
@@ -122,6 +124,7 @@
         android:layout_below="@+id/cv"
         app:cardBackgroundColor="#fcfcfc"
         app:cardCornerRadius="15dp"
+        app:cardElevation="15dp"
         android:id="@+id/cv2"
         android:visibility="gone"
 
@@ -185,6 +188,7 @@
             android:layout_below="@+id/cv2"
             app:cardBackgroundColor="#fcfcfc"
             app:cardCornerRadius="15dp"
+            app:cardElevation="15dp"
             android:id="@+id/cv3"
             >
             <RelativeLayout
@@ -268,6 +272,8 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_marginLeft="20sp"
+            android:textColor="@color/white"
+
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:textStyle="bold"
@@ -285,6 +291,9 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:layout_toRightOf="@id/a"
+            android:tint="@color/white"
+
+
             android:src="@drawable/ic_baseline_attach_file_24"/>
 
 
@@ -299,7 +308,7 @@
         android:layout_height="wrap_content"
         android:windowSoftInputMode="stateVisible|adjustResize"
         android:fontFamily="sans-serif-light"
-        android:background="@drawable/button_background"
+        android:background="@drawable/button_background2"
         android:hint="Write about your post"
         android:textColorHint="@color/gray"
         android:gravity="top|left"
@@ -364,5 +373,15 @@
     </ScrollView>
 
 
-
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:id="@+id/bottom_navigation"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation"
+        app:labelVisibilityMode="labeled"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="@color/bottom_nav_color"
+        android:background="?android:attr/windowBackground"
+        />
 </RelativeLayout>
