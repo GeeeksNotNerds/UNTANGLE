@@ -489,6 +489,9 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()){
+                        case R.id.nav_post:
+                            SendUserToLoginActivity();
+                            break;
                         case R.id.nav_profile:
                             SendUserToLoginActivity();
                             break;
@@ -519,7 +522,12 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                             intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                            finish();
                             break;
-
+                        case R.id.nav_post:
+                            Intent intent=new Intent(StarActivity.this,PostActivity.class);
+                            startActivity(intent);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            finish();
+                            break;
                         case R.id.nav_profile:
                             Intent Pintent=new Intent(StarActivity.this,ProfileActivity.class);
                             Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);

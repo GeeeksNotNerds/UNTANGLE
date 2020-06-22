@@ -188,24 +188,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="#ebebeb" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/post_button"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="40dp"
-        android:elevation="5dp"
-        android:layout_marginBottom="80dp"
-        android:background="@color/colorAccent"
-        android:clickable="true"
-        android:src="@drawable/postas"
-        android:tint="@color/white"
-        app:maxImageSize="35dp"
-
-
-        />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:id="@+id/bottom_navigation"
