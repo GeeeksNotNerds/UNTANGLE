@@ -786,6 +786,8 @@ public class PostActivity extends AppCompatActivity {
                                 {
                                     if(task.isSuccessful())
                                     {
+
+
                                         SendUserToMainActivity();
                                         Toast.makeText(PostActivity.this, "New Post is updated successfully.", Toast.LENGTH_LONG).show();
                                         mLoading.setVisibility(View.GONE);
@@ -823,17 +825,50 @@ public class PostActivity extends AppCompatActivity {
 
     private void SendUserToMainActivity()
     {
-        progressBar.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent=new Intent(PostActivity.this,MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-            }
-        },5000);
-        progressBar.setVisibility(View.GONE);
+
+        if(Checker.equals("Image")) {
+
+
+            progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(PostActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            }, 5000);
+            progressBar.setVisibility(View.GONE);
+        }else if(Checker.equals("PDF")){
+
+
+            progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(PostActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            }, 15000);
+            progressBar.setVisibility(View.GONE);
+
+        }else{
+
+            progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(PostActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            }, 1000);
+            progressBar.setVisibility(View.GONE);
+        }
 
 
     }
