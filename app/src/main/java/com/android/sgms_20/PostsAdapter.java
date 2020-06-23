@@ -393,6 +393,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }
       Context context = holder.PostImage.getContext();
       String t=question.getPostImage();
+      String x= question.getPostPdf();
       if(!t.equals("null"))
       {
           holder.PostImage.setVisibility(View.VISIBLE);
@@ -403,7 +404,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                   .placeholder(R.drawable.loader1)
                   .into(holder.PostImage);
 
-      }else{
+      }else if(!x.equals("null")){
+
+          holder.PostImage.setVisibility(View.VISIBLE);
+
+          holder.PostImage.setImageResource(R.drawable.download);
+
+          holder.PostImage.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(x));
+                  holder.itemView.getContext().startActivity(intent);
+              }
+          });
+
+      }
+      else{
           holder.PostImage.setVisibility(View.GONE);
       }
 

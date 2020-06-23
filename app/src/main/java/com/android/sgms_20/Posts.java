@@ -20,18 +20,19 @@ public class Posts
     private String subCategory;
     private String showInformation;
     private String postid;
-    private String postImage;
+    private String postImage,postPdf;
     private String star;
     private String status;
     private List<Tag> tags;
 
     public Posts(String likes,String postid,String name, String email, String description, String date, String time,
-                 String uid, String mode,String postimage, String category, String subCategory,String showInformation,String status,List<Tag> tags) {
+                 String uid, String mode,String postimage,String postpdf, String category, String subCategory,String showInformation,String status,List<Tag> tags) {
         this.postid=postid;
         this.username = name;
         this.likes=likes;
 
         this.postImage=postimage;
+        this.postPdf=postpdf;
 
         this.email = email;
         this.description = description;
@@ -70,6 +71,9 @@ public class Posts
     }
 
     public String getPostImage(){return postImage;}
+
+    public String getPostPdf(){return postPdf;}
+    public void setPostPdf(String postPdf){ this.postPdf = postPdf;}
 
     public void setPostImage( String postImage) {
         this.postImage = postImage;

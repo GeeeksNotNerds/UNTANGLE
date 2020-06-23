@@ -538,6 +538,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String postpic=dataSnapshot1.child("PostImage").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
                                     String post = dataSnapshot1.child("description").getValue().toString();
+                                    String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
                                     {
@@ -576,7 +577,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String like=dataSnapshot1.child("likes").getValue().toString();
                                     if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -691,9 +692,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if (sub.equals("Placements")) colour2 = mColors[12];
 
                                     String like=dataSnapshot1.child("likes").getValue().toString();
+                                    String pdf =dataSnapshot1.child("PostPDF").getValue().toString();
                                     if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -810,9 +812,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if (sub.equals("Placements")) colour2 = mColors[12];
 
                                     String like=dataSnapshot1.child("likes").getValue().toString();
+                                    String pdf=dataSnapshot1.child("PostPDF").getValue().toString();
                                     if(uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -926,9 +929,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if (sub.equals("Placements")) colour2 = mColors[12];
 
                                     String like=dataSnapshot1.child("likes").getValue().toString();
+                                    String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
                                     if(uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -1045,9 +1049,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if (sub.equals("Placements")) colour2 = mColors[12];
 
                                     String like=dataSnapshot1.child("likes").getValue().toString();
+                                    String pdf=dataSnapshot1.child("PostPDF").getValue().toString();
                                     if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -1160,10 +1165,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if (owner.equals("Club")) colour4 = mColors[2];
                                     if (sub.equals("Placements")) colour2 = mColors[12];
 
+                                    String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
+
                                     String like=dataSnapshot1.child("likes").getValue().toString();
                                     if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));

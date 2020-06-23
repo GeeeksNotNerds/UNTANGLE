@@ -375,9 +375,11 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                             if (owner.equals("Club")) colour4 = mColors[2];
                             if (sub.equals("Placements")) colour2 = mColors[12];
 
+                            String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
+
 
                             if (mode.equals("Public")) {
-                                add(new Posts(like,postKey, "" + info, mail, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
+                                add(new Posts(like,postKey, "" + info, mail, post, date, date, uid, mode, postpic,pdf, categ, sub, show, status, new ArrayList<Tag>() {{
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
@@ -395,7 +397,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 }
                                 if (l == 1 || (uid.equals(currentUserID))) {
                                     l = 0;
-                                    add(new Posts(like,postKey, info, "" + user, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
+                                    add(new Posts(like,postKey, info, "" + user, post, date, date, uid, mode, postpic,pdf, categ, sub, show, status, new ArrayList<Tag>() {{
                                         add(new Tag(owner, colour4));
                                         add(new Tag(mode, colour3));
                                         add(new Tag(categ, colour1));

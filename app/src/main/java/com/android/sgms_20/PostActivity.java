@@ -71,9 +71,10 @@ public class PostActivity extends AppCompatActivity {
     private EditText PostDescription;
     private ImageButton UpdatePostButton;
     private String[] mAdmin= new String[]{"AkX6MclvgrXpN8oOGI5v37dn7eb2"};
-    String downloadUrl="";
+    String downloadUrl="",downloadUrlp="";
+    Uri fileUri=null;
     TextView title;
-    int check=1;
+    int check=1,check1=1;
     private TextView mLoading;
     ImageView Media;
     private DatabaseReference UsersRef, PostsRef;
@@ -87,6 +88,7 @@ public class PostActivity extends AppCompatActivity {
     String Mode,category,Sub_Category;
     private Uri resultUri=null;
     ImageView Image;
+    private String Checker="";
     private RelativeLayout r;
     private ImageButton information;
 
@@ -206,10 +208,54 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent gallInt=new Intent();
-                gallInt.setAction(Intent.ACTION_GET_CONTENT);
-                gallInt.setType("image/*");
-                startActivityForResult(gallInt,Gall);
+
+                CharSequence options[]= new CharSequence[]{
+
+                        "Images",
+                        "PDF Files"
+
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+                 builder.setTitle("Select the type");
+                 builder.setItems(options, new android.content.DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(android.content.DialogInterface dialog, int i) {
+
+                         if(i == 0){
+
+                             Checker="Image";
+
+                             Intent gallInt=new Intent();
+                             gallInt.setAction(Intent.ACTION_GET_CONTENT);
+                             gallInt.setType("image/*");
+                             startActivityForResult(gallInt,Gall);
+
+
+
+                         }
+                         else if(i==1){
+
+                             Checker="PDF";
+
+
+                             Intent gallInt=new Intent();
+                             gallInt.setAction(Intent.ACTION_GET_CONTENT);
+                             gallInt.setType("application/pdf");
+                             startActivityForResult(gallInt.createChooser(gallInt,"Select PDF File"),Gall);
+
+
+
+                         }
+
+                     }
+                 });
+
+                 builder.show();
+
+
+
+
 
             }
         });
@@ -442,39 +488,56 @@ public class PostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Gall && resultCode == RESULT_OK) {
-            Uri imageuri = data.getData();
-            Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + imageuri);
-            CropImage.activity(imageuri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
-        }
+        if(Checker.equals("Image")) {
 
 
+            if (requestCode == Gall && resultCode == RESULT_OK) {
+                Uri imageuri = data.getData();
+                Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + imageuri);
+                CropImage.activity(imageuri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
+            }
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-           // progressBar.setVisibility(View.VISIBLE);
-            Log.d(TAG, "onActivityResult: CROP IMAGE");
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-            if (resultCode == RESULT_OK) {
-                 resultUri = result.getUri();
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                 progressBar.setVisibility(View.VISIBLE);
+                Log.d(TAG, "onActivityResult: CROP IMAGE");
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-                if(resultUri!=null){
-                    Image.setVisibility(View.VISIBLE);
-                    Image.setImageURI(resultUri);
-                    PostDescription.setHint("Enter your Caption");
+                if (resultCode == RESULT_OK) {
+                    resultUri = result.getUri();
 
+                    if (resultUri != null) {
+                        Image.setVisibility(View.VISIBLE);
+                        Image.setImageURI(resultUri);
+                        PostDescription.setHint("Enter your Caption");
+
+                    }
+
+
+                    Log.d(TAG, "onActivityResult: CROP IMAGE : OK >> " + resultUri);
+
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(PostActivity.this, "Error Occured!....Image Can't be cropped....try again!", Toast.LENGTH_SHORT).show();
                 }
+            }
+
+        }else if(Checker.equals("PDF")) {
+
+            if (requestCode == Gall && resultCode == RESULT_OK) {
+
+                progressBar.setVisibility(View.VISIBLE);
 
 
+                fileUri = data.getData();
 
-                Log.d(TAG, "onActivityResult: CROP IMAGE : OK >> " + resultUri);
-
-            } else {
-                //progressBar.setVisibility(View.GONE);
-                Toast.makeText(PostActivity.this, "Error Occured!....Image Can't be cropped....try again!", Toast.LENGTH_SHORT).show();
+                if(fileUri != null){
+                    Image.setVisibility(View.VISIBLE);
+                    Image.setImageResource(R.drawable.download);
+                    PostDescription.setHint("Enter your Caption");
+                }
             }
         }
-
 
 
 
@@ -490,9 +553,13 @@ public class PostActivity extends AppCompatActivity {
            storingImageToFirebaseStorage();
        }
 
+       if(fileUri!= null){
+           stringFileToFirebaseStorage();
+       }
 
 
-        if(TextUtils.isEmpty(description)&& resultUri==null)
+
+        if(TextUtils.isEmpty(description)&& resultUri==null && fileUri==null)
         {
             Toast.makeText(this, "Post cannot be left empty..", Toast.LENGTH_SHORT).show();
         }
@@ -548,6 +615,58 @@ public class PostActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    private void stringFileToFirebaseStorage() {
+
+
+       UpdatePostButton.setVisibility(View.INVISIBLE);
+        mLoading.setVisibility(View.VISIBLE);
+        StorageReference filePath1=PostImageRef.child("Post PDF").child(fileUri.getLastPathSegment()+postRandomName+".pdf");
+
+
+
+
+
+        filePath1.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                filePath1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        downloadUrlp = uri.toString();
+                        PostsRef.child(postRandomName+current_user_id).child("PostPDF").setValue(downloadUrlp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(PostActivity.this, "PDF Stored", Toast.LENGTH_SHORT).show();
+                                    check1=0;
+
+                                  UpdatePostButton.setVisibility(View.VISIBLE);
+
+
+                                    progressBar.setVisibility(View.GONE);
+
+                                } else
+                                {
+                                    String message = task.getException().getMessage();
+                                    Toast.makeText(PostActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
+                                    UpdatePostButton.setVisibility(View.VISIBLE);
+                                    mLoading.setVisibility(View.GONE);
+                                    progressBar.setVisibility(View.GONE);
+                                }
+
+                            }
+                        });
+
+                    }
+                });
+
+            }
+        });
+
+
+
     }
 
     private void storingImageToFirebaseStorage() {
@@ -636,6 +755,7 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("date", saveCurrentDate);
                     postsMap.put("time", saveCurrentTime);
                     postsMap.put("description", description);
+                   // postsMap.put("type",Checker);
                     postsMap.put("mode", Mode);
                     postsMap.put("admissionNo",userAdmissionNo);
                     postsMap.put("category", cat1);
@@ -650,6 +770,9 @@ public class PostActivity extends AppCompatActivity {
 
                    if(check==1){
                        postsMap.put("PostImage","null");
+                   }
+                   if(check1==1) {
+                       postsMap.put("PostPDF","null");
                    }
 
 
