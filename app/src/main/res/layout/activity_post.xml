@@ -92,13 +92,7 @@
                 android:gravity="center"
                 android:id="@+id/rg1"
                 android:layout_below="@+id/tv">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="To all (except admin)"
-                    android:id="@+id/post_public"
-                   />
+
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -363,8 +357,12 @@
         android:layout_below="@id/ll"
         android:text="Loading...."/>
 
-
-
+    <RadioButton
+        android:id="@+id/post_public"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="To all (except admin)" />
 
 
 </RelativeLayout>
@@ -384,4 +382,16 @@
         app:itemIconTint="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"
         />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_admin"
+        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_admin"
+        tools:ignore="MissingConstraints" />
+
 </RelativeLayout>

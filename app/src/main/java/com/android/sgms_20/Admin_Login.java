@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Admin_Login extends AppCompatActivity implements View.OnClickListener {
@@ -29,8 +30,13 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
     EditText email,password;
     ProgressBar progressBar;
     FirebaseAuth mAuth;
+    ArrayList<String> mylist = new ArrayList<String>();
+    private String[] mAdmin;
+    int c;
     private boolean checker;
     private String TAG;
+    private  String type;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +44,12 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_admin__login);
 
 
+
         email=findViewById(R.id.login_email);
         password=findViewById(R.id.login_password);
+        mAdmin=getResources().getStringArray(R.array.admin_uid);
+        c=mAdmin.length;
+       // mylist=getResources().getStringArray(R.array.admin_uid);
         findViewById(R.id.login_button).setOnClickListener(this);
         mAuth=FirebaseAuth.getInstance();
         progressBar=findViewById(R.id.progress_bar);
@@ -98,6 +108,19 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                         {
                             if(!dataSnapshot.hasChild(current_user_id))
                             {
+                                if(Password.equals("12345678"))
+                                {
+                                    type="Admin";
+                                }
+                                else if(Password.equals("1234567"))
+                                {
+                                    type="SubAdmin";
+                                }
+                                else
+                                {
+                                    type="Club";
+                                }
+
                                 String token;
                                 String id=mAuth.getUid().toString();
                                 String Mail=mAuth.getCurrentUser().getEmail().toString();
@@ -119,6 +142,7 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                                 user1.put("email", Mail);
                                 user1.put("designation", admissionNo);
                                 user1.put("device_token",token);
+                                user1.put("type",type);
 
                                 UserRef.child(id).updateChildren(user1).addOnCompleteListener(new OnCompleteListener()
                                 {

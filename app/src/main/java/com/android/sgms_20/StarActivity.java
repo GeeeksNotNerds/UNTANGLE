@@ -202,12 +202,24 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation1);
 
-        if (currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2")) {
-            bottomNav.setOnNavigationItemSelectedListener(navListner1);
-        } else {
-            bottomNav.setOnNavigationItemSelectedListener(navListner);
+        BottomNavigationView bottomNavigAdmin=findViewById(R.id.bottom_navigation_admin);
+
+
+        if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
+        {
+            bottomNavigAdmin.setVisibility(View.VISIBLE);
+            bottomNav.setVisibility(View.GONE);
+            bottomNavigAdmin.setOnNavigationItemSelectedListener(navListner2);
+            bottomNavigAdmin.getMenu().findItem(R.id.nav_star_admin).setChecked(true);
         }
-        bottomNav.getMenu().findItem(R.id.nav_star).setChecked(true);
+        else
+        {
+            bottomNav.setVisibility(View.VISIBLE);
+            bottomNavigAdmin.setVisibility(View.GONE);
+            bottomNav.setOnNavigationItemSelectedListener(navListner);
+            bottomNav.getMenu().findItem(R.id.nav_star).setChecked(true);
+        }
+
     }
 
 
@@ -535,6 +547,49 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                             Intent Pintent=new Intent(StarActivity.this,ProfileActivity.class);
                             Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(Pintent);
+                            finish();
+                            break;
+
+                    }
+
+                    return true;
+                }
+            };
+    private BottomNavigationView.OnNavigationItemSelectedListener navListner2=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId())
+                    {
+                        case R.id.nav_home_admin:
+                            Intent intent4=new Intent(StarActivity.this,MainActivity.class);
+                            startActivity(intent4);
+                            intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            finish();
+                            break;
+                        case R.id.nav_post_admin:
+                            Intent intent=new Intent(StarActivity.this,PostActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                            break;
+                        case R.id.nav_profile_admin:
+                            Intent Pintent=new Intent(StarActivity.this,ProfileActivity.class);
+                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent);
+                            finish();
+                            break;
+                        case R.id.nav_star_admin:
+                            Intent Pintent1=new Intent(StarActivity.this,StarActivity.class);
+                            Pintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent1);
+                            finish();
+                            break;
+                        case R.id.nav_add_admin:
+                            Intent Pintent2=new Intent(StarActivity.this,AddAdmin.class);
+                            Pintent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent2);
                             finish();
                             break;
 

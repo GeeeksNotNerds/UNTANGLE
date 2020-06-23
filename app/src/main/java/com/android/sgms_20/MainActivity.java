@@ -392,8 +392,19 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavAdmin=findViewById(R.id.bottom_navigation_admin);
 
-        if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
+        if(isAdmin)
+        {
+            bottomNav.setVisibility(View.GONE);
+            bottomNavAdmin.setVisibility(View.VISIBLE);
+            bottomNavAdmin.setOnNavigationItemSelectedListener(navListner2);
+        }
+        else
+        {
+            bottomNav.setVisibility(View.VISIBLE);
+            bottomNavAdmin.setVisibility(View.GONE);
+            if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
             bottomNav.setOnNavigationItemSelectedListener(navListner1);
         }
@@ -401,6 +412,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
          {
             bottomNav.setOnNavigationItemSelectedListener(navListner);
          }
+        }
         int d = 0;
         for (int i = 0; i < 1; i++) {
             if (currentUserID.equals(mAdmin[i])) {
@@ -1735,6 +1747,41 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     return true;
                 }
             };
+    private BottomNavigationView.OnNavigationItemSelectedListener navListner2=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()){
+
+                        case R.id.nav_post_admin:
+                            Intent intent=new Intent(MainActivity.this,PostActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            // finish();
+                            break;
+                        case R.id.nav_profile_admin:
+                            Intent Pintent=new Intent(MainActivity.this,ProfileActivity.class);
+                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent);
+                            //finish();
+                            break;
+                        case R.id.nav_star_admin:
+                            Intent Pintent1=new Intent(MainActivity.this,StarActivity.class);
+                            Pintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent1);
+                            //finish();
+                            break;
+                        case R.id.nav_add_admin:
+                            Intent Pintent2=new Intent(MainActivity.this,AddAdmin.class);
+                            Pintent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent2);
+
+                    }
+
+                    return true;
+                }
+            };
 
     @Override
     protected void onStart()
@@ -1762,7 +1809,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         }
         else
         {
-         //   if(!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+            //if(!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
             if(!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||!currentUserID.equals("HwRTgHAQF4UyfkoP8r0zN3MmO4y2"))
             CheckUserExistence();
         }
@@ -1799,6 +1846,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                     user1.put("email", Mail);
                     user1.put("admission_number", admissionNo);
                     user1.put("device_token",token);
+                    user1.put("type","Student");
 
                     UsersRef.child(id).updateChildren(user1).addOnCompleteListener(new OnCompleteListener()
                     {

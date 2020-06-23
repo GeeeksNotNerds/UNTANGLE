@@ -474,6 +474,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }else{
             holder.textQuestion.setText(question.getDescription());
         }
+        int lineCount;//=holder.textQuestion.getLineCount();
+
+        lineCount=holder.textQuestion.getText().toString().split(System.getProperty("line.separator")).length;
+        String count=Integer.toString(lineCount);
+       Toast.makeText(context, count, Toast.LENGTH_SHORT).show();
+        if(lineCount>3)
+        {
+
+            int start = holder.textQuestion.getText().toString().indexOf(System.getProperty("line.separator"));
+            int end = holder.textQuestion.getText().toString().indexOf(System.getProperty("line.separator"),start);
+            int ends=holder.textQuestion.getText().toString().indexOf(System.getProperty("line.separator"),end);
+           // holder.textQuestion.setText(question.getDescription().substring(0,end-3)+"...");
+            Toast.makeText(context, Integer.toString(start), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, Integer.toString(end), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, Integer.toString(ends), Toast.LENGTH_SHORT).show();
+        }
 
         Tag firstTag = question.getTags().get(0);
         holder.textCategory.setText(firstTag.getText());
