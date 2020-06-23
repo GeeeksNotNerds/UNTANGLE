@@ -42,6 +42,7 @@ public class ClickPostActivity extends AppCompatActivity {
     private TextView PostDescription,postStatus,postStatus_heading;
     private Button DeletePostButton,EditPostButton,statusButton;
     ImageView Share;
+    String type,postType;
     private String PostKey,currentUserID,databaseUSerID,description,Status,message,ReceiverUid;
     private DatabaseReference ClickPostRef,NotificationRef,UserRef;
 
@@ -83,6 +84,12 @@ public class ClickPostActivity extends AppCompatActivity {
 
         PostKey=getIntent().getExtras().get("PostKey").toString();
         UserRef=FirebaseDatabase.getInstance().getReference().child("Users");
+        UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                type=dataSnapshot.child("type").getValue().toString();
+
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
         ClickPostRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -123,7 +130,20 @@ public class ClickPostActivity extends AppCompatActivity {
 
                   PostDescription.setText(description);
                   databaseUSerID=dataSnapshot.child("uid").getValue().toString();
-                  if(mode.equals("Private")){
+                  postType=dataSnapshot.child("postType").getValue().toString();
+                 /* UserRef.child(databaseUSerID).addValueEventListener(new ValueEventListener() {
+                      @Override
+                      public void onDataChange(DataSnapshot dataSnapshot) {
+                        postType=dataSnapshot.child("type").getValue().toString();
+                      }
+
+                      @Override
+                      public void onCancelled(DatabaseError databaseError) {
+
+                      }
+                  });*/
+                  if(mode.equals("Private"))
+                  {
 
                       postStatus.setVisibility(View.VISIBLE);
                       postStatus_heading.setVisibility(View.VISIBLE);
@@ -132,8 +152,8 @@ public class ClickPostActivity extends AppCompatActivity {
 
 
 
-                  if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")&& !databaseUSerID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
-
+                 // if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2") && !databaseUSerID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                    if(type.equals("Admin")&& !postType.equals("Admin")){
                       statusButton.setVisibility(View.VISIBLE);
                       DeletePostButton.setVisibility(View.INVISIBLE);
                       EditPostButton.setVisibility(View.INVISIBLE);
@@ -250,8 +270,15 @@ public class ClickPostActivity extends AppCompatActivity {
         });
 
 
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
+
 
     private void EditCurrentPost(String description)
     {

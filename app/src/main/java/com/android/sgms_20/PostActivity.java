@@ -89,7 +89,7 @@ public class PostActivity extends AppCompatActivity {
     Spinner mSpin;
     private RelativeLayout r;
     private ImageButton information;
-
+    private String type;
     private String description,checker="",myUrl;
     private Uri myUri;
     private StorageTask uploadTask;
@@ -127,8 +127,18 @@ public class PostActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
         BottomNavigationView bottomNavigAdmin=findViewById(R.id.bottom_navigation_admin);
-        if(current_user_id.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
-        {
+
+        UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                type=dataSnapshot.child("type").getValue().toString();
+
+
+
+       // if(current_user_id.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
+        if(type.equals("Admin"))
+                {
             bottomNavigAdmin.setVisibility(View.VISIBLE);
             bottomNav.setVisibility(View.GONE);
             bottomNavigAdmin.setOnNavigationItemSelectedListener(navListner2);
@@ -152,8 +162,9 @@ public class PostActivity extends AppCompatActivity {
         Image=findViewById(R.id.ima);
         //r=(RelativeLayout)findViewById(R.id.r1);
 
-        if(current_user_id.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
-        {
+        //if(current_user_id.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+        if(type.equals("Club"))
+                {
             cv.setVisibility(View.GONE);
             mSpin.setVisibility(View.GONE);
             mSelect.setVisibility(View.GONE);
@@ -163,8 +174,9 @@ public class PostActivity extends AppCompatActivity {
             Mode="Public";
 
         }
-        else if(current_user_id.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-        {
+        //else if(current_user_id.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+        if(type.equals("Admin"))
+                {
             cv.setVisibility(View.GONE);
            // rg_mode.setVisibility(View.GONE);
             UserInfo_show="yes";
@@ -186,7 +198,7 @@ public class PostActivity extends AppCompatActivity {
                     }
                 }
 
-                if(c==0){
+                if(!type.equals("Admin")){
                     MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
                             .setTitle("Info")
                             .setMessage("Posts visible to all except the admin will be shown in the public tab while the posts only to the admin will be visible in the official tab..")
@@ -309,7 +321,8 @@ public class PostActivity extends AppCompatActivity {
         adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
-        if(current_user_id.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+        //if(current_user_id.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+                if(type.equals("Club"))
         {
             spinner2.setAdapter(adapter5);
         }
@@ -463,7 +476,7 @@ public class PostActivity extends AppCompatActivity {
             }
         }
 
-        if(c==0){
+        if(type.equals("Admin")){
 
             title.setText("Select Your Announcement Category");
         }
@@ -471,7 +484,7 @@ public class PostActivity extends AppCompatActivity {
 
         PostDescription=(EditText)findViewById(R.id.post_description);
         UpdatePostButton=findViewById(R.id.update_post_button);
-        loadingBar = new ProgressDialog(this);
+        loadingBar = new ProgressDialog(PostActivity.this);
 
        // mToolbar=(Toolbar)findViewById(R.id.update_post_page_toolbar);
         //setSupportActionBar(mToolbar);
@@ -483,6 +496,13 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 ValidatePostInfo();
+
+            }
+        });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -661,6 +681,7 @@ public class PostActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
+                    type=dataSnapshot.child("type").getValue().toString();
                     int c = 0;
                     for (int i = 0; i < 1; i++) {
                         if (current_user_id.equals(mAdmin[i])) {
@@ -669,17 +690,19 @@ public class PostActivity extends AppCompatActivity {
                         }
                     }
                     String userAdmissionNo;
-                        if(c==1)
+                        if(type.equals("Admin")||type.equals("Club"))
                         {
                              userAdmissionNo=dataSnapshot.child("designation").getValue().toString();
                         }
-                        else {
+                        else
+                            {
                              userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
                         }
                         //String userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
                         String userFullName = dataSnapshot.child("username").getValue().toString();
 //                        String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
                         String userEmail=dataSnapshot.child("email").getValue().toString();
+                        String postType=dataSnapshot.child("type").getValue().toString();
 
 
                     HashMap postsMap = new HashMap();
@@ -697,6 +720,7 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("showInformation",UserInfo_show);
                     postsMap.put("PostKey",postRandomName+current_user_id);
                     postsMap.put("status","Unresolved");
+                    postsMap.put("postType",postType);
 
 
                    if(check==1){

@@ -1,114 +1,380 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    tools:context=".SetupActivity">
 
-    tools:context=".adminSetup"
-    android:background="@color/white">
-
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/colorPrimaryDark"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="240dp"
         android:background="@color/colorPrimaryDark" />
-    <TextView
+
+    <!--Top Header Layout-->
+    <LinearLayout
+        android:id="@+id/topbar"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Profile Setup"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:padding="16dp">
 
 
-        android:textAlignment="center"
-        android:id="@+id/head"
-        android:textSize="35sp"
-        android:padding="10dp"
 
-        android:background="@drawable/tabtypeno"
-        android:textColor="@color/colorAccent"
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:fontFamily="sans-serif-light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Setup your Details"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
 
 
-        android:layout_centerHorizontal="true"
-        />
 
-    <TextView
-        android:id="@+id/t"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/head"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/button"
-        android:fontFamily="sans-serif"
-        android:padding="10dp"
-        android:text="Select the category and sub-category of the complaints you want to solve.."
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="25dp" />
 
-    <TextView
+        </RelativeLayout>
 
-        android:layout_below="@id/t"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="70dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-light"
-        android:layout_height="wrap_content"
-        android:text="Select the category"
-        android:textColor="@color/colorPrimaryDark"
-        android:id="@+id/sel1"
-        android:layout_marginLeft="10dp"/>
-    <Spinner
-        android:layout_below="@id/sel1"
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:id="@+id/spin1"
-        android:layout_marginRight="10dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20dp"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_below="@+id/topbar">
 
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-light"
-        android:layout_height="wrap_content"
-        android:text="Select the sub-category"
-        android:layout_below="@id/spin1"
-        android:id="@+id/sel2"
-        android:layout_marginLeft="10dp"/>
-    <Spinner
-        android:layout_below="@id/sel2"
-        android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp">
 
-        android:id="@+id/spin2"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10sp"
-        />
-    <Button
-        android:id="@+id/con"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_background2"
-        android:text="NEXT"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginBottom="150dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="24dp"
-        android:elevation="15dp"
 
-        />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circularbordersolid"
+                android:gravity="center"
+                android:elevation="15dp"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:background="@drawable/circle">
 
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/circle"
+                        android:padding="2dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_height="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/pro_pic"
+                        android:src="@drawable/profile" >
+
+                    </de.hdodenhof.circleimageview.CircleImageView>
+
+
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fab_cam"
+
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/canv"
+                        android:layout_marginTop="30dp"
+                        android:textAllCaps="false"
+                        app:fabCustomSize="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+
+
+                        android:background="@color/colorPrimaryDark"
+                        android:elevation="10dp"
+                        />
+                </RelativeLayout>
+
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_border"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:tint="@color/white"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+
+                            android:padding="10dp"
+                            android:src="@drawable/ic_account_circle_24px" />
+
+                        <EditText
+                            android:layout_width="289dp"
+                            android:layout_height="40dp"
+
+                            android:layout_marginLeft="2dp"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:id="@+id/name"
+                            android:textColorHint="@color/white"
+                            android:hint="  Name"
+                            android:inputType="textCapSentences"
+
+                            android:textSize="15sp"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/edit_border">
+
+                        <ImageView
+                            android:tint="@color/white"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+
+                            android:padding="10dp"
+                            android:src="@drawable/dept" />
+
+                        <EditText
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:textColorHint="@color/white"
+                            android:layout_width="289dp"
+                            android:textColor="@color/white"
+                            android:layout_height="40dp"
+                            android:inputType="textCapSentences"
+                            android:layout_marginLeft="2dp"
+                            android:id="@+id/dept"
+                            android:hint="  Department"
+
+
+                            android:textSize="15sp"
+                            />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    android:background="@drawable/edit_border">
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:paddingRight="8dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:tint="@color/white"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_email_24dp" />
+
+                        <EditText
+                            android:layout_width="289dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="2dp"
+                            android:textColorHint="@color/white"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:background="@drawable/edit_border"
+                            android:id="@+id/email"
+                            android:hint="  Email"
+                            android:inputType="textEmailAddress"
+
+                            android:textSize="15sp"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_border"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:tint="@color/white"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+
+                            android:padding="10dp"
+                            android:src="@drawable/ic_account_circle_24px" />
+
+                        <EditText
+                            android:layout_width="289dp"
+                            android:layout_height="40dp"
+                            android:textColor="@color/white"
+
+                            android:layout_marginLeft="2dp"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:id="@+id/desig"
+
+                            android:textColorHint="@color/white"
+                            android:hint="  Designation"
+                            android:inputType="textCapSentences"
+
+                            android:textSize="15sp"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_height="wrap_content"
+                            android:text="Select the category of the complaints you will be solving"
+
+                            android:textColor="@color/colorPrimaryDark"
+                            android:id="@+id/sel1"
+                            android:layout_marginLeft="10dp"/>
+                        <Spinner
+                            android:layout_below="@id/sel1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/spin1"
+                            android:layout_marginRight="10dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="20dp"
+
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_height="wrap_content"
+                            android:text="Select the sub-category"
+                            android:layout_below="@id/spin1"
+                            android:id="@+id/sel2"
+                            android:layout_marginLeft="10dp"/>
+                        <Spinner
+                            android:layout_below="@id/sel2"
+                            android:layout_width="match_parent"
+
+                            android:id="@+id/spin2"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10sp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10sp"
+                            android:layout_marginBottom="20dp"
+                            />
+
+                    </RelativeLayout>
+
+
+
+
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="250dp"
+
+                android:layout_height="50dp"
+                android:layout_below="@id/cv_one_login"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/pro_layout"
+                android:layout_gravity="center"
+                android:textAllCaps="false"
+                android:layout_marginTop="50dp"
+                android:text="Upload Details"
+                android:textSize="25sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="bold"
+                android:id="@+id/con"
+                android:textColor="@color/colorPrimaryDark"
+                android:elevation="15dp" />
+        </LinearLayout>
+        </ScrollView>
+    </ScrollView>
 </RelativeLayout>
-

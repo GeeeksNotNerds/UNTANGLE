@@ -37,6 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
 
     private List<Posts> mPosts;
+    private String type;
     boolean LikeChecker=false,DownVoteChecker=false,StarChecker=false;
     private Context mContext;
     private TextDrawable mDrawableBuilder;
@@ -46,13 +47,14 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
     private  Intent in;
 
 
-    DatabaseReference UserRef,LikesRef,PostsRef,DownVotesRef,Post;
+    DatabaseReference UserRef,LikesRef,PostsRef,DownVotesRef,Post,UserReference;
 
     public StarAdapter(Context context, List<Posts> posts) {
         mContext = context;
         mPosts= posts;
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
+        UserReference=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
         UserRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId).child("star");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
@@ -89,12 +91,20 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
 
         //String email=question.getEmail();
 
+        UserReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                type=dataSnapshot.child("type").getValue().toString();
+
+        //});
         Post.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
                 mode=dataSnapshot.child("mode").getValue().toString();
-                if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2")||mode.equals("Private"))
+                String postType=dataSnapshot.child("postType").getValue().toString();
+                //if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2")||mode.equals("Private"))
+                if(postType.equals("Admin")||postType.equals("Club")||mode.equals("Private"))
                 {
                     //comments hidden for posts from admin,clubs and private
                     holder.cnt.setVisibility(View.GONE);
@@ -394,6 +404,13 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
             {
             }
         });
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
+    }
+});
 
     }
 

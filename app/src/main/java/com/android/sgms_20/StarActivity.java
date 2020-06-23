@@ -87,6 +87,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
     private TextDrawable mDrawableBuilder;
     private String[] mTitles;
     private List<Posts> mAllQuestions;
+    private String type;
     private Filter<Tag> mFilter;
     private LinearLayoutManager linearLayoutManager;
     private StarAdapter mAdapter;
@@ -132,6 +133,8 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
         DownVotesRef = FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         //pro.setVisibility(View.INVISIBLE);
+
+
         MyPostRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -204,9 +207,18 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
         BottomNavigationView bottomNavigAdmin=findViewById(R.id.bottom_navigation_admin);
 
+        UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                type=dataSnapshot.child("type").getValue().toString();
 
-        if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
-        {
+
+
+
+        //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
+        if(type.equals("Admin"))
+                {
             bottomNavigAdmin.setVisibility(View.VISIBLE);
             bottomNav.setVisibility(View.GONE);
             bottomNavigAdmin.setOnNavigationItemSelectedListener(navListner2);
@@ -220,6 +232,13 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
             bottomNav.getMenu().findItem(R.id.nav_star).setChecked(true);
         }
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
@@ -270,6 +289,11 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
         return new ArrayList<Posts>() {
             {
 
+                UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot)
+                    {
+                        type=dataSnapshot.child("type").getValue().toString();
 
 
                 PostsRef.addValueEventListener(new ValueEventListener() {
@@ -289,6 +313,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                             if(dataSnapshot1.child("star").hasChild(currentUserID))
                             {
                             String postKey = dataSnapshot1.child("PostKey").getValue().toString();
+                            String postType=dataSnapshot1.child("postType").getValue().toString();
                             //if(PostsRef.child("PostKey").equals(null))
                               //  Toast.makeText(StarActivity.this, "Working", Toast.LENGTH_SHORT).show();
                             //else
@@ -320,10 +345,10 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 }
                             }
 
-                            if (c == 1) {
+                            if (postType.equals("Admin")) {
                                 owner = "Admin";
                                 c = 0;
-                            } else if (c == 2) {
+                            } else if (postType.equals("Club")) {
                                 owner = "Club";
                                 c = 0;
                             } else if (currentUserID.equals(uid)) {
@@ -353,7 +378,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                             String date = dataSnapshot1.child("date").getValue().toString();
                             String post = dataSnapshot1.child("description").getValue().toString();
                             //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                                if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+                                if(type.equals("Admin"))
                                 {
                                     info=name;
                                     mail=user;
@@ -408,7 +433,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                         break;
                                     }
                                 }
-                                if (l == 1 || (uid.equals(currentUserID))) {
+                                if (type.equals("Admin") || (uid.equals(currentUserID))) {
                                     l = 0;
                                     add(new Posts(like,postKey, info, "" + user, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
                                         add(new Tag(owner, colour4));
@@ -429,10 +454,18 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
                     }
                 });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
             }
 
     };
+
 }
 
     private List<Posts> findByTags(List<Tag> tags) {

@@ -45,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
     DatabaseReference MyPostRef;
 
     private static String TAG;
+    private String type;
 
     ImageView pro;
 
@@ -76,8 +77,13 @@ public class ProfileActivity extends AppCompatActivity {
         BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
         BottomNavigationView bottomNavigAdmin=findViewById(R.id.bottom_navigation_admin);
 
+        profileUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                type=dataSnapshot.child("type").getValue().toString();
 
-        if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
+        if(type.equals("Admin"))//if admin
         {
             bottomNavigAdmin.setVisibility(View.VISIBLE);
             bottomNav.setVisibility(View.GONE);
@@ -114,17 +120,10 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-                        if (currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
-
-
+                        if (type.equals("Admin")||type.equals("Club"))
+                        {
                             //String myProfileImage="";
-
-
-
-
-                           //if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
-
-
+                             //if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
                             String myUserName = dataSnapshot.child("username").getValue().toString();
                             String Designation = dataSnapshot.child("designation").getValue().toString();
@@ -157,7 +156,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                             //pro.setImageDrawable(mDrawableBuilder);
 
-                        } else if (!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+                        } else if (!type.equals("Admin")) {
                             //String myProfileImage="";
                               //if(dataSnapshot.child("ProfileImage").exists())  myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
@@ -198,6 +197,13 @@ public class ProfileActivity extends AppCompatActivity {
 
                         }
                     }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
             }
 
             @Override

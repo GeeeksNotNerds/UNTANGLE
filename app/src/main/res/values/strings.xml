@@ -6,6 +6,11 @@
 
     <string-array name="admin_uid">
         <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
+        <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
+        <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
+        <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
+        <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
+        <item>AkX6MclvgrXpN8oOGI5v37dn7eb2</item>
     </string-array>
 
     <string-array name="club_uid">
@@ -67,4 +72,5 @@
         <item>Events</item>
 
     </string-array>
+
 </resources>

@@ -92,6 +92,12 @@
                 android:gravity="center"
                 android:id="@+id/rg1"
                 android:layout_below="@+id/tv">
+                <RadioButton
+                    android:id="@+id/post_public"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="To all (except admin)" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -357,12 +363,7 @@
         android:layout_below="@id/ll"
         android:text="Loading...."/>
 
-    <RadioButton
-        android:id="@+id/post_public"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="To all (except admin)" />
+
 
 
 </RelativeLayout>
