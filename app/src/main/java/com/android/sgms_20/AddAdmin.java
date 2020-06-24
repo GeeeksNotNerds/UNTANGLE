@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -107,7 +108,22 @@ public class AddAdmin extends AppCompatActivity
                 else
                 {
                     mProgressBar.setVisibility(View.GONE);
-                    Toast.makeText(AddAdmin.this, "Try Again...something went wrong!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AddAdmin.this, "Try Again...something went wrong!", Toast.LENGTH_SHORT).show();
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        Toast.makeText(AddAdmin.this, "User with this email already exist.", Toast.LENGTH_SHORT).show();
+                    }
+
+                    mAuth.signInWithEmailAndPassword(Mail,"12345678").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task)
+                        {
+                            Toast.makeText(AddAdmin.this, "enter valid and unregistered email.", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+
+
                 }
 
 

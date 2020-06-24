@@ -622,24 +622,19 @@ public class PostActivity extends AppCompatActivity {
         //edit text is not empty
         description=PostDescription.getText().toString();
 
-
-       if(resultUri!=null){
-           storingImageToFirebaseStorage();
-       }
-
-       if(fileUri!= null){
-           stringFileToFirebaseStorage();
-       }
-
-
-
-        if(TextUtils.isEmpty(description)&& resultUri==null && fileUri==null)
+        if(UserInfo_show.isEmpty()){
+            Toast.makeText(this, "Please Select the mode of posting (public or private), and if the mode is public...select if you wish to post anonymously or no!", Toast.LENGTH_SHORT).show();
+        }
+        else if(resultUri!=null){
+            storingImageToFirebaseStorage();
+        }
+        else if(fileUri!= null){
+            stringFileToFirebaseStorage();
+        }
+        else if(TextUtils.isEmpty(description)&& resultUri==null && fileUri==null)
         {
             Toast.makeText(this, "Post cannot be left empty..", Toast.LENGTH_SHORT).show();
         }
-        else if(UserInfo_show.isEmpty()){
-        Toast.makeText(this, "Please Select the mode of posting (public or private), and if the mode is public...select if you wish to post anonymously or no!", Toast.LENGTH_SHORT).show();
-           }
         else
         {
             MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
@@ -689,6 +684,9 @@ public class PostActivity extends AppCompatActivity {
 
 
         }
+
+
+
     }
 
     private void stringFileToFirebaseStorage() {

@@ -494,15 +494,37 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
       {
           holder.PostImage.setVisibility(View.VISIBLE);
 
+          holder.PostImage.getLayoutParams().height=350;
+          holder.PostImage.getLayoutParams().width=350;
+          holder.PostImage.requestLayout();
+
           Picasso.with(context)
                   .load(t)
                   .fit()
                   .placeholder(R.drawable.loader1)
                   .into(holder.PostImage);
 
+
+
+          holder.PostImage.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+
+
+                  Intent clickPosIntent = new Intent(mContext, ClickPostActivity.class);
+                  clickPosIntent.putExtra("PostKey", PostKey);
+                  mContext.startActivity(clickPosIntent);
+
+
+              }
+          });
+
       }else if(!x.equals("null")){
 
           holder.PostImage.setVisibility(View.VISIBLE);
+          holder.PostImage.getLayoutParams().height=150;
+          holder.PostImage.getLayoutParams().width=150;
+          holder.PostImage.requestLayout();
 
           holder.PostImage.setImageResource(R.drawable.download);
 
