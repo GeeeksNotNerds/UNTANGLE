@@ -364,15 +364,13 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 //{
                                     info=name;
                                     mail=user;
-                                //}
-                                //else {
-                                  //  if (show.equals("no")) {
-                                    //    info = "Anonymous";
-                                      //  mail = " ";
-                                    //} else {
-                                      //  info = name;
-                                       // mail = user;
-                                    //}}
+
+                               
+
+                            String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
+
+
+                            
 
                                 if (categ.equals("Official")) colour1 = mColors[7];
                                 if (categ.equals("Personal")) colour1 = mColors[8];
@@ -400,6 +398,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
                            /*if (mode.equals("Public")) {
                                 add(new Posts(like,postKey, "" + info, mail, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
+
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
@@ -417,16 +416,29 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                         l = 1;
                                         break;
                                     }
+
+                                }
+                                if (l == 1 || (uid.equals(currentUserID))) {
+                                    l = 0;
+                                    add(new Posts(like,postKey, info, "" + user, post, date, date, uid, mode, postpic,pdf, categ, sub, show, status, new ArrayList<Tag>() {{
+                                        add(new Tag(owner, colour4));
+                                        add(new Tag(mode, colour3));
+                                        add(new Tag(categ, colour1));
+                                        add(new Tag(sub, colour2));
+                                    }}));
+                                }
+
                                 }*/
                                // if (type.equals("Admin") || (uid.equals(currentUserID))) {
                                     //l = 0;
-                                add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
                                     add(new Tag(categ, colour1));
                                     add(new Tag(sub, colour2));
                                 }}));
                                 //}
+
                             }
                         }}
                         mAdapter = new StarAdapter(StarActivity.this, mAllQuestions);

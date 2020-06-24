@@ -279,6 +279,8 @@
         android:layout_height="250dp"
         android:src="@drawable/ic_profile"
         android:id="@+id/postImage"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="10dp"
         android:visibility="gone"
         android:layout_below="@id/filter_first"

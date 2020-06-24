@@ -603,6 +603,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                                     String date = dataSnapshot1.child("date").getValue().toString();
                                     String post = dataSnapshot1.child("description").getValue().toString();
+                                    String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     if(type.equals("Admin"))
                                     {
@@ -645,7 +646,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String like=dataSnapshot1.child("likes").getValue().toString();
                                     if(postType.equals("Admin")||(uid.equals(currentUserID)&& mode.equals("Private")))
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -765,10 +766,15 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if(sub.equals("Results"))colour2=mColors[21];
                                     if(sub.equals("Events"))colour2=mColors[22];
                                     String like=dataSnapshot1.child("likes").getValue().toString();
+
+                                    String pdf =dataSnapshot1.child("PostPDF").getValue().toString();
+                                   // if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+
                                     //if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
                                     if(postType.equals("Admin")||(uid.equals(currentUserID)&& mode.equals("Private")))
+
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -877,9 +883,14 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if(sub.equals("Events"))colour2=mColors[22];
                                     String like=dataSnapshot1.child("likes").getValue().toString();
 
+                                    String pdf=dataSnapshot1.child("PostPDF").getValue().toString();
+                                   // if(uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+
+
                                     if(postType.equals("Club"))//posts by the clubs are only shown
+
                                     {
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -983,9 +994,17 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if(sub.equals("Events"))colour2=mColors[22];
                                     String like = dataSnapshot1.child("likes").getValue().toString();
 
+
+                                    String like=dataSnapshot1.child("likes").getValue().toString();
+                                    String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
+                                   // if(uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+                                    //{
+                                      //  add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
+
                                     if (postType.equals("Club"))//posts by the clubs are only shown
                                     {
-                                        add(new Posts(like, postKey, "" + info, mail, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
+                                        add(new Posts(like, postKey, "" + info, mail, post, date, date, uid, mode, postpic,pdf, categ, sub, show, status, new ArrayList<Tag>() {{
+
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -1109,6 +1128,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if(sub.equals("Events"))colour2=mColors[22];
                                     String like=dataSnapshot1.child("likes").getValue().toString();
 
+                                    String pdf=dataSnapshot1.child("PostPDF").getValue().toString();
+                                   // if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
+                                    //{
+                                      //  add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
+
+
 
                                    // if((!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))&&(!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2")))
                                     if((!postType.equals("Admin"))&&(!postType.equals("Club")))
@@ -1116,7 +1141,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                        // if(mode.equals("Private")&&currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")&&adminCat.equals(sub))
                                         if(mode.equals("Private") && type.equals("Admin") && adminCat.equals(sub))
                                         {
-                                            add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
                                                 add(new Tag(mode, colour3));
                                                 add(new Tag(categ, colour1));
@@ -1125,7 +1150,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         }
                                         else if(mode.equals("Public")&&(!type.equals("Admin")))
                                         {
-                                            add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
                                                 add(new Tag(mode, colour3));
                                                 add(new Tag(categ, colour1));
@@ -1144,6 +1169,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     {
                                         if(mode.equals("Public")){
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+
                                             add(new Tag(owner, colour4));
                                             add(new Tag(mode, colour3));
                                             add(new Tag(categ, colour1));
@@ -1278,7 +1304,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if(sub.equals("Results"))colour2=mColors[21];
                                     if(sub.equals("Events"))colour2=mColors[22];
 
+                                    String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
+
                                     String like=dataSnapshot1.child("likes").getValue().toString();
+                                   
 
 
 
@@ -1288,7 +1317,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         //if(mode.equals("Private")&&currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")&&adminCat.equals(sub))
                                         if(mode.equals("Private") && type.equals("Admin")&&adminCat.equals(sub))
                                         {
-                                            add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
                                                 add(new Tag(mode, colour3));
                                                 add(new Tag(categ, colour1));
