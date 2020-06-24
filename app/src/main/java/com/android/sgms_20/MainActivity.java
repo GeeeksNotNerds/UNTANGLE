@@ -995,7 +995,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String like = dataSnapshot1.child("likes").getValue().toString();
 
 
-                                    String like=dataSnapshot1.child("likes").getValue().toString();
+                                    //String like=dataSnapshot1.child("likes").getValue().toString();
                                     String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
                                    // if(uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
                                     //{
@@ -1327,7 +1327,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         //else if(mode.equals("Public")&&(!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
                                         else if(mode.equals("Public")&&(!type.equals("Admin")))
                                         {
-                                            add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
                                                 add(new Tag(mode, colour3));
                                                 add(new Tag(categ, colour1));
