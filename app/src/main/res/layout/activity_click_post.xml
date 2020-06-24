@@ -87,7 +87,22 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+
+        <ImageView
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_profile"
+            android:id="@+id/postImage_c"
+            android:visibility="gone"
+            android:padding="10dp"
+            />
+
+        </RelativeLayout>
 
 
         <ScrollView
@@ -111,6 +126,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
+
         </ScrollView>
 
     </LinearLayout>
