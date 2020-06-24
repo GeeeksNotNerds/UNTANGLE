@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -43,6 +44,7 @@ public class ClickPostActivity extends AppCompatActivity {
     private Button DeletePostButton,EditPostButton,statusButton;
     ImageView Share;
     String type,postType;
+    ImageView Image;
     private String PostKey,currentUserID,databaseUSerID,description,Status,message,ReceiverUid;
     private DatabaseReference ClickPostRef,NotificationRef,UserRef;
 
@@ -75,6 +77,8 @@ public class ClickPostActivity extends AppCompatActivity {
 
         mAuth= FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
+
+        Image=findViewById(R.id.postImage_c);
 
         // FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId)
         //get it using known data from the card view
@@ -148,6 +152,21 @@ public class ClickPostActivity extends AppCompatActivity {
                       postStatus.setVisibility(View.VISIBLE);
                       postStatus_heading.setVisibility(View.VISIBLE);
 
+                  }
+
+                  if(!(dataSnapshot.child("PostImage").getValue().toString()).equals("null")){
+
+
+                      Image.setVisibility(View.VISIBLE);
+
+                      Picasso.with(ClickPostActivity.this)
+                              .load(dataSnapshot.child("PostImage").getValue().toString())
+                              .fit()
+                              .placeholder(R.drawable.loader1)
+                              .into(Image);
+
+                  }else{
+                      Image.setVisibility(View.GONE);
                   }
 
 
