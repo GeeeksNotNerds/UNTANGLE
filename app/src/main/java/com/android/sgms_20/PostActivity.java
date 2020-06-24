@@ -607,7 +607,7 @@ public class PostActivity extends AppCompatActivity {
 
                 if(fileUri != null){
                     Image.setVisibility(View.VISIBLE);
-                    Image.setImageResource(R.drawable.download);
+                    Image.setImageResource(R.drawable.pdf);
                     PostDescription.setHint("Enter your Caption");
                 }
             }

@@ -83,7 +83,7 @@ public class AddAdmin extends AppCompatActivity
             mEmail.requestFocus();
             return;
         }
-        mAuth.signOut();
+      //  mAuth.signOut();
 
         mAuth.createUserWithEmailAndPassword(email,"1234567").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

@@ -280,7 +280,7 @@
             android:id="@+id/a"
             android:layout_alignParentLeft="true"
             android:textSize="20sp"
-            android:text="Want to attach an Image ? "/>
+            android:text="Want to attach Image/Pdf ? "/>
 
         <ImageView
             android:layout_height="50dp"

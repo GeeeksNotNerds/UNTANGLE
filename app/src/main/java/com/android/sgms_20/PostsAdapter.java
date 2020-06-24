@@ -504,7 +504,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
           holder.PostImage.setVisibility(View.VISIBLE);
 
-          holder.PostImage.setImageResource(R.drawable.download);
+          holder.PostImage.setImageResource(R.drawable.pdf);
 
           holder.PostImage.setOnClickListener(new View.OnClickListener() {
               @Override
