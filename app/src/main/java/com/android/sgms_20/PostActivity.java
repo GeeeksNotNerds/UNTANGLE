@@ -180,7 +180,7 @@ public class PostActivity extends AppCompatActivity {
 
         }
         //else if(current_user_id.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-        if(type.equals("Admin"))
+        if(type.equals("Admin")||type.equals("SubAdmin"))
                 {
             cv.setVisibility(View.GONE);
            // rg_mode.setVisibility(View.GONE);
@@ -203,7 +203,7 @@ public class PostActivity extends AppCompatActivity {
                     }
                 }
 
-                if(!type.equals("Admin")){
+                if(!type.equals("Admin")&&(!type.equals("SubAdmin"))){
                     MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
                             .setTitle("Info")
                             .setMessage("Posts visible to all except the admin will be shown in the public tab while the posts only to the admin will be visible in the official tab..")
@@ -525,7 +525,7 @@ public class PostActivity extends AppCompatActivity {
             }
         }
 
-        if(type.equals("Admin")){
+        if(type.equals("Admin")||type.equals("SubAdmin")){
 
             title.setText("Select Your Announcement Category");
         }
@@ -810,7 +810,7 @@ public class PostActivity extends AppCompatActivity {
                         }
                     }
                     String userAdmissionNo;
-                        if(type.equals("Admin")||type.equals("Club"))
+                        if(type.equals("Admin")||type.equals("SubAdmin")||type.equals("Club"))
                         {
                              userAdmissionNo=dataSnapshot.child("designation").getValue().toString();
                         }

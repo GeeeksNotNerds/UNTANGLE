@@ -204,6 +204,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_admin"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"

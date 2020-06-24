@@ -106,7 +106,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 String postType=dataSnapshot.child("postType").getValue().toString();
 
                    // if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2")||mode.equals("Private"))
-                    if(postType.equals("Admin")||postType.equals("Club")||mode.equals("Private"))
+                    if(postType.equals("Admin")||postType.equals("SubAdmin")||postType.equals("Club")||mode.equals("Private"))
                     {
                         //comments hidden for posts from admin,clubs and private
                         holder.cnt.setVisibility(View.GONE);
@@ -174,7 +174,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     type=dataSnapshot.child("type").getValue().toString();
 
             //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-            if(type.equals("Admin"))
+            if(type.equals("Admin")||type.equals("SubAdmin"))
             {
 
                 holder.pic.setOnClickListener(new View.OnClickListener() {
@@ -342,7 +342,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                             type=dataSnapshot.child("type").getValue().toString();
 
                             //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                            if(type.equals("Admin"))
+                            if(type.equals("Admin")||type.equals("SubAdmin"))
                             {
 
                                 holder.pic.setOnClickListener(new View.OnClickListener() {
