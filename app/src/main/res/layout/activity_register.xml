@@ -98,6 +98,9 @@
                             android:tint="@color/colorPrimaryDark"
                             android:padding="10dp"
                             android:src="@drawable/ic_email_24dp" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/email"
@@ -109,6 +112,7 @@
                             android:backgroundTint="@color/colorPrimaryDark"
                             android:hint=" Email"
                             android:textSize="15sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
 
@@ -123,21 +127,27 @@
                             android:layout_width="40dp"
                             android:tint="@color/colorPrimaryDark"
                             android:layout_height="80dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="10dp"
                             android:padding="10dp"
                             android:src="@drawable/password" />
 
+                       <com.google.android.material.textfield.TextInputLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="8dp"
+                           app:passwordToggleEnabled="true">
                         <EditText
                             android:id="@+id/password"
                             android:layout_width="289dp"
                             android:layout_height="40dp"
                             android:layout_marginLeft="2dp"
-                            android:layout_marginTop="16dp"
+
                             android:layout_marginBottom="0dp"
                             android:backgroundTint="@color/colorPrimaryDark"
                             android:inputType="textPassword"
                             android:hint="Password"
                             android:textSize="15sp" />
+                       </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
                     <LinearLayout
@@ -150,23 +160,28 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="80dp"
-                            android:layout_marginTop="0dp"
+                            android:layout_marginTop="7dp"
                             android:padding="10dp"
                             android:tint="@color/colorPrimaryDark"
                             android:src="@drawable/password" />
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            app:passwordToggleEnabled="true">
                         <EditText
                             android:id="@+id/confirm_password"
                             android:layout_width="289dp"
 
                             android:layout_height="40dp"
                             android:layout_marginLeft="2dp"
-                            android:layout_marginTop="24dp"
                             android:layout_marginBottom="16dp"
                             android:inputType="textPassword"
                             android:backgroundTint="@color/colorPrimaryDark"
                             android:hint="Confirm Password"
                             android:textSize="15sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
 

@@ -8,6 +8,7 @@ import java.util.List;
 public class Posts
 {
     private String username;
+    private String postType;
     private String email;
     private String likes;
     private String description;
@@ -50,6 +51,14 @@ public class Posts
 
     public String getStar() {
         return star;
+    }
+
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
     }
 
     public void setStar(String star) {

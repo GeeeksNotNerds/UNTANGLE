@@ -45,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
     DatabaseReference MyPostRef;
 
     private static String TAG;
+    private String type;
 
     ImageView pro;
 
@@ -74,8 +75,28 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListner);
-        bottomNav.getMenu().findItem(R.id.nav_profile).setChecked(true);
+        BottomNavigationView bottomNavigAdmin=findViewById(R.id.bottom_navigation_admin);
+
+        profileUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                type=dataSnapshot.child("type").getValue().toString();
+
+        if(type.equals("Admin"))//if admin
+        {
+            bottomNavigAdmin.setVisibility(View.VISIBLE);
+            bottomNav.setVisibility(View.GONE);
+            bottomNavigAdmin.setOnNavigationItemSelectedListener(navListner2);
+            bottomNavigAdmin.getMenu().findItem(R.id.nav_profile_admin).setChecked(true);
+        }
+        else
+        {
+            bottomNav.setVisibility(View.VISIBLE);
+            bottomNavigAdmin.setVisibility(View.GONE);
+            bottomNav.setOnNavigationItemSelectedListener(navListner);
+            bottomNav.getMenu().findItem(R.id.nav_profile).setChecked(true);
+        }
 
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -99,17 +120,10 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-                        if (currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
-
-
+                        if (type.equals("Admin")||type.equals("Club"))
+                        {
                             //String myProfileImage="";
-
-
-
-
-                           //if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
-
-
+                             //if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
                             String myUserName = dataSnapshot.child("username").getValue().toString();
                             String Designation = dataSnapshot.child("designation").getValue().toString();
@@ -142,7 +156,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                             //pro.setImageDrawable(mDrawableBuilder);
 
-                        } else if (!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+                        } else if (!type.equals("Admin")) {
                             //String myProfileImage="";
                               //if(dataSnapshot.child("ProfileImage").exists())  myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
@@ -190,6 +204,13 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
@@ -207,7 +228,14 @@ public class ProfileActivity extends AppCompatActivity {
                             finish();
                             return true;
 
+                        case R.id.nav_post:
+                            Intent Lintent=new Intent(ProfileActivity.this,PostActivity.class);
+                            Lintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
+                            startActivity(Lintent);
+                            finish();
+
+                            return true;
                         case R.id.nav_star:
                             Intent Lintent1=new Intent(ProfileActivity.this,StarActivity.class);
                             Lintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -224,6 +252,49 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
                     return false;
+                }
+            };
+    private BottomNavigationView.OnNavigationItemSelectedListener navListner2=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId())
+                    {
+                        case R.id.nav_home_admin:
+                            Intent intent4=new Intent(ProfileActivity.this,MainActivity.class);
+                            startActivity(intent4);
+                            intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            finish();
+                            break;
+                        case R.id.nav_post_admin:
+                            Intent intent=new Intent(ProfileActivity.this,PostActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                            break;
+                        case R.id.nav_profile_admin:
+                            Intent Pintent=new Intent(ProfileActivity.this,ProfileActivity.class);
+                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent);
+                            finish();
+                            break;
+                        case R.id.nav_star_admin:
+                            Intent Pintent1=new Intent(ProfileActivity.this,StarActivity.class);
+                            Pintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent1);
+                            finish();
+                            break;
+                        case R.id.nav_add_admin:
+                            Intent Pintent2=new Intent(ProfileActivity.this,AddAdmin.class);
+                            Pintent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent2);
+                            finish();
+                            break;
+
+                    }
+
+                    return true;
                 }
             };
 

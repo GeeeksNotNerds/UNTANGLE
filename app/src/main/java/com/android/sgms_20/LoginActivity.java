@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -46,10 +48,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ProgressBar progressBar;
     FirebaseAuth mAuth;
     private boolean checker;
+    private ImageView mShow;
     private String TAG;
     ImageView google;
     GoogleSignInClient mGooglesignInClient;
     TextView pass;
+    boolean checkPass=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         email=findViewById(R.id.login_email);
         password=findViewById(R.id.login_password);
+        //mShow=findViewById(R.id.showPassword);
         findViewById(R.id.login_button).setOnClickListener(this);
         pass=findViewById(R.id.pass);
         mAuth=FirebaseAuth.getInstance();
@@ -65,8 +70,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         google=findViewById(R.id.google_signin_button);
         findViewById(R.id.register_account_link).setOnClickListener(this);
 
+        /*mShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                //show
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                mShow.setVisibility(View.GONE);
+            }
+        });*/
+
         if(!haveNetworkConnection()){
-            Toast.makeText(LoginActivity.this,"You are not Online....Please switch on your interner connection!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this,"You are not Online....Please switch on your internet connection!",Toast.LENGTH_SHORT).show();
         }
 
 

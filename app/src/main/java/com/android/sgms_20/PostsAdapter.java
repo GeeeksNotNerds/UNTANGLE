@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,19 +43,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private Context mContext;
     private TextDrawable mDrawableBuilder;
     FirebaseAuth mAuth;
+    private String type;
     String currentUserId;
+    private String mode;
     private  Intent in;
 
 
 
-    DatabaseReference UserRef,LikesRef,PostsRef,DownVotesRef,Post;
+    DatabaseReference UserRef,LikesRef,PostsRef,DownVotesRef,Post,UserReference;
 
     public PostsAdapter(Context context, List<Posts> posts) {
         mContext = context;
         mPosts= posts;
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
-        UserRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId).child("star");
+        UserReference=FirebaseDatabase.getInstance().getReference().child("Users");
+
+        UserRef=FirebaseDatabase.getInstance().getReference().child("Posts").child(currentUserId).child("star");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         PostsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
@@ -78,10 +83,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
-
-
+    public void onBindViewHolder(ViewHolder holder, int position)
+    {
 
         Posts question = mPosts.get(position);
         String PostKey=question.getPostid();
@@ -91,9 +94,70 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.setStar(PostKey);
         holder.setCommentCount(PostKey);
 
+
+
+
+        Post.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.exists()){
+                mode=dataSnapshot.child("mode").getValue().toString();
+                String postType=dataSnapshot.child("postType").getValue().toString();
+
+                   // if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2")||mode.equals("Private"))
+                    if(postType.equals("Admin")||postType.equals("Club")||mode.equals("Private"))
+                    {
+                        //comments hidden for posts from admin,clubs and private
+                        holder.cnt.setVisibility(View.GONE);
+                        holder.cnt_head.setVisibility(View.GONE);
+                        holder.CommentPostButton.setVisibility(View.GONE);
+                    }
+                    if(mode.equals("Private"))
+                    {
+                        //disable upvote and downvote
+                        holder.LikePostButton.setVisibility(View.GONE);
+                        holder.DisplayDownVotes.setVisibility(View.GONE);
+                        holder.DisplayNoOfLikes.setVisibility(View.GONE);
+                        holder.DownVoteButton.setVisibility(View.GONE);
+
+
+                    }
+
+                    if(mode.equals("Private"))
+                    {
+                        holder.textStatus.setVisibility(View.VISIBLE);
+                        holder.statusHeading.setVisibility(View.VISIBLE);
+                    }
+
+               // Toast.makeText(mContext, mode, Toast.LENGTH_SHORT).show();
+            }}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        //Comments will be visible only for posts not from admin and club and only public
+        //Status will be shown only for private posts
+
         //String email=question.getEmail();
-        if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
+
+
+       /* */
+       /* UserReference.child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                type=dataSnapshot.child("type").getValue().toString();
+*/
+
+
+                if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
+
             holder.mStar.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -103,8 +167,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                 }
             });
+            UserReference.child(currentUserId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    type=dataSnapshot.child("type").getValue().toString();
 
-            if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+            //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+            if(type.equals("Admin"))
+            {
 
                 holder.pic.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -115,7 +186,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                     }
                 });
-            }else{
+            }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            /*else{
 
                 holder.pic.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -127,7 +206,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     }
                 });
 
-            }
+            }*/
             holder.settings.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -172,6 +251,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             });
         }
         else {
+
             holder.mStar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
@@ -204,7 +284,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                         //postsMap.put("subCategory", question.getSubCategory());
                                         //postsMap.put("profileImage", question.getProfileImage());
                                         postsMap.put("username", question.getName());
-                                        //postsMap.put("email",question.getEmail());
+                                        postsMap.put("postType",question.getPostType());
                                         //postsMap.put("showInformation",question.getShowInformation());
                                         //postsMap.put("PostKey",question.getPostid());
                                         //postsMap.put("status","Unresolved");
@@ -253,20 +333,36 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
               });
 
-                    holder.mStar.setImageResource(R.drawable.ic_star_selected);
+            holder.mStar.setImageResource(R.drawable.ic_star_selected);
 
-            if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
+                    UserReference.child(currentUserId).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot)
+                        {
+                            type=dataSnapshot.child("type").getValue().toString();
 
-                holder.pic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent ProIntent = new Intent(mContext, ProItemView.class);
-                        ProIntent.putExtra("PostKey", PostKey);
-                        mContext.startActivity(ProIntent);
+                            //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+                            if(type.equals("Admin"))
+                            {
 
-                    }
-                });
-            }else{
+                                holder.pic.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent ProIntent = new Intent(mContext, ProItemView.class);
+                                        ProIntent.putExtra("PostKey", PostKey);
+                                        mContext.startActivity(ProIntent);
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+            /*else{
 
                 holder.pic.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -278,7 +374,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     }
                 });
 
-            }
+            }*/
 
 
 
@@ -441,6 +537,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }else{
             holder.textQuestion.setText(question.getDescription());
         }
+       // int lineCount;//=holder.textQuestion.getLineCount();
+
+        //lineCount=holder.textQuestion.getText().toString().split(System.getProperty("line.separator")).length;
+        //String count=Integer.toString(lineCount);
+       //Toast.makeText(context, count, Toast.LENGTH_SHORT).show();
+        /*if(lineCount>3)
+        {
+
+            int start = holder.textQuestion.getText().toString().indexOf(System.getProperty("line.separator"));
+            int end = holder.textQuestion.getText().toString().indexOf(System.getProperty("line.separator"),start);
+            int ends=holder.textQuestion.getText().toString().indexOf(System.getProperty("line.separator"),end);
+           // holder.textQuestion.setText(question.getDescription().substring(0,end-3)+"...");
+            Toast.makeText(context, Integer.toString(start), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, Integer.toString(end), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, Integer.toString(ends), Toast.LENGTH_SHORT).show();
+        }*/
 
         Tag firstTag = question.getTags().get(0);
         holder.textCategory.setText(firstTag.getText());
@@ -494,17 +606,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
 
-        Post.addValueEventListener(new ValueEventListener()
+     /*   Post.addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.child("uid").equals(null)){
                 String ID=dataSnapshot.child("uid").getValue().toString();
-                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||ID.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+                String mode=dataSnapshot.child("mode").getValue().toString();
+                if(mode.equals("Private"))
                 {
-                    holder.textStatus.setVisibility(View.GONE);
-                    holder.statusHeading.setVisibility(View.GONE);
-                }else{
                     holder.textStatus.setVisibility(View.VISIBLE);
                     holder.statusHeading.setVisibility(View.VISIBLE);
                 }
@@ -515,8 +625,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
+           /* }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
     }
 
     private void SendUserToSnackBarActivity()
@@ -589,6 +705,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             textJobTitle = (TextView) itemView.findViewById(R.id.text_job_title);
             textDate = (TextView) itemView.findViewById(R.id.text_date);
             textQuestion = (TextView) itemView.findViewById(R.id.text_question);
+            textQuestion.setMovementMethod(LinkMovementMethod.getInstance());
             textCategory = (TextView) itemView.findViewById(R.id.filter_first);
             textMode=(TextView)itemView.findViewById(R.id.filter_third);
             textUid=(TextView)itemView.findViewById(R.id.filter_fourth);
@@ -597,6 +714,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             textSubcategory= (TextView) itemView.findViewById(R.id.filter_second);
             PostImage=itemView.findViewById(R.id.postImage);
             PostImage1=itemView.findViewById(R.id.postImage1);
+
 
 
 
