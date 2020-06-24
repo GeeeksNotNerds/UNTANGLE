@@ -55,7 +55,7 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
         UserReference=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
-        UserRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId).child("star");
+        UserRef=FirebaseDatabase.getInstance().getReference().child("Posts").child(currentUserId).child("star");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         PostsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
@@ -152,7 +152,8 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
 
                     StarChecker = true;
 
-                    PostsRef.child(PostKey).addValueEventListener(new ValueEventListener() {
+                    PostsRef.child(PostKey).addValueEventListener(new ValueEventListener()
+                    {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot)
                         {
@@ -164,7 +165,8 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
                                     StarChecker = false;
                                     //DownVotesRef.child(PostKey).child(currentUserId).setValue(true);
                                 }
-                                else {
+                                else
+                                {
                                     StarChecker=false;
                                 }
                             }
@@ -385,7 +387,7 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
 
 
 
-        Post.addValueEventListener(new ValueEventListener()
+       /* Post.addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -403,7 +405,7 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
             public void onCancelled(DatabaseError databaseError)
             {
             }
-        });
+        });*/
     }
 
     @Override

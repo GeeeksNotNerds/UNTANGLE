@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,7 @@ public class AddAdmin extends AppCompatActivity
     private EditText mEmail,mDesignation,mDepartment;
     private Button mAdd;
     private String email,designation,department,cat,sub;
+    ProgressBar mProgressBar;
     FirebaseAuth mAuth;
     DatabaseReference UserRef;
     String currentUserId;
@@ -40,6 +42,7 @@ public class AddAdmin extends AppCompatActivity
         mEmail=findViewById(R.id.email_admin);
         mAdmin=getResources().getStringArray(R.array.admin_uid);
          Mail=mAuth.getCurrentUser().getEmail().toString();
+         mProgressBar=findViewById(R.id.progress_bar);
 
         mAdd=findViewById(R.id.add_admin);
 
@@ -49,6 +52,7 @@ public class AddAdmin extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                mProgressBar.setVisibility(View.VISIBLE);
                 RegisterAdmin();
 
             }
@@ -87,6 +91,7 @@ public class AddAdmin extends AppCompatActivity
             {
                 if(task.isSuccessful())
                 {
+                    mProgressBar.setVisibility(View.GONE);
                     //add admin in list
                     Toast.makeText(AddAdmin.this, "Admin added successfully", Toast.LENGTH_SHORT).show();
                     mAuth.signOut();
@@ -97,6 +102,12 @@ public class AddAdmin extends AppCompatActivity
                             SendUserToMainActivity();
                         }
                     });
+
+                }
+                else
+                {
+                    mProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(AddAdmin.this, "Try Again...something went wrong!", Toast.LENGTH_SHORT).show();
                 }
 
 

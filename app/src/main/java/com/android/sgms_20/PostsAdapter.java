@@ -59,7 +59,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         currentUserId=mAuth.getCurrentUser().getUid();
         UserReference=FirebaseDatabase.getInstance().getReference().child("Users");
 
-        UserRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId).child("star");
+        UserRef=FirebaseDatabase.getInstance().getReference().child("Posts").child(currentUserId).child("star");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         PostsRef=FirebaseDatabase.getInstance().getReference().child("Posts");
@@ -94,11 +94,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.setStar(PostKey);
         holder.setCommentCount(PostKey);
 
-        UserReference.child(currentUserId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                type=dataSnapshot.child("type").getValue().toString();
 
 
 
@@ -152,9 +147,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
        /* */
+       /* UserReference.child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                type=dataSnapshot.child("type").getValue().toString();
+*/
 
 
-        if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
+                if(currentUserId.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
 
             holder.mStar.setOnClickListener(new View.OnClickListener()
@@ -166,6 +167,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                 }
             });
+            UserReference.child(currentUserId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    type=dataSnapshot.child("type").getValue().toString();
 
             //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
             if(type.equals("Admin"))
@@ -181,6 +187,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     }
                 });
             }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             /*else{
 
                 holder.pic.setOnClickListener(new View.OnClickListener() {
@@ -271,7 +284,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                         //postsMap.put("subCategory", question.getSubCategory());
                                         //postsMap.put("profileImage", question.getProfileImage());
                                         postsMap.put("username", question.getName());
-                                        //postsMap.put("email",question.getEmail());
+                                        postsMap.put("postType",question.getPostType());
                                         //postsMap.put("showInformation",question.getShowInformation());
                                         //postsMap.put("PostKey",question.getPostid());
                                         //postsMap.put("status","Unresolved");
@@ -320,22 +333,35 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
               });
 
-                    holder.mStar.setImageResource(R.drawable.ic_star_selected);
+            holder.mStar.setImageResource(R.drawable.ic_star_selected);
 
-            //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-            if(type.equals("Admin"))
-            {
+                    UserReference.child(currentUserId).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot)
+                        {
+                            type=dataSnapshot.child("type").getValue().toString();
 
-                holder.pic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent ProIntent = new Intent(mContext, ProItemView.class);
-                        ProIntent.putExtra("PostKey", PostKey);
-                        mContext.startActivity(ProIntent);
+                            //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+                            if(type.equals("Admin"))
+                            {
 
-                    }
-                });
-            }
+                                holder.pic.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent ProIntent = new Intent(mContext, ProItemView.class);
+                                        ProIntent.putExtra("PostKey", PostKey);
+                                        mContext.startActivity(ProIntent);
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
             /*else{
 
                 holder.pic.setOnClickListener(new View.OnClickListener() {
@@ -495,7 +521,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }else{
             holder.textQuestion.setText(question.getDescription());
         }
-        int lineCount;//=holder.textQuestion.getLineCount();
+       // int lineCount;//=holder.textQuestion.getLineCount();
 
         //lineCount=holder.textQuestion.getText().toString().split(System.getProperty("line.separator")).length;
         //String count=Integer.toString(lineCount);
@@ -584,13 +610,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             }
         });*/
-            }
+           /* }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
 
     private void SendUserToSnackBarActivity()

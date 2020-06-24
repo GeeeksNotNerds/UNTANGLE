@@ -289,14 +289,10 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
         return new ArrayList<Posts>() {
             {
 
-                UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot)
-                    {
-                        type=dataSnapshot.child("type").getValue().toString();
 
 
-                PostsRef.addValueEventListener(new ValueEventListener() {
+                PostsRef.addValueEventListener(new ValueEventListener()
+                {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot)
@@ -329,34 +325,20 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
                             String uid = dataSnapshot1.child("uid").getValue().toString();
 
-                            int c = 0;
-                            for (int i = 0; i < 1; i++) {
-                                if (uid.equals(mAdmin[i])) {
-                                    c = 1;
-                                    break;
-                                }
-                            }
-                            if (c != 1) {
-                                for (int j = 0; j < 1; j++) {
-                                    if (uid.equals(mClub[j])) {
-                                        c = 2;
-                                        break;
-                                    }
-                                }
-                            }
+
 
                             if (postType.equals("Admin")) {
                                 owner = "Admin";
-                                c = 0;
+                               // c = 0;
                             } else if (postType.equals("Club")) {
                                 owner = "Club";
-                                c = 0;
+                                //c = 0;
                             } else if (currentUserID.equals(uid)) {
                                 owner = "MyPosts";
-                                c = 0;
+                                //c = 0;
                             } else {
                                 owner = "General";
-                                c = 0;
+                                //c = 0;
                             }
 
 
@@ -378,19 +360,19 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                             String date = dataSnapshot1.child("date").getValue().toString();
                             String post = dataSnapshot1.child("description").getValue().toString();
                             //    String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                                if(type.equals("Admin"))
-                                {
+                                //if(type.equals("Admin"))
+                                //{
                                     info=name;
                                     mail=user;
-                                }
-                                else {
-                                    if (show.equals("no")) {
-                                        info = "Anonymous";
-                                        mail = " ";
-                                    } else {
-                                        info = name;
-                                        mail = user;
-                                    }}
+                                //}
+                                //else {
+                                  //  if (show.equals("no")) {
+                                    //    info = "Anonymous";
+                                      //  mail = " ";
+                                    //} else {
+                                      //  info = name;
+                                       // mail = user;
+                                    //}}
 
                                 if (categ.equals("Official")) colour1 = mColors[7];
                                 if (categ.equals("Personal")) colour1 = mColors[8];
@@ -411,12 +393,12 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 if (owner.equals("MyPosts")) colour4 = mColors[3];
                                 if (owner.equals("Club")) colour4 = mColors[2];
                                 if (sub.equals("Placements")) colour2 = mColors[12];
-                                if(categ.equals("Activities"))colour1=mColors[15];
-                                if(sub.equals("Workshops"))colour1=mColors[16];
-                                if(sub.equals("Results"))colour1=mColors[17];
-                                if(sub.equals("Events"))colour1=mColors[18];
+                                if(categ.equals("Activities"))colour1=mColors[23];
+                                if(sub.equals("Workshops"))colour2=mColors[20];
+                                if(sub.equals("Results"))colour2=mColors[21];
+                                if(sub.equals("Events"))colour2=mColors[22];
 
-                            if (mode.equals("Public")) {
+                           /*if (mode.equals("Public")) {
                                 add(new Posts(like,postKey, "" + info, mail, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
                                     add(new Tag(owner, colour4));
                                     add(new Tag(mode, colour3));
@@ -425,36 +407,32 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                                 }}));
-                            } else {
-                                int l = 0;
+                            }*/
+
+                            //else
+                              //  {
+                                /*int l = 0;
                                 for (int i = 0; i < 1; i++) {
                                     if (currentUserID.equals(mAdmin[i])) {
                                         l = 1;
                                         break;
                                     }
-                                }
-                                if (type.equals("Admin") || (uid.equals(currentUserID))) {
-                                    l = 0;
-                                    add(new Posts(like,postKey, info, "" + user, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
-                                        add(new Tag(owner, colour4));
-                                        add(new Tag(mode, colour3));
-                                        add(new Tag(categ, colour1));
-                                        add(new Tag(sub, colour2));
-                                    }}));
-                                }
+                                }*/
+                               // if (type.equals("Admin") || (uid.equals(currentUserID))) {
+                                    //l = 0;
+                                add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
+                                    add(new Tag(owner, colour4));
+                                    add(new Tag(mode, colour3));
+                                    add(new Tag(categ, colour1));
+                                    add(new Tag(sub, colour2));
+                                }}));
+                                //}
                             }
                         }}
                         mAdapter = new StarAdapter(StarActivity.this, mAllQuestions);
                         mRecyclerView.setAdapter(mAdapter);
                     }
-                }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                    }
+                //}
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

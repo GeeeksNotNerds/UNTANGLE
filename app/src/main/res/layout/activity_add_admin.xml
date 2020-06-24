@@ -120,14 +120,7 @@
                 </RelativeLayout>
 
 
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
 
-                    />
 
 
                 <LinearLayout
@@ -207,6 +200,16 @@
                 android:id="@+id/add_admin"
                 android:textColor="@color/colorPrimaryDark"
                 android:elevation="15dp" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_marginTop="50dp"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                />
+
         </LinearLayout>
 
     </ScrollView>

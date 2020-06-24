@@ -107,6 +107,7 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                         public void onDataChange(DataSnapshot dataSnapshot)
                         {
 
+
                             if(!dataSnapshot.hasChild(current_user_id))
                             {
                                 if(Password.equals("12345678")||Password.equals("1234567"))
@@ -173,7 +174,7 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             }
-                            else if(password.equals("123456"))
+                            if(Password.equals("123456"))
                             {
                                 Intent intent=new Intent(Admin_Login.this,MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);

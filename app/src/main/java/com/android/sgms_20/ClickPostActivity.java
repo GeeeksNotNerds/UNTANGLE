@@ -153,7 +153,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
 
                  // if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2") && !databaseUSerID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
-                    if(type.equals("Admin")&& !postType.equals("Admin")){
+                    if(type.equals("Admin")&& !postType.equals("Admin") &&mode.equals("Private")){
                       statusButton.setVisibility(View.VISIBLE);
                       DeletePostButton.setVisibility(View.INVISIBLE);
                       EditPostButton.setVisibility(View.INVISIBLE);
