@@ -68,7 +68,7 @@
                 android:layout_marginLeft="10dp"
                 android:fontFamily="sans-serif-light"
                  android:layout_marginRight="40dp"
-                android:text="You want your post to be Public or Private?"
+                android:text="You want your post to be visible"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
                 android:textSize="20sp"
                  />
@@ -93,17 +93,17 @@
                 android:id="@+id/rg1"
                 android:layout_below="@+id/tv">
                 <RadioButton
+                    android:id="@+id/post_public"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="PUBLIC"
-                    android:id="@+id/post_public"
-                   />
+                    android:text="To all (except admin)" />
+
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="PRIVATE"
+                    android:text="Only to the admin"
                     android:id="@+id/post_private"
                     />
             </RadioGroup>
@@ -366,7 +366,6 @@
 
 
 
-
 </RelativeLayout>
 
 </LinearLayout>
@@ -384,4 +383,16 @@
         app:itemIconTint="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"
         />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_admin"
+        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_admin"
+        tools:ignore="MissingConstraints" />
+
 </RelativeLayout>

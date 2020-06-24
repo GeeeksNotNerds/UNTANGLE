@@ -77,7 +77,7 @@ public class PostActivity extends AppCompatActivity {
     private DatabaseReference UsersRef, PostsRef;
     private FirebaseAuth mAuth;
     RadioGroup rg_mode,rg_mode_opt,rg_cat,rg_cat_off,rg_cat_per,rg_cat_oth;
-    CardView cv2,cv4,cv5,cv6;
+    CardView cv2,cv4,cv5,cv6,cv;
     String UserInfo_show="",UsersRefid;
     String cat1,cat2;
     int Gall=8;
@@ -85,9 +85,11 @@ public class PostActivity extends AppCompatActivity {
     String Mode,category,Sub_Category;
     private Uri resultUri=null;
     ImageView Image;
+    TextView mSelect;
+    Spinner mSpin;
     private RelativeLayout r;
     private ImageButton information;
-
+    private String type;
     private String description,checker="",myUrl;
     private Uri myUri;
     private StorageTask uploadTask;
@@ -99,27 +101,89 @@ public class PostActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        mAuth = FirebaseAuth.getInstance();
+        current_user_id = mAuth.getCurrentUser().getUid();
+
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        cv=findViewById(R.id.cv);
+
+
+
+        PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+
         title=findViewById(R.id.select);
         mLoading=(TextView)findViewById(R.id.loading);
         cv2=findViewById(R.id.cv2);
+        mSelect=findViewById(R.id.select);
+        mSpin=findViewById(R.id.spinner1);
         Media=findViewById(R.id.media);
         progressBar=(ProgressBar)findViewById(R.id.progress_bar1);
+
         //cv4=findViewById(R.id.cv4);
-       // cv5=findViewById(R.id.cv5);
+        // cv5=findViewById(R.id.cv5);
         //cv6=findViewById(R.id.cv6);
-//        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
+
         BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListner);
-        bottomNav.getMenu().findItem(R.id.nav_post).setChecked(true);
+        BottomNavigationView bottomNavigAdmin=findViewById(R.id.bottom_navigation_admin);
+
+        UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                type=dataSnapshot.child("type").getValue().toString();
+
+
+
+       // if(current_user_id.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
+        if(type.equals("Admin"))
+                {
+            bottomNavigAdmin.setVisibility(View.VISIBLE);
+            bottomNav.setVisibility(View.GONE);
+            bottomNavigAdmin.setOnNavigationItemSelectedListener(navListner2);
+            bottomNavigAdmin.getMenu().findItem(R.id.nav_post_admin).setChecked(true);
+        }
+        else
+        {
+            bottomNav.setVisibility(View.VISIBLE);
+            bottomNavigAdmin.setVisibility(View.GONE);
+            bottomNav.setOnNavigationItemSelectedListener(navListner);
+            bottomNav.getMenu().findItem(R.id.nav_post).setChecked(true);
+        }
 
         rg_mode=findViewById(R.id.rg1);
         rg_mode_opt=findViewById(R.id.rg2);
+
         //rg_cat=findViewById(R.id.rg3);
         //rg_cat_off=findViewById(R.id.rg4);
         //rg_cat_per=findViewById(R.id.rg5);
         //rg_cat_oth=findViewById(R.id.rg6);
         Image=findViewById(R.id.ima);
         //r=(RelativeLayout)findViewById(R.id.r1);
+
+        //if(current_user_id.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+        if(type.equals("Club"))
+                {
+            cv.setVisibility(View.GONE);
+            mSpin.setVisibility(View.GONE);
+            mSelect.setVisibility(View.GONE);
+            cat1="Activities";
+            //rg_mode.setVisibility(View.GONE);
+            UserInfo_show="yes";
+            Mode="Public";
+
+        }
+        //else if(current_user_id.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+        if(type.equals("Admin"))
+                {
+            cv.setVisibility(View.GONE);
+           // rg_mode.setVisibility(View.GONE);
+            UserInfo_show="yes";
+            Mode="Public";
+
+        }
+
         information=(ImageButton)findViewById(R.id.info);
 
         information.setOnClickListener(new View.OnClickListener() {
@@ -134,10 +198,10 @@ public class PostActivity extends AppCompatActivity {
                     }
                 }
 
-                if(c==0){
+                if(!type.equals("Admin")){
                     MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
                             .setTitle("Info")
-                            .setMessage("Public posts will be visible to all,while the private posts will only be visible to you and the other admins ")
+                            .setMessage("Posts visible to all except the admin will be shown in the public tab while the posts only to the admin will be visible in the official tab..")
                             .setCancelable(false)
                             .setPositiveButton("Okay,Got it!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
                                 @Override
@@ -192,6 +256,7 @@ public class PostActivity extends AppCompatActivity {
         });
 
 
+
         Media.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,9 +272,10 @@ public class PostActivity extends AppCompatActivity {
         rg_mode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId==R.id.post_public){
+                if(checkedId==R.id.post_public)
+                {
 
-                         cv2.setVisibility(View.VISIBLE);
+                         /*cv2.setVisibility(View.VISIBLE);
                          rg_mode_opt.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                              @Override
                              public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -222,11 +288,16 @@ public class PostActivity extends AppCompatActivity {
                                      Mode="Public";
                                  }
                              }
-                         });
+                         });*/
+
+                    UserInfo_show="yes";
+                    Mode="Public";
 
 
 
-                }else{
+                }
+                else
+                    {
 
                     cv2.setVisibility(View.GONE);
                     Mode="Private";
@@ -243,40 +314,50 @@ public class PostActivity extends AppCompatActivity {
         final ArrayAdapter<String> adapter2=new ArrayAdapter<String>(PostActivity.this,android.R.layout.simple_expandable_list_item_1,getResources().getStringArray(R.array.sub1));
         final ArrayAdapter<String> adapter3=new ArrayAdapter<String>(PostActivity.this,android.R.layout.simple_expandable_list_item_1,getResources().getStringArray(R.array.sub2));
         final ArrayAdapter<String> adapter4=new ArrayAdapter<String>(PostActivity.this,android.R.layout.simple_expandable_list_item_1,getResources().getStringArray(R.array.sub3));
+        final ArrayAdapter<String> adapter5=new ArrayAdapter<String>(PostActivity.this,android.R.layout.simple_expandable_list_item_1,getResources().getStringArray(R.array.clubs));
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinner1.setAdapter(adapter1);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String label=parent.getItemAtPosition(position).toString();
-                cat1=label;
 
-                if(label.equals("Official"))
-                {
-                    spinner2.setAdapter(adapter2);
+        //if(current_user_id.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
+                if(type.equals("Club"))
+        {
+            spinner2.setAdapter(adapter5);
+        }
+
+        else {
+
+            spinner1.setAdapter(adapter1);
+            spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String label = parent.getItemAtPosition(position).toString();
+                    cat1 = label;
+
+
+                    if (label.equals("Official")) {
+                        spinner2.setAdapter(adapter2);
+                    } else if (label.equals("Personal")) {
+                        spinner2.setAdapter(adapter3);
+                    } else {
+                        spinner2.setAdapter(adapter4);
+                    }
+
                 }
-                else if(label.equals("Personal"))
-                {
-                    spinner2.setAdapter(adapter3);
+
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
                 }
-                else {
-                    spinner2.setAdapter(adapter4);
-                }
-
-            }
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+            });
+        }
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
                 cat2=parent.getItemAtPosition(position).toString();
             }
 
@@ -382,14 +463,7 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-        mAuth = FirebaseAuth.getInstance();
-        current_user_id = mAuth.getCurrentUser().getUid();
 
-        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
-
-
-
-        PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
 
 
 
@@ -402,7 +476,7 @@ public class PostActivity extends AppCompatActivity {
             }
         }
 
-        if(c==0){
+        if(type.equals("Admin")){
 
             title.setText("Select Your Announcement Category");
         }
@@ -410,7 +484,7 @@ public class PostActivity extends AppCompatActivity {
 
         PostDescription=(EditText)findViewById(R.id.post_description);
         UpdatePostButton=findViewById(R.id.update_post_button);
-        loadingBar = new ProgressDialog(this);
+        loadingBar = new ProgressDialog(PostActivity.this);
 
        // mToolbar=(Toolbar)findViewById(R.id.update_post_page_toolbar);
         //setSupportActionBar(mToolbar);
@@ -422,6 +496,13 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 ValidatePostInfo();
+
+            }
+        });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -439,8 +520,9 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-           // progressBar.setVisibility(View.VISIBLE);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+        {
+            // progressBar.setVisibility(View.VISIBLE);
             Log.d(TAG, "onActivityResult: CROP IMAGE");
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
@@ -486,13 +568,13 @@ public class PostActivity extends AppCompatActivity {
             Toast.makeText(this, "Post cannot be left empty..", Toast.LENGTH_SHORT).show();
         }
         else if(UserInfo_show.isEmpty()){
-        Toast.makeText(this, "Please Select the mode of posting(public or private), and if the mode is public...select if you wish to post anonymously or no!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Please Select the mode of posting (public or private), and if the mode is public...select if you wish to post anonymously or no!", Toast.LENGTH_SHORT).show();
            }
         else
         {
             MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
                     .setTitle("Post It..")
-                    .setMessage("Users details,even in the anonymous posts,will be visible to the admin." +
+                    .setMessage("Be sure of the content you are posting..admin can scan your credentials in case of any spam!" +
                             "Are you sure you want to post this?")
                     .setCancelable(false)
                     .setPositiveButton("Yes,Post It", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
@@ -599,6 +681,7 @@ public class PostActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
+                    type=dataSnapshot.child("type").getValue().toString();
                     int c = 0;
                     for (int i = 0; i < 1; i++) {
                         if (current_user_id.equals(mAdmin[i])) {
@@ -607,17 +690,19 @@ public class PostActivity extends AppCompatActivity {
                         }
                     }
                     String userAdmissionNo;
-                        if(c==1)
+                        if(type.equals("Admin")||type.equals("Club"))
                         {
                              userAdmissionNo=dataSnapshot.child("designation").getValue().toString();
                         }
-                        else {
+                        else
+                            {
                              userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
                         }
                         //String userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
                         String userFullName = dataSnapshot.child("username").getValue().toString();
 //                        String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
                         String userEmail=dataSnapshot.child("email").getValue().toString();
+                        String postType=dataSnapshot.child("type").getValue().toString();
 
 
                     HashMap postsMap = new HashMap();
@@ -635,6 +720,7 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("showInformation",UserInfo_show);
                     postsMap.put("PostKey",postRandomName+current_user_id);
                     postsMap.put("status","Unresolved");
+                    postsMap.put("postType",postType);
 
 
                    if(check==1){
@@ -708,6 +794,49 @@ public class PostActivity extends AppCompatActivity {
 
 
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListner2=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId())
+                    {
+                        case R.id.nav_home_admin:
+                            Intent intent4=new Intent(PostActivity.this,MainActivity.class);
+                            startActivity(intent4);
+                            intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            finish();
+                            break;
+                        case R.id.nav_post_admin:
+                            Intent intent=new Intent(PostActivity.this,PostActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                             finish();
+                            break;
+                        case R.id.nav_profile_admin:
+                            Intent Pintent=new Intent(PostActivity.this,ProfileActivity.class);
+                            Pintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent);
+                            finish();
+                            break;
+                        case R.id.nav_star_admin:
+                            Intent Pintent1=new Intent(PostActivity.this,StarActivity.class);
+                            Pintent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent1);
+                            finish();
+                            break;
+                        case R.id.nav_add_admin:
+                            Intent Pintent2=new Intent(PostActivity.this,AddAdmin.class);
+                            Pintent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(Pintent2);
+                            finish();
+                            break;
+
+                    }
+
+                    return true;
+                }
+            };
     private BottomNavigationView.OnNavigationItemSelectedListener
             navListner=
             new BottomNavigationView.OnNavigationItemSelectedListener() {

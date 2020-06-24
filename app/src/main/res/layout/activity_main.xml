@@ -44,6 +44,52 @@
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:id="@+id/tabs"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:weightSum="3"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/tabtype"
+            android:drawableLeft="@drawable/publictab"
+            android:text="PUBLIC"
+            android:textColor="@color/colorPrimaryDark" />
+        <Button
+            android:drawableLeft="@drawable/official"
+            android:id="@+id/admin"
+            android:background="@drawable/tabtypeno"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="OFFICIAL"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:paddingLeft="15dp"
+            android:id="@+id/club"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/tabtypeno"
+            android:drawableLeft="@drawable/events"
+            android:text="CLUBS"
+            android:textColor="@color/colorPrimaryDark" />
+
+
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -79,14 +125,14 @@
     </FrameLayout>
     <HorizontalScrollView
         android:layout_width="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/tabs"
         android:id="@+id/sort"
         android:layout_height="wrap_content">
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+
 
         android:layout_margin="10dp"
 
@@ -152,6 +198,18 @@
         app:itemTextColor="@color/bottom_nav_color"
         app:itemIconTint="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_admin"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_admin"
         tools:ignore="MissingConstraints" />
 
 

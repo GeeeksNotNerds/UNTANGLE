@@ -5,22 +5,31 @@ public class Comments
 
 
 
-    public String comment,date,time,username;
+    public String comment,date,time,username,cid;
 
     public Comments()
     {
 
     }
 
-    public Comments(String comment, String date, String time, String username) {
+    public Comments(String comment,String cid, String date, String time, String username) {
         this.comment = comment;
         this.date = date;
         this.time = time;
+        this.cid=cid;
         this.username = username;
     }
 
     public String getComment() {
         return comment;
+    }
+
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 
     public void setComment(String comment) {

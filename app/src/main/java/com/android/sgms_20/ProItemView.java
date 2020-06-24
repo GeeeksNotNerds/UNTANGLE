@@ -23,9 +23,9 @@ public class ProItemView extends AppCompatActivity {
 
     TextView Name,Email,Depatment,AdNo;
     CircleImageView image;
-
+    String type;
     private String PostKey,currentUserID,databaseUSerID,description,Status,permission,ProfileImage,Pro,admissionNo,department;
-    private DatabaseReference ClickPostRef,ProRef;
+    private DatabaseReference ClickPostRef,ProRef,UserRef;
 
     private FirebaseAuth mAuth;
 
@@ -51,6 +51,7 @@ public class ProItemView extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
         PostKey=getIntent().getExtras().get("PostKey").toString();
+        UserRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
 
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
 
@@ -68,7 +69,7 @@ public class ProItemView extends AppCompatActivity {
 
 
 
-                    ProRef=FirebaseDatabase.getInstance().getReference().child("Users").child(Pro);
+                    ProRef=FirebaseDatabase.getInstance().getReference().child("Users").child(Pro);//pro is uid of the one who is posting
 
                     ProRef.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -78,7 +79,7 @@ public class ProItemView extends AppCompatActivity {
                                // ProfileImage="";
 
 
-                               if(permission.equals("yes")){
+                               //if(permission.equals("yes")){
 
                                   //  Picasso.with(ProItemView.this)
                                     //        .load(ProfileImage)
@@ -97,37 +98,48 @@ public class ProItemView extends AppCompatActivity {
                                     description = dataSnapshot.child("username").getValue().toString();
                                     Status = dataSnapshot.child("email").getValue().toString();
                                     department=dataSnapshot.child("department").getValue().toString();
+                                    String postType=dataSnapshot.child("type").getValue().toString();
 
-                                    if(Pro.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+
+                                   // if(Pro.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if post is from admin
+                                 /*  if(postType.equals("Admin"))
+                                    {
                                         admissionNo=dataSnapshot.child("designation").getValue().toString();
                                         AdNo.setText("Designation : ");
 
                                     }
-                                    else {
+                                    else
+                                        {
                                         admissionNo = dataSnapshot.child("admission_number").getValue().toString();
-                                    }
+                                    }*/
                                     Email.setText("Email : " +Status);
 
                                     Name.setText("Name : "+description);
 
                                     Depatment.setText("Department : "+department);
-                                   if(Pro.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+
+                                   //if(Pro.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
+                                   if(postType.equals("Admin")||postType.equals("Club"))
+                                   {
                                        admissionNo=dataSnapshot.child("designation").getValue().toString();
                                        AdNo.setText("Designation : "+admissionNo);
 
                                    }
-                                   else {
+                                   else
+                                       {
                                        admissionNo = dataSnapshot.child("admission_number").getValue().toString();
                                        AdNo.setText("Admission Number : "+admissionNo);
                                    }
-                                }
-                                else if(permission.equals("no") && !currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                                //}
+
+                                 /*if(permission.equals("no") && !currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
                                     Email.setText("-");
                                     AdNo.setText("-");
                                     Depatment.setText("-");
 
                                     Name.setText("Anonymous");
-                                }else if(permission.equals("no") && currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+                                }*/
+                                /*else if(permission.equals("no") && currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
 
                                    description = dataSnapshot.child("username").getValue().toString();
                                    Status = dataSnapshot.child("email").getValue().toString();
@@ -137,8 +149,10 @@ public class ProItemView extends AppCompatActivity {
                                        admissionNo=dataSnapshot.child("designation").getValue().toString();
 
 
-                                   }
-                                   else {
+                                   }*/
+
+                                   /*else
+                                       {
                                        admissionNo = dataSnapshot.child("admission_number").getValue().toString();
                                    }
                                    Email.setText("Email : "+Status);
@@ -151,12 +165,13 @@ public class ProItemView extends AppCompatActivity {
                                        AdNo.setText("Designation : "+admissionNo);
 
                                    }
-                                   else {
+                                   else
+                                       {
                                        admissionNo = dataSnapshot.child("admission_number").getValue().toString();
                                        AdNo.setText("Admission Number : "+admissionNo);
                                    }
 
-                               }
+                               }*/
                             }
 
                         }
