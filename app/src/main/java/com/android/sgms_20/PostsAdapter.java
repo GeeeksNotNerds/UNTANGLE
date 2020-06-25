@@ -494,8 +494,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
       {
           holder.PostImage.setVisibility(View.VISIBLE);
 
-          holder.PostImage.getLayoutParams().height=350;
-          holder.PostImage.getLayoutParams().width=350;
+          holder.PostImage.getLayoutParams().height=600;
+          holder.PostImage.getLayoutParams().width=600;
           holder.PostImage.requestLayout();
 
           Picasso.with(context)
@@ -522,8 +522,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
       }else if(!x.equals("null")){
 
           holder.PostImage.setVisibility(View.VISIBLE);
-          holder.PostImage.getLayoutParams().height=150;
-          holder.PostImage.getLayoutParams().width=150;
+          holder.PostImage.getLayoutParams().height=300;
+          holder.PostImage.getLayoutParams().width=300;
           holder.PostImage.requestLayout();
 
           holder.PostImage.setImageResource(R.drawable.pdf);

@@ -11,6 +11,7 @@
     tools:context=".PostActivity">
     <ScrollView
         android:layout_width="wrap_content"
+        android:layout_marginBottom="70dp"
         android:layout_height="wrap_content">
 <LinearLayout
     android:layout_width="wrap_content"
@@ -331,8 +332,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/progress_bar1"
         android:visibility="gone"
+        android:layout_below="@id/cv3"
+        android:layout_marginTop="40dp"
+
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        />
 
     <ImageButton
             android:id="@+id/update_post_button"

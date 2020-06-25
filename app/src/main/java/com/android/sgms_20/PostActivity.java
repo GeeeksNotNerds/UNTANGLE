@@ -418,112 +418,6 @@ public class PostActivity extends AppCompatActivity {
 
         PostImageRef=FirebaseStorage.getInstance().getReference();
 
-        /*rg_cat.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId==R.id.post_official) {
-                    cv4.setVisibility(View.VISIBLE);
-                    cv5.setVisibility(View.GONE);
-                    cv6.setVisibility(View.GONE);
-
-                    rg_cat_off.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            if (checkedId == R.id.post_official_academic) {
-                                category = "officialGrievance";
-                                Sub_Category = "academic";
-                            } else if (checkedId == R.id.post_official_admission) {
-                                category = "officialGrievance";
-                                Sub_Category = "admission";
-
-                            } else if (checkedId == R.id.post_official_finance) {
-                                category = "officialGrievance";
-                                Sub_Category = "finance";
-                            }
-                        }
-
-                        ;
-
-                    });
-                }
-                else if(checkedId==R.id.post_personal){
-                    cv4.setVisibility(View.GONE);
-                    cv5.setVisibility(View.VISIBLE);
-                    cv6.setVisibility(View.GONE);
-
-                    rg_cat_per.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            if (checkedId == R.id.post_personal_health) {
-                                category = "personalIssue";
-                                Sub_Category = "health";
-                            } else if (checkedId == R.id.post_personal_housing) {
-                                category = "personalIssue";
-                                Sub_Category = "housing";
-
-                            } else if (checkedId == R.id.post_personal_rightviolation) {
-                                category = "personalIssue";
-                                Sub_Category = "rightViolation";
-                            }
-                        }
-
-                        ;
-
-                    });
-
-
-                }
-                else if(checkedId==R.id.post_other){
-                    cv4.setVisibility(View.GONE);
-                    cv5.setVisibility(View.GONE);
-                    cv6.setVisibility(View.VISIBLE);
-
-
-                    rg_cat_oth.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            if (checkedId == R.id.post_other_announcement) {
-                                category = "other";
-                                Sub_Category = "announcement";
-                            } else if (checkedId == R.id.post_other_comp) {
-                                category = "other";
-                                Sub_Category = "competetion";
-
-                            } else if (checkedId == R.id.post_other_intern) {
-                                category = "other";
-                                Sub_Category = "intern";
-                            } else if (checkedId == R.id.post_other_placements) {
-                                category = "other";
-                                Sub_Category = "placements";
-                            }
-                        }
-
-                        ;
-
-                    });
-
-
-
-                }
-
-            }
-        });*/
-
-
-
-
-
-
-
-
-
-        int c=1;
-        for(int i=0;i<1;i++){
-            if(current_user_id.equals(mAdmin[i])){
-                c=0;
-                break;
-            }
-        }
 
         if(type.equals("Admin")||type.equals("SubAdmin")){
 
@@ -600,7 +494,7 @@ public class PostActivity extends AppCompatActivity {
 
             if (requestCode == Gall && resultCode == RESULT_OK) {
 
-                progressBar.setVisibility(View.VISIBLE);
+                //progressBar.setVisibility(View.VISIBLE);
 
 
                 fileUri = data.getData();
@@ -625,19 +519,30 @@ public class PostActivity extends AppCompatActivity {
         if(UserInfo_show.isEmpty()){
             Toast.makeText(this, "Please Select the mode of posting (public or private), and if the mode is public...select if you wish to post anonymously or no!", Toast.LENGTH_SHORT).show();
         }
-        else if(resultUri!=null){
-            storingImageToFirebaseStorage();
-        }
-        else if(fileUri!= null){
-            stringFileToFirebaseStorage();
-        }
         else if(TextUtils.isEmpty(description)&& resultUri==null && fileUri==null)
         {
             Toast.makeText(this, "Post cannot be left empty..", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
+            if(resultUri!=null){
+                UpdatePostButton.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+            storingImageToFirebaseStorage(); }
+
+            else if(fileUri!= null){
+                UpdatePostButton.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+            stringFileToFirebaseStorage(); }
+
+         /*   else if(TextUtils.isEmpty(description)&& resultUri==null && fileUri==null)
+        {
+            Toast.makeText(this, "Post cannot be left empty..", Toast.LENGTH_SHORT).show();
+        }*/
+         else
+        {
+            SavingPostInformationToDatabase();
+            /*MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
                     .setTitle("Post It..")
                     .setMessage("Be sure of the content you are posting..admin can scan your credentials in case of any spam!" +
                             "Are you sure you want to post this?")
@@ -680,10 +585,10 @@ public class PostActivity extends AppCompatActivity {
                     .build();
 
             // Show Dialog
-            mDialog.show();
+            mDialog.show();*/
 
 
-        }
+        }}
 
 
 
@@ -692,12 +597,9 @@ public class PostActivity extends AppCompatActivity {
     private void stringFileToFirebaseStorage() {
 
 
-       UpdatePostButton.setVisibility(View.INVISIBLE);
-        mLoading.setVisibility(View.VISIBLE);
+       //UpdatePostButton.setVisibility(View.INVISIBLE);
+      //  mLoading.setVisibility(View.VISIBLE);
         StorageReference filePath1=PostImageRef.child("Post PDF").child(fileUri.getLastPathSegment()+postRandomName+".pdf");
-
-
-
 
 
         filePath1.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -707,19 +609,25 @@ public class PostActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         downloadUrlp = uri.toString();
-                        PostsRef.child(postRandomName+current_user_id).child("PostPDF").setValue(downloadUrlp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        check1=0;
+                        Toast.makeText(PostActivity.this, "PDF Stored", Toast.LENGTH_SHORT).show();
+                       // mLoading.setVisibility(View.GONE);
+                        SavingPostInformationToDatabase();
+                        progressBar.setVisibility(View.GONE);
+                        Checker.equals("PDF");
+                        //mLoading.setVisibility(View.GONE);
+                       /* PostsRef.child(postRandomName+current_user_id).child("PostPDF").setValue(downloadUrlp).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(PostActivity.this, "PDF Stored", Toast.LENGTH_SHORT).show();
                                     check1=0;
-
-                                  UpdatePostButton.setVisibility(View.VISIBLE);
-
-
+                                    mLoading.setVisibility(View.GONE);
+                                    UpdatePostButton.setVisibility(View.VISIBLE);
                                     progressBar.setVisibility(View.GONE);
 
-                                } else
+                                }
+                                else
                                 {
                                     String message = task.getException().getMessage();
                                     Toast.makeText(PostActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
@@ -729,7 +637,7 @@ public class PostActivity extends AppCompatActivity {
                                 }
 
                             }
-                        });
+                        });*/
 
                     }
                 });
@@ -743,8 +651,8 @@ public class PostActivity extends AppCompatActivity {
 
     private void storingImageToFirebaseStorage() {
 
-        UpdatePostButton.setVisibility(View.INVISIBLE);
-        mLoading.setVisibility(View.VISIBLE);
+        //UpdatePostButton.setVisibility(View.INVISIBLE);
+        //mLoading.setVisibility(View.VISIBLE);
         StorageReference filePath=PostImageRef.child("Post Images").child(resultUri.getLastPathSegment()+postRandomName+".jpg");
 
 
@@ -758,7 +666,14 @@ public class PostActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         downloadUrl = uri.toString();
-                        PostsRef.child(postRandomName+current_user_id).child("PostImage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        check=0;
+                        SavingPostInformationToDatabase();
+                        Toast.makeText(PostActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        Checker="Image";
+                        //mLoading.setVisibility(View.GONE);
+                       // mLoading.setVisibility(View.GONE);
+                        /*PostsRef.child(postRandomName+current_user_id).child("PostImage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
@@ -780,7 +695,7 @@ public class PostActivity extends AppCompatActivity {
                                 }
 
                             }
-                        });
+                        });*/
 
                     }
                 });
@@ -795,20 +710,173 @@ public class PostActivity extends AppCompatActivity {
 
     private void SavingPostInformationToDatabase()
     {
-        UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+
+
+
+
+        MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
+                .setTitle("Post It..")
+                .setMessage("Be sure of the content you are posting..admin can scan your credentials in case of any spam!" +
+                        "Are you sure you want to post this?")
+                .setCancelable(false)
+                .setPositiveButton("Yes,Post It", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which)
+                    {
+                        loadingBar.setTitle("Add New Post");
+                        loadingBar.setMessage("Please wait, while we are updating your new post...");
+                        loadingBar.show();
+                        loadingBar.setCanceledOnTouchOutside(true);
+
+
+                        Calendar calFordDate = Calendar.getInstance();
+                        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+                        saveCurrentDate = currentDate.format(calFordDate.getTime());
+
+                        Calendar calFordTime = Calendar.getInstance();
+                        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+                        saveCurrentTime = currentTime.format(calFordDate.getTime());
+
+                        postRandomName = saveCurrentDate + saveCurrentTime;
+
+                        //SavingPostInformationToDatabase();
+
+                        UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot)
+                            {
+                                if(dataSnapshot.exists())
+                                {
+                                    type=dataSnapshot.child("type").getValue().toString();
+
+                                    String userAdmissionNo;
+                                    if(type.equals("Admin")||type.equals("SubAdmin")||type.equals("Club"))
+                                    {
+                                        userAdmissionNo=dataSnapshot.child("designation").getValue().toString();
+                                    }
+                                    else
+                                    {
+                                        userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
+                                    }
+                                    //String userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
+                                    String userFullName = dataSnapshot.child("username").getValue().toString();
+//                        String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
+                                    String userEmail=dataSnapshot.child("email").getValue().toString();
+                                    String postType=dataSnapshot.child("type").getValue().toString();
+
+
+                                    HashMap postsMap = new HashMap();
+                                    postsMap.put("uid", current_user_id);
+                                    postsMap.put("date", saveCurrentDate);
+                                    postsMap.put("time", saveCurrentTime);
+                                    postsMap.put("description", description);
+                                    // postsMap.put("type",Checker);
+                                    postsMap.put("mode", Mode);
+                                    postsMap.put("admissionNo",userAdmissionNo);
+                                    postsMap.put("category", cat1);
+                                    postsMap.put("subCategory", cat2);
+                                    //                  postsMap.put("profileImage", userProfileImage);
+                                    postsMap.put("username", userFullName);
+                                    postsMap.put("email",userEmail);
+                                    postsMap.put("showInformation",UserInfo_show);
+                                    postsMap.put("PostKey",postRandomName+current_user_id);
+                                    postsMap.put("status","Unresolved");
+                                    postsMap.put("postType",postType);
+
+
+                                    if(check==1){
+                                        postsMap.put("PostImage","null");
+                                    }
+                                    if(check==0)
+                                    {
+                                        postsMap.put("PostImage",downloadUrl);
+                                    }
+                                    if(check1==1) {
+                                        postsMap.put("PostPDF","null");
+                                    }
+                                    if(check1==0)
+                                    {
+                                        postsMap.put("PostPDF",downloadUrlp);
+                                    }
+
+
+
+                                    // postsMap.put("star","no");
+                                    postsMap.put("likes","0");
+                                    PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
+                                            .addOnCompleteListener(new OnCompleteListener() {
+                                                @Override
+                                                public void onComplete(@NonNull Task task)
+                                                {
+                                                    if(task.isSuccessful())
+                                                    {
+
+                                                        //loadingBar.dismiss();
+                                                        SendUserToMainActivity();
+                                                       // progressBar.setVisibility(View.VISIBLE);
+                                                        Toast.makeText(PostActivity.this, "New Post is updated successfully.", Toast.LENGTH_LONG).show();
+                                                        mLoading.setVisibility(View.GONE);
+
+                                                    }
+                                                    else
+                                                    {
+                                                        //loadingBar.dismiss();
+                                                        Toast.makeText(PostActivity.this, "Error Occured while updating your post.", Toast.LENGTH_LONG).show();
+                                                        mLoading.setVisibility(View.GONE);
+                                                    }
+                                                }
+                                            });
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+                        dialogInterface.dismiss();
+                    }
+
+
+                })
+                .setNegativeButton("No,Leave It", R.drawable.ic_baseline_cancel_schedule_send_24, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which)
+                    {
+                        Toast.makeText(PostActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                        UpdatePostButton.setVisibility(View.VISIBLE);
+                        dialogInterface.dismiss();
+
+                    }
+                })
+                .build();
+
+        // Show Dialog
+        mDialog.show();
+
+
+
+
+        Calendar calFordDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+        saveCurrentDate = currentDate.format(calFordDate.getTime());
+
+        Calendar calFordTime = Calendar.getInstance();
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+        saveCurrentTime = currentTime.format(calFordDate.getTime());
+
+        postRandomName = saveCurrentDate + saveCurrentTime;
+        /*UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
                 if(dataSnapshot.exists())
                 {
                     type=dataSnapshot.child("type").getValue().toString();
-                    int c = 0;
-                    for (int i = 0; i < 1; i++) {
-                        if (current_user_id.equals(mAdmin[i])) {
-                            c = 1;
-                            break;
-                        }
-                    }
+
                     String userAdmissionNo;
                         if(type.equals("Admin")||type.equals("SubAdmin")||type.equals("Club"))
                         {
@@ -847,6 +915,10 @@ public class PostActivity extends AppCompatActivity {
                    if(check==1){
                        postsMap.put("PostImage","null");
                    }
+                   if(check==0)
+                   {
+                       postsMap.put("PostImage",downloadUrl);
+                   }
                    if(check1==1) {
                        postsMap.put("PostPDF","null");
                    }
@@ -883,7 +955,7 @@ public class PostActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
     }
 
@@ -933,17 +1005,17 @@ public class PostActivity extends AppCompatActivity {
 
         }else{
 
-            progressBar.setVisibility(View.VISIBLE);
+           /* progressBar.setVisibility(View.VISIBLE);
             new Handler().postDelayed(new Runnable() {
                 @Override
-                public void run() {
+                public void run() {*/
                     Intent intent = new Intent(PostActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
-                }
-            }, 1000);
-            progressBar.setVisibility(View.GONE);
+                //}
+            //}, 1000);
+            //progressBar.setVisibility(View.GONE);
         }
 
 
