@@ -409,7 +409,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         {
             bottomNav.setVisibility(View.GONE);
             bottomNavAdmin.setVisibility(View.VISIBLE);
+           // bottomNavAdmin.getMenu().findItem(R.id.nav_home_admin).setChecked(true);
             bottomNavAdmin.setOnNavigationItemSelectedListener(navListner2);
+            bottomNavAdmin.getMenu().findItem(R.id.nav_home_admin).setChecked(true);
         }
         else
         {
@@ -418,10 +420,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
             bottomNav.setOnNavigationItemSelectedListener(navListner1);
+            bottomNav.getMenu().findItem(R.id.nav_home).setChecked(true);
         }
         else
          {
             bottomNav.setOnNavigationItemSelectedListener(navListner);
+            bottomNav.getMenu().findItem(R.id.nav_home).setChecked(true);
          }
         }
         int d = 0;
