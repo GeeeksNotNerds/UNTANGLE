@@ -110,16 +110,16 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
 
                             if(!dataSnapshot.hasChild(current_user_id))
                             {
-                                if(Password.equals("12345678")||Password.equals("1234567"))
+                                if(Password.equals("12345678"))
                                 {
                                     type="Admin";
                                    // c++;
                                     //mAdmin[c]=current_user_id;
                                 }
-                                /*else if(Password.equals("1234567"))
+                                else if(Password.equals("1234567"))
                                 {
                                     type="SubAdmin";
-                                }*/
+                                }
                                 else
                                 {
                                     type="Club";

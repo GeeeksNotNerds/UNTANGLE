@@ -120,7 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-                        if (type.equals("Admin")||type.equals("Club"))
+                        if (type.equals("Admin")||type.equals("Club")||type.equals("SubAdmin"))
                         {
                             //String myProfileImage="";
                              //if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
@@ -156,7 +156,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                             //pro.setImageDrawable(mDrawableBuilder);
 
-                        } else if (!type.equals("Admin")) {
+                        } else if (!type.equals("Admin")&&(!type.equals("SubAdmin"))) {
                             //String myProfileImage="";
                               //if(dataSnapshot.child("ProfileImage").exists())  myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 

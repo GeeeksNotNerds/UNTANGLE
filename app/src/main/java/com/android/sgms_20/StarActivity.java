@@ -327,7 +327,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-                            if (postType.equals("Admin")) {
+                            if (postType.equals("Admin")||postType.equals("SubAdmin")) {
                                 owner = "Admin";
                                // c = 0;
                             } else if (postType.equals("Club")) {

@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
        // if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||currentUserID.equals("HwRTgHAQF4UyfkoP8r0zN3MmO4y2"))
-        if(type.equals("Admin"))
+        if(type.equals("Admin")||type.equals("SubAdmin"))
                 {
            MyPostRef.addValueEventListener(new ValueEventListener() {
                @Override
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mFilter.build();
 
        // if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-        if(type.equals("Admin"))
+        if(type.equals("Admin")||type.equals("SubAdmin"))
                 {
             PublicTab.setText("Private");
         }
@@ -433,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         }
 
        // if(d==1)
-                if(type.equals("Admin"))
+                if(type.equals("Admin")||type.equals("SubAdmin"))
         {
             Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                     .getBoolean("isFirstRun", true);
@@ -571,7 +571,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         }
                                     }
 
-                                    if (postType.equals("Admin")) {
+                                    if (postType.equals("Admin")||postType.equals("SubAdmin")) {
                                         owner = "Admin";
                                         c = 0;
                                     } else if (postType.equals("Club")) {
@@ -605,7 +605,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                                    if(type.equals("Admin"))
+                                    if(type.equals("Admin")||type.equals("SubAdmin"))
                                     {
                                         info=name;
                                         mail=user;
@@ -644,7 +644,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if(sub.equals("Events"))colour2=mColors[22];
 
                                     String like=dataSnapshot1.child("likes").getValue().toString();
-                                    if(postType.equals("Admin")||(uid.equals(currentUserID)&& mode.equals("Private")))
+                                    if(postType.equals("Admin")||postType.equals("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))
                                     {
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
@@ -695,7 +695,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         }
                                     }
 
-                                    if (postType.equals("Admin")) {
+                                    if (postType.equals("Admin")||postType.equals("SubAdmin")) {
                                         owner = "Admin";
                                         c = 0;
                                     } else if (postType.equals("Club")) {
@@ -728,7 +728,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String date = dataSnapshot1.child("date").getValue().toString();
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                                    if(type.equals("Admin"))
+                                    if(type.equals("Admin")||type.equals("SubAdmin"))
                                     {
                                         info=name;
                                         mail=user;
@@ -771,7 +771,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                    // if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
 
                                     //if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                                    if(postType.equals("Admin")||(uid.equals(currentUserID)&& mode.equals("Private")))
+                                    if(postType.equals("Admin")||postType.equals("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))
 
                                     {
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
@@ -811,7 +811,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String postType=dataSnapshot1.child("postType").getValue().toString();
 
 
-                                    if (postType.equals("Admin")) {
+                                    if (postType.equals("Admin")||postType.equals("SubAdmin")) {
                                         owner = "Admin";
                                     //    c = 0;
                                     } else if (postType.equals("Club")) {
@@ -844,7 +844,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                                    if(type.equals("Admin"))
+                                    if(type.equals("Admin")||type.equals("SubAdmin"))
                                     {
                                         info=name;
                                         mail=user;
@@ -922,7 +922,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String uid = dataSnapshot1.child("uid").getValue().toString();
                                     String postType = dataSnapshot1.child("postType").getValue().toString();
 
-                                    if (postType.equals("Admin")) {
+                                    if (postType.equals("Admin")||postType.equals("SubAdmin")) {
                                         owner = "Admin";
                                     //    c = 0;
                                     } else if (postType.equals("Club")) {
@@ -956,7 +956,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                                    if (type.equals("Admin")) {
+                                    if (type.equals("Admin")||type.equals("SubAdmin")) {
                                         info = name;
                                         mail = user;
                                     } else {
@@ -1056,7 +1056,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         }
                                     }
 
-                                    if (postType.equals("Admin")) {
+                                    if (postType.equals("Admin")||postType.equals("SubAdmin")) {
                                         owner = "Admin";
                                         c = 0;
                                     } else if (postType.equals("Club")) {
@@ -1089,7 +1089,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                                    if(type.equals("Admin"))
+                                    if(type.equals("Admin")||type.equals("SubAdmin"))
                                     {
                                         info=name;
                                         mail=user;
@@ -1136,10 +1136,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                                    // if((!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))&&(!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2")))
-                                    if((!postType.equals("Admin"))&&(!postType.equals("Club")))
+                                    if((!postType.equals("Admin"))&&(!postType.equals("SubAdmin"))&&(!postType.equals("Club")))
                                     {
                                        // if(mode.equals("Private")&&currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")&&adminCat.equals(sub))
-                                        if(mode.equals("Private") && type.equals("Admin") && adminCat.equals(sub))
+                                        if(mode.equals("Private") && (type.equals("Admin")||type.equals("SubAdmin")) && adminCat.equals(sub))
                                         {
                                             add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
@@ -1148,7 +1148,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                                 add(new Tag(sub, colour2));
                                             }}));
                                         }
-                                        else if(mode.equals("Public")&&(!type.equals("Admin")))
+                                        else if(mode.equals("Public")&&(!type.equals("Admin"))&&(!type.equals("SubAdmin")))
                                         {
                                             add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
@@ -1233,7 +1233,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String postType=dataSnapshot1.child("postType").getValue().toString();
 
 
-                                    if (postType.equals("Admin")) {
+                                    if (postType.equals("Admin")||postType.equals("SubAdmin")) {
                                         owner = "Admin";
                                     //    c = 0;
                                     } else if (postType.equals("Club")) {
@@ -1266,7 +1266,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                                    if(type.equals("Admin"))
+                                    if(type.equals("Admin")||type.equals("SubAdmin"))
                                     {
                                         info=name;
                                         mail=user;
@@ -1312,10 +1312,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                                    // if((!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))&&(!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2")))
-                                    if((!postType.equals("Admin")) && (!postType.equals("Club")))
+                                    if((!postType.equals("Admin"))&&(!postType.equals("SubAdmin")) && (!postType.equals("Club")))
                                     {
                                         //if(mode.equals("Private")&&currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")&&adminCat.equals(sub))
-                                        if(mode.equals("Private") && type.equals("Admin")&&adminCat.equals(sub))
+                                        if(mode.equals("Private") && (type.equals("Admin")||type.equals("SubAdmin"))&&adminCat.equals(sub))
                                         {
                                             add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
@@ -1325,7 +1325,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                             }}));
                                         }
                                         //else if(mode.equals("Public")&&(!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
-                                        else if(mode.equals("Public")&&(!type.equals("Admin")))
+                                        else if(mode.equals("Public")&&(!type.equals("Admin"))&&(!type.equals("SubAdmin")))
                                         {
                                             add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
@@ -1547,7 +1547,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 {
                     type=dataSnapshot.child("type").getValue().toString();
                     //if(!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||!currentUserID.equals("HwRTgHAQF4UyfkoP8r0zN3MmO4y2"))
-                      if(!type.equals("Admin")&&!type.equals("Club"))
+                      if(!type.equals("Admin")&&!type.equals("SubAdmin")&&!type.equals("Club"))
                         CheckUserExistence();
                 }
 
