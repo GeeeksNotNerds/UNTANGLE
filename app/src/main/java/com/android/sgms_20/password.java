@@ -35,7 +35,12 @@ public class password extends AppCompatActivity {
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(password.this, "Enter your Email ID", Toast.LENGTH_SHORT).show();
 
-                }else{
+                }else if(!(email.endsWith("iitism.ac.in") || email.endsWith("ism.ac.in"))) {
+                    Email.setError("Please enter College ID");
+                    Email.requestFocus();
+                    return;
+                }
+                else{
                     mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
