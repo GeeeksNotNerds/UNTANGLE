@@ -144,11 +144,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mAuth=FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
 
-        if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+       /* if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
             isAdmin=true;
         }else{
             isAdmin=false;
-        }
+        }*/
 
 
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");

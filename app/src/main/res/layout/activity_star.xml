@@ -44,36 +44,76 @@
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar1"
+        android:id="@+id/tabs1"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:weightSum="3"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/chat_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/tabtype"
+            android:drawableLeft="@drawable/publictab"
+            android:text="PUBLIC"
+            android:textColor="@color/colorPrimaryDark" />
+        <Button
+            android:drawableLeft="@drawable/official"
+            android:id="@+id/admin_star"
+            android:background="@drawable/tabtypeno"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="OFFICIAL"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:paddingLeft="15dp"
+            android:id="@+id/club_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/tabtypeno"
+            android:drawableLeft="@drawable/events"
+            android:text="CLUBS"
+            android:textColor="@color/colorPrimaryDark" />
+
+
+    </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/frame1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="70dp"
+        android:layout_below="@id/tabs1"
         android:background="@color/gray"
-
-        android:id="@+id/frame1"
-
-        android:layout_below="@id/toolbar1"
-        android:layout_above="@id/bottom_navigation1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list1"
             android:layout_width="match_parent"
-            android:focusable="false"
-            android:nestedScrollingEnabled="false"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/container_height"
+            android:focusable="false"
+            android:nestedScrollingEnabled="false"
             tools:listitem="@layout/item_list" />
 
         <com.yalantis.filter.widget.Filter
             android:id="@+id/filter1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-
 
 
     </FrameLayout>
