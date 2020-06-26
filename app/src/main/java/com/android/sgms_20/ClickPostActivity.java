@@ -161,7 +161,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
                       Picasso.with(ClickPostActivity.this)
                               .load(dataSnapshot.child("PostImage").getValue().toString())
-                              .fit()
+                              //.fit()
                               .placeholder(R.drawable.loader1)
                               .into(Image);
 
