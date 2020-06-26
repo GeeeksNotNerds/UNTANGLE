@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".AddAdmin"></activity>
+        <activity android:name=".AddAdmin"
+            android:theme="@style/Dialog"></activity>
         <activity android:name=".adminSetup" />
         <activity
             android:name=".EntryActivity"
