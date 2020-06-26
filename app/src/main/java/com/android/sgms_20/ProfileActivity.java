@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -34,13 +35,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView userName,userEmail,userBranch,admin_no;
+    private TextView userName,userEmail,userBranch,admin_no,categ,subCateg;
     private CircleImageView userProfileImage;
     private DatabaseReference profileUserRef;
     private FirebaseAuth mAuth;
     private String currentUserId;
     Button edit_profile;
+    private LinearLayout l1,l2;
     private Toolbar mToolbar;
+    private String category,subCategory;
     TextDrawable mDrawableBuilder;
     DatabaseReference MyPostRef;
 
@@ -54,7 +57,10 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         pro=(ImageView)findViewById(R.id.thumbnail1);
-
+        l1=findViewById(R.id.l1);
+        l2=findViewById(R.id.l2);
+        categ=findViewById(R.id.category);
+        subCateg=findViewById(R.id.sub_category);
 
         edit_profile=findViewById(R.id.edit_button);
 
@@ -103,10 +109,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Intent intent=new Intent(ProfileActivity.this,SettingsActivity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                //startActivity(intent);
-                //finish();
+                Intent intent=new Intent(ProfileActivity.this,SettingsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
 
 
             }
@@ -122,6 +128,18 @@ public class ProfileActivity extends AppCompatActivity {
 
                         if (type.equals("Admin")||type.equals("Club")||type.equals("SubAdmin"))
                         {
+                            if(type.equals("Admin")||type.equals("SubAdmin"))
+                            {
+
+                                l1.setVisibility(View.VISIBLE);
+                                l2.setVisibility(View.VISIBLE);
+                                category=dataSnapshot.child("category").getValue().toString();
+                                subCategory=dataSnapshot.child("subCategory").getValue().toString();
+                                categ.setText("Complaint Category : "+category);
+                                subCateg.setText("Sub-Category : "+subCategory);
+                                edit_profile.setVisibility(View.VISIBLE);
+
+                            }
                             //String myProfileImage="";
                              //if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 

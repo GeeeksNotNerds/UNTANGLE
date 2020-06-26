@@ -36,19 +36,19 @@
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
+    <ScrollView
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/header_cover_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="#827f93" />
+
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="gone"
             android:id="@+id/settings_pro_pic"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -65,18 +65,20 @@
             android:id="@+id/profile_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
             android:layout_below="@+id/header_cover_image"
             android:background="#827f93"
-            android:elevation="4dp"
+
             android:paddingBottom="24dp">
 
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_one_login"
+
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="200dp"
                 android:elevation="10dp"
                 app:cardBackgroundColor="#fcfcfc"
                 app:cardCornerRadius="15dp"
@@ -118,7 +120,7 @@
                             android:layout_marginTop="16dp"
                             android:textColorHint="@color/colorPrimaryDark"
                             android:backgroundTint="@color/colorPrimaryDark"
-                            android:hint="Name"
+                            android:hint="Username"
 
                             android:textSize="15sp" />
 
@@ -129,6 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:visibility="gone"
                         android:gravity="center_vertical"
                         android:paddingRight="8dp">
 
@@ -148,7 +151,7 @@
                             android:layout_marginTop="16dp"
                             android:textColorHint="@color/colorPrimaryDark"
                             android:backgroundTint="@color/colorPrimaryDark"
-                            android:hint=" Email"
+                            android:hint=" Designation"
                             android:inputType="textEmailAddress"
                             android:textSize="15sp" />
 
@@ -179,12 +182,12 @@
                             android:inputType="textCapSentences"
                             android:textColorHint="@color/colorPrimaryDark"
                             android:backgroundTint="@color/colorPrimaryDark"
-                            android:hint="Department"
-
+                            android:hint=" Department"
                             android:textSize="15sp" />
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -201,7 +204,7 @@
                             android:src="@drawable/ic_profile" />
 
                         <EditText
-                            android:id="@+id/settings_admin_no"
+                            android:id="@+id/settings_designation"
                             android:layout_width="289dp"
                             android:layout_height="40dp"
                             android:layout_marginLeft="2dp"
@@ -209,12 +212,66 @@
                             android:inputType="textCapSentences"
                             android:textColorHint="@color/colorPrimaryDark"
                             android:backgroundTint="@color/colorPrimaryDark"
-                            android:hint="Department"
+                            android:hint=" Designation"
 
                             android:textSize="15sp" />
 
 
                     </LinearLayout>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+
+                            android:fontFamily="sans-serif-light"
+                            android:layout_height="wrap_content"
+                            android:text="  Select your grievance category"
+
+                            android:textColor="@color/colorPrimaryDark"
+                            android:id="@+id/select"
+                            android:layout_marginLeft="10dp"/>
+                        <Spinner
+                            android:layout_below="@id/select"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/settings_cat"
+                            android:layout_marginRight="10dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="20dp"
+
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_height="wrap_content"
+                            android:text="  Select the sub-category"
+                            android:layout_below="@id/settings_cat"
+                            android:id="@+id/select2"
+                            android:layout_marginLeft="10dp"/>
+                        <Spinner
+                            android:layout_below="@id/select2"
+                            android:layout_width="match_parent"
+
+                            android:id="@+id/settings_Subcat"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10sp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginRight="10sp"
+                            />
+
+                    </RelativeLayout>
+
 
 
 
@@ -257,6 +314,7 @@
 
 
     </RelativeLayout>
+    </ScrollView>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:id="@+id/bottom_navigation"
@@ -268,5 +326,17 @@
         app:itemIconTint="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"
         />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_admin"
+        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+
+        app:menu="@menu/bottom_navigation_admin"
+        tools:ignore="MissingConstraints" />
 
 </RelativeLayout>
