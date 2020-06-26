@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
     private RecyclerView postList,mRecyclerView;
-    private DatabaseReference MyPostRef,PostsRef,LikesRef,DownVotesRef;
+    private DatabaseReference MyPostRef,PostsRef,LikesRef,DownVotesRef,currRef;
     String letter="A";
 
 
@@ -152,16 +152,37 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
+        currRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         PostsRef= FirebaseDatabase.getInstance().getReference().child("Posts");
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         //Toast.makeText(instance, currentUserID, Toast.LENGTH_SHORT).show();
+
+        String h;
+
+        h= FirebaseInstanceId.getInstance().getToken();
+
+        currRef.child("device_token").setValue(h);
+
+
+
         UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
                 type=dataSnapshot.child("type").getValue().toString();
+
+              if(!currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2")){
+
+                  String token;
+
+                  token= FirebaseInstanceId.getInstance().getToken();
+
+
+
+
+              }
 
 
 
