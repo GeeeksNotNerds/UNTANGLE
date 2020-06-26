@@ -97,8 +97,9 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
     int pos;
     private ImageView pro;
+    private int q,tab;
     //private int q;
-
+    private Button AdminTab,ClubTab,PublicTab;
     private RecyclerView postList, mRecyclerView;
 
     private DatabaseReference MyPostRef, PostsRef, LikesRef, DownVotesRef;
@@ -113,6 +114,10 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
         setContentView(R.layout.activity_star);
         //q=0;
         mToolbar = (Toolbar) findViewById(R.id.toolbar1);
+        AdminTab=(Button)findViewById(R.id.admin_star);
+        ClubTab=(Button)findViewById(R.id.club_star);
+        PublicTab=(Button)findViewById(R.id.chat_star);
+        tab=3;
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");//subscribing
         FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications");//unsubscribe
 
@@ -232,6 +237,11 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
             bottomNav.getMenu().findItem(R.id.nav_star).setChecked(true);
         }
 
+                if(type.equals("Admin")||type.equals("SubAdmin"))
+                {
+                    PublicTab.setText("Private");
+                }
+
             }
 
             @Override
@@ -239,6 +249,59 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
             }
         });
+
+
+        AdminTab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+
+
+                tab=1;
+                AdminTab.setBackgroundResource(R.drawable.tabtype);
+                ClubTab.setBackgroundResource(R.drawable.tabtypeno);
+                PublicTab.setBackgroundResource(R.drawable.tabtypeno);
+                linearLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setHasFixedSize(true);
+                mAdapter=new StarAdapter(StarActivity.this,mAllQuestions=getQuestions());
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        });
+        ClubTab.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+
+                tab=2;
+                AdminTab.setBackgroundResource(R.drawable.tabtypeno);
+                ClubTab.setBackgroundResource(R.drawable.tabtype);
+                PublicTab.setBackgroundResource(R.drawable.tabtypeno);
+                linearLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setHasFixedSize(true);
+                mAdapter=new StarAdapter(StarActivity.this,mAllQuestions=getQuestions());
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        });
+        PublicTab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                tab=3;
+                AdminTab.setBackgroundResource(R.drawable.tabtypeno);
+                ClubTab.setBackgroundResource(R.drawable.tabtypeno);
+                PublicTab.setBackgroundResource(R.drawable.tabtype);
+                linearLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setHasFixedSize(true);
+                mAdapter=new StarAdapter(StarActivity.this,mAllQuestions=getQuestions());
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        });
+
+
     }
 
 
@@ -431,12 +494,47 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 }*/
                                // if (type.equals("Admin") || (uid.equals(currentUserID))) {
                                     //l = 0;
-                                add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
-                                    add(new Tag(owner, colour4));
-                                    add(new Tag(mode, colour3));
-                                    add(new Tag(categ, colour1));
-                                    add(new Tag(sub, colour2));
-                                }}));
+                                if(tab==1)//Admin
+                                {
+                                    if(postType.equals("Admin")||postType.equals("SubAdmin"))
+                                    {
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Tag(owner, colour4));
+                                            add(new Tag(mode, colour3));
+                                            add(new Tag(categ, colour1));
+                                            add(new Tag(sub, colour2));
+                                        }}));
+                                    }
+
+                                }
+                                if(tab==2)//club
+                                {
+                                    if(postType.equals("Club"))
+                                    {
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Tag(owner, colour4));
+                                            add(new Tag(mode, colour3));
+                                            add(new Tag(categ, colour1));
+                                            add(new Tag(sub, colour2));
+                                        }}));
+                                    }
+
+                                }
+                                if(tab==3)//public/private
+                                {
+                                    if(!postType.equals("Admin") && !postType.equals("SubAdmin") && !postType.equals("Club"))
+                                    {
+                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
+                                            add(new Tag(owner, colour4));
+                                            add(new Tag(mode, colour3));
+                                            add(new Tag(categ, colour1));
+                                            add(new Tag(sub, colour2));
+                                        }}));
+                                    }
+
+                                }
+
+
                                 //}
 
                             }

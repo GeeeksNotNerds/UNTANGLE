@@ -199,6 +199,7 @@
         app:itemTextColor="@color/bottom_nav_color"
         app:itemIconTint="@color/bottom_nav_color"
         android:background="?android:attr/windowBackground"
+
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -206,6 +207,7 @@
         android:layout_width="match_parent"
         android:visibility="gone"
         android:layout_height="70dp"
+
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
         app:itemIconTint="@color/bottom_nav_color"

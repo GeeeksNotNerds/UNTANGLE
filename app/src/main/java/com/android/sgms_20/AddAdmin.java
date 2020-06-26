@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
 public class AddAdmin extends AppCompatActivity
 {
@@ -27,6 +29,7 @@ public class AddAdmin extends AppCompatActivity
     private Button mAdd;
     private String email,designation,department,cat,sub;
     ProgressBar mProgressBar;
+    private String username;
     FirebaseAuth mAuth;
     DatabaseReference UserRef;
     String currentUserId;
@@ -68,7 +71,6 @@ public class AddAdmin extends AppCompatActivity
         //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
 
             bottomNavigAdmin.setVisibility(View.VISIBLE);
-
             bottomNavigAdmin.setOnNavigationItemSelectedListener(navListner2);
             bottomNavigAdmin.getMenu().findItem(R.id.nav_add_admin).setChecked(true);
 
@@ -113,14 +115,14 @@ public class AddAdmin extends AppCompatActivity
                         Toast.makeText(AddAdmin.this, "User with this email already exist.", Toast.LENGTH_SHORT).show();
                     }
 
-                    mAuth.signInWithEmailAndPassword(Mail,"12345678").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                   /* mAuth.signInWithEmailAndPassword(Mail,"12345678").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task)
                         {
                             Toast.makeText(AddAdmin.this, "enter valid and unregistered email.", Toast.LENGTH_SHORT).show();
 
                         }
-                    });
+                    });*/
 
 
 
@@ -133,8 +135,59 @@ public class AddAdmin extends AppCompatActivity
 
     private void SendUserToMainActivity()
     {
-        startActivity(new Intent(AddAdmin.this,MainActivity.class));
-        finish();
+        int p=email.indexOf('@');
+        username=email.substring(0,p);
+
+        MaterialDialog mDialog = new MaterialDialog.Builder(AddAdmin.this)
+                .setTitle("Notify the Admin ")
+                .setMessage("Do you want to notify "+username+" that he/she has been added as an admin ? ")
+                .setCancelable(false)
+                .setPositiveButton("Yes,Send!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                    {
+                        String senderMail=Mail;
+                        String toMail=email;
+                        String subject="Untangle : Admin Confirmation";
+                        String body="You have been added as an admin by " +Mail+". Please login and setup your details.";
+
+                        //String mailto = "mailto:"+toMail +"&subject=" + Uri.encode(subject) +"&body=" + Uri.encode(body);
+
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        //intent.setData(Uri.parse(mailto));
+                        //intent.setData(Uri.parse())
+                        intent.putExtra(Intent.EXTRA_EMAIL,toMail);
+                        intent.putExtra(Intent.EXTRA_SUBJECT,subject);
+                        intent.putExtra(Intent.EXTRA_TEXT,body);
+                       // intent.setType("plain/text");
+                        intent.setType("message/rfc822");
+                        startActivity(Intent.createChooser(intent,"Choose an email client"));
+                        finish();
+                        //startActivity(new Intent(AddAdmin.this,MainActivity.class));
+                        //finish();
+                        dialogInterface.dismiss();
+                    }
+
+
+                })
+                .setNegativeButton("No,Leave it!", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
+                    {
+                        startActivity(new Intent(AddAdmin.this,MainActivity.class));
+                        finish();
+                        dialogInterface.dismiss();
+
+                    }
+                })
+                .build();
+
+        // Show Dialog
+        mDialog.show();
+
+
+     //   startActivity(new Intent(AddAdmin.this,MainActivity.class));
+      //  finish();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListner2=

@@ -144,11 +144,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mAuth=FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
 
-        if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
+       /* if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
             isAdmin=true;
         }else{
             isAdmin=false;
-        }
+        }*/
 
 
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
@@ -409,7 +409,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         {
             bottomNav.setVisibility(View.GONE);
             bottomNavAdmin.setVisibility(View.VISIBLE);
+           // bottomNavAdmin.getMenu().findItem(R.id.nav_home_admin).setChecked(true);
             bottomNavAdmin.setOnNavigationItemSelectedListener(navListner2);
+            bottomNavAdmin.getMenu().findItem(R.id.nav_home_admin).setChecked(true);
         }
         else
         {
@@ -418,10 +420,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
             bottomNav.setOnNavigationItemSelectedListener(navListner1);
+            bottomNav.getMenu().findItem(R.id.nav_home).setChecked(true);
         }
         else
          {
             bottomNav.setOnNavigationItemSelectedListener(navListner);
+            bottomNav.getMenu().findItem(R.id.nav_home).setChecked(true);
          }
         }
         int d = 0;
@@ -1546,6 +1550,13 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 public void onDataChange(DataSnapshot dataSnapshot)
                 {
                     type=dataSnapshot.child("type").getValue().toString();
+                    if(type.equals("Admin")||type.equals("subAdmin"))
+                    {
+                        if(!dataSnapshot.hasChild("subCategory"))
+                        {
+                            SendToSetupActivity();
+                        }
+                    }
                     //if(!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||!currentUserID.equals("HwRTgHAQF4UyfkoP8r0zN3MmO4y2"))
                       if(!type.equals("Admin")&&!type.equals("SubAdmin")&&!type.equals("Club"))
                         CheckUserExistence();
@@ -1567,6 +1578,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(current_user_id))
+                {
+
+                }
                 if(!dataSnapshot.hasChild(current_user_id))
                 {
 

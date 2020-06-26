@@ -186,19 +186,24 @@
 
             <Button
                 android:layout_width="250dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/cv_one_login"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/pro_layout"
+                android:background="@color/colorAccent"
+
                 android:layout_gravity="center"
                 android:textAllCaps="false"
+
                 android:layout_marginTop="70dp"
                 android:text="Add Admin"
                 android:textSize="25sp"
+                android:drawableTint="@color/white"
+
+                android:padding="10dp"
                 android:fontFamily="sans-serif-light"
                 android:textStyle="bold"
                 android:id="@+id/add_admin"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/white"
                 android:elevation="15dp" />
 
             <ProgressBar

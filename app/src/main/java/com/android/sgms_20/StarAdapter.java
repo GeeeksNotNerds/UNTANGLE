@@ -118,8 +118,6 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
                     holder.DisplayDownVotes.setVisibility(View.GONE);
                     holder.DisplayNoOfLikes.setVisibility(View.GONE);
                     holder.DownVoteButton.setVisibility(View.GONE);
-
-
                 }
 
                 if(mode.equals("Private"))
