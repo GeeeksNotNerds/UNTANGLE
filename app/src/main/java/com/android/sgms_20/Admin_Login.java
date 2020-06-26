@@ -110,6 +110,7 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
 
                             if(!dataSnapshot.hasChild(current_user_id))
                             {
+                                //if(Password.equals("12345678")||Password.equals("1234567"))
                                 if(Password.equals("12345678"))
                                 {
                                     type="Admin";
@@ -124,9 +125,10 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                                 {
                                     type="Club";
                                 }
+                                SendToSetupActivity();
 
                                 String token;
-                                String id=mAuth.getUid().toString();
+                                String id=mAuth.getCurrentUser().getUid().toString();
                                 String Mail=mAuth.getCurrentUser().getEmail().toString();
                                 token= FirebaseInstanceId.getInstance().getToken();
                                 //int pos1=Mail.indexOf('.');
@@ -166,7 +168,7 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                                         }
                                     }
                                 });
-                                SendToSetupActivity();
+                                //SendToSetupActivity();
                             }
                             else if(dataSnapshot.child(current_user_id).hasChild("subCategory"))
                             {

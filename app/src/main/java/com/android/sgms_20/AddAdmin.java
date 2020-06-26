@@ -68,7 +68,6 @@ public class AddAdmin extends AppCompatActivity
         //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
 
             bottomNavigAdmin.setVisibility(View.VISIBLE);
-
             bottomNavigAdmin.setOnNavigationItemSelectedListener(navListner2);
             bottomNavigAdmin.getMenu().findItem(R.id.nav_add_admin).setChecked(true);
 
@@ -113,14 +112,14 @@ public class AddAdmin extends AppCompatActivity
                         Toast.makeText(AddAdmin.this, "User with this email already exist.", Toast.LENGTH_SHORT).show();
                     }
 
-                    mAuth.signInWithEmailAndPassword(Mail,"12345678").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                   /* mAuth.signInWithEmailAndPassword(Mail,"12345678").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task)
                         {
                             Toast.makeText(AddAdmin.this, "enter valid and unregistered email.", Toast.LENGTH_SHORT).show();
 
                         }
-                    });
+                    });*/
 
 
 

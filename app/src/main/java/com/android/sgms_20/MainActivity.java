@@ -1550,6 +1550,13 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                 public void onDataChange(DataSnapshot dataSnapshot)
                 {
                     type=dataSnapshot.child("type").getValue().toString();
+                    if(type.equals("Admin")||type.equals("subAdmin"))
+                    {
+                        if(!dataSnapshot.hasChild("subCategory"))
+                        {
+                            SendToSetupActivity();
+                        }
+                    }
                     //if(!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||!currentUserID.equals("HwRTgHAQF4UyfkoP8r0zN3MmO4y2"))
                       if(!type.equals("Admin")&&!type.equals("SubAdmin")&&!type.equals("Club"))
                         CheckUserExistence();
@@ -1571,6 +1578,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(current_user_id))
+                {
+
+                }
                 if(!dataSnapshot.hasChild(current_user_id))
                 {
 

@@ -456,7 +456,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
                     DownVoteChecker = true;
-                    DownVotesRef.addValueEventListener(new ValueEventListener() {
+                    DownVotesRef.addValueEventListener(new ValueEventListener()
+                    {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (DownVoteChecker == true) {
@@ -537,7 +538,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
           });
 
       }
-      else{
+      else
+          {
           holder.PostImage.setVisibility(View.GONE);
       }
 
