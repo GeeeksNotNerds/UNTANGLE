@@ -461,7 +461,14 @@ public class PostActivity extends AppCompatActivity {
             if (requestCode == Gall && resultCode == RESULT_OK) {
                 Uri imageuri = data.getData();
                 Log.d(TAG, "onActivityResult: CHOOSE IMAGE : OK >> " + imageuri);
-                CropImage.activity(imageuri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
+                CropImage.activity(imageuri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+//                        .setAspectRatio(1, 1)
+                        .setActivityTitle("Select your image..")
+                        .setCropShape(CropImageView.CropShape.RECTANGLE)
+                        .setCropMenuCropButtonTitle("Done")
+  //                      .setRequestedSize(400, 400)
+                        .start(this);
             }
 
 

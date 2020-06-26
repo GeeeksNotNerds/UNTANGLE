@@ -501,7 +501,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
           Picasso.with(context)
                   .load(t)
-                  .fit()
+                  //.fit()
                   .placeholder(R.drawable.loader1)
                   .into(holder.PostImage);
 
@@ -512,7 +512,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
               public void onClick(View v) {
 
 
-                  Intent clickPosIntent = new Intent(mContext, ClickPostActivity.class);
+                  Intent clickPosIntent = new Intent(mContext, ClickPhotoActivity.class);
                   clickPosIntent.putExtra("PostKey", PostKey);
                   mContext.startActivity(clickPosIntent);
 
