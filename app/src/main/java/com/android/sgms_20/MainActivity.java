@@ -67,7 +67,9 @@ import com.yalantis.filter.widget.FilterItem;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private Filter<Tag> mFilter;
     private String adminCat;
     private Button Send;
+    private String saveCurrentDate;
     private LinearLayoutManager linearLayoutManager;
     private PostsAdapter mAdapter;
     AppCompatImageView LikePostButton,downVotePostButton;
@@ -284,6 +287,10 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions=getQuestions());
         mRecyclerView.setAdapter(mAdapter);
         mSort1=(Button)findViewById(R.id.latest);
+
+                Calendar calFordDate = Calendar.getInstance();
+                SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+                saveCurrentDate = currentDate.format(calFordDate.getTime());
 
         mSort1.setOnClickListener(new View.OnClickListener() {
 
@@ -625,8 +632,44 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     else status="-";
                                     String user = dataSnapshot1.child("email").getValue().toString();
                                     String postpic=dataSnapshot1.child("PostImage").getValue().toString();
-
+                                    String time=dataSnapshot1.child("time").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
+                                    if(date.equals(saveCurrentDate))
+                                    {
+                                        //date=time.substring(0,5);
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date="Today , "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date="Today , "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date="Today , "+time.substring(0,5)+" PM";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //date=date+" , "+time;
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date=date+" at "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" PM";
+                                        }
+                                    }
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
@@ -751,6 +794,43 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String user = dataSnapshot1.child("email").getValue().toString();
                                     String postpic=dataSnapshot1.child("PostImage").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
+                                    String time=dataSnapshot1.child("time").getValue().toString();
+                                    if(date.equals(saveCurrentDate))
+                                    {
+                                        //date=time.substring(0,5);
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date="Today , "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date="Today , "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date="Today , "+time.substring(0,5)+" PM";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //date=date+" , "+time;
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date=date+" at "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" PM";
+                                        }
+                                    }
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     if(type.equals("Admin")||type.equals("SubAdmin"))
@@ -866,6 +946,43 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String user = dataSnapshot1.child("email").getValue().toString();
                                     String postpic=dataSnapshot1.child("PostImage").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
+                                    String time=dataSnapshot1.child("time").getValue().toString();
+                                    if(date.equals(saveCurrentDate))
+                                    {
+                                        //date=time.substring(0,5);
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date="Today , "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date="Today , "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date="Today , "+time.substring(0,5)+" PM";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //date=date+" , "+time;
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date=date+" at "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" PM";
+                                        }
+                                    }
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
@@ -978,6 +1095,44 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String user = dataSnapshot1.child("email").getValue().toString();
                                     String postpic = dataSnapshot1.child("PostImage").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
+                                    String time=dataSnapshot1.child("time").getValue().toString();
+                                    if(date.equals(saveCurrentDate))
+                                    {
+                                        //date=time.substring(0,5);
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date="Today , "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date="Today , "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date="Today , "+time.substring(0,5)+" PM";
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        //date=date+" , "+time;
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date=date+" at "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" PM";
+                                        }
+                                    }
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
@@ -1111,6 +1266,43 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String user = dataSnapshot1.child("email").getValue().toString();
                                     String postpic=dataSnapshot1.child("PostImage").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
+                                    String time=dataSnapshot1.child("time").getValue().toString();
+                                    if(date.equals(saveCurrentDate))
+                                    {
+                                        //date=time.substring(0,5);
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date="Today , "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date="Today , "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date="Today , "+time.substring(0,5)+" PM";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //date=date+" , "+time;
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date=date+" at "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" PM";
+                                        }
+                                    }
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
@@ -1288,6 +1480,43 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String user = dataSnapshot1.child("email").getValue().toString();
                                     String postpic=dataSnapshot1.child("PostImage").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
+                                    String time=dataSnapshot1.child("time").getValue().toString();
+                                    if(date.equals(saveCurrentDate))
+                                    {
+                                        //date=time.substring(0,5);
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date="Today , "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date="Today , "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date="Today , "+time.substring(0,5)+" PM";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //date=date+" , "+time;
+                                        if(Integer.parseInt(time.substring(0,2)) > 12 )
+                                        {
+                                            int s=Integer.parseInt(time.substring(0,2));
+                                            s=s-12;
+                                            date=date+" at "+Integer.toString(s)+time.substring(2,5)+" PM";
+                                        }
+                                        else if(Integer.parseInt(time.substring(0,2)) < 12 )
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" AM";
+                                        }
+                                        else
+                                        {
+                                            date=date+" at "+time.substring(0,5)+" PM";
+                                        }
+                                    }
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
