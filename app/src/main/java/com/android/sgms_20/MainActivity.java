@@ -652,6 +652,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                             date="Today , "+time.substring(0,5)+" PM";
                                         }
                                     }
+                                    //String todayDate=saveCurrentDate.substring(0,2);
+
                                     else
                                     {
                                         //date=date+" , "+time;
