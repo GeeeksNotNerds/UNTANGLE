@@ -506,7 +506,7 @@ public class SettingsActivity extends AppCompatActivity {
        // if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
 
             MaterialDialog mDialog = new MaterialDialog.Builder(SettingsActivity.this)
-                    .setTitle("Update Post..")
+                    .setTitle("Update Details..")
                     .setMessage("Are you sure you want update your details?")
                     .setCancelable(false)
                     .setPositiveButton("Yes,Update!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
