@@ -48,7 +48,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationBody)
-                .setSound(defaultSoundUri);
+                .setSound(defaultSoundUri)
+                .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL);
+
 
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
