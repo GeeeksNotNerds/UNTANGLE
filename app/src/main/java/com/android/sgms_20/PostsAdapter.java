@@ -514,6 +514,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                   Intent clickPosIntent = new Intent(mContext, ClickPhotoActivity.class);
                   clickPosIntent.putExtra("PostKey", PostKey);
+                  clickPosIntent.putExtra("URL",t);
                   mContext.startActivity(clickPosIntent);
 
 
