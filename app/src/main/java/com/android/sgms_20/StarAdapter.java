@@ -304,17 +304,39 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
         {
             holder.PostImage.setVisibility(View.VISIBLE);
 
+            holder.PostImage.getLayoutParams().height=600;
+            holder.PostImage.getLayoutParams().width=600;
+            holder.PostImage.requestLayout();
+
             Picasso.with(context)
                     .load(t)
-                    .fit()
+                    //.fit()
                     .placeholder(R.drawable.loader1)
                     .into(holder.PostImage);
+
+            holder.PostImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Intent clickPosIntent = new Intent(mContext, ClickPhotoActivity.class);
+                    clickPosIntent.putExtra("PostKey", PostKey);
+                    mContext.startActivity(clickPosIntent);
+
+
+                }
+            });
+
+
 
         }else if(!x.equals("null")){
 
             holder.PostImage.setVisibility(View.VISIBLE);
+            holder.PostImage.getLayoutParams().height=300;
+            holder.PostImage.getLayoutParams().width=300;
+            holder.PostImage.requestLayout();
 
-            holder.PostImage.setImageResource(R.drawable.download);
+            holder.PostImage.setImageResource(R.drawable.pdf);
 
             holder.PostImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -325,7 +347,8 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
             });
 
         }
-        else{
+        else
+        {
             holder.PostImage.setVisibility(View.GONE);
         }
 
