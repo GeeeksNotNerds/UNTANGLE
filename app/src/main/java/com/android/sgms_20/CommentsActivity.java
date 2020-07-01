@@ -144,8 +144,10 @@ public class CommentsActivity extends AppCompatActivity {
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
                         {
                             String uid=dataSnapshot1.child("uid").getValue().toString();
+                            String check=dataSnapshot1.child("cid").getValue().toString();
+                            //Toast.makeText(CommentsActivity.this, PostsRef.child(uid).child("cid").toString(), Toast.LENGTH_SHORT).show();
 
-                            if(uid.equals(current_user_id))
+                            if(uid.equals(current_user_id) && !(check.startsWith("delete")))
                             {
                                 commentsViewHolder.mDelete.setVisibility(View.VISIBLE);
                             }
@@ -170,9 +172,17 @@ public class CommentsActivity extends AppCompatActivity {
 
 
                            // PostsRef.child()
+
                         String cid=comments.getCid();
+                     //   if(cid.startsWith("delete"))
+  //                      if(PostsRef.child(cid).child("cid").toString().startsWith("delete"))
+    //                   {
+      //                    commentsViewHolder.mDelete.setVisibility(View.GONE);
+        //                }
                         //Toast.makeText(CommentsActivity.this, cid, Toast.LENGTH_SHORT).show();
-                        PostsRef.child(cid).removeValue();
+                        //PostsRef.child(cid).removeValue();
+                        PostsRef.child(cid).child("comment").setValue("The comment has been deleted");
+                        PostsRef.child(cid).child("cid").setValue("delete"+cid);
                         SendUserToMainActivity();
                         Toast.makeText(CommentsActivity.this, "Comment deleted....", Toast.LENGTH_SHORT).show();
 
@@ -259,8 +269,27 @@ public class CommentsActivity extends AppCompatActivity {
             Calendar calFordTime = Calendar.getInstance();
             SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
             final String  saveCurrentTime = currentTime.format(calFordDate.getTime());
+            int date=calFordDate.get(Calendar.DAY_OF_MONTH);
+            int month=calFordDate.get(Calendar.MONTH);
 
-            final String RandomKey= saveCurrentDate + saveCurrentTime+current_user_id ;
+            int year=calFordDate.get(Calendar.YEAR);
+            String RandomKey;
+            //postRandomName = saveCurrentDate + saveCurrentTime;
+            if(month<10)
+            {
+                if(date<10)
+                    RandomKey=Integer.toString(year)+"0"+Integer.toString(month)+"0"+Integer.toString(date)+saveCurrentTime;
+                else
+                    RandomKey=Integer.toString(year)+"0"+Integer.toString(month)+Integer.toString(date)+saveCurrentTime;
+            }
+            else
+            {
+                if(date<10)
+                    RandomKey=Integer.toString(year)+Integer.toString(month)+"0"+Integer.toString(date)+saveCurrentTime;
+                else
+                    RandomKey=Integer.toString(year)+Integer.toString(month)+Integer.toString(date)+saveCurrentTime;
+            }
+            //final String RandomKey= saveCurrentDate + saveCurrentTime+current_user_id ;
 
             HashMap commentsMap=new HashMap();
             commentsMap.put("uid",current_user_id);
@@ -268,8 +297,8 @@ public class CommentsActivity extends AppCompatActivity {
             commentsMap.put("date",saveCurrentDate);
             commentsMap.put("time",saveCurrentTime);
             commentsMap.put("username",userName);
-            commentsMap.put("cid",RandomKey);
-            PostsRef.child(RandomKey).updateChildren(commentsMap).addOnCompleteListener(new OnCompleteListener() {
+            commentsMap.put("cid",RandomKey+current_user_id);
+            PostsRef.child(RandomKey+current_user_id).updateChildren(commentsMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
                 if(task.isSuccessful())

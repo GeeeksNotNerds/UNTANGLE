@@ -390,10 +390,10 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-                            if (postType.equals("Admin")||postType.equals("SubAdmin")) {
+                            if (postType.endsWith("Admin")||postType.endsWith("SubAdmin")) {
                                 owner = "Admin";
                                // c = 0;
-                            } else if (postType.equals("Club")) {
+                            } else if (postType.endsWith("Club")) {
                                 owner = "Club";
                                 //c = 0;
                             } else if (currentUserID.equals(uid)) {
@@ -496,7 +496,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                     //l = 0;
                                 if(tab==1)//Admin
                                 {
-                                    if(postType.equals("Admin")||postType.equals("SubAdmin"))
+                                    if(postType.endsWith("Admin")||postType.endsWith("SubAdmin"))
                                     {
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
@@ -509,7 +509,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 }
                                 if(tab==2)//club
                                 {
-                                    if(postType.equals("Club"))
+                                    if(postType.endsWith("Club"))
                                     {
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
@@ -522,7 +522,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 }
                                 if(tab==3)//public/private
                                 {
-                                    if(!postType.equals("Admin") && !postType.equals("SubAdmin") && !postType.equals("Club"))
+                                    if(!postType.endsWith("Admin") && !postType.endsWith("SubAdmin") && !postType.endsWith("Club"))
                                     {
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
