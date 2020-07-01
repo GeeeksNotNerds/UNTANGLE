@@ -28,8 +28,8 @@ import java.io.OutputStream;
 public class ClickPhotoActivity extends AppCompatActivity
 {
     FirebaseAuth mAuth;
-    String currentUserID,PostKey;
-    ImageView Share;
+    String currentUserID,PostKey,url;
+    ImageView Download;
     DatabaseReference ClickPostRef;
 
 
@@ -53,9 +53,10 @@ public class ClickPhotoActivity extends AppCompatActivity
 //        imViewedImage.setImageResource(R.drawable.art_freaks);
 
         PostKey=getIntent().getExtras().get("PostKey").toString();
+        url=getIntent().getExtras().get("URL").toString();
     //    Image=findViewById(R.id.postImage_c);
 
-        Share=findViewById(R.id.share_pic);
+        Download=findViewById(R.id.download_pic);
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
 
         ClickPostRef.addValueEventListener(new ValueEventListener() {
@@ -76,18 +77,15 @@ public class ClickPhotoActivity extends AppCompatActivity
 
             }
         });
-        Share.setOnClickListener(new View.OnClickListener() {
+        Download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                BitmapDrawable bitmapDrawable = ((BitmapDrawable) imViewedImage.getDrawable());
-                Bitmap bitmap = bitmapDrawable .getBitmap();
-                String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,"some title", null);
-                Uri bitmapUri = Uri.parse(bitmapPath);
-                Intent shareIntent=new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("image/jpeg");
-                shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
-                startActivity(Intent.createChooser(shareIntent,"Share Image"));
+
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+               startActivity(intent);
+
+
             }
         });
       /*  Share.setOnClickListener(new View.OnClickListener() {
