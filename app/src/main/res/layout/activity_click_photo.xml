@@ -11,7 +11,9 @@
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
+
         android:src="@drawable/ic_baseline_open_in_browser_24"
+
         android:id="@+id/download_pic"
         android:tint="@color/colorAccent"
         android:layout_alignParentTop="true"
