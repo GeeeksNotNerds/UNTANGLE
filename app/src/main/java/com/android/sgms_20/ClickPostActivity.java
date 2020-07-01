@@ -43,6 +43,7 @@ public class ClickPostActivity extends AppCompatActivity {
     private TextView PostDescription,postStatus,postStatus_heading;
     private Button DeletePostButton,EditPostButton,statusButton;
     ImageView Share;
+    private String postTypeDelete;
     String type,postType;
     ImageView Image;
     private String PostKey,currentUserID,databaseUSerID,description,Status,message,ReceiverUid;
@@ -127,6 +128,7 @@ public class ClickPostActivity extends AppCompatActivity {
               if(dataSnapshot.exists())
               {
                   description=dataSnapshot.child("description").getValue().toString();
+                  postTypeDelete=dataSnapshot.child("postType").getValue().toString();
                   message=dataSnapshot.child("description").getValue().toString();
                   Status=dataSnapshot.child("status").getValue().toString();
                   String mode=dataSnapshot.child("mode").getValue().toString();
@@ -172,7 +174,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
 
                  // if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2") && !databaseUSerID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
-                    if((type.equals("Admin")||type.equals("SubAdmin"))&& !postType.equals("Admin")&& !postType.equals("SubAdmin") &&mode.equals("Private")){
+                    if((type.equals("Admin")||type.equals("SubAdmin"))&& !postType.endsWith("Admin")&& !postType.endsWith("SubAdmin") &&mode.equals("Private")){
                       statusButton.setVisibility(View.VISIBLE);
                       DeletePostButton.setVisibility(View.INVISIBLE);
                       EditPostButton.setVisibility(View.INVISIBLE);
@@ -212,7 +214,7 @@ public class ClickPostActivity extends AppCompatActivity {
                               public void onClick(DialogInterface dialog, int which)
                               {
 
-                                  ClickPostRef.child("status").setValue(inputField.getText().toString())
+                                  ClickPostRef.child("status").setValue("(edited)"+inputField.getText().toString())
                                           .addOnCompleteListener(task -> {
 
                                               if(task.isSuccessful()){
@@ -271,7 +273,7 @@ public class ClickPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                DeleteCurrentPost();
+                DeleteCurrentPost(postTypeDelete);
 
             }
         });
@@ -312,7 +314,7 @@ public class ClickPostActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which)
             {
 
-                ClickPostRef.child("description").setValue(inputField.getText().toString());
+                ClickPostRef.child("description").setValue("(edited) "+inputField.getText().toString());
                 //UserRef.child("description").setValue(inputField.getText().toString());
                 /*UserRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -348,7 +350,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
     }
 
-    private void DeleteCurrentPost()
+    private void DeleteCurrentPost(String deletePost)
     {
 
         //public Iterable<DataSnapshot> getChildren();
@@ -430,7 +432,18 @@ public class ClickPostActivity extends AppCompatActivity {
                     @Override
                     public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
 
-                                 ClickPostRef.removeValue();
+                                 //ClickPostRef.removeValue();
+                       // String check=ClickPostRef.child("postType").
+                        if(deletePost.endsWith("Admin")||deletePost.endsWith("SubAdmin"))
+                        {
+                            ClickPostRef.removeValue();
+                        }
+                        else {
+                            ClickPostRef.child("postType").setValue("delete" + deletePost);
+                            ClickPostRef.child("PostPDF").setValue("null");
+                            ClickPostRef.child("PostImage").setValue("null");
+                            ClickPostRef.child("description").setValue("The message has been deleted...");
+                        }
                                  SendUserToMainActivity();
                                  Toast.makeText(ClickPostActivity.this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
 

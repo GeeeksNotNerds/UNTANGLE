@@ -97,6 +97,7 @@ public class PostActivity extends AppCompatActivity {
     private String type;
     private String description,checker="",myUrl;
     private Uri myUri;
+    private int month,year,date;
     private StorageTask uploadTask;
     private String current_user_id,saveCurrentDate,saveCurrentTime,postRandomName;
 
@@ -744,7 +745,30 @@ public class PostActivity extends AppCompatActivity {
                         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
                         saveCurrentTime = currentTime.format(calFordDate.getTime());
 
-                        postRandomName = saveCurrentDate + saveCurrentTime;
+                        //int pos1=saveCurrentDate.indexOf('-');
+                        //date=saveCurrentDate.substring(0,pos1);
+                        //int pos2=saveCurrentDate.indexOf('-',)
+                        //calFordDate.get(D)
+
+                        date=calFordDate.get(Calendar.DAY_OF_MONTH);
+                        month=calFordDate.get(Calendar.MONTH);
+
+                        year=calFordDate.get(Calendar.YEAR);
+                        //postRandomName = saveCurrentDate + saveCurrentTime;
+                        if(month<10)
+                        {
+                            if(date<10)
+                            postRandomName=Integer.toString(year)+"0"+Integer.toString(month)+"0"+Integer.toString(date)+saveCurrentTime;
+                            else
+                                postRandomName=Integer.toString(year)+"0"+Integer.toString(month)+Integer.toString(date)+saveCurrentTime;
+                        }
+                        else
+                        {
+                            if(date<10)
+                                postRandomName=Integer.toString(year)+Integer.toString(month)+"0"+Integer.toString(date)+saveCurrentTime;
+                            else
+                                postRandomName=Integer.toString(year)+Integer.toString(month)+Integer.toString(date)+saveCurrentTime;
+                        }
 
                         //SavingPostInformationToDatabase();
 
@@ -810,6 +834,8 @@ public class PostActivity extends AppCompatActivity {
 
                                     // postsMap.put("star","no");
                                     postsMap.put("likes","0");
+
+
                                     PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
                                             .addOnCompleteListener(new OnCompleteListener() {
                                                 @Override

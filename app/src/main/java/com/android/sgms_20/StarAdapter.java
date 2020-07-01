@@ -104,7 +104,7 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
                 mode=dataSnapshot.child("mode").getValue().toString();
                 String postType=dataSnapshot.child("postType").getValue().toString();
                 //if(PostKey.endsWith("AkX6MclvgrXpN8oOGI5v37dn7eb2")||PostKey.endsWith("nO3l336v84OXDNCkR0aFNm0Es1w2")||mode.equals("Private"))
-                if(postType.equals("Admin")||postType.equals("Club")||mode.equals("Private")||postType.equals("SubAdmin"))
+                if(postType.endsWith("Admin")||postType.endsWith("Club")||mode.equals("Private")||postType.endsWith("SubAdmin"))
                 {
                     //comments hidden for posts from admin,clubs and private
                     holder.cnt.setVisibility(View.GONE);
@@ -124,6 +124,23 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
                 {
                     holder.textStatus.setVisibility(View.VISIBLE);
                     holder.statusHeading.setVisibility(View.VISIBLE);
+                }
+                if(postType.startsWith("delete"))
+                {
+                    holder.textCategory.setVisibility(View.GONE);
+                    holder.textSubcategory.setVisibility(View.GONE);
+                    holder.textMode.setVisibility(View.GONE);
+                    holder.textUid.setVisibility(View.GONE);
+                    holder.LikePostButton.setVisibility(View.GONE);
+                    holder.DisplayDownVotes.setVisibility(View.GONE);
+                    holder.DisplayNoOfLikes.setVisibility(View.GONE);
+                    holder.DownVoteButton.setVisibility(View.GONE);
+                    holder.textStatus.setVisibility(View.GONE);
+                    holder.statusHeading.setVisibility(View.GONE);
+                    holder.cnt.setVisibility(View.GONE);
+                    holder.cnt_head.setVisibility(View.GONE);
+                    holder.CommentPostButton.setVisibility(View.GONE);
+                    holder.settings.setVisibility(View.GONE);
                 }
             }
 

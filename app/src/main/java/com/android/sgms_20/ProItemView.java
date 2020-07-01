@@ -119,7 +119,7 @@ public class ProItemView extends AppCompatActivity {
                                     Depatment.setText("Department : "+department);
 
                                    //if(Pro.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                                   if(postType.equals("Admin")||postType.equals("Club")||postType.equals("SubAdmin"))
+                                   if(postType.endsWith("Admin")||postType.endsWith("Club")||postType.endsWith("SubAdmin"))
                                    {
                                        admissionNo=dataSnapshot.child("designation").getValue().toString();
                                        AdNo.setText("Designation : "+admissionNo);
