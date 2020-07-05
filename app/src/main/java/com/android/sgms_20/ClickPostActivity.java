@@ -99,6 +99,7 @@ public class ClickPostActivity extends AppCompatActivity {
         ClickPostRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
                 ReceiverUid=dataSnapshot.child("uid").getValue().toString();
             }
 
@@ -181,7 +182,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
 
                   }
-                  else if(currentUserID.equals(databaseUSerID))
+                  else if(currentUserID.equals(databaseUSerID)&&(!postType.equals("StudentOnly")))
                   {
                       DeletePostButton.setVisibility(View.VISIBLE);
                       EditPostButton.setVisibility(View.VISIBLE);
@@ -214,7 +215,7 @@ public class ClickPostActivity extends AppCompatActivity {
                               public void onClick(DialogInterface dialog, int which)
                               {
 
-                                  ClickPostRef.child("status").setValue("(edited)"+inputField.getText().toString())
+                                  ClickPostRef.child("status").setValue(inputField.getText().toString())
                                           .addOnCompleteListener(task -> {
 
                                               if(task.isSuccessful()){
@@ -230,7 +231,34 @@ public class ClickPostActivity extends AppCompatActivity {
                                                               public void onComplete(@NonNull Task<Void> task) {
                                                                   Toast.makeText(ClickPostActivity.this, "Status Changed.", Toast.LENGTH_SHORT).show();
 
-                                                                  SendUserToMainActivity();
+                                                                  MaterialDialog mDialog = new MaterialDialog.Builder(ClickPostActivity.this)
+                                                                          .setTitle("Status of grievance....")
+                                                                          .setMessage("The grievance is..")
+                                                                          .setCancelable(false)
+                                                                          .setPositiveButton("Solved!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
+                                                                              @Override
+                                                                              public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                                                                                  ClickPostRef.child("postType").setValue("StudentOnly");
+                                                                                  SendUserToMainActivity();
+                                                                                  dialogInterface.dismiss();
+                                                                              }
+                                                                          })
+                                                                          .setNegativeButton("Pending..", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
+                                                                              @Override
+                                                                              public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                                                                                  SendUserToMainActivity();
+                                                                                  dialogInterface.dismiss();
+                                                                              }
+
+
+                                                                          })
+                                                                          .build();
+
+                                                                  // Show Dialog
+                                                                  mDialog.show();
+
+
+
 
                                                               }
                                                           });
@@ -438,12 +466,14 @@ public class ClickPostActivity extends AppCompatActivity {
                         {
                             ClickPostRef.removeValue();
                         }
-                        else {
+                        else
+                        {
                             ClickPostRef.child("postType").setValue("delete" + deletePost);
                             ClickPostRef.child("PostPDF").setValue("null");
                             ClickPostRef.child("PostImage").setValue("null");
                             ClickPostRef.child("description").setValue("The message has been deleted...");
                         }
+                                // MainActivity.getInstance().sort();
                                  SendUserToMainActivity();
                                  Toast.makeText(ClickPostActivity.this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
 

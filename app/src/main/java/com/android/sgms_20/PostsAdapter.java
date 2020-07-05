@@ -147,6 +147,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         holder.settings.setVisibility(View.GONE);
                     }
 
+
                // Toast.makeText(mContext, mode, Toast.LENGTH_SHORT).show();
             }}
 
