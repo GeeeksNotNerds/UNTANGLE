@@ -734,7 +734,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if(sub.equals("Events"))colour2=mColors[22];
 
                                     String like=dataSnapshot1.child("likes").getValue().toString();
-                                    if(postType.endsWith("Admin")||postType.endsWith("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))
+                                    if((postType.endsWith("Admin")||postType.endsWith("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))&&!postType.startsWith("delete"))
                                     {
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
@@ -898,8 +898,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                    // if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
 
                                     //if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                                    if(postType.endsWith("Admin")||postType.endsWith("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))
-
+                                   // if(postType.endsWith("Admin")||postType.endsWith("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))
+                                    if((postType.endsWith("Admin")||postType.endsWith("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))&&!postType.startsWith("delete"))
                                     {
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
@@ -1377,7 +1377,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if((!postType.endsWith("Admin"))&&(!postType.endsWith("SubAdmin"))&&(!postType.endsWith("Club")))
                                     {
                                        // if(mode.equals("Private")&&currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")&&adminCat.equals(sub))
-                                        if(mode.equals("Private") && (type.equals("Admin")||type.equals("SubAdmin")) && adminCat.equals(sub))
+                                        if(mode.equals("Private") && (type.equals("Admin")||type.equals("SubAdmin")) && adminCat.equals(sub)&&(!postType.equals("StudentOnly"))&&!postType.startsWith("delete"))
                                         {
                                             add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
@@ -1590,7 +1590,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     if((!postType.endsWith("Admin"))&&(!postType.endsWith("SubAdmin")) && (!postType.endsWith("Club")))
                                     {
                                         //if(mode.equals("Private")&&currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")&&adminCat.equals(sub))
-                                        if(mode.equals("Private") && (type.equals("Admin")||type.equals("SubAdmin"))&&adminCat.equals(sub))
+                                        if(mode.equals("Private") && (type.equals("Admin")||type.equals("SubAdmin"))&&adminCat.equals(sub)&&(!postType.equals("StudentOnly"))&&!postType.startsWith("delete"))
                                         {
                                             add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                                 add(new Tag(owner, colour4));
