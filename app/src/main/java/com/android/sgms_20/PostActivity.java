@@ -75,7 +75,7 @@ public class PostActivity extends AppCompatActivity {
     int check=1,check1=1;
     private TextView mLoading;
     ImageView Media;
-    private DatabaseReference UsersRef, PostsRef;
+    private DatabaseReference UsersRef, PostsRef,multiNoteRef;
     private FirebaseAuth mAuth;
     RadioGroup rg_mode,rg_mode_opt,rg_cat,rg_cat_off,rg_cat_per,rg_cat_oth;
     CardView cv2,cv4,cv5,cv6,cv;
@@ -114,6 +114,7 @@ public class PostActivity extends AppCompatActivity {
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         cv=findViewById(R.id.cv);
 
+        multiNoteRef=FirebaseDatabase.getInstance().getReference().child("MultiNotifications");
 
 
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
@@ -843,12 +844,35 @@ public class PostActivity extends AppCompatActivity {
                                                 {
                                                     if(task.isSuccessful())
                                                     {
+                                                        if(!type.equals("Student")){
+                                                            HashMap<String,String> NotificationMap= new HashMap<>();
 
-                                                        //loadingBar.dismiss();
-                                                        SendUserToMainActivity();
-                                                       // progressBar.setVisibility(View.VISIBLE);
-                                                        Toast.makeText(PostActivity.this, "New Post is updated successfully.", Toast.LENGTH_LONG).show();
-                                                        mLoading.setVisibility(View.GONE);
+                                                            NotificationMap.put("type","Admin Post");
+
+                                                            multiNoteRef.child(current_user_id).push()
+                                                                    .setValue(NotificationMap)
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            Toast.makeText(PostActivity.this, "Notification sent.", Toast.LENGTH_SHORT).show();
+
+                                                                            SendUserToMainActivity();
+
+                                                                            Toast.makeText(PostActivity.this, "New Post is updated successfully.", Toast.LENGTH_LONG).show();
+                                                                            mLoading.setVisibility(View.GONE);
+
+                                                                        }
+                                                                    });
+                                                        }else {
+
+
+                                                            //loadingBar.dismiss();
+                                                            SendUserToMainActivity();
+                                                            // progressBar.setVisibility(View.VISIBLE);
+                                                            Toast.makeText(PostActivity.this, "New Post is updated successfully.", Toast.LENGTH_LONG).show();
+                                                            mLoading.setVisibility(View.GONE);
+
+                                                        }
 
                                                     }
                                                     else
