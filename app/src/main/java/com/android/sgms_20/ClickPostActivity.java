@@ -47,7 +47,7 @@ public class ClickPostActivity extends AppCompatActivity {
     String type,postType;
     ImageView Image;
     private String PostKey,currentUserID,databaseUSerID,description,Status,message,ReceiverUid;
-    private DatabaseReference ClickPostRef,NotificationRef,UserRef;
+    private DatabaseReference ClickPostRef,NotificationRef,UserRef,multiNoteRef;
 
     private FirebaseAuth mAuth;
 
@@ -108,6 +108,7 @@ public class ClickPostActivity extends AppCompatActivity {
             }
         });
         NotificationRef=FirebaseDatabase.getInstance().getReference().child("Notification");
+        multiNoteRef=FirebaseDatabase.getInstance().getReference().child("MultiNotifications");
 
         PostDescription=(TextView)findViewById(R.id.click_post_description);
         PostDescription.setMovementMethod(LinkMovementMethod.getInstance());
