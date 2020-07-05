@@ -19,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     private Button AdminTab,ClubTab,PublicTab;
     private List<Posts> mAllQuestions;
     private Filter<Tag> mFilter;
-    private String adminCat;
+    private String adminCat,TAG;
     private Button Send;
     private String saveCurrentDate;
     private LinearLayoutManager linearLayoutManager;
@@ -152,6 +153,34 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         //Toast.makeText(instance, currentUserID, Toast.LENGTH_SHORT).show();
+
+        UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if((dataSnapshot.child("type").getValue().toString()).equals("Student")){
+                    FirebaseMessaging.getInstance().subscribeToTopic("students")
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    String msg = "Subscribed to receive Notifications";
+                                    if (!task.isSuccessful()) {
+                                        msg = "subscription to notifications failed";
+                                    }
+                                    Log.d(TAG, msg);
+                                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         String h;
 
