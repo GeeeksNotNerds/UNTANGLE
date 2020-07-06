@@ -1,6 +1,7 @@
 package com.android.sgms_20;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
@@ -14,7 +15,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -77,6 +80,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements FilterListener<Tag>
 {
     private FirebaseAuth mAuth;
+    String typ="";
     private GoogleApiClient mGoogleApiClient;
     private String currentUserID;
     private String type;
@@ -154,6 +158,13 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         //Toast.makeText(instance, currentUserID, Toast.LENGTH_SHORT).show();
 
+
+
+
+
+
+
+/*
         UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -181,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
             }
         });
+        */
 
         String h;
 

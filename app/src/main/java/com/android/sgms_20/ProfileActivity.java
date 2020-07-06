@@ -10,18 +10,24 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -40,6 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference profileUserRef;
     private FirebaseAuth mAuth;
     private String currentUserId;
+    CardView not;
+    Switch sw;
     Button edit_profile;
     private LinearLayout l1,l2;
     private Toolbar mToolbar;
@@ -61,6 +70,8 @@ public class ProfileActivity extends AppCompatActivity {
         l2=findViewById(R.id.l2);
         categ=findViewById(R.id.category);
         subCateg=findViewById(R.id.sub_category);
+        not = findViewById(R.id.note);
+        sw=findViewById(R.id.switchx);
 
         edit_profile=findViewById(R.id.edit_button);
 
@@ -102,6 +113,51 @@ public class ProfileActivity extends AppCompatActivity {
             bottomNavigAdmin.setVisibility(View.GONE);
             bottomNav.setOnNavigationItemSelectedListener(navListner);
             bottomNav.getMenu().findItem(R.id.nav_profile).setChecked(true);
+        }
+
+        if(type.equals("Student")){
+            not.setVisibility(View.VISIBLE);
+            sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        FirebaseMessaging.getInstance().subscribeToTopic("students")
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        String msg = "Subscribed to receive Notifications";
+                                        if (!task.isSuccessful()) {
+                                            msg = "subscription to notifications failed";
+                                        }
+                                        Log.d(TAG, msg);
+                                        Toast.makeText(ProfileActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }else{
+
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic("students")
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        String msg = "UnSubscribed to receive Notifications";
+                                        if (!task.isSuccessful()) {
+                                            msg = "Unsubscription to notifications failed";
+                                        }
+                                        Log.d(TAG, msg);
+                                        Toast.makeText(ProfileActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+
+                    }
+                }
+            });
+
+
+
+        }else{
+            not.setVisibility(View.GONE);
         }
 
 

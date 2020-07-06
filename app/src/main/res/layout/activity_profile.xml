@@ -356,9 +356,48 @@
                 android:elevation="15dp" />
 
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:elevation="10dp"
+                android:visibility="gone"
+                android:foregroundGravity="center"
+                app:cardBackgroundColor="#fcfcfc"
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="false"
+                android:id="@+id/note"
+                app:cardUseCompatPadding="true"
+                android:layout_below="@id/cv_one_login">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/tvx"
+                    android:padding="8dp"
+                    android:text="Do you want to receive notifications for admin or club announcements?"
+                    />
+
+                    <Switch
+                        android:layout_width="60dp"
+                        android:layout_below="@id/tvx"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/switchx"
+                        android:layout_height="40dp"/>
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
 
         </RelativeLayout>
+
 
 
 
