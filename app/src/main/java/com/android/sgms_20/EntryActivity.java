@@ -34,8 +34,6 @@ public class EntryActivity extends AppCompatActivity {
         int height=dm.heightPixels;
         getWindow().setLayout((int)(width*.90),(int) (height*.28));
         mGot=findViewById(R.id.got);
-
-        user_id=getIntent().getExtras().get("ID").toString();
         mGot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -43,33 +41,9 @@ public class EntryActivity extends AppCompatActivity {
                 SendUserToMainActivity();
             }
         });
-        text=findViewById(R.id.click);
-        image=findViewById(R.id.enIcon);
-
-        usersRef=FirebaseDatabase.getInstance().getReference().child("Users");
-
-        usersRef.child(user_id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if((dataSnapshot.child("type").getValue().toString()).equals("Student") || (dataSnapshot.child("type").getValue().toString()).equals("Club")){
-
-                    image.setVisibility(View.GONE);
-                    text.setText("Switch on the notification button in the profile activiy to receive notifications for admin and club announcements");
 
 
-                }else{
 
-                    image.setVisibility(View.VISIBLE);
-                    text.setText("Click this in the posts to check the credential of students");
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
 

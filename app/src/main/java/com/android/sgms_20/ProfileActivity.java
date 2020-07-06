@@ -115,50 +115,6 @@ public class ProfileActivity extends AppCompatActivity {
             bottomNav.getMenu().findItem(R.id.nav_profile).setChecked(true);
         }
 
-        if(type.equals("Student")){
-            not.setVisibility(View.VISIBLE);
-            sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
-                        FirebaseMessaging.getInstance().subscribeToTopic("students")
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        String msg = "Subscribed to receive Notifications";
-                                        if (!task.isSuccessful()) {
-                                            msg = "subscription to notifications failed";
-                                        }
-                                        Log.d(TAG, msg);
-                                        Toast.makeText(ProfileActivity.this, msg, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }else{
-
-                        FirebaseMessaging.getInstance().unsubscribeFromTopic("students")
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        String msg = "UnSubscribed to receive Notifications";
-                                        if (!task.isSuccessful()) {
-                                            msg = "Unsubscription to notifications failed";
-                                        }
-                                        Log.d(TAG, msg);
-                                        Toast.makeText(ProfileActivity.this, msg, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-
-
-                    }
-                }
-            });
-
-
-
-        }else{
-            not.setVisibility(View.GONE);
-        }
 
 
         edit_profile.setOnClickListener(new View.OnClickListener() {

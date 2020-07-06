@@ -164,12 +164,12 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-/*
+
         UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if((dataSnapshot.child("type").getValue().toString()).equals("Student")){
+                if(!(dataSnapshot.child("type").getValue().toString()).equals("Admin") || !(dataSnapshot.child("type").getValue().toString()).equals("SubAdmin")){
                     FirebaseMessaging.getInstance().subscribeToTopic("students")
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
             }
         });
-        */
+
 
         String h;
 
@@ -510,7 +510,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
                 Intent tIntent = new Intent(MainActivity.this, EntryActivity.class);
-                tIntent.putExtra("ID", currentUserID);
                 startActivity(tIntent);
                 // Show Dialog
                // mDialog.show();
