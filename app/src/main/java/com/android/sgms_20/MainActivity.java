@@ -213,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                   String token;
 
                   token= FirebaseInstanceId.getInstance().getToken();
+                  typ=dataSnapshot.child("type").getValue().toString();
 
 
 
@@ -497,8 +498,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         }*/
 
        // if(d==1)
-                if(type.equals("Admin")||type.equals("SubAdmin"))
-        {
+
             Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                     .getBoolean("isFirstRun", true);
 
@@ -506,16 +506,19 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             {
                 //Toast.makeText(instance, "Working", Toast.LENGTH_SHORT).show();
                 //show start activity
-                startActivity(new Intent(MainActivity.this,EntryActivity.class));
+                //startActivity(new Intent(MainActivity.this,EntryActivity.class));
 
 
+                Intent tIntent = new Intent(MainActivity.this, EntryActivity.class);
+                tIntent.putExtra("ID", currentUserID);
+                startActivity(tIntent);
                 // Show Dialog
                // mDialog.show();
             }
 
 
             getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                    .putBoolean("isFirstRun", false).commit();}
+                    .putBoolean("isFirstRun", false).commit();
 
             }
 
