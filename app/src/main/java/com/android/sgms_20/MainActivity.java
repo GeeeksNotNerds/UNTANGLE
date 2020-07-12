@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         msg = "subscription to notifications failed";
                                     }
                                     Log.d(TAG, msg);
-                                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                  //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                                 }
                             });
 
