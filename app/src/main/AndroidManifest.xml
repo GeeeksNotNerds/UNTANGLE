@@ -36,13 +36,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.customTheme" />
         <activity android:name=".password" />
-
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <activity
             android:name=".SideMenu"
             android:screenOrientation="portrait"

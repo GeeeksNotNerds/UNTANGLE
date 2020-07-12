@@ -573,13 +573,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.textAuthorName.setText(question.getName());
         holder.textJobTitle.setText(question.getEmail());
         holder.textDate.setText(question.getDate());
-
+        //int charCount=question.getDescription().length();
         String txt=question.getDescription();
         if(txt.equals("")){
             holder.textQuestion.setVisibility(View.GONE);
         }else{
-            holder.textQuestion.setText(question.getDescription());
+            //holder.textQuestion.setText(question.getDescription());
+            if(question.getDescription().length()>110)
+            {
+                holder.textQuestion.setText(question.getDescription().substring(0,106)+".....");
+            }
+            else
+            {
+                holder.textQuestion.setText(question.getDescription());
+            }
         }
+        //Toast.makeText(context, Integer.toString(charCount), Toast.LENGTH_SHORT).show();
        // int lineCount;//=holder.textQuestion.getLineCount();
 
         //lineCount=holder.textQuestion.getText().toString().split(System.getProperty("line.separator")).length;
