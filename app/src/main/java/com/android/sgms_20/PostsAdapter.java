@@ -238,6 +238,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                 }
             });
+            holder.textQuestion.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v)
+                {
+
+
+                    Intent clickPosIntent=new Intent(mContext,ClickPostActivity.class);
+                    clickPosIntent.putExtra("PostKey",PostKey);
+                    mContext.startActivity(clickPosIntent);
+
+                }
+            });
 
             holder.LikePostButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -248,6 +261,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             });
             holder.CommentPostButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Intent commentsIntent = new Intent(mContext, CommentsActivity.class);
+                    commentsIntent.putExtra("PostKey", PostKey);
+                    mContext.startActivity(commentsIntent);
+
+
+                }
+            });
+            holder.cnt_head.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -409,6 +434,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                 }
             });
+                    holder.textQuestion.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+
+                            Intent clickPosIntent = new Intent(mContext, ClickPostActivity.class);
+                            clickPosIntent.putExtra("PostKey", PostKey);
+                            mContext.startActivity(clickPosIntent);
+
+                        }
+                    });
 
             holder.CommentPostButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -422,6 +459,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                 }
             });
+                    holder.cnt_head.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+
+                            Intent commentsIntent = new Intent(mContext, CommentsActivity.class);
+                            commentsIntent.putExtra("PostKey", PostKey);
+                            mContext.startActivity(commentsIntent);
+
+
+                        }
+                    });
 
 
             holder.LikePostButton.setOnClickListener(new View.OnClickListener() {

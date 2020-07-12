@@ -228,6 +228,18 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
 
                 }
             });
+                holder.cnt_head.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        Intent commentsIntent = new Intent(mContext, CommentsActivity.class);
+                        commentsIntent.putExtra("PostKey", PostKey);
+                        mContext.startActivity(commentsIntent);
+
+
+                    }
+                });
 
             holder.pic.setOnClickListener(new View.OnClickListener() {
                 @Override
