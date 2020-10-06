@@ -79,18 +79,7 @@ public class The_First extends AppCompatActivity {
         {
             SendUserToMainActivity();
         }
-      /*else//if user is not logged in
-        {
-            mAuth=FirebaseAuth.getInstance();
-            mAuth.signInWithEmailAndPassword("withoutloginuser@gmail.com","LoginFast").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    Toast.makeText(The_First.this, "Welcome", Toast.LENGTH_SHORT).show();
-                }
-            });
-            //SendUserToMainActivity();
-            SendUserToStartActivity();
-        }*/
+
     }
 
 

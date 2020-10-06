@@ -161,15 +161,7 @@ public class PostActivity extends AppCompatActivity {
 
         rg_mode=findViewById(R.id.rg1);
         rg_mode_opt=findViewById(R.id.rg2);
-
-        //rg_cat=findViewById(R.id.rg3);
-        //rg_cat_off=findViewById(R.id.rg4);
-        //rg_cat_per=findViewById(R.id.rg5);
-        //rg_cat_oth=findViewById(R.id.rg6);
         Image=findViewById(R.id.ima);
-        //r=(RelativeLayout)findViewById(R.id.r1);
-
-        //if(current_user_id.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
         if(type.equals("Club"))
                 {
             cv.setVisibility(View.GONE);
@@ -218,12 +210,7 @@ public class PostActivity extends AppCompatActivity {
 
 
                             })
-                            /*.setNegativeButton("Cancel", R.drawable.ic_arrow, new MaterialDialog.OnClickListener() {
-                                @Override
-                                public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
 
-                                }
-                            })*/
                             .build();
 
                     // Show Dialog
@@ -232,9 +219,6 @@ public class PostActivity extends AppCompatActivity {
                 }
 
 
-                    //title.setText("Select Your Announcement Category");
-
-               // RelativeLayout rl = (RelativeLayout) findViewById(R.id.myLayout) ;
                 else {
                     MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
                             .setTitle("Info")
@@ -248,12 +232,7 @@ public class PostActivity extends AppCompatActivity {
 
 
                             })
-                            /*.setNegativeButton("Cancel", R.drawable.ic_arrow, new MaterialDialog.OnClickListener() {
-                                @Override
-                                public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
 
-                                }
-                            })*/
                             .build();
 
                     // Show Dialog
@@ -326,20 +305,6 @@ public class PostActivity extends AppCompatActivity {
                 if(checkedId==R.id.post_public)
                 {
 
-                         /*cv2.setVisibility(View.VISIBLE);
-                         rg_mode_opt.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                             @Override
-                             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                                 if(checkedId==R.id.post_no){
-                                     UserInfo_show="no";
-                                     Mode="Public";
-                                 }
-                                 else if(checkedId==R.id.post_yes){
-                                     UserInfo_show="yes";
-                                     Mode="Public";
-                                 }
-                             }
-                         });*/
 
                     UserInfo_show="yes";
                     Mode="Public";
@@ -551,50 +516,7 @@ public class PostActivity extends AppCompatActivity {
          else
         {
             SavingPostInformationToDatabase();
-            /*MaterialDialog mDialog = new MaterialDialog.Builder(PostActivity.this)
-                    .setTitle("Post It..")
-                    .setMessage("Be sure of the content you are posting..admin can scan your credentials in case of any spam!" +
-                            "Are you sure you want to post this?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes,Post It", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int which)
-                        {
-                            loadingBar.setTitle("Add New Post");
-                            loadingBar.setMessage("Please wait, while we are updating your new post...");
-                            loadingBar.show();
-                            loadingBar.setCanceledOnTouchOutside(true);
 
-
-                            Calendar calFordDate = Calendar.getInstance();
-                            SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
-                            saveCurrentDate = currentDate.format(calFordDate.getTime());
-
-                            Calendar calFordTime = Calendar.getInstance();
-                            SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-                            saveCurrentTime = currentTime.format(calFordDate.getTime());
-
-                            postRandomName = saveCurrentDate + saveCurrentTime;
-
-                            SavingPostInformationToDatabase();
-                            dialogInterface.dismiss();
-                        }
-
-
-                    })
-                    .setNegativeButton("No,Leave It", R.drawable.ic_baseline_cancel_schedule_send_24, new MaterialDialog.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int which)
-                        {
-                            Toast.makeText(PostActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
-                            dialogInterface.dismiss();
-
-                        }
-                    })
-                    .build();
-
-            // Show Dialog
-            mDialog.show();*/
 
 
         }}
@@ -624,29 +546,7 @@ public class PostActivity extends AppCompatActivity {
                         SavingPostInformationToDatabase();
                         progressBar.setVisibility(View.GONE);
                         Checker.equals("PDF");
-                        //mLoading.setVisibility(View.GONE);
-                       /* PostsRef.child(postRandomName+current_user_id).child("PostPDF").setValue(downloadUrlp).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(PostActivity.this, "PDF Stored", Toast.LENGTH_SHORT).show();
-                                    check1=0;
-                                    mLoading.setVisibility(View.GONE);
-                                    UpdatePostButton.setVisibility(View.VISIBLE);
-                                    progressBar.setVisibility(View.GONE);
 
-                                }
-                                else
-                                {
-                                    String message = task.getException().getMessage();
-                                    Toast.makeText(PostActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
-                                    UpdatePostButton.setVisibility(View.VISIBLE);
-                                    mLoading.setVisibility(View.GONE);
-                                    progressBar.setVisibility(View.GONE);
-                                }
-
-                            }
-                        });*/
 
                     }
                 });
@@ -660,8 +560,7 @@ public class PostActivity extends AppCompatActivity {
 
     private void storingImageToFirebaseStorage() {
 
-        //UpdatePostButton.setVisibility(View.INVISIBLE);
-        //mLoading.setVisibility(View.VISIBLE);
+
         StorageReference filePath=PostImageRef.child("Post Images").child(resultUri.getLastPathSegment()+postRandomName+".jpg");
 
 
@@ -680,31 +579,7 @@ public class PostActivity extends AppCompatActivity {
                         Toast.makeText(PostActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                         Checker="Image";
-                        //mLoading.setVisibility(View.GONE);
-                       // mLoading.setVisibility(View.GONE);
-                        /*PostsRef.child(postRandomName+current_user_id).child("PostImage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(PostActivity.this, "Image Stored", Toast.LENGTH_SHORT).show();
-                                    check=0;
 
-                                    UpdatePostButton.setVisibility(View.VISIBLE);
-
-
-                                   progressBar.setVisibility(View.GONE);
-
-                                } else
-                                    {
-                                    String message = task.getException().getMessage();
-                                    Toast.makeText(PostActivity.this, "Error:" + message, Toast.LENGTH_SHORT).show();
-                                    UpdatePostButton.setVisibility(View.VISIBLE);
-                                    mLoading.setVisibility(View.GONE);
-                                   progressBar.setVisibility(View.GONE);
-                                }
-
-                            }
-                        });*/
 
                     }
                 });
@@ -745,11 +620,6 @@ public class PostActivity extends AppCompatActivity {
                         Calendar calFordTime = Calendar.getInstance();
                         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
                         saveCurrentTime = currentTime.format(calFordDate.getTime());
-
-                        //int pos1=saveCurrentDate.indexOf('-');
-                        //date=saveCurrentDate.substring(0,pos1);
-                        //int pos2=saveCurrentDate.indexOf('-',)
-                        //calFordDate.get(D)
 
                         date=calFordDate.get(Calendar.DAY_OF_MONTH);
                         month=calFordDate.get(Calendar.MONTH);
@@ -926,93 +796,7 @@ public class PostActivity extends AppCompatActivity {
         saveCurrentTime = currentTime.format(calFordDate.getTime());
 
         postRandomName = saveCurrentDate + saveCurrentTime;
-        /*UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if(dataSnapshot.exists())
-                {
-                    type=dataSnapshot.child("type").getValue().toString();
 
-                    String userAdmissionNo;
-                        if(type.equals("Admin")||type.equals("SubAdmin")||type.equals("Club"))
-                        {
-                             userAdmissionNo=dataSnapshot.child("designation").getValue().toString();
-                        }
-                        else
-                            {
-                             userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
-                        }
-                        //String userAdmissionNo=dataSnapshot.child("admission_number").getValue().toString();
-                        String userFullName = dataSnapshot.child("username").getValue().toString();
-//                        String userProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
-                        String userEmail=dataSnapshot.child("email").getValue().toString();
-                        String postType=dataSnapshot.child("type").getValue().toString();
-
-
-                    HashMap postsMap = new HashMap();
-                    postsMap.put("uid", current_user_id);
-                    postsMap.put("date", saveCurrentDate);
-                    postsMap.put("time", saveCurrentTime);
-                    postsMap.put("description", description);
-                   // postsMap.put("type",Checker);
-                    postsMap.put("mode", Mode);
-                    postsMap.put("admissionNo",userAdmissionNo);
-                    postsMap.put("category", cat1);
-                    postsMap.put("subCategory", cat2);
-  //                  postsMap.put("profileImage", userProfileImage);
-                    postsMap.put("username", userFullName);
-                    postsMap.put("email",userEmail);
-                    postsMap.put("showInformation",UserInfo_show);
-                    postsMap.put("PostKey",postRandomName+current_user_id);
-                    postsMap.put("status","Unresolved");
-                    postsMap.put("postType",postType);
-
-
-                   if(check==1){
-                       postsMap.put("PostImage","null");
-                   }
-                   if(check==0)
-                   {
-                       postsMap.put("PostImage",downloadUrl);
-                   }
-                   if(check1==1) {
-                       postsMap.put("PostPDF","null");
-                   }
-
-
-
-                   // postsMap.put("star","no");
-                    postsMap.put("likes","0");
-                    PostsRef.child(postRandomName+current_user_id ).updateChildren(postsMap)
-                            .addOnCompleteListener(new OnCompleteListener() {
-                                @Override
-                                public void onComplete(@NonNull Task task)
-                                {
-                                    if(task.isSuccessful())
-                                    {
-
-
-                                        SendUserToMainActivity();
-                                        Toast.makeText(PostActivity.this, "New Post is updated successfully.", Toast.LENGTH_LONG).show();
-                                        mLoading.setVisibility(View.GONE);
-
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(PostActivity.this, "Error Occured while updating your post.", Toast.LENGTH_LONG).show();
-                                        mLoading.setVisibility(View.GONE);
-                                    }
-                                }
-                            });
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
 
     }
 

@@ -408,23 +408,11 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
         holder.textStatus.setText(question.getStatus());
         Tag fourthTag= question.getTags().get(3);
         holder.textUid.setText(fourthTag.getText());
-        //holder.pic.setImageURI(Uri.parse(question.getProfileImage()));
-        /*String s=question.getStar();
-        if(s.equals("no")){
-            holder.mStar.setImageResource(R.drawable.ic_star_unselected);
-        }
-        else if(s.equals("yes"))
-        {
-            holder.mStar.setImageResource(R.drawable.ic_star_selected);
-        }*/
 
         char letter = question.getName().charAt(0);
         letter = Character.toUpperCase(letter);
 
 
-        //Uri imgUri=Uri.parse(question.getProfileImage());
-        //imageView.setImageURI(null);
-        //imageView.setImageURI(imgUri);
         mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
         holder.pic.setImageDrawable(mDrawableBuilder);
         // else holder.pic.setImageURI(imgUri);
@@ -451,25 +439,6 @@ public class StarAdapter extends RecyclerView.Adapter<StarAdapter.ViewHolder> {
 
 
 
-       /* Post.addValueEventListener(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.child("uid").equals(null))
-                {
-                String ID=dataSnapshot.child("uid").getValue().toString();
-                if(ID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
-                    holder.textStatus.setVisibility(View.GONE);
-                    holder.statusHeading.setVisibility(View.GONE);
-                }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
-            }
-        });*/
     }
 
     @Override

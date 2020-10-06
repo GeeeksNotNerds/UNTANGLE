@@ -76,9 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNav =findViewById(R.id.bottom_navigation);
-//        bottomNav.setOnNavigationItemSelectedListener(navListner);
-  //      bottomNav.getMenu().findItem(R.id.nav_profile).setChecked(true);
-        BottomNavigationView bottomNavigAdmin=findViewById(R.id.bottom_navigation_admin);
+ BottomNavigationView bottomNavigAdmin=findViewById(R.id.bottom_navigation_admin);
 
         UserRef=FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -165,13 +163,6 @@ public class SettingsActivity extends AppCompatActivity {
         adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
-        //if(current_user_id.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))
-      /*  if(type.equals("Club"))
-        {
-            spinner2.setAdapter(adapter5);
-        }
-
-        else {*/
 
             spinner1.setAdapter(adapter1);
             spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -215,15 +206,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-       /* if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
-            userAdminNo.setHint("Designation");
-        }else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
-            userAdminNo.setHint("Admisiion Number");
-        }*/
 
-
-
-        //userProfImage=findViewById(R.id.settings_pro_pic);
         UpdateAccountSettingsButton=(Button)findViewById(R.id.update_button);
 
         SettingsuserRef.addValueEventListener(new ValueEventListener() {
@@ -232,65 +215,18 @@ public class SettingsActivity extends AppCompatActivity {
                     if(dataSnapshot.exists())
                     {
 
-                       /* if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
-                            String myProfileImage="";
-                            if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();*/
-
-
 
                             String myUserName = dataSnapshot.child("username").getValue().toString();
                             String myDesignation=dataSnapshot.child("designation").getValue().toString();
                             String myDept = dataSnapshot.child("department").getValue().toString();
-                            //String Categ = dataSnapshot.child("email").getValue().toString();
 
-                           /* if(!myProfileImage.isEmpty()) {
-                                Picasso.with(SettingsActivity.this)
-                                        .load(myProfileImage)
-                                        .placeholder(R.drawable.ic_account_circle_24px)
-                                        .into(userProfImage);
-                            }else{
-                                userProfImage.setImageResource(R.drawable.profile);
-                            }
-*/
+
                             userName.setText(myUserName);
                             userDesig.setText(myDesignation);
                             userDept.setText(myDept);
                             //userEmail.setText(myEmail);
                         }
-                    /*else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
-                            String myProfileImage="";
-                            if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
-
-
-                            String myUserName = dataSnapshot.child("username").getValue().toString();
-                            String myAdminNo=dataSnapshot.child("admission_number").getValue().toString();
-                            String myDept = dataSnapshot.child("department").getValue().toString();
-                            String myEmail = dataSnapshot.child("email").getValue().toString();
-
-                        //    Picasso.with(SettingsActivity.this)
-                          //          .load(myProfileImage)
-                            //        .placeholder(R.drawable.ic_account_circle_24px)
-                              //      .into(userProfImage);
-
-                            if(!myProfileImage.isEmpty()) {
-                                Picasso.with(SettingsActivity.this)
-                                        .load(myProfileImage)
-                                        .placeholder(R.drawable.ic_account_circle_24px)
-                                        .into(userProfImage);
-                            }else{
-                                userProfImage.setImageResource(R.drawable.profile);
-                            }
-
-                            userName.setText(myUserName);
-                            userAdminNo.setText(myAdminNo);
-                            userDept.setText(myDept);
-                            userEmail.setText(myEmail);
-
-
-
-                        }*/
-                    //}
             }
 
             @Override
@@ -306,23 +242,6 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
-        /*userProfImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              //  Intent galleryIntent = new Intent();
-                //galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                //galleryIntent.setType("image/*");
-                //startActivityForResult(galleryIntent, Gallery_Pick);
-
-
-                Intent gallint = new Intent();
-                gallint.setType("image/*");
-                gallint.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(gallint, "Select Profile Image"), Gallery_Pick);
-
-
-            }
-        });*/
 
 
 
@@ -393,48 +312,6 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-                /*
-
-
-
-                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task)
-                    {
-                        if(task.isSuccessful())
-                        {
-
-                            Toast.makeText(SettingsActivity.this, "Profile Image stored successfully to Firebase storage...", Toast.LENGTH_SHORT).show();
-
-                            final String downloadUrl = task.getResult().getDownloadUrl().toString();
-
-                            SettingsuserRef.child("profileimage").setValue(downloadUrl)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task)
-                                        {
-                                            if(task.isSuccessful())
-                                            {
-                                                Intent selfIntent = new Intent(SettingsActivity.this, SettingsActivity.class);
-                                                startActivity(selfIntent);
-
-                                                Toast.makeText(SettingsActivity.this, "Profile Image stored to Firebase Database Successfully...", Toast.LENGTH_SHORT).show();
-                                                loadingBar.dismiss();
-                                            }
-                                            else
-                                            {
-                                                String message = task.getException().getMessage();
-                                                Toast.makeText(SettingsActivity.this, "Error Occured: " + message, Toast.LENGTH_SHORT).show();
-                                                loadingBar.dismiss();
-                                            }
-                                        }
-                                    });
-                        }
-                    }
-                });
-
-
-                */
             }
             else
             {
@@ -471,33 +348,7 @@ public class SettingsActivity extends AppCompatActivity {
             loadingBar.show();
             UpdateAccountInfo(username, userdept,cat1,cat2,userDesignation);
         }
-        //}
-        /*else if (!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")) {
 
-
-            String username = userName.getText().toString();
-            String userDesignation=userAdminNo.getText().toString();
-            String userdept = userDept.getText().toString();
-            String useremail = userEmail.getText().toString();
-
-            if (TextUtils.isEmpty(username)) {
-                Toast.makeText(this, "Please write your username", Toast.LENGTH_SHORT).show();
-            } else if (TextUtils.isEmpty(userdept)) {
-                Toast.makeText(this, "Please write your department", Toast.LENGTH_SHORT).show();
-            } else if (TextUtils.isEmpty(useremail)) {
-                Toast.makeText(this, "Please write your Email", Toast.LENGTH_SHORT).show();
-            } else if (TextUtils.isEmpty(userDesignation)) {
-                Toast.makeText(this, "Please write your Admission Number", Toast.LENGTH_SHORT).show();
-            } else {
-                loadingBar.setTitle("Profile Image");
-                loadingBar.setMessage("Please wait, while we updating your profile ...");
-                loadingBar.setCanceledOnTouchOutside(true);
-                loadingBar.show();
-                UpdateAccountInfo(username, userdept, useremail,userDesignation);
-            }
-
-
-        }*/
 
     }
 
@@ -557,58 +408,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-        //}
-        /*else if(!currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-        {
-            MaterialDialog mDialog = new MaterialDialog.Builder(SettingsActivity.this)
-                    .setTitle("Update Post..")
-                    .setMessage("Are you sure you want update your details?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes,Update!", R.drawable.ic_baseline_thumb_up_24, new MaterialDialog.OnClickListener() {
-                        @Override
-                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
-                        {
-                            HashMap useMap = new HashMap();
-                            useMap.put("username", username);
-                            useMap.put("admission_number",userDesignation);
-                            useMap.put("department", userdept);
-                            useMap.put("email", useremail);
-                            SettingsuserRef.updateChildren(useMap).addOnCompleteListener(new OnCompleteListener() {
-                                @Override
-                                public void onComplete(@NonNull Task task) {
-                                    if (task.isSuccessful()) {
-                                        loadingBar.dismiss();
-                                        SendUserToMainActivity();
-                                        Toast.makeText(SettingsActivity.this, "Account Settings Updated Successfully..", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        loadingBar.dismiss();
-                                        Toast.makeText(SettingsActivity.this, "Error Occured while update account setting info..", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                            dialogInterface.dismiss();
-                        }
 
-
-                    })
-                    .setNegativeButton("Cancel", R.drawable.ic_baseline_cancel_24, new MaterialDialog.OnClickListener() {
-                        @Override
-                        public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which)
-                        {
-                            loadingBar.dismiss();
-                            dialogInterface.dismiss();
-
-                        }
-                    })
-                    .build();
-
-            // Show Dialog
-            mDialog.show();
-
-
-
-
-        }*/
     }
 
     private void SendUserToMainActivity()

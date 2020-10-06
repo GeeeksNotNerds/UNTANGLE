@@ -319,20 +319,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                 else
                                     {   HashMap postsMap = new HashMap();
                                         postsMap.put("uid", currentUserId);
-                                       // postsMap.put("date", question.getDate());
-                                        //postsMap.put("time", question.getTime());
-                                        //postsMap.put("description", question.getDescription());
-                                        //postsMap.put("mode", question.getMode());
-                                        //postsMap.put("category", question.getCategory());
-                                        //postsMap.put("subCategory", question.getSubCategory());
-                                        //postsMap.put("profileImage", question.getProfileImage());
+
                                         postsMap.put("username", question.getName());
                                         postsMap.put("postType",question.getPostType());
-                                        //postsMap.put("showInformation",question.getShowInformation());
-                                        //postsMap.put("PostKey",question.getPostid());
-                                        //postsMap.put("status","Unresolved");
-                                        //postsMap.put("PostImage",question.getPostImage());
-                                        //postsMap.put("likes",question.getLikes());
 
                                         PostsRef.child(question.getPostid()).child("star").child(currentUserId).updateChildren(postsMap)
 
@@ -354,10 +343,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                                         }
                                                     }
                                                 });
-
-
-                                    //UserRef.child(PostKey).setValue(true);
-                                    //DownVotesRef.child(PostKey).child(currentUserId).removeValue();
                                     StarChecker = false;
 
 
@@ -637,23 +622,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 holder.textQuestion.setText(question.getDescription());
             }
         }
-        //Toast.makeText(context, Integer.toString(charCount), Toast.LENGTH_SHORT).show();
-       // int lineCount;//=holder.textQuestion.getLineCount();
-
-        //lineCount=holder.textQuestion.getText().toString().split(System.getProperty("line.separator")).length;
-        //String count=Integer.toString(lineCount);
-       //Toast.makeText(context, count, Toast.LENGTH_SHORT).show();
-        /*if(lineCount>3)
-        {
-
-            int start = holder.textQuestion.getText().toString().indexOf(System.getProperty("line.separator"));
-            int end = holder.textQuestion.getText().toString().indexOf(System.getProperty("line.separator"),start);
-            int ends=holder.textQuestion.getText().toString().indexOf(System.getProperty("line.separator"),end);
-           // holder.textQuestion.setText(question.getDescription().substring(0,end-3)+"...");
-            Toast.makeText(context, Integer.toString(start), Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, Integer.toString(end), Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, Integer.toString(ends), Toast.LENGTH_SHORT).show();
-        }*/
 
         Tag firstTag = question.getTags().get(0);
         holder.textCategory.setText(firstTag.getText());
@@ -664,23 +632,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.textStatus.setText(question.getStatus());
         Tag fourthTag= question.getTags().get(3);
         holder.textUid.setText(fourthTag.getText());
-        //holder.pic.setImageURI(Uri.parse(question.getProfileImage()));
-        /*String s=question.getStar();
-        if(s.equals("no")){
-            holder.mStar.setImageResource(R.drawable.ic_star_unselected);
-        }
-        else if(s.equals("yes"))
-        {
-            holder.mStar.setImageResource(R.drawable.ic_star_selected);
-        }*/
+
 
         char letter = question.getName().charAt(0);
        letter = Character.toUpperCase(letter);
 
 
-        //Uri imgUri=Uri.parse(question.getProfileImage());
-        //imageView.setImageURI(null);
-        //imageView.setImageURI(imgUri);
+
         mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
        holder.pic.setImageDrawable(mDrawableBuilder);
       // else holder.pic.setImageURI(imgUri);
@@ -707,33 +665,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
 
-     /*   Post.addValueEventListener(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.child("uid").equals(null)){
-                String ID=dataSnapshot.child("uid").getValue().toString();
-                String mode=dataSnapshot.child("mode").getValue().toString();
-                if(mode.equals("Private"))
-                {
-                    holder.textStatus.setVisibility(View.VISIBLE);
-                    holder.statusHeading.setVisibility(View.VISIBLE);
-                }
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-           /* }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
     }
 
     private void SendUserToSnackBarActivity()

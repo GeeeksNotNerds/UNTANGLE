@@ -140,23 +140,12 @@ public class ProfileActivity extends AppCompatActivity {
                                 edit_profile.setVisibility(View.VISIBLE);
 
                             }
-                            //String myProfileImage="";
-                             //if(dataSnapshot.child("ProfileImage").exists()) myProfileImage = dataSnapshot.child("ProfileImage").getValue().toString();
 
                             String myUserName = dataSnapshot.child("username").getValue().toString();
                             String Designation = dataSnapshot.child("designation").getValue().toString();
                             String myBranch = dataSnapshot.child("department").getValue().toString();
                             String myEmail = dataSnapshot.child("email").getValue().toString();
 
-                            /*if(!myProfileImage.isEmpty()) {
-                                Picasso.with(ProfileActivity.this)
-                                        .load(myProfileImage)
-                                        .placeholder(R.drawable.ic_account_circle_24px)
-                                        .into(userProfileImage);
-                            }else
-                                {
-                                userProfileImage.setImageResource(R.drawable.profile);
-                            }*/
 
 
                             userName.setText("UserName : " + myUserName);
@@ -186,16 +175,7 @@ public class ProfileActivity extends AppCompatActivity {
                             String myBranch = dataSnapshot.child("department").getValue().toString();
                             String myEmail = dataSnapshot.child("email").getValue().toString();
 
-                            /*if(!myProfileImage.isEmpty()) {
-                                Picasso.with(ProfileActivity.this)
-                                        .load(myProfileImage)
-                                        .placeholder(R.drawable.ic_account_circle_24px)
-                                        .into(userProfileImage);
-                            }
-                            else
-                                {
-                                userProfileImage.setImageResource(R.drawable.profile);
-                            }*/
+
 
 
                             userName.setText("UserName : " + myUserName);
@@ -203,15 +183,6 @@ public class ProfileActivity extends AppCompatActivity {
 
                             userBranch.setText("Department : " + myBranch);
                             userEmail.setText("Email : " + myEmail);
-
-                            /*String myProfileName = dataSnapshot.child("username").getValue().toString();
-                            char letter = myProfileName.charAt(0);
-                            letter = Character.toUpperCase(letter);
-
-
-                            mDrawableBuilder = TextDrawable.builder().buildRound(String.valueOf(letter), R.color.colorAccent);
-
-                            pro.setImageDrawable(mDrawableBuilder);*/
 
                         }
                     }

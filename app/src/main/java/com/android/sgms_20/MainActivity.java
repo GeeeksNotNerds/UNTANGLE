@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         AdminTab=(Button)findViewById(R.id.admin);
         ClubTab=(Button)findViewById(R.id.club);
         PublicTab=(Button)findViewById(R.id.chat);
-        //Window window = MainActivity.getWindow();
+
 
 
         mToolbar=(Toolbar) findViewById(R.id.toolbar);
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         LikesRef=FirebaseDatabase.getInstance().getReference().child("Likes");
         DownVotesRef=FirebaseDatabase.getInstance().getReference().child("DownVotes");
         MyPostRef=FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
-        //Toast.makeText(instance, currentUserID, Toast.LENGTH_SHORT).show();
+
 
         UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         msg = "subscription to notifications failed";
                                     }
                                     Log.d(TAG, msg);
-                                  //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -209,8 +208,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-       // if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||currentUserID.equals("HwRTgHAQF4UyfkoP8r0zN3MmO4y2"))
-        if(type.equals("Admin")||type.equals("SubAdmin"))
+       if(type.equals("Admin")||type.equals("SubAdmin"))
                 {
            MyPostRef.addValueEventListener(new ValueEventListener() {
                @Override
@@ -218,8 +216,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                    if (dataSnapshot.exists()) {
                        if(dataSnapshot.hasChild("subCategory"))
                        adminCat = dataSnapshot.child("subCategory").getValue().toString();
-                       //  Toast.makeText(MainActivity.this, adminCat, Toast.LENGTH_SHORT).show();
-                   }
+                       }
                }
 
                @Override
@@ -232,7 +229,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2"))
         {
             pro.setVisibility(View.INVISIBLE);
-            //Toast.makeText(this, "Working", Toast.LENGTH_SHORT).show();
         }
         else
             {
@@ -278,19 +274,18 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         Fresco.initialize(MainActivity.this, config);
 
         mColors = getResources().getIntArray(R.array.colors);
-        //mAdmin=getResources().getStringArray(R.array.admin_uid);
+
         mTitles = getResources().getStringArray(R.array.job_titles);
-        //mClub=getResources().getStringArray(R.array.club_uid);
+
 
         mFilter = (Filter<Tag>) findViewById(R.id.filter);
         mFilter.setAdapter(new Adapter(getTags()));
         mFilter.setListener(MainActivity.this);
 
-        //the text to show when there's no selected items
+
         mFilter.setNoSelectedItemText(getString(R.string.str_all_selected));
         mFilter.build();
 
-       // if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
         if(type.equals("Admin")||type.equals("SubAdmin"))
                 {
             PublicTab.setText("Private");
@@ -352,9 +347,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             {
 
                 if(isAdmin){
-                   // add.setVisibility(View.VISIBLE);
+
                 }else{
-                   // add.setVisibility(View.GONE);
+
                 }
                 mSort1.setBackgroundResource(R.drawable.button_clicked);
                 mSort2.setBackgroundResource(R.drawable.button_unclick);
@@ -378,9 +373,8 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             {
 
                 if(isAdmin){
-                   // add.setVisibility(View.VISIBLE);
-                }else{
-                    //add.setVisibility(View.GONE);
+                    }else{
+
                 }
                 mSort1.setBackgroundResource(R.drawable.button_clicked);
                 mSort2.setBackgroundResource(R.drawable.button_unclick);
@@ -403,9 +397,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             {
 
                 if(!isAdmin){
-                   // add.setVisibility(View.VISIBLE);
+
                 }else{
-                    //add.setVisibility(View.GONE);
+
                 }
                 mSort1.setBackgroundResource(R.drawable.button_clicked);
                 mSort2.setBackgroundResource(R.drawable.button_unclick);
@@ -425,29 +419,14 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
         if(currentUserID.equals("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2")){
 
-           /* add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent loginIntent=new Intent(MainActivity.this,SnackBarActivity.class);
-                    startActivity(loginIntent);
-                }
-            });
-*/
+
 
 
         }else {
 
 
-           /* add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
-                    postIntent.putExtra("UserID", currentUserID);
-                    startActivity(postIntent);
-                }
-            });*/
+
         }
-        //mRecyclerView.setAdapter(mAdapter = new PostsAdapter(this, mAllQuestions = getQuestions()));
 
         mRecyclerView.setItemAnimator(new FiltersListItemAnimator());
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
@@ -457,7 +436,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         {
             bottomNav.setVisibility(View.GONE);
             bottomNavAdmin.setVisibility(View.VISIBLE);
-           // bottomNavAdmin.getMenu().findItem(R.id.nav_home_admin).setChecked(true);
             bottomNavAdmin.setOnNavigationItemSelectedListener(navListner2);
             bottomNavAdmin.getMenu().findItem(R.id.nav_home_admin).setChecked(true);
         }
@@ -476,15 +454,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
             bottomNav.getMenu().findItem(R.id.nav_home).setChecked(true);
          }
         }
-       /* int d = 0;
-        for (int i = 0; i < 1; i++) {
-            if (currentUserID.equals(mAdmin[i])) {
-                d = 1;
-                break;
-            }
-        }*/
 
-       // if(d==1)
                 if(type.equals("Admin")||type.equals("SubAdmin"))
         {
             Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
@@ -492,13 +462,9 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
             if (isFirstRun)
             {
-                //Toast.makeText(instance, "Working", Toast.LENGTH_SHORT).show();
-                //show start activity
+
                 startActivity(new Intent(MainActivity.this,EntryActivity.class));
 
-
-                // Show Dialog
-               // mDialog.show();
             }
 
 
@@ -519,13 +485,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     }
 
 
-    /*private void SendUserToStarActivity()
-    {
-        Intent intent=new Intent(MainActivity.this, StarActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }*/
 
 
     private void calculateDiff(final List<Posts> oldList, final List<Posts> newList) {
@@ -571,7 +530,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
     }
     public void getData(DataSnapshot dataSnapshot)
     {
-        //dataSnapshot=new DataSnapshot(UsersRef,"");
+
     }
     public void sort()
     {
@@ -607,21 +566,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                                     String uid = dataSnapshot1.child("uid").getValue().toString();
                                     String postType=dataSnapshot1.child("postType").getValue().toString();
-                                    /* int c = 0;
-                                    for (int i = 0; i < 1; i++) {
-                                        if (uid.equals(mAdmin[i])) {
-                                            c = 1;
-                                            break;
-                                        }
-                                    }
-                                    if (c != 1) {
-                                        for (int j = 0; j < 1; j++) {
-                                            if (uid.equals(mClub[j])) {
-                                                c = 2;
-                                                break;
-                                            }
-                                        }
-                                    }*/
+
 
                                     if (postType.endsWith("Admin")||postType.endsWith("SubAdmin")) {
                                         owner = "Admin";
@@ -640,7 +585,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                                     String show = dataSnapshot1.child("showInformation").getValue().toString();
                                     String info, mail;
-                                    //if(show.equals("no"))info="Anonymous";
 
 
                                     final String mode = dataSnapshot1.child("mode").getValue().toString();
@@ -656,7 +600,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String date = dataSnapshot1.child("date").getValue().toString();
                                     if(date.equals(saveCurrentDate))
                                     {
-                                        //date=time.substring(0,5);
+
                                         if(Integer.parseInt(time.substring(0,2)) > 12 )
                                         {
                                             int s=Integer.parseInt(time.substring(0,2));
@@ -672,11 +616,11 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                             date="Today , "+time.substring(0,5)+" PM";
                                         }
                                     }
-                                    //String todayDate=saveCurrentDate.substring(0,2);
+
 
                                     else
                                     {
-                                        //date=date+" , "+time;
+
                                         if(Integer.parseInt(time.substring(0,2)) > 12 )
                                         {
                                             int s=Integer.parseInt(time.substring(0,2));
@@ -694,7 +638,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     }
                                     String post = dataSnapshot1.child("description").getValue().toString();
                                     String pdf = dataSnapshot1.child("PostPDF").getValue().toString();
-                                    // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
                                     if(type.equals("Admin")||type.equals("SubAdmin"))
                                     {
                                         info=name;
@@ -769,21 +712,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     final String owner;
                                     String uid = dataSnapshot1.child("uid").getValue().toString();
                                     String postType=dataSnapshot1.child("postType").getValue().toString();
-                                   /* int c = 0;
-                                    for (int i = 0; i < 1; i++) {
-                                        if (uid.equals(mAdmin[i])) {
-                                            c = 1;
-                                            break;
-                                        }
-                                    }
-                                    if (c != 1) {
-                                        for (int j = 0; j < 1; j++) {
-                                            if (uid.equals(mClub[j])) {
-                                                c = 2;
-                                                break;
-                                            }
-                                        }
-                                    }*/
 
                                     if (postType.endsWith("Admin")||postType.endsWith("SubAdmin")) {
                                         owner = "Admin";
@@ -802,7 +730,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                                     String show = dataSnapshot1.child("showInformation").getValue().toString();
                                     String info, mail;
-                                    //if(show.equals("no"))info="Anonymous";
+
 
 
                                     final String mode = dataSnapshot1.child("mode").getValue().toString();
@@ -812,14 +740,13 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String status;
                                     if(!owner.equals("Admin"))status=dataSnapshot1.child("status").getValue().toString();
                                     else status="-";
-                                   // String postType=dataSnapshot1.child("postType").getValue().toString();
-                                    String user = dataSnapshot1.child("email").getValue().toString();
+                                  String user = dataSnapshot1.child("email").getValue().toString();
                                     String postpic=dataSnapshot1.child("PostImage").getValue().toString();
                                     String date = dataSnapshot1.child("date").getValue().toString();
                                     String time=dataSnapshot1.child("time").getValue().toString();
                                     if(date.equals(saveCurrentDate))
                                     {
-                                        //date=time.substring(0,5);
+
                                         if(Integer.parseInt(time.substring(0,2)) > 12 )
                                         {
                                             int s=Integer.parseInt(time.substring(0,2));
@@ -854,7 +781,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         }
                                     }
                                     String post = dataSnapshot1.child("description").getValue().toString();
-                                    // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
+
                                     if(type.equals("Admin")||type.equals("SubAdmin"))
                                     {
                                         info=name;
@@ -895,11 +822,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                     String like=dataSnapshot1.child("likes").getValue().toString();
 
                                     String pdf =dataSnapshot1.child("PostPDF").getValue().toString();
-                                   // if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-
-                                    //if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                                   // if(postType.endsWith("Admin")||postType.endsWith("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))
-                                    if((postType.endsWith("Admin")||postType.endsWith("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))&&!postType.startsWith("delete"))
+                                  if((postType.endsWith("Admin")||postType.endsWith("SubAdmin")||(uid.equals(currentUserID)&& mode.equals("Private")))&&!postType.startsWith("delete"))
                                     {
                                         add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic,pdf, categ, sub, show,status, new ArrayList<Tag>() {{
                                             add(new Tag(owner, colour4));
@@ -955,9 +878,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                                     String show = dataSnapshot1.child("showInformation").getValue().toString();
                                     String info, mail;
-                                    //if(show.equals("no"))info="Anonymous";
-
-
                                     final String mode = dataSnapshot1.child("mode").getValue().toString();
                                     final String sub = dataSnapshot1.child("subCategory").getValue().toString();
                                     final String categ = dataSnapshot1.child("category").getValue().toString();
@@ -1006,9 +926,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         }
                                     }
                                     String post = dataSnapshot1.child("description").getValue().toString();
-                                    // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                                    //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
-                                    if(type.equals("Admin")||type.equals("SubAdmin"))
+                                   if(type.equals("Admin")||type.equals("SubAdmin"))
                                     {
                                         info=name;
                                         mail=user;
@@ -1103,7 +1021,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
                                     String show = dataSnapshot1.child("showInformation").getValue().toString();
                                     String info, mail;
-                                    //if(show.equals("no"))info="Anonymous";
+
 
 
                                     final String mode = dataSnapshot1.child("mode").getValue().toString();
@@ -1156,8 +1074,6 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
                                         }
                                     }
                                     String post = dataSnapshot1.child("description").getValue().toString();
-                                    // String profilePic = dataSnapshot1.child("profileImage").getValue().toString();
-                                    //if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))
                                     if (type.equals("Admin")||type.equals("SubAdmin")) {
                                         info = name;
                                         mail = user;
@@ -1401,49 +1317,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
 
 
 
-                                    /*if((!currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))//visible only to students and clubs
-                                    {
-                                        if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
-                                    {
-                                        if(mode.equals("Public")){
-                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
 
-                                            add(new Tag(owner, colour4));
-                                            add(new Tag(mode, colour3));
-                                            add(new Tag(categ, colour1));
-                                            add(new Tag(sub, colour2));
-                                        }}));
-                                    }}
-                                }
-                                    if(uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")||uid.equals(currentUserID)) //show admin only private issues
-                                    {
-                                        if(mode.equals("Private"))
-                                        {
-                                            if((!uid.equals("nO3l336v84OXDNCkR0aFNm0Es1w2"))&&(!uid.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")))
-                                            {
-                                                if(isAdmin) {
-                                                    if (adminCat.equals(sub)) {
-                                                        add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
-                                                            add(new Tag(owner, colour4));
-                                                            add(new Tag(mode, colour3));
-                                                            add(new Tag(categ, colour1));
-                                                            add(new Tag(sub, colour2));
-                                                        }}));
-                                                    }
-                                                }
-                                                /*else
-                                                {
-                                                add(new Posts(like,postKey, ""+info,   mail, post, date, date, uid, mode,postpic, categ, sub, show,status, new ArrayList<Tag>() {{
-                                                    add(new Tag(owner, colour4));
-                                                    add(new Tag(mode, colour3));
-                                                    add(new Tag(categ, colour1));
-                                                    add(new Tag(sub, colour2));
-                                                }}));
-                                                }
-                                            }
-
-                                        }
-                                    }*/
                                 }
                                 mAdapter=new PostsAdapter(MainActivity.this,mAllQuestions);
                                 mRecyclerView.setAdapter(mAdapter);
@@ -1804,14 +1678,7 @@ public class MainActivity extends AppCompatActivity implements FilterListener<Ta
         mGoogleApiClient.connect();
         if(currentUser==null)
         {
-            //sendUserToLoginActivity();
-           /* mAuth=FirebaseAuth.getInstance();
-            mAuth.signInWithEmailAndPassword("withoutloginuser@gmail.com","LoginFast").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
-                }
-            });*/
+
         }
         else
         {
