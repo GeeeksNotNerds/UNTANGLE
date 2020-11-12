@@ -205,34 +205,6 @@ public class SetupActivity extends AppCompatActivity {
         }
     }
 
-                /*
-
-
-                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        Toast.makeText(CreateProfile.this,"Profile Image has been successfully stored to Firebase storage!",Toast.LENGTH_SHORT).show();
-                        final String downloadUrl=task.getResult().getStorage().getDownloadUrl().toString();
-                        userRef.child("ProfileImage").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                progressBar.setVisibility(View.GONE);
-
-                                if(task.isSuccessful()){
-                                    Toast.makeText(CreateProfile.this,"Image Successfully stored to the database!",Toast.LENGTH_SHORT).show();
-
-                                }
-                                else{
-                                    String message=task.getException().getMessage();
-                                    Toast.makeText(CreateProfile.this,message,Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        });
-
-                    }
-                });
-                */
 
 
     private void SaveAccountInfo() {

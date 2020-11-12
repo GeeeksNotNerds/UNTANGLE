@@ -36,7 +36,6 @@ import java.util.HashMap;
 
 public class CommentsActivity extends AppCompatActivity {
     private ImageButton postCommentButton;
-   // ImageView end;
 
     private EditText CommentInputText;
     private RecyclerView CommentsList;
@@ -62,7 +61,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         mAuth= FirebaseAuth.getInstance();
         current_user_id=mAuth.getCurrentUser().getUid();
-        //end=findViewById(R.id.end);
+
         Post_Key=getIntent().getExtras().get("PostKey").toString();
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -171,16 +170,9 @@ public class CommentsActivity extends AppCompatActivity {
                     {
 
 
-                           // PostsRef.child()
 
                         String cid=comments.getCid();
-                     //   if(cid.startsWith("delete"))
-  //                      if(PostsRef.child(cid).child("cid").toString().startsWith("delete"))
-    //                   {
-      //                    commentsViewHolder.mDelete.setVisibility(View.GONE);
-        //                }
-                        //Toast.makeText(CommentsActivity.this, cid, Toast.LENGTH_SHORT).show();
-                        //PostsRef.child(cid).removeValue();
+
                         PostsRef.child(cid).child("comment").setValue("The comment has been deleted");
                         PostsRef.child(cid).child("cid").setValue("delete"+cid);
                         SendUserToMainActivity();

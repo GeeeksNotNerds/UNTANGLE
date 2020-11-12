@@ -459,41 +459,6 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
                                 if(sub.equals("Results"))colour2=mColors[21];
                                 if(sub.equals("Events"))colour2=mColors[22];
 
-                           /*if (mode.equals("Public")) {
-                                add(new Posts(like,postKey, "" + info, mail, post, date, date, uid, mode, postpic, categ, sub, show, status, new ArrayList<Tag>() {{
-
-                                    add(new Tag(owner, colour4));
-                                    add(new Tag(mode, colour3));
-                                    add(new Tag(categ, colour1));
-                                    add(new Tag(sub, colour2));
-
-
-                                }}));
-                            }*/
-
-                            //else
-                              //  {
-                                /*int l = 0;
-                                for (int i = 0; i < 1; i++) {
-                                    if (currentUserID.equals(mAdmin[i])) {
-                                        l = 1;
-                                        break;
-                                    }
-
-                                }
-                                if (l == 1 || (uid.equals(currentUserID))) {
-                                    l = 0;
-                                    add(new Posts(like,postKey, info, "" + user, post, date, date, uid, mode, postpic,pdf, categ, sub, show, status, new ArrayList<Tag>() {{
-                                        add(new Tag(owner, colour4));
-                                        add(new Tag(mode, colour3));
-                                        add(new Tag(categ, colour1));
-                                        add(new Tag(sub, colour2));
-                                    }}));
-                                }
-
-                                }*/
-                               // if (type.equals("Admin") || (uid.equals(currentUserID))) {
-                                    //l = 0;
                                 if(tab==1)//Admin
                                 {
                                     if(postType.endsWith("Admin")||postType.endsWith("SubAdmin"))
@@ -736,14 +701,7 @@ public class StarActivity extends AppCompatActivity implements FilterListener<Ta
         mGoogleApiClient.connect();
         if(currentUser==null)
         {
-            //sendUserToLoginActivity();
-           /* mAuth=FirebaseAuth.getInstance();
-            mAuth.signInWithEmailAndPassword("withoutloginuser@gmail.com","LoginFast").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
-                }
-            });*/
+
         }
         else
         {

@@ -49,9 +49,6 @@ public class AddAdmin extends AppCompatActivity
          mProgressBar=findViewById(R.id.progress_bar);
 
         mAdd=findViewById(R.id.add_admin);
-
-        //department=mDepartment.getText().toString().trim();
-        //designation=mDesignation.getText().toString().trim();
         mAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -67,8 +64,6 @@ public class AddAdmin extends AppCompatActivity
 
         BottomNavigationView bottomNavigAdmin=findViewById(R.id.bottom_navigation_admin);
 
-
-        //if(currentUserId.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2"))//if admin
 
             bottomNavigAdmin.setVisibility(View.VISIBLE);
             bottomNavigAdmin.setOnNavigationItemSelectedListener(navListner2);
@@ -86,7 +81,7 @@ public class AddAdmin extends AppCompatActivity
             mEmail.requestFocus();
             return;
         }
-      //  mAuth.signOut();
+
 
         mAuth.createUserWithEmailAndPassword(email,"1234567").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -110,20 +105,9 @@ public class AddAdmin extends AppCompatActivity
                 else
                 {
                     mProgressBar.setVisibility(View.GONE);
-                    //Toast.makeText(AddAdmin.this, "Try Again...something went wrong!", Toast.LENGTH_SHORT).show();
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         Toast.makeText(AddAdmin.this, "User with this email already exist.", Toast.LENGTH_SHORT).show();
                     }
-
-                   /* mAuth.signInWithEmailAndPassword(Mail,"12345678").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task)
-                        {
-                            Toast.makeText(AddAdmin.this, "enter valid and unregistered email.", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });*/
-
 
 
                 }
@@ -151,20 +135,14 @@ public class AddAdmin extends AppCompatActivity
                         String subject="Untangle : Admin Confirmation";
                         String body="You have been added as an admin by " +Mail+". Please login and setup your details.";
 
-                        //String mailto = "mailto:"+toMail +"&subject=" + Uri.encode(subject) +"&body=" + Uri.encode(body);
-
                         Intent intent = new Intent(Intent.ACTION_SEND);
-                        //intent.setData(Uri.parse(mailto));
-                        //intent.setData(Uri.parse())
+
                         intent.putExtra(Intent.EXTRA_EMAIL,toMail);
                         intent.putExtra(Intent.EXTRA_SUBJECT,subject);
                         intent.putExtra(Intent.EXTRA_TEXT,body);
-                       // intent.setType("plain/text");
                         intent.setType("message/rfc822");
                         startActivity(Intent.createChooser(intent,"Choose an email client"));
                         finish();
-                        //startActivity(new Intent(AddAdmin.this,MainActivity.class));
-                        //finish();
                         dialogInterface.dismiss();
                     }
 
@@ -181,13 +159,8 @@ public class AddAdmin extends AppCompatActivity
                     }
                 })
                 .build();
-
-        // Show Dialog
         mDialog.show();
 
-
-     //   startActivity(new Intent(AddAdmin.this,MainActivity.class));
-      //  finish();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListner2=

@@ -42,9 +42,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mail = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
-  //      mAuth = FirebaseAuth.getInstance();
-        //fab = findViewById(R.id.fab_cam);
-//        currUserId = mAuth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         password2 = findViewById(R.id.confirm_password);
@@ -111,40 +108,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful())
                                 {
-                                    /*token= FirebaseInstanceId.getInstance().getToken();
-                                    int pos1=Mail.indexOf('.');
-                                    String userName=Mail.substring(0,pos1);
-                                    int pos2=Mail.indexOf('@',pos1+1);
-                                    String admissionNo=Mail.substring(pos1+1,pos2);
-                                    int pos3=Mail.indexOf('.',pos2+1);
-                                    String branch=Mail.substring(pos2+1,pos3);
 
-                                    HashMap user1 = new HashMap();
-                                    user1.put("username", userName);
-                                    user1.put("department", branch);
-                                    user1.put("email", Mail);
-                                    user1.put("admission_number", admissionNo);
-                                    user1.put("device_token",token);
-
-                                    userRef.child(currUserId).updateChildren(user1).addOnCompleteListener(new OnCompleteListener() {
-                                        @Override
-                                        public void onComplete(@NonNull Task task)
-                                        {
-                                            progressBar.setVisibility(View.GONE);
-                                            if (task.isSuccessful()) {
-
-                                                //Toast.makeText(RegisterActivity.this, "Details Saved", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                startActivity(intent);
-                                                finish();
-
-                                            } else
-                                                {
-                                                Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });*/
 
                                     Toast.makeText(RegisterActivity.this, "A verification link has been sent to your Email.Please verify your account", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));

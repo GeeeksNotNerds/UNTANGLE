@@ -32,7 +32,6 @@ public class EntryActivity extends AppCompatActivity {
 
     private void SendUserToMainActivity()
     {
-        //Intent myIntent2 = new Intent(getApplicationContext(), EntryActivity.class);
         EntryActivity.this.finish();
     }
 }
