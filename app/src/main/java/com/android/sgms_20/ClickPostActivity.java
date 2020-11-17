@@ -57,8 +57,6 @@ public class ClickPostActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_post);
-        //getSupportActionBar().hide();
-
 
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
             NotificationChannel channel=new NotificationChannel("n","n", NotificationManager.IMPORTANCE_DEFAULT);
@@ -80,13 +78,6 @@ public class ClickPostActivity extends AppCompatActivity {
         currentUserID=mAuth.getCurrentUser().getUid();
 
         Image=findViewById(R.id.postImage_c);
-
-        // FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId)
-        //get it using known data from the card view
-        //.child("posts").push().getKey()
-
-
-
         PostKey=getIntent().getExtras().get("PostKey").toString();
         UserRef=FirebaseDatabase.getInstance().getReference().child("Users");
         UserRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
@@ -139,17 +130,7 @@ public class ClickPostActivity extends AppCompatActivity {
                   PostDescription.setText(description);
                   databaseUSerID=dataSnapshot.child("uid").getValue().toString();
                   postType=dataSnapshot.child("postType").getValue().toString();
-                 /* UserRef.child(databaseUSerID).addValueEventListener(new ValueEventListener() {
-                      @Override
-                      public void onDataChange(DataSnapshot dataSnapshot) {
-                        postType=dataSnapshot.child("type").getValue().toString();
-                      }
 
-                      @Override
-                      public void onCancelled(DatabaseError databaseError) {
-
-                      }
-                  });*/
                   if(mode.equals("Private"))
                   {
 
@@ -175,8 +156,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
 
 
-                 // if(currentUserID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2") && !databaseUSerID.equals("AkX6MclvgrXpN8oOGI5v37dn7eb2")){
-                    if((type.equals("Admin")||type.equals("SubAdmin"))&& !postType.endsWith("Admin")&& !postType.endsWith("SubAdmin") &&mode.equals("Private")){
+                 if((type.equals("Admin")||type.equals("SubAdmin"))&& !postType.endsWith("Admin")&& !postType.endsWith("SubAdmin") &&mode.equals("Private")){
                       statusButton.setVisibility(View.VISIBLE);
                       DeletePostButton.setVisibility(View.INVISIBLE);
                       EditPostButton.setVisibility(View.INVISIBLE);
@@ -201,9 +181,6 @@ public class ClickPostActivity extends AppCompatActivity {
                       @Override
                       public void onClick(View v) {
 
-                          //ClickPostRef.child("status").setValue("Reviewed...Corresponding Action will be taken as soon as possible");
-                         // Toast.makeText(ClickPostActivity.this, "Status Changed", Toast.LENGTH_SHORT).show();
-                          //SendUserToMainActivity();
 
                           AlertDialog.Builder builder=new AlertDialog.Builder(ClickPostActivity.this);
                           builder.setTitle("Change Status");
@@ -255,7 +232,6 @@ public class ClickPostActivity extends AppCompatActivity {
                                                                           })
                                                                           .build();
 
-                                                                  // Show Dialog
                                                                   mDialog.show();
 
 
@@ -344,25 +320,7 @@ public class ClickPostActivity extends AppCompatActivity {
             {
 
                 ClickPostRef.child("description").setValue("(edited) "+inputField.getText().toString());
-                //UserRef.child("description").setValue(inputField.getText().toString());
-                /*UserRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot)
-                    {
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                        {
-                          if(dataSnapshot1.child("star").hasChild(PostKey))
-                          {
-                            dataSnapshot1.child("star").child(PostKey).child("description").getRef().setValue(inputField.getText().toString());
-                          }
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });*/
 
                 Toast.makeText(ClickPostActivity.this, "Post updated..", Toast.LENGTH_SHORT).show();
                 SendUserToMainActivity();
@@ -382,77 +340,6 @@ public class ClickPostActivity extends AppCompatActivity {
     private void DeleteCurrentPost(String deletePost)
     {
 
-        //public Iterable<DataSnapshot> getChildren();
-        //for(DataSnapshot child:)
-        //void getData(DataSnapshot dataSnapshot){
-        /*UserRef.addValueEventListener(new ValueEventListener()
-        {
-            public void getData(DataSnapshot dataSnapshot)
-            {
-                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
-                {
-
-                        Toast.makeText(ClickPostActivity.this, "Working", Toast.LENGTH_SHORT).show();
-                        UserRef.child("pHpCnW14v9cUKXLLB4eySHHSmlG3").child("star").child(PostKey).getRef().removeValue();
-                    }
-            }
-
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                {
-                    if(dataSnapshot1.hasChild("star"))
-                    {
-
-                        //Toast.makeText(ClickPostActivity.this, PostKey, Toast.LENGTH_SHORT).show();
-                        //dataSnapshot1.child("star").child(PostKey).getRef().removeValue();
-                        //if(dataSnapshot1.child("star").hasChild(PostKey))
-                            //Toast.makeText(ClickPostActivity.this, "Working", Toast.LENGTH_SHORT).show();
-                        UserRef.child("pHpCnW14v9cUKXLLB4eySHHSmlG3").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot2)
-                            {
-                                if(dataSnapshot2.child("star").hasChild(PostKey))
-                                {
-                                    //Toast.makeText(ClickPostActivity.this, "Working", Toast.LENGTH_SHORT).show();
-                                    dataSnapshot2.child("star").child(PostKey).getRef().removeValue();
-                                }
-                                else
-                                {
-                                    //Toast.makeText(ClickPostActivity.this, "Not a child", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError)
-                            {
-
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
-       // ClickPostRef.removeValue();
-        //UserRef.removeValue();
-        //UserRef.child("pHpCnW14v9cUKXLLB4eySHHSmlG3").child("star").child(PostKey).getRef().removeValue();
-        //UserRef.child("FU5r1KMEvOeQqCU5D8V7FQ4MGQW2").child("department").setValue("lfof");
-      // new Handler().postDelayed(new Runnable() {
-        //    @Override
-          //  public void run() {
-                //ClickPostRef.removeValue();
-                //SendUserToMainActivity();
-                //Toast.makeText(ClickPostActivity.this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
-            //}
-        //},5000);
         MaterialDialog mDialog = new MaterialDialog.Builder(ClickPostActivity.this)
                 .setTitle("Delete..")
                 .setMessage("Are you sure you want to delete this post?")
@@ -461,8 +348,6 @@ public class ClickPostActivity extends AppCompatActivity {
                     @Override
                     public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
 
-                                 //ClickPostRef.removeValue();
-                       // String check=ClickPostRef.child("postType").
                         if(deletePost.endsWith("Admin")||deletePost.endsWith("SubAdmin"))
                         {
                             ClickPostRef.removeValue();
@@ -474,7 +359,7 @@ public class ClickPostActivity extends AppCompatActivity {
                             ClickPostRef.child("PostImage").setValue("null");
                             ClickPostRef.child("description").setValue("The message has been deleted...");
                         }
-                                // MainActivity.getInstance().sort();
+
                                  SendUserToMainActivity();
                                  Toast.makeText(ClickPostActivity.this, "Post has been deleted..", Toast.LENGTH_SHORT).show();
 
@@ -493,7 +378,7 @@ public class ClickPostActivity extends AppCompatActivity {
                 })
                 .build();
 
-        // Show Dialog
+
         mDialog.show();
 
 
@@ -504,8 +389,7 @@ public class ClickPostActivity extends AppCompatActivity {
         {
             if(dataSnapshot1.hasChild("star")){
                 Toast.makeText(this, "Working", Toast.LENGTH_SHORT).show();
-            //UserRef.child("pHpCnW14v9cUKXLLB4eySHHSmlG3").child("star").child(PostKey).getRef().removeValue();
-        }}
+              }}
     }
     private void SendUserToMainActivity()
     {

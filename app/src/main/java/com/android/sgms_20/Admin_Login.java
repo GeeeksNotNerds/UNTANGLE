@@ -49,7 +49,6 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
         password=findViewById(R.id.login_password);
         mAdmin=getResources().getStringArray(R.array.admin_uid);
         c=1;
-       // mylist=getResources().getStringArray(R.array.admin_uid);
         findViewById(R.id.login_button).setOnClickListener(this);
         mAuth=FirebaseAuth.getInstance();
         progressBar=findViewById(R.id.progress_bar);
@@ -110,12 +109,9 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
 
                             if(!dataSnapshot.hasChild(current_user_id))
                             {
-                                //if(Password.equals("12345678")||Password.equals("1234567"))
                                 if(Password.equals("12345678"))
                                 {
                                     type="Admin";
-                                   // c++;
-                                    //mAdmin[c]=current_user_id;
                                 }
                                 else if(Password.equals("1234567"))
                                 {
@@ -131,22 +127,15 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                                 String id=mAuth.getCurrentUser().getUid().toString();
                                 String Mail=mAuth.getCurrentUser().getEmail().toString();
                                 token= FirebaseInstanceId.getInstance().getToken();
-                                //int pos1=Mail.indexOf('.');
                                 int Apos=Mail.indexOf('@');
                                 String userName=Mail.substring(0,Apos);
                                 String first=Mail.substring(0,1);
                                 first=first.toUpperCase();
                                 userName=first+Mail.substring(1,Apos);
-                                //int pos2=Mail.indexOf('@',pos1+1);
-                                //String admissionNo=Mail.substring(Apos-8,Apos);
-                                //int pos3=Mail.indexOf('.',pos2+1);
-                                //String branch=Mail.substring(pos2+1,pos3);*/
 
                                 HashMap user1 = new HashMap();
                                 user1.put("username", userName);
-                                //user1.put("department", branch);
                                 user1.put("email", Mail);
-                                //user1.put("designation", admissionNo);
                                 user1.put("device_token",token);
                                 user1.put("type",type);
 
@@ -155,7 +144,6 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                                     @Override
                                     public void onComplete(@NonNull Task task)
                                     {
-                                        //progressBar.setVisibility(View.GONE);
                                         if (task.isSuccessful())
                                         {
                                             Toast.makeText(Admin_Login.this, "Setup your profile ...", Toast.LENGTH_SHORT).show();
@@ -168,7 +156,6 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                                         }
                                     }
                                 });
-                                //SendToSetupActivity();
                             }
                             else if(dataSnapshot.child(current_user_id).hasChild("subCategory"))
                             {
@@ -182,15 +169,6 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             }
-                            //else if()
-
-                           /* else
-                            {
-                                Intent intent=new Intent(Admin_Login.this,MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                finish();
-                            }*/
 
                         }
 
@@ -202,10 +180,7 @@ public class Admin_Login extends AppCompatActivity implements View.OnClickListen
                     });
 
                     Toast.makeText(getApplicationContext(), "Login Successful!", Toast.LENGTH_SHORT).show();
-                   // Intent intent=new Intent(Admin_Login.this,MainActivity.class);
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    //startActivity(intent);
-                    //finish();
+
 
                 }
                 else

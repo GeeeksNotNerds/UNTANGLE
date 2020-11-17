@@ -37,17 +37,12 @@ public class adminSetup extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_setup);
-        //this.setFinishOnTouchOutside(false);
-
         mAuth=FirebaseAuth.getInstance();
         current_user_id=mAuth.getCurrentUser().getUid();
         UserRef=FirebaseDatabase.getInstance().getReference().child("Users");
         mContinue=findViewById(R.id.con);
         mDep=findViewById(R.id.dept);
         mDesig=findViewById(R.id.desig);
-
-        //department=mDep
-
         Spinner spinner1=(Spinner)findViewById(R.id.spin1);
         final Spinner spinner2=(Spinner)findViewById(R.id.spin2);
         ArrayAdapter<String> adapter1=new ArrayAdapter<String>(adminSetup.this,android.R.layout.simple_expandable_list_item_1,getResources().getStringArray(R.array.categories));
@@ -114,10 +109,6 @@ public class adminSetup extends AppCompatActivity
     {
         department = mDep.getText().toString().trim();
         designation = mDesig.getText().toString().trim();
-        //String Password2 = password2.getText().toString().trim();
-
-
-
         if (department.isEmpty())
         {
             mDep.setError("Department is required!");
@@ -133,9 +124,9 @@ public class adminSetup extends AppCompatActivity
 
 
         HashMap postsMap = new HashMap();
-        //postsMap.put("department",);
+
         postsMap.put("department", department);
-       // user1.put("email", Mail);
+
         postsMap.put("designation", designation);
         postsMap.put("category", cat1);
         postsMap.put("subCategory", cat2);
@@ -149,13 +140,13 @@ public class adminSetup extends AppCompatActivity
                         {
                             SendUserToMainActivity();
                             Toast.makeText(adminSetup.this, "Details are updated successfully....", Toast.LENGTH_LONG).show();
-                            //mLoading.setVisibility(View.GONE);
+
 
                         }
                         else
                         {
                             Toast.makeText(adminSetup.this, "Error occurred while updating your details....", Toast.LENGTH_LONG).show();
-                            //mLoading.setVisibility(View.GONE);
+
                         }
                     }
                 });

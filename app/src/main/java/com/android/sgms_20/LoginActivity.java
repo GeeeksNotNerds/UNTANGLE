@@ -70,15 +70,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         google=findViewById(R.id.google_signin_button);
         findViewById(R.id.register_account_link).setOnClickListener(this);
 
-        /*mShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                //show
-                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                mShow.setVisibility(View.GONE);
-            }
-        });*/
 
         if(!haveNetworkConnection()){
             Toast.makeText(LoginActivity.this,"You are not Online....Please switch on your internet connection!",Toast.LENGTH_SHORT).show();
@@ -175,7 +166,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.login_button:
                 UserLogin();
-                //finish();
+
                 break;
         }
     }

@@ -50,11 +50,11 @@ public class ClickPhotoActivity extends AppCompatActivity
         mAuth= FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
         ZoomableImageView imViewedImage = findViewById(R.id.post_pic);
-//        imViewedImage.setImageResource(R.drawable.art_freaks);
+
 
         PostKey=getIntent().getExtras().get("PostKey").toString();
         url=getIntent().getExtras().get("URL").toString();
-    //    Image=findViewById(R.id.postImage_c);
+
 
         Download=findViewById(R.id.download_pic);
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
@@ -63,10 +63,9 @@ public class ClickPhotoActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                //imViewedImage.setIma(dataSnapshot.child("").getValue().toString());
                 Picasso.with(ClickPhotoActivity.this)
                         .load(dataSnapshot.child("PostImage").getValue().toString())
-                        //.fit()
+
                         .placeholder(R.drawable.loader1)
                         .into(imViewedImage);
             }
@@ -88,113 +87,6 @@ public class ClickPhotoActivity extends AppCompatActivity
 
             }
         });
-      /*  Share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-
-                /*BitmapDrawable drawable = (BitmapDrawable) imViewedImage.getDrawable();
-                Bitmap icon = drawable.getBitmap();
-               // Bitmap icon = mBitmap;
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("image/jpeg");
-
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, "title");
-                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-                Uri uri = getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                        values);
-
-
-                OutputStream outstream;
-                try {
-                    outstream = getContentResolver().openOutputStream(uri);
-                    icon.compress(Bitmap.CompressFormat.JPEG, 100, outstream);
-                    outstream.close();
-                } catch (Exception e) {
-                    System.err.println(e.toString());
-                }
-
-                share.putExtra(Intent.EXTRA_STREAM, uri);
-                startActivity(Intent.createChooser(share, "Share Image"));*/
-                /*Uri imageUri = Uri.parse(pictureFile.getAbsolutePath());
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-//Send to Whattssap
-                shareIntent.setPackage("com.whatsapp");
-//Even you can add text to the image
-                shareIntent.putExtra(Intent.EXTRA_TEXT, picture_text);
-                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                shareIntent.setType("image/jpeg");
-                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                try {
-                    startActivity(shareIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    ToastHelper.MakeShortText("Whatsapp have not been installed.");
-                }
-                //ImageView content = (ImageView)mView.findViewById(R.id.imageViewy);
-                ClickPostRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        ImageView content=findViewById(R.id.share_pic1);
-                        Picasso.with(ClickPhotoActivity.this)
-                                .load(dataSnapshot.child("PostImage").getValue().toString())
-                                //.fit()
-                                .placeholder(R.drawable.loader1)
-                                .into(content);
-
-                        //content.setDrawingCacheEnabled(true);
-
-                        content.buildDrawingCache();
-                        Bitmap icon = content.getDrawingCache();
-
-                        Intent share = new Intent(Intent.ACTION_SEND);
-                        share.setType("image/jpeg");
-
-                        ContentValues values = new ContentValues();
-                        values.put(MediaStore.Images.Media.TITLE, "title");
-                        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-                        Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                values);
-
-
-                        OutputStream outstream;
-                        try {
-                            outstream = getContentResolver().openOutputStream(uri);
-                            icon.compress(Bitmap.CompressFormat.JPEG, 100, outstream);
-                            outstream.close();
-                        } catch (Exception e) {
-                            System.err.println(e.toString());
-                        }
-
-                        share.putExtra(Intent.EXTRA_STREAM, uri);
-                        startActivity(Intent.createChooser(share, "Share Image"));
-
-                        /*Uri imageUri= null;
-                        try {
-                            imageUri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), String.valueOf(content), "title", "discription"));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        Intent shareIntent = new Intent();
-                        shareIntent.setAction(Intent.ACTION_SEND);
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                        shareIntent.setType("image/*");
-                        startActivity(Intent.createChooser(shareIntent,"Share"));
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-            }
-        });*/
 
     }
 }
