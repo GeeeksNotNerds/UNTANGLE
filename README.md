@@ -35,6 +35,8 @@ FUNCTIONALITY OF THE APP:
        
 MEASURES TO AVOID SPAMMING:
 1.The students will only be able to loginusing their college email id’s
+
 2.A verification link will be sentto the childrenon their respective college id’son registration.Only after the verificationthey will be allowed to login into the app.
+
 3.The admin will be able to view the details like name,admission number,branchand college email id of anyone who posts.Only the admin can see these details
 
